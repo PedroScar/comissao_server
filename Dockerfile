@@ -4,7 +4,7 @@ COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle buildFatJar --no-daemon
 
-FROM amazoncorretto:20 AS runtime
+FROM amazoncorretto:17 AS runtime
 EXPOSE 8080:8080
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/libs/*.jar /app/decorapi.jar
