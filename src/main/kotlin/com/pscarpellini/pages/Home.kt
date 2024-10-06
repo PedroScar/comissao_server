@@ -32,7 +32,7 @@ fun HTML.homePage(errorMessage: String? = null, successMessage: String? = null) 
             a(href = "#", classes = "sidebar-item") { +"Sair" }
         }
         div(classes = "main-content") {
-            h1 { +"${Sessao.loja?.nome}" }
+            h1 { +"${Sessao.conta?.nome}" }
             p { +"This is the main content area." }
         }
     }

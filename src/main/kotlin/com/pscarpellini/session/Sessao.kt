@@ -1,9 +1,10 @@
 package com.pscarpellini.session
 
-import com.pscarpellini.model.loja.Loja
-import com.pscarpellini.model.funcionario.Funcionario
+import com.pscarpellini.enums.ContaTipoEnum
+import com.pscarpellini.model.Conta
 
 object Sessao {
-    var funcionario: Funcionario? = null
-    var loja: Loja? = null
+    var idPai: Int? = null
+    var tipo: ContaTipoEnum? = null
+    var conta: Conta? = null
 }

@@ -3,6 +3,12 @@ plugins {
     alias(libs.plugins.ktor)
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
 }
+//
+//java {
+//    toolchain {
+//        languageVersion.set(JavaLanguageVersion.of(20)) // ou 20 se você estiver usando Java 20
+//    }
+//}
 
 group = "com.example"
 version = "0.0.1"

@@ -8,11 +8,12 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
 object FuncionariosTable : IntIdTable("funcionarios") {
-    val idLoja = integer("idloja")
+    val iden = integer("id")
+    val idloja = integer("idloja")
     val nome = varchar("nome", 255)
     val endereco = varchar("endereco", 255)
     val cpf = varchar("cpf", 255)
-    val email = varchar("email", 255).uniqueIndex()
+    val email = varchar("email", 255)
     val telefone = varchar("telefone", 255)
     val status = varchar("status", 255)
 }
@@ -20,7 +21,8 @@ object FuncionariosTable : IntIdTable("funcionarios") {
 class FuncionarioDAO(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<FuncionarioDAO>(FuncionariosTable)
 
-    var idLoja by  FuncionariosTable.idLoja
+    var iden by FuncionariosTable.iden
+    var idloja by  FuncionariosTable.idloja
     var nome by FuncionariosTable.nome
     var endereco by FuncionariosTable.endereco
     var cpf by FuncionariosTable.cpf
@@ -30,7 +32,8 @@ class FuncionarioDAO(id: EntityID<Int>) : IntEntity(id) {
 }
 
 fun funcionarioDaoToModel(dao: FuncionarioDAO) = Funcionario(
-    dao.idLoja,
+    dao.iden,
+    dao.idloja,
     dao.nome,
     dao.endereco,
     dao.cpf,

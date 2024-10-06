@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.*
 
 fun Application.configureDatabases() {
     Database.connect(
-        "jdbc:postgresql://ep-red-bread-a567nqac.us-east-2.aws.neon.tech:5432/comissaodb",
+        "jdbc:postgresql://ep-blue-unit-a5d79dcb.us-east-2.aws.neon.tech:5432/comissaodb",
         user = "comissaodb_owner",
         password = "T3JMNw0IYkBK"
     )

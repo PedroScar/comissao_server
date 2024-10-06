@@ -3,20 +3,20 @@ package com.pscarpellini.style
 import io.ktor.http.ContentType
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.application.pluginOrNull
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Routing
-import io.ktor.server.routing.RoutingRoot
 import io.ktor.server.routing.get
-import io.ktor.utils.io.KtorDsl
+import io.ktor.util.KtorDsl
 import kotlinx.css.*
 import kotlinx.css.properties.BoxShadow
 import kotlinx.css.properties.BoxShadows
 import kotlinx.css.properties.TextDecoration
 
 @KtorDsl
-fun Application.styledRouting(configuration: Routing.() -> Unit): RoutingRoot {
+fun Application.styledRouting(configuration: Routing.() -> Unit): Routing {
     val styledConfig: Routing.() -> Unit = {
         configuration()
         get("/styles.css") {
@@ -111,7 +111,7 @@ fun Application.styledRouting(configuration: Routing.() -> Unit): RoutingRoot {
             }
         }
     }
-    return pluginOrNull(RoutingRoot)?.apply(styledConfig) ?: install(RoutingRoot, styledConfig)
+    return pluginOrNull(Routing)?.apply(styledConfig) ?: install(Routing, styledConfig)
 }
 
 suspend inline fun ApplicationCall.respondCss(builder: CssBuilder.() -> Unit) {

@@ -11,9 +11,9 @@ object LojasTable : IntIdTable("lojas") {
     val nome = varchar("nome", 255)
     val endereco = varchar("endereco", 255)
     val cnpj = varchar("cnpj", 255)
-    val email = varchar("email", 255).uniqueIndex()
+    val email = varchar("email", 255)
     val telefone = varchar("telefone", 255)
-    val status = varchar("status", 255)
+    val status = integer("status")
 }
 
 class LojaDAO(id: EntityID<Int>) : IntEntity(id) {
@@ -34,5 +34,5 @@ fun lojaDaoToModel(dao: LojaDAO) = Loja(
     dao.cnpj,
     dao.email,
     dao.telefone,
-    ContaStatusEnum.valueOf(dao.status)
+    ContaStatusEnum.getStatus(dao.status)
 )

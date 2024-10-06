@@ -7,10 +7,10 @@ class FuncionarioRepositoryPostgres : FuncionarioRepository {
     override suspend fun adicionarUsuario(funcionario: Funcionario): Boolean = suspendTransaction {
         runCatching {
             FuncionarioDAO.new {
-                idLoja = funcionario.idLoja
+                idloja = funcionario.idloja
                 nome = funcionario.nome
                 endereco = funcionario.endereco
-                cpf = funcionario.cpf
+                cpf = funcionario.doc
                 email = funcionario.email
                 telefone = funcionario.telefone
                 status = funcionario.status.name

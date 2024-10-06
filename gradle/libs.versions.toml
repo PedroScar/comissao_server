@@ -1,11 +1,10 @@
-
 [versions]
-ktor-version = "3.0.0-rc-1"
+ktor-version = "2.3.12"
 kotlin-version = "1.9.10"
 logback-version = "1.4.14"
 postgres-version = "42.6.0"
 h2-version = "2.2.224"
-exposed-version = "0.54.0"
+exposed-version = "0.41.1"
 jetbrains-kotlin-css = "1.0.0-pre.809"
 
 [libraries]
@@ -24,8 +23,6 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "e
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor-version" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback-version" }
 ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor-version" }
-ktor-server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-version" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

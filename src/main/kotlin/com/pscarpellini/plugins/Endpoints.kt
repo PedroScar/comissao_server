@@ -51,46 +51,46 @@ fun Application.configureEndpoints() {
         post(EndpointsEnum.CriarUserRequest.path) {
             val params = call.receiveParameters()
 
-            val nome = params["nome"]
-            val endereco = params["endereco"]
-            val cpf = params["cpf"]
-            val email = params["email"]
-            val telefone = params["telefone"]
-            val username = params["username"]
-            val password = params["password"]
-            val status = ContaStatusEnum.getByName(params["status"].toString())
-
-            if (nome == null ||
-                cpf == null ||
-                email == null ||
-                telefone == null ||
-                username == null ||
-                password == null
-            ) {
-                call.respondHtml {
-                    addUserPage(errorMessage = "Todos os campos são obrigatórios.")
-                }
-            } else {
-                if (funcionarioRepository.adicionarUsuario(
-                        Funcionario(
-                            idLoja = Sessao.loja?.id ?: 0,
-                            nome = nome,
-                            endereco = endereco ?: "",
-                            cpf = cpf,
-                            email = email,
-                            telefone = telefone,
-                            status = status
-                        )
-                    )
-                )
-                    call.respondHtml {
-                        homePage(successMessage = "Usuário adicionado com sucesso")
-                    }
-                else
-                    call.respondHtml {
-                        homePage(errorMessage = "Erro ao criar novo usuário")
-                    }
-            }
+//            val nome = params["nome"]
+//            val endereco = params["endereco"]
+//            val cpf = params["cpf"]
+//            val email = params["email"]
+//            val telefone = params["telefone"]
+//            val username = params["username"]
+//            val password = params["password"]
+//            val status = ContaStatusEnum.getStatus(params["status"].toString())
+//
+//            if (nome == null ||
+//                cpf == null ||
+//                email == null ||
+//                telefone == null ||
+//                username == null ||
+//                password == null
+//            ) {
+//                call.respondHtml {
+//                    addUserPage(errorMessage = "Todos os campos são obrigatórios.")
+//                }
+//            } else {
+//                if (funcionarioRepository.adicionarUsuario(
+//                        Funcionario(
+//                            idloja = Sessao.loja?.id ?: 0,
+//                            nome = nome,
+//                            endereco = endereco ?: "",
+//                            doc = cpf,
+//                            email = email,
+//                            telefone = telefone,
+//                            status = status
+//                        )
+//                    )
+//                )
+//                    call.respondHtml {
+//                        homePage(successMessage = "Usuário adicionado com sucesso")
+//                    }
+//                else
+//                    call.respondHtml {
+//                        homePage(errorMessage = "Erro ao criar novo usuário")
+//                    }
+//            }
         }
     }
 }
