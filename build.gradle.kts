@@ -9,6 +9,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+}
+
 group = "com.example"
 version = "0.0.1"
 
