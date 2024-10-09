@@ -1,6 +1,5 @@
 package com.pscarpellini.model.login
 
-
 import com.pscarpellini.db.ColaboradorDAO
 import com.pscarpellini.db.ColaboradoresTable
 import com.pscarpellini.db.FuncionarioDAO
@@ -14,6 +13,7 @@ import com.pscarpellini.db.funcionarioDaoToModel
 import com.pscarpellini.db.loginDaoToModel
 import com.pscarpellini.db.lojaDaoToModel
 import com.pscarpellini.enums.ContaTipoEnum
+import com.pscarpellini.model.Conta
 import com.pscarpellini.session.Sessao
 import com.pscarpellini.suspendTransaction
 
@@ -27,7 +27,6 @@ class LoginRepositoryPostgres : LoginRepository {
 
         if (login?.password == password) {
             Sessao.tipo = login.tipo
-            Sessao.idPai = login.idpai
             Sessao.conta = when (login.tipo) {
                 ContaTipoEnum.ADMIN -> LojaDAO
                     .find { (LojasTable.id eq login.idpai) }
@@ -46,5 +45,21 @@ class LoginRepositoryPostgres : LoginRepository {
             }
             true
         } else false
+    }
+
+    override suspend fun criarLogin(
+        mUsername: String,
+        mPassword: String,
+        mTipo: Int
+    ): Boolean = suspendTransaction {
+        runCatching {
+            LoginDAO.new {
+                idpai = Sessao.idPai!!
+                tipo = mTipo
+                username = mUsername
+                pwd = mPassword
+            }
+            true
+        }.getOrElse { false }
     }
 }

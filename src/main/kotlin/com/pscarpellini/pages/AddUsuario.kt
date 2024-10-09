@@ -1,6 +1,7 @@
 package com.pscarpellini.pages
 
 import com.pscarpellini.enums.ContaStatusEnum
+import com.pscarpellini.enums.ContaTipoEnum
 import com.pscarpellini.enums.EndpointsEnum
 import com.pscarpellini.enums.PagesEnum
 import kotlinx.html.*
@@ -79,13 +80,22 @@ fun HTML.addUserPage(errorMessage: String? = null) {
                 div(classes = "form-input") {
                     label { +"Status:" }
                     select(classes = "status") {
-                        option {
-                            value = ContaStatusEnum.ATIVO.name
-                            +"ATIVO"
+                        ContaStatusEnum.entries.forEach { conta ->
+                            option {
+                                value = conta.name
+                                +conta.name
+                            }
                         }
-                        option {
-                            value = ContaStatusEnum.INATIVO.name
-                            +"INATIVO"
+                    }
+                }
+                div(classes = "form-input") {
+                    label { +"Tipo:" }
+                    select(classes = "tipo") {
+                        ContaTipoEnum.entries.forEach { conta ->
+                            option {
+                                value = conta.name
+                                +conta.name
+                            }
                         }
                     }
                 }

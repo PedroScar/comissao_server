@@ -1,6 +1,5 @@
 package com.pscarpellini.db
 
-import com.pscarpellini.enums.ContaStatusEnum
 import com.pscarpellini.model.loja.Loja
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -34,5 +33,5 @@ fun lojaDaoToModel(dao: LojaDAO) = Loja(
     dao.cnpj,
     dao.email,
     dao.telefone,
-    ContaStatusEnum.getStatus(dao.status)
+    dao.status
 )

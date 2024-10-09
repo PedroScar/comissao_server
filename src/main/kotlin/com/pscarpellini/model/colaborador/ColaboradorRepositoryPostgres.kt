@@ -13,7 +13,7 @@ class ColaboradorRepositoryPostgres : ColaboradorRepository {
                 cpf = funcionario.doc
                 email = funcionario.email
                 telefone = funcionario.telefone
-                status = funcionario.status.name
+                status = funcionario.status
             }
             true
         }.getOrElse { false }
