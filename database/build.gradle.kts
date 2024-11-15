@@ -4,6 +4,10 @@ plugins {
     alias(libs.plugins.serialization)
 }
 
+repositories {
+    mavenCentral()
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_20
     targetCompatibility = JavaVersion.VERSION_20
@@ -15,9 +19,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
     }
 }
 
-group = "br.com.lumen"
-version = "0.0.1"
-
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 
@@ -25,12 +26,6 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation(project(":base"))
-    implementation(project(":comissao"))
-    implementation(project(":database"))
+    api(project(":base"))
 }
