@@ -1,10 +1,6 @@
-package com.pscarpellini.model.loja
+package com.pscarpellini.repositories.implementations
 
-import com.pscarpellini.db.LojaDAO
-import com.pscarpellini.db.LojasTable
-import com.pscarpellini.db.lojaDaoToModel
-import com.pscarpellini.session.Sessao
-import com.pscarpellini.suspendTransaction
+import com.pscarpellini.repositories.interfaces.LojaRepository
 
 class LojaRepositoryPostgres : LojaRepository {
 //    override suspend fun validarLogin(username: String, password: String): Boolean = suspendTransaction {

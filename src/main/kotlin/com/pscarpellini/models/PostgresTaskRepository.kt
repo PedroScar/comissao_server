@@ -1,9 +1,5 @@
-package com.pscarpellini.model
+package com.pscarpellini.models
 
-
-import com.pscarpellini.suspendTransaction
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class PostgresTaskRepository : TaskRepository {
 //    override suspend fun allTasks(): List<Task> = suspendTransaction {

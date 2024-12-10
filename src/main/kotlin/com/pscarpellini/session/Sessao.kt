@@ -1,7 +1,7 @@
 package com.pscarpellini.session
 
 import com.pscarpellini.enums.ContaTipoEnum
-import com.pscarpellini.model.Conta
+import com.pscarpellini.models.Conta
 
 object Sessao {
     var idPai: Int? = null

@@ -1,13 +1,13 @@
 package com.pscarpellini.plugins
 
-import com.pscarpellini.model.colaborador.ColaboradorRepository
-import com.pscarpellini.model.colaborador.ColaboradorRepositoryPostgres
-import com.pscarpellini.model.loja.LojaRepository
-import com.pscarpellini.model.loja.LojaRepositoryPostgres
-import com.pscarpellini.model.funcionario.FuncionarioRepository
-import com.pscarpellini.model.funcionario.FuncionarioRepositoryPostgres
-import com.pscarpellini.model.login.LoginRepository
-import com.pscarpellini.model.login.LoginRepositoryPostgres
+import com.pscarpellini.repositories.interfaces.ColaboradorRepository
+import com.pscarpellini.repositories.implementations.ColaboradorRepositoryPostgres
+import com.pscarpellini.repositories.interfaces.LojaRepository
+import com.pscarpellini.repositories.implementations.LojaRepositoryPostgres
+import com.pscarpellini.repositories.interfaces.FuncionarioRepository
+import com.pscarpellini.repositories.implementations.FuncionarioRepositoryPostgres
+import com.pscarpellini.repositories.interfaces.LoginRepository
+import com.pscarpellini.repositories.implementations.LoginRepositoryPostgres
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import org.koin.dsl.module

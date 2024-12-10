@@ -1,4 +1,4 @@
-package com.pscarpellini.model
+package com.pscarpellini.models
 
 interface TaskRepository {
 //    suspend fun allTasks(): List<Task>
