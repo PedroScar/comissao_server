@@ -40,7 +40,7 @@ fun Application.styledRouting(configuration: Routing.() -> Unit): RoutingRoot {
                     flexDirection = FlexDirection.row
                     justifyContent = JustifyContent.spaceBetween
                     alignItems = Align.center
-                   // border = Border(1.px, BorderStyle.solid, Colors.neutral_low_pure)
+                    // border = Border(1.px, BorderStyle.solid, Colors.neutral_low_pure)
                 }
 
                 rule(".header-logo") {
@@ -292,6 +292,41 @@ fun Application.styledRouting(configuration: Routing.() -> Unit): RoutingRoot {
                     padding = Padding(0.px)
                 }
 
+                rule(".login-header") {
+                    width = LinearDimension("calc(100% - 64px)")
+                    backgroundColor = Colors.neutral_high_light
+                    padding = Padding(32.px)
+                    position = Position.fixed
+                    top = 0.px
+                    zIndex = 100
+                    display = Display.flex
+                    flexDirection = FlexDirection.row
+                    justifyContent = JustifyContent.spaceBetween
+                    alignItems = Align.center
+                    border = Border(1.px, BorderStyle.solid, Colors.neutral_low_pure)
+                }
+
+                rule(".botoes-container-login") {
+                    display = Display.flex
+                    flexDirection = FlexDirection.row
+                    gap = 8.px
+                }
+
+                rule(".texto-login-duvida") {
+                    fontFamily = "Nunito"
+                    fontSize = 16.px
+                    fontWeight = FontWeight.w400
+                    color = Colors.neutral_low_pure
+                    margin = Margin(0.px)
+                    padding = Padding(0.px)
+                }
+
+                rule(".botao-login-contato") {
+                    fontFamily = "Nunito"
+                    fontSize = 16.px
+                    fontWeight = FontWeight.w600
+                    color = Colors.neutral_low_pure
+                }
             }
         }
     }

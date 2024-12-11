@@ -1,5 +1,6 @@
 package com.pscarpellini.pages
 
+import com.pscarpellini.enums.PagesEnum
 import com.pscarpellini.session.Sessao
 import kotlinx.html.*
 
@@ -28,7 +29,10 @@ fun HTML.landingPage() {
             }
 
             div(classes = "botoes-container") {
-                form(action = "https://wa.me/${Sessao.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações", method = FormMethod.get) {
+                form(
+                    action = "https://wa.me/${Sessao.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações",
+                    method = FormMethod.get
+                ) {
                     attributes["target"] = "_blank"
                     button(classes = "botao-especialista", type = ButtonType.submit) {
                         +"Falar com especialista"
@@ -36,7 +40,7 @@ fun HTML.landingPage() {
                     }
                 }
 
-                form(action = "/entrar-button-click", method = FormMethod.get) {
+                form(action = PagesEnum.Login.path, method = FormMethod.get) {
                     button(classes = "botao-entrar", type = ButtonType.submit) { +"Entrar" }
                 }
             }

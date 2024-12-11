@@ -38,8 +38,8 @@ fun Application.configurePages() {
             call.respondHtml(HttpStatusCode.OK, PagesEnum.AddUser.reference)
         }
 
-        get("/entrar-button-click") {
-
+        get(PagesEnum.Login.path) {
+            call.respondHtml(HttpStatusCode.OK, PagesEnum.Login.reference)
         }
     }
 }
