@@ -2,11 +2,11 @@ package com.pscarpellini.enums
 
 import com.pscarpellini.pages.addUserPage
 import com.pscarpellini.pages.homePage
-import com.pscarpellini.pages.loginPage
+import com.pscarpellini.pages.landingPage
 import kotlinx.html.HTML
 
 enum class PagesEnum(val path: String, val reference: HTML.() -> Unit) {
-    Login("/", HTML::loginPage),
+    Landing("/", HTML::landingPage),
     Home("/home", HTML::homePage),
     AddUser("/addUser", HTML::addUserPage),
 }
