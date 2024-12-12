@@ -2,7 +2,7 @@ package com.pscarpellini.plugins
 
 import com.pscarpellini.enums.PagesEnum
 import com.pscarpellini.pages.homePage
-import com.pscarpellini.pages.landingPage
+import com.pscarpellini.pages.landingPage.landingPage
 import com.pscarpellini.style.styledRouting
 import io.ktor.http.*
 import io.ktor.server.application.*

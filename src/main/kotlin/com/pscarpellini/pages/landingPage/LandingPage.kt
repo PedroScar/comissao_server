@@ -1,4 +1,4 @@
-package com.pscarpellini.pages
+package com.pscarpellini.pages.landingPage
 
 import com.pscarpellini.enums.PagesEnum
 import com.pscarpellini.scripts.addLandingPageScript

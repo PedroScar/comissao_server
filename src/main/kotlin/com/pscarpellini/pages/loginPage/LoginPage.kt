@@ -1,4 +1,4 @@
-package com.pscarpellini.pages
+package com.pscarpellini.pages.loginPage
 
 import com.pscarpellini.session.Sessao
 import kotlinx.html.*
@@ -27,7 +27,9 @@ fun HTML.loginPage() {
             }
         }
         div(classes = "conteudo-vertical-background-cinza") {
+            div(classes = "login-painel-light") {
 
+            }
         }
     }
 }
