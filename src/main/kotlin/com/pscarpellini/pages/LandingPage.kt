@@ -1,6 +1,7 @@
 package com.pscarpellini.pages
 
 import com.pscarpellini.enums.PagesEnum
+import com.pscarpellini.scripts.addLandingPageScript
 import com.pscarpellini.session.Sessao
 import kotlinx.html.*
 
@@ -12,12 +13,17 @@ fun HTML.landingPage() {
             href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap",
             rel = "stylesheet"
         )
+        script {
+            unsafe {
+                raw(addLandingPageScript())
+            }
+        }
     }
     body {
         div(classes = "landing-header") {
             img(classes = "header-logo", src = "/static/header_lumen.svg", alt = "Lumen Apps")
 
-            div(classes = "botoes-container") {
+            div(classes = "linearLayoutHorizontal") {
                 button(classes = "botao-vazado") {
                     attributes["id"] = "btn-vantagens"
                     +"Principais vantagens"
@@ -28,7 +34,7 @@ fun HTML.landingPage() {
                 }
             }
 
-            div(classes = "botoes-container") {
+            div(classes = "linearLayoutHorizontal") {
                 form(
                     action = "https://wa.me/${Sessao.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações",
                     method = FormMethod.get
@@ -41,7 +47,7 @@ fun HTML.landingPage() {
                 }
 
                 form(action = PagesEnum.Login.path, method = FormMethod.get) {
-                    button(classes = "botao-entrar", type = ButtonType.submit) { +"Entrar" }
+                    button(classes = "botao-verde", type = ButtonType.submit) { +"Entrar" }
                 }
             }
         }
@@ -108,38 +114,6 @@ fun HTML.landingPage() {
                     }
                 }
             }
-        }
-        script {
-            unsafe {
-                raw(
-                    """
-                    document.addEventListener("DOMContentLoaded", function() {
-                        document.getElementById("btn-vantagens").addEventListener("click", function() {
-                            const targetElement = document.getElementById("txt-vantagens");
-                            const headerHeight = document.querySelector(".landing-header").offsetHeight;
-                            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: "smooth"
-                            });
-                        });
-                        
-                        document.getElementById("btn-porque").addEventListener("click", function() {
-                            const targetElement = document.getElementById("txt-porque");
-                            const headerHeight = document.querySelector(".landing-header").offsetHeight;
-                            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: "smooth"
-                            });
-                        });
-                    });
-                """
-                )
-            }
-
         }
     }
 }

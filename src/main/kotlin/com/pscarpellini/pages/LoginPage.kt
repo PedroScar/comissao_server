@@ -15,7 +15,7 @@ fun HTML.loginPage() {
     body {
         div(classes = "login-header") {
             img(classes = "header-logo", src = "/static/header_lumen.svg", alt = "Lumen Apps")
-            div(classes = "botoes-container-login") {
+            div(classes = "linearLayoutHorizontal-login") {
                 p(classes = "texto-login-duvida") { +"Alguma dúvida?" }
                 a(
                     classes = "botao-login-contato",
@@ -26,7 +26,7 @@ fun HTML.loginPage() {
                 }
             }
         }
-        div(classes = "conteudo-vertical-centralizado") {
+        div(classes = "conteudo-vertical-background-cinza") {
 
         }
     }
