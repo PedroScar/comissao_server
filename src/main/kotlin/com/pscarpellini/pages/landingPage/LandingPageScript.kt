@@ -1,4 +1,4 @@
-package com.pscarpellini.scripts
+package com.pscarpellini.pages.landingPage
 
 fun addLandingPageScript(): String {
     return """

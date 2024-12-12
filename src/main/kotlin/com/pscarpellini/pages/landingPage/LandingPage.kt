@@ -1,7 +1,6 @@
 package com.pscarpellini.pages.landingPage
 
 import com.pscarpellini.enums.PagesEnum
-import com.pscarpellini.scripts.addLandingPageScript
 import com.pscarpellini.session.Sessao
 import kotlinx.html.*
 
