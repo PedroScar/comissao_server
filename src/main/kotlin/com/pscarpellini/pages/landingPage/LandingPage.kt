@@ -12,11 +12,7 @@ fun HTML.landingPage() {
             href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap",
             rel = "stylesheet"
         )
-        script {
-            unsafe {
-                raw(addLandingPageScript())
-            }
-        }
+        script { unsafe { raw(addLandingPageScript()) } }
     }
     body {
         div(classes = "landing-header") {
