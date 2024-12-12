@@ -12,6 +12,64 @@ fun HTML.landingPage() {
             href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap",
             rel = "stylesheet"
         )
+        script(src = "https://cdn.tailwindcss.com") {}
+        script {
+            unsafe {
+                raw("""
+                    tailwind.config = {
+                      theme: {
+                        extend: {
+                          colors: {
+                            "brand-pure": "#6BD9D5",
+                            "brand-light": "#EDFCFD",
+                            "brand-medium": "#B3F7FC",
+                            "brand-dark": "#007F87",
+                            
+                            "highlight-pure": "#C9F56A",
+                            "highlight-light": "#F1FCD9",
+                            "highlight-medium": "#87BF0D",
+                            "highlight-dark": "#517308",
+                            
+                            "low-pure": "#1F1F1F",
+                            "low-light": "#808080",
+                            "low-medium": "#4D4D4D",
+                            "low-dark": "#141414",
+                            
+                            "high-pure": "#FAFAFA",
+                            "high-light": "#F5F5F5",
+                            "high-medium": "#E0E0E0",
+                            "high-dark": "#D1D1D1",
+                            
+                            "alert-pure": "#FF3D00",
+                            "alert-light": "#FBF1EF",
+                            "alert-medium": "#FFC0AE",
+                            "alert-dark": "#D80000",
+                            
+                            "warning-pure": "#FFC107",
+                            "warning-light": "#FDF4E3",
+                            "warning-medium": "#FFE291",
+                            "warning-dark": "#936800",
+                            
+                            "success-pure": "#4CAF50",
+                            "success-light": "#EFF5EF",
+                            "success-medium": "#C1E2C0",
+                            "success-dark": "#1F7827",
+                            
+                            "color-01": "#00A3E0",
+                            "color-02": "#DC143C",
+                            "color-03": "#32CD32",
+                            "color-04": "#FFD700",
+                            "color-05": "#0759AB",
+                            "color-06": "#A52A2A",
+                            "color-07": "#008080",
+                            "color-08": "#FF5722",
+                          }
+                        }
+                      }
+                    }
+                """)
+            }
+        }
     }
     body {
         div(classes = "landing-header") {
@@ -34,14 +92,14 @@ fun HTML.landingPage() {
                     method = FormMethod.get
                 ) {
                     attributes["target"] = "_blank"
-                    button(classes = "botao-especialista", type = ButtonType.submit) {
+                    button(classes = "py-3 px-6 bg-high-light rounded-full flex items-center transition-all hover:scale-105", type = ButtonType.submit) {
                         +"Falar com especialista"
                         img(classes = "ic-whatsapp", src = "/static/ic_whatsapp.svg", alt = "Ícone")
                     }
                 }
 
                 form(action = PagesEnum.Login.path, method = FormMethod.get) {
-                    button(classes = "botao-entrar", type = ButtonType.submit) { +"Entrar" }
+                    button(classes = "ms-2 py-3 px-6 bg-brand-pure rounded-full transition-all hover:scale-105", type = ButtonType.submit) { +"Entrar" }
                 }
             }
         }
@@ -96,14 +154,12 @@ fun HTML.landingPage() {
                         p(classes = "texto-landing-carrossel-subtitulo2") { +"dos gestores reduzem erros manuais nas comissões e tomadas de decisões" }
                     }
                 }
-                div(classes = "fundo-inferior") {
+//                OLHA ESSE CÓDIGO AQUI
+                div(classes = "bg-brand-pure w-full py-14 px-36 mt-24") {
                     img(classes = "img-logo-preto", src = "/static/logo_preto.svg")
                     p(classes = "texto-landing-inferior_lumen") {
                         +"Na "
-                        strong {
-                            style = "font-weight: 700;"
-                            +"lumen"
-                        }
+                        span(classes = "font-bold") { +"lumen" }
                         +" , transformamos desafios em soluções simples e eficazes, ajudando empresas a alcançarem seus objetivos com tecnologia e inovação."
                     }
                 }
