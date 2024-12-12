@@ -1,7 +1,7 @@
 package com.pscarpellini.pages.landingPage
 
+import com.pscarpellini.AmbientController
 import com.pscarpellini.enums.PagesEnum
-import com.pscarpellini.session.Sessao
 import kotlinx.html.*
 
 fun HTML.landingPage() {
@@ -12,7 +12,9 @@ fun HTML.landingPage() {
             href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap",
             rel = "stylesheet"
         )
-        script { unsafe { raw(addLandingPageScript()) } }
+        script(src = "https://cdn.tailwindcss.com") {}
+        script(src = "/static/scripts/TailWindScript.js") {}
+        script(src = "/static/scripts/LandingPageScript.js") {}
     }
     body {
         div(classes = "landing-header") {
@@ -31,7 +33,7 @@ fun HTML.landingPage() {
 
             div(classes = "linearLayoutHorizontal") {
                 form(
-                    action = "https://wa.me/${Sessao.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações",
+                    action = "https://wa.me/${AmbientController.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações",
                     method = FormMethod.get
                 ) {
                     attributes["target"] = "_blank"

@@ -1,6 +1,6 @@
 package com.pscarpellini.pages.loginPage
 
-import com.pscarpellini.session.Sessao
+import com.pscarpellini.AmbientController
 import kotlinx.html.*
 
 fun HTML.loginPage() {
@@ -11,6 +11,9 @@ fun HTML.loginPage() {
             href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap",
             rel = "stylesheet"
         )
+        script(src = "https://cdn.tailwindcss.com") {}
+        script(src = "/static/scripts/TailWindScript.js") {}
+        script(src = "/static/scripts/LandingPageScript.js") {}
     }
     body {
         div(classes = "login-header") {
@@ -19,7 +22,7 @@ fun HTML.loginPage() {
                 p(classes = "texto-login-duvida") { +"Alguma dúvida?" }
                 a(
                     classes = "botao-login-contato",
-                    href = "https://wa.me/${Sessao.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações"
+                    href = "https://wa.me/${AmbientController.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações"
                 ) {
                     attributes["target"] = "_blank"
                     +"Entre em contato"
