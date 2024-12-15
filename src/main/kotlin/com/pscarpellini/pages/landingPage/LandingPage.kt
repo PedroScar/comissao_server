@@ -37,14 +37,14 @@ fun HTML.landingPage() {
                     method = FormMethod.get
                 ) {
                     attributes["target"] = "_blank"
-                    button(classes = "botao-especialista", type = ButtonType.submit) {
+                    button(classes = "botao-especialista hover:bg-high-pure", type = ButtonType.submit) {
                         +"Falar com especialista"
                         img(classes = "ic-whatsapp", src = "/static/ic_whatsapp.svg", alt = "Ícone")
                     }
                 }
 
                 form(action = PagesEnum.Login.path, method = FormMethod.get) {
-                    button(classes = "botao-verde", type = ButtonType.submit) { +"Entrar" }
+                    button(classes = "botao-verde hover:bg-brand-medium", type = ButtonType.submit) { +"Entrar" }
                 }
             }
         }
