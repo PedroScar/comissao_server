@@ -50,6 +50,5 @@ fun CssBuilder.loginPageStyle() {
     rule(".carrossel-item2") {
         linearLayoutVertical()
         gravityStart()
-        width = 437.px
     }
 }

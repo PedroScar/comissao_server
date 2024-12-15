@@ -46,6 +46,9 @@ tailwind.config = {
                 "color-07": "#008080",
                 "color-08": "#FF5722",
             }
-        }
+        },
+        container: {
+            center: true,
+        },
     }
 }

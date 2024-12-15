@@ -2,21 +2,14 @@ package com.pscarpellini.pages.loginPage
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.components.header_menu.headerMenu
+import com.pscarpellini.components.html_header.htmlHeader
+import com.pscarpellini.components.logo.logoLumen
 import kotlinx.html.*
 
 fun HTML.loginPage() {
-    head {
-        title("Lumen Apps")
-        link(rel = "stylesheet", href = "/styles.css", type = "text/css")
-        link(
-            href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap",
-            rel = "stylesheet"
-        )
-        meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
-        script(src = "https://cdn.tailwindcss.com") {}
-        script(src = "/static/scripts/TailWindScript.js") {}
-        script(src = "/static/scripts/LandingPageScript.js") {}
-    }
+    htmlHeader(
+        scriptsDaPagina = arrayListOf("/static/scripts/LandingPageScript.js")
+    )
     body(
         classes = "bg-high-light"
     ) {
@@ -24,8 +17,7 @@ fun HTML.loginPage() {
             headerMenu(
                 classes = "flex flex-row space-between items-center"
             ) {
-                img(classes = "header-logo hidden lg:block", src = "/static/header_lumen.svg", alt = "Lumen Apps")
-                img(classes = "lg:hidden", src = "/static/logo_preto.svg", alt = "Lumen Apps")
+                logoLumen()
                 div(classes = "flex flex-row gap-2 text-sm lg:text-lg") {
                     +"Alguma dúvida?"
                     a(

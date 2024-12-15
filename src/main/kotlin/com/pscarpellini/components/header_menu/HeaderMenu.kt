@@ -4,11 +4,15 @@ import com.pscarpellini.AmbientController
 import kotlinx.html.*
 
 fun FlowContent.headerMenu(
+    id: String = "",
     classes: String,
     child: FlowContent.() -> Unit
-) = div(classes = "w-screen flex justify-center") {
-    div(classes = "container py-8 px-6 lg:px-12 w-full justify-between $classes") {
-        child()
+) {
+    div(classes = "w-full flex justify-center") {
+        attributes["id"] = id
+        div(classes = "py-8 px-6 lg:px-12 w-full justify-between $classes") {
+            child()
+        }
     }
 }
 

@@ -6,30 +6,7 @@ import baseTexto
 import com.pscarpellini.style.Colors
 import gravityCenter
 import gravityStart
-import kotlinx.css.CssBuilder
-import kotlinx.css.FontWeight
-import kotlinx.css.LinearDimension
-import kotlinx.css.Margin
-import kotlinx.css.Overflow
-import kotlinx.css.Padding
-import kotlinx.css.TextAlign
-import kotlinx.css.WhiteSpace
-import kotlinx.css.backgroundColor
-import kotlinx.css.color
-import kotlinx.css.fontSize
-import kotlinx.css.fontWeight
-import kotlinx.css.height
-import kotlinx.css.margin
-import kotlinx.css.marginLeft
-import kotlinx.css.marginRight
-import kotlinx.css.marginTop
-import kotlinx.css.overflow
-import kotlinx.css.padding
-import kotlinx.css.paddingTop
-import kotlinx.css.px
-import kotlinx.css.textAlign
-import kotlinx.css.whiteSpace
-import kotlinx.css.width
+import kotlinx.css.*
 import linearLayoutHorizontal
 import linearLayoutVertical
 import screenWidth
@@ -58,7 +35,6 @@ fun CssBuilder.landingPageStyle() {
 
     rule(".botao-especialista") {
         baseBotaoArredondado(Colors.neutral_high_light)
-        marginRight = 8.px
     }
 
     rule(".ic-whatsapp") {
@@ -69,7 +45,6 @@ fun CssBuilder.landingPageStyle() {
 
     rule(".texto-landing-titulo") {
         baseTexto()
-        fontSize = 56.px
         fontWeight = FontWeight.w600
         textAlign = TextAlign.center
         color = Colors.neutral_low_pure
@@ -79,34 +54,14 @@ fun CssBuilder.landingPageStyle() {
 
     rule(".texto-landing-subtitulo") {
         baseTexto()
-        fontSize = 24.px
         fontWeight = FontWeight.w500
         color = Colors.neutral_low_light
         textAlign = TextAlign.center
         whiteSpace = WhiteSpace.preLine
     }
 
-    rule(".texto-landing-vantagens") {
-        baseTexto()
-        fontSize = 14.px
-        fontWeight = FontWeight.w600
-        color = Colors.brand_dark
-        textAlign = TextAlign.center
-        margin = Margin(0.px, 0.px, 0.px, 32.px)
-    }
-
-    rule(".texto-landing-solucoes") {
-        baseTexto()
-        fontSize = 32.px
-        fontWeight = FontWeight.w600
-        color = Colors.neutral_low_pure
-        textAlign = TextAlign.center
-        margin = Margin(8.px, 0.px, 0.px, 32.px)
-    }
-
     rule(".carrossel-landing") {
         linearLayoutHorizontal(true)
-        width = LinearDimension("calc(100% - 64px)")
         margin = Margin(32.px, 32.px, 0.px, 32.px)
         overflow = Overflow.hidden
     }
@@ -114,11 +69,9 @@ fun CssBuilder.landingPageStyle() {
     rule(".carrossel-item") {
         linearLayoutVertical()
         gravityStart()
-        width = 290.px
     }
 
     rule(".imagem-carrossel") {
-        width = 290.px
         height = LinearDimension.auto
     }
 
@@ -143,16 +96,13 @@ fun CssBuilder.landingPageStyle() {
 
     rule(".texto-landing-carrossel-titulo2") {
         baseTexto()
-        fontSize = 80.px
         fontWeight = FontWeight.w600
-        width = 437.px
         color = Colors.neutral_low_pure
         textAlign = TextAlign.center
     }
 
     rule(".texto-landing-carrossel-subtitulo2") {
         baseTexto()
-        width = 437.px
         fontSize = 22.px
         fontWeight = FontWeight.w400
         color = Colors.neutral_low_medium
@@ -160,29 +110,20 @@ fun CssBuilder.landingPageStyle() {
         margin = Margin(8.px, 0.px, 0.px, 0.px)
     }
 
-    rule(".texto-landing-porque-titulo") {
+    rule(".texto-landing-titulo-section") {
         baseTexto()
         fontSize = 14.px
         fontWeight = FontWeight.w600
         color = Colors.brand_dark
-        margin = Margin(128.px, 0.px, 0.px, 32.px)
+        margin = Margin(3.rem, 0.px, 0.px, 32.px)
     }
 
-    rule(".texto-landing-porque-subtitulo") {
+    rule(".texto-landing-subtitulo-section") {
         baseTexto()
         fontSize = 32.px
         fontWeight = FontWeight.w600
         color = Colors.neutral_low_pure
-        textAlign = TextAlign.center
         margin = Margin(8.px, 0.px, 0.px, 32.px)
-    }
-
-    rule(".fundo-inferior") {
-        linearLayoutVertical(screenWidth = true)
-        gravityStart()
-        backgroundColor = Colors.brand_pure
-        marginTop = 64.px
-        padding = Padding(32.px, 150.px, 32.px, 150.px)
     }
 
     rule(".img-logo-preto") {
@@ -193,10 +134,8 @@ fun CssBuilder.landingPageStyle() {
     rule(".texto-landing-inferior_lumen") {
         baseTexto()
         fontSize = 14.px
-        width = 400.px
         fontWeight = FontWeight.w400
         color = Colors.neutral_low_pure
         textAlign = TextAlign.start
-        margin = Margin(24.px, 0.px, 0.px, 0.px)
     }
 }
