@@ -47,7 +47,8 @@ fun CssBuilder.linearLayoutVertical(espacarItens: Boolean = false, screenWidth: 
 
 fun CssBuilder.baseHeader(backColor: Color) {
     backgroundColor = backColor
-    width = LinearDimension("calc(100% - 64px)")
+ //   width = LinearDimension("calc(100% - 64px)")
+    screenWidth()
     padding = Padding(32.px)
     position = Position.fixed
     top = 0.px

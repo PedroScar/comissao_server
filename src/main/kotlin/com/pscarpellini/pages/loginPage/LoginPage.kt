@@ -44,18 +44,18 @@ fun HTML.loginPage() {
                             +"Olá, boas vindas à lumen"
                         }
                         p(classes = "text-low-medium text-sm mt-2") {
-                            +"Faça login com seu e-mail e senha cadastrados."
+                            +"Faça login com seu usuário e senha cadastrados."
                         }
                         form(classes = "w-full max-w-sm mt-6 space-y-4") {
                             div {
                                 label(classes = "block text-sm font-medium text-low-pure") {
-                                    htmlFor = "email"
-                                    +"E-mail"
+                                    htmlFor = "usuário"
+                                    +"Usuário"
                                 }
                                 input(classes = "mt-1 w-full px-4 py-2 rounded-2xl focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
-                                    type = InputType.email
-                                    id = "email"
-                                    placeholder = "Digite seu e-mail cadastrado"
+                                    type = InputType.text
+                                    id = "usuário"
+                                    placeholder = "Digite seu usuário"
                                 }
                             }
 

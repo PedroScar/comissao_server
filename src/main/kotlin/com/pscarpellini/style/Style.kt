@@ -2,9 +2,8 @@ package com.pscarpellini.style
 
 import baseBody
 import baseBotaoArredondado
-import baseHeader
-import com.pscarpellini.pages.loginPage.loginPageStyle
 import com.pscarpellini.pages.landingPage.landingPageStyle
+import com.pscarpellini.pages.loginPage.loginPageStyle
 import io.ktor.http.ContentType
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
@@ -33,9 +32,6 @@ fun Application.styledRouting(configuration: Routing.() -> Unit): RoutingRoot {
                 rule(".linearLayoutHorizontal") { linearLayoutHorizontal() }
                 rule(".botao-vazado") { baseBotaoArredondado(Colors.transparent) }
                 rule(".botao-verde") { baseBotaoArredondado(Colors.brand_pure) }
-
-                rule(".landing-header") { baseHeader(Colors.neutral_high_pure) }
-                rule(".login-header") { baseHeader(Colors.neutral_high_light) }
 
                 rule(".header-logo") {
                     width = 145.px

@@ -1,6 +1,7 @@
 package com.pscarpellini.pages.landingPage
 
 import baseBotaoArredondado
+import baseHeader
 import baseTexto
 import com.pscarpellini.style.Colors
 import gravityCenter
@@ -34,9 +35,13 @@ import linearLayoutVertical
 import screenWidth
 
 fun CssBuilder.landingPageStyle() {
+
+    rule(".landing-header") { baseHeader(Colors.neutral_high_pure) }
+
     rule(".conteudo-vertical-centralizado") {
         linearLayoutVertical(screenWidth = true)
         gravityCenter()
+        backgroundColor = Colors.neutral_high_pure
         marginTop = 108.px
     }
 
@@ -78,7 +83,6 @@ fun CssBuilder.landingPageStyle() {
         fontWeight = FontWeight.w500
         color = Colors.neutral_low_light
         textAlign = TextAlign.center
-        margin = Margin(0.px)
         whiteSpace = WhiteSpace.preLine
     }
 
@@ -144,7 +148,6 @@ fun CssBuilder.landingPageStyle() {
         width = 437.px
         color = Colors.neutral_low_pure
         textAlign = TextAlign.center
-        margin = Margin(0.px)
     }
 
     rule(".texto-landing-carrossel-subtitulo2") {
@@ -163,7 +166,6 @@ fun CssBuilder.landingPageStyle() {
         fontWeight = FontWeight.w600
         color = Colors.brand_dark
         margin = Margin(128.px, 0.px, 0.px, 32.px)
-        padding = Padding(0.px)
     }
 
     rule(".texto-landing-porque-subtitulo") {
