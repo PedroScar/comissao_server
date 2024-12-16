@@ -14,7 +14,7 @@ fun HTML.landingPage() {
     body {
         headerMenu(
             id = "header",
-            classes = "flex flex-row space-between items-center fixed top-0 bg-white"
+            classes = "flex flex-row space-between items-center fixed top-0 bg-high-pure container"
         ) {
             logoLumen()
             div(classes = "flex-row gap-2 hidden lg:flex") {
@@ -102,7 +102,7 @@ fun HTML.landingPage() {
                 }
             }
             section(classes = "bg-brand-pure w-full flex mt-10") {
-                div(classes = "container flex flex-col gap-4 content-center pl-4 lg:pl-12 py-8") {
+                div(classes = "container flex flex-col gap-4 content-center px-4 lg:px-12 py-8") {
                     logoLumen(mostrarApenasIcone = true)
                     p(classes = "texto-landing-inferior_lumen text-pretty") {
                         +"Na "
