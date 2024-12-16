@@ -8,7 +8,7 @@ import org.slf4j.*
 suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
 
-inline fun <reified T> T.logeer(): Logger {
+inline fun <reified T> T.logger(): Logger {
     return LoggerFactory.getLogger(T::class.java)
 }
 

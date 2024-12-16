@@ -18,7 +18,7 @@ tailwind.config = {
                 "low-dark": "#141414",
 
                 "high-pure": "#FAFAFA",
-                "high-light": "#F5F5F5",
+                "high-light": "#F0F2F2",
                 "high-medium": "#E0E0E0",
                 "high-dark": "#D1D1D1",
 

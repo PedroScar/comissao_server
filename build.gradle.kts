@@ -15,7 +15,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
     }
 }
 
-group = "com.example"
+group = "br.com.lumenapps"
 version = "0.0.1"
 
 application {

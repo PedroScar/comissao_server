@@ -1,6 +1,7 @@
 package com.pscarpellini
 
-import com.pscarpellini.plugins.*
+import com.pscarpellini.backend.plugins.*
+import com.pscarpellini.frontend.plugins.configurePages
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
