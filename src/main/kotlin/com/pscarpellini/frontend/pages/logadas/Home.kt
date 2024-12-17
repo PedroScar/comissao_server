@@ -1,7 +1,7 @@
-package com.pscarpellini.frontend.pages
+package com.pscarpellini.frontend.pages.logadas
 
-import com.pscarpellini.frontend.enums.PagesEnum
 import com.pscarpellini.backend.session.Sessao
+import com.pscarpellini.frontend.routes.enums.PagesLogadasEnum
 import kotlinx.html.*
 
 fun HTML.homePage(errorMessage: String? = null, successMessage: String? = null) {
@@ -23,8 +23,8 @@ fun HTML.homePage(errorMessage: String? = null, successMessage: String? = null) 
             }
         }
         div(classes = "sidebar") {
-            a(href = PagesEnum.Home.path, classes = "sidebar-item") { +"Home" }
-            a(href = PagesEnum.AddUser.path, classes = "sidebar-item") { +"Novo contribuidor" }
+            a(href = PagesLogadasEnum.Home.path, classes = "sidebar-item") { +"Home" }
+            a(href = PagesLogadasEnum.AddUser.path, classes = "sidebar-item") { +"Novo contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Editar contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Remover contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Adicionar saldo" }

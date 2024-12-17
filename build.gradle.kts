@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
+    implementation(libs.ktor.server.sessions)
 
     // Adicione as dependências do Koin
     implementation("io.insert-koin:koin-core:3.5.0")

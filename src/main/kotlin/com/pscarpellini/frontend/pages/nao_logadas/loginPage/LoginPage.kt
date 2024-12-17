@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.loginPage
+package com.pscarpellini.frontend.pages.nao_logadas.loginPage
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.components.header_menu.headerMenu

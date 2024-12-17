@@ -1,9 +1,9 @@
-package com.pscarpellini.frontend.pages
+package com.pscarpellini.frontend.pages.logadas
 
 import com.pscarpellini.backend.enums.ContaStatusEnum
 import com.pscarpellini.backend.enums.ContaTipoEnum
 import com.pscarpellini.backend.enums.EndpointsEnum
-import com.pscarpellini.frontend.enums.PagesEnum
+import com.pscarpellini.frontend.routes.enums.PagesLogadasEnum
 import kotlinx.html.*
 
 
@@ -14,8 +14,8 @@ fun HTML.addUserPage(errorMessage: String? = null) {
     }
     body {
         div(classes = "sidebar") {
-            a(href = PagesEnum.Home.path, classes = "sidebar-item") { +"Home" }
-            a(href = PagesEnum.AddUser.path, classes = "sidebar-item") { +"Novo contribuidor" }
+            a(href = PagesLogadasEnum.Home.path, classes = "sidebar-item") { +"Home" }
+            a(href = PagesLogadasEnum.AddUser.path, classes = "sidebar-item") { +"Novo contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Editar contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Remover contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Adicionar saldo" }

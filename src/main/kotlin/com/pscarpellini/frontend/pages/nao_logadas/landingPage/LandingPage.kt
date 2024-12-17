@@ -1,10 +1,10 @@
-package com.pscarpellini.frontend.pages.landingPage
+package com.pscarpellini.frontend.pages.nao_logadas.landingPage
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.components.header_menu.headerMenu
 import com.pscarpellini.frontend.components.html_header.htmlHeader
 import com.pscarpellini.frontend.components.logo.logoLumen
-import com.pscarpellini.frontend.enums.PagesEnum
+import com.pscarpellini.frontend.routes.enums.PagesNaoLogadasEnum
 import kotlinx.html.*
 
 fun HTML.landingPage() {
@@ -39,7 +39,7 @@ fun HTML.landingPage() {
                     }
                 }
 
-                form(action = PagesEnum.Login.path, method = FormMethod.get) {
+                form(action = PagesNaoLogadasEnum.Login.path, method = FormMethod.get) {
                     button(classes = "botao-verde hover:bg-brand-medium hidden lg:block", type = ButtonType.submit) { +"Entrar" }
                 }
             }

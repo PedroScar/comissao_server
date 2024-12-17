@@ -2,8 +2,8 @@ package com.pscarpellini.frontend.style
 
 import baseBody
 import baseBotaoArredondado
-import com.pscarpellini.frontend.pages.landingPage.landingPageStyle
-import com.pscarpellini.frontend.pages.loginPage.loginPageStyle
+import com.pscarpellini.frontend.pages.nao_logadas.landingPage.landingPageStyle
+import com.pscarpellini.frontend.pages.nao_logadas.loginPage.loginPageStyle
 import io.ktor.http.ContentType
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall

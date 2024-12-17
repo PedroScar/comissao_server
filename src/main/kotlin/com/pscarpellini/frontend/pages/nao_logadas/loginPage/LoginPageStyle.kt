@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.loginPage
+package com.pscarpellini.frontend.pages.nao_logadas.loginPage
 
 import baseHeader
 import baseTexto
