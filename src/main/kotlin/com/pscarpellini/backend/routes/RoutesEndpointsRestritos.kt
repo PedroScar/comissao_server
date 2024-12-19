@@ -2,7 +2,7 @@ package com.pscarpellini.backend.routes
 
 import com.pscarpellini.backend.enums.ContaStatusEnum
 import com.pscarpellini.backend.enums.ContaTipoEnum
-import com.pscarpellini.backend.enums.endpoints.EndpointsLogadosEnum
+import com.pscarpellini.backend.enums.endpoints.EndpointsRestritosEnum
 import com.pscarpellini.frontend.pages.restritos.addUserPage
 import io.ktor.server.application.*
 import io.ktor.server.html.*
@@ -12,7 +12,7 @@ import io.ktor.server.routing.*
 fun Application.endpointsRestritos() {
 
     routing {
-        post(EndpointsLogadosEnum.CriarUserRequest.path) {
+        post(EndpointsRestritosEnum.CriarUserRequest.pathCompleto) {
             val params = call.receiveParameters()
 
             val nome = params["nome"]

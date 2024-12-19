@@ -3,9 +3,9 @@ package com.pscarpellini.backend.enums.endpoints
 import com.pscarpellini.backend.interfaces.IEndpointEnum
 import kotlinx.html.FormMethod
 
-enum class EndpointsDeTesteEnum(
+enum class EndpointsControleEnum(
     override val path: String,
-    override val method: FormMethod
+    override val method: FormMethod,
 ): IEndpointEnum {
-    CriarUserRequest("/addUser", FormMethod.post)
+    Ping("infos", FormMethod.get)
 }

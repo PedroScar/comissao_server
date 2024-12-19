@@ -1,5 +1,6 @@
 package com.pscarpellini.backend.plugins
 
+import com.pscarpellini.frontend.exceptions.NaoLogadoException
 import com.pscarpellini.frontend.pages.abertos.landingPage.landingPage
 import com.pscarpellini.frontend.routes.abertos.routesAbertos
 import com.pscarpellini.frontend.routes.restritos.fragments.fragmentsRestritos
@@ -9,13 +10,14 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.server.http.content.*
-import io.ktor.server.plugins.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
-import io.ktor.server.routing.*
 
 fun Application.configurePages() {
     install(StatusPages) {
+        exception<NaoLogadoException> { call, cause ->
+            call.respondText(text = "Você não poderia estar aqui!", status = HttpStatusCode.Forbidden)
+        }
         exception<Throwable> { call, cause ->
             call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
         }

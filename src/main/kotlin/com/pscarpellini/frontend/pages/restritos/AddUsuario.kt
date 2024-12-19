@@ -2,7 +2,7 @@ package com.pscarpellini.frontend.pages.restritos
 
 import com.pscarpellini.backend.enums.ContaStatusEnum
 import com.pscarpellini.backend.enums.ContaTipoEnum
-import com.pscarpellini.backend.enums.endpoints.EndpointsLogadosEnum
+import com.pscarpellini.backend.enums.endpoints.EndpointsRestritosEnum
 import com.pscarpellini.frontend.routes.restritos.RoutesRestritosEnum
 import kotlinx.html.*
 
@@ -32,8 +32,8 @@ fun HTML.addUserPage(errorMessage: String? = null) {
             }
 
             form(
-                action = EndpointsLogadosEnum.CriarUserRequest.path,
-                method = EndpointsLogadosEnum.CriarUserRequest.method
+                action = EndpointsRestritosEnum.CriarUserRequest.pathCompleto,
+                method = EndpointsRestritosEnum.CriarUserRequest.method
             ) {
                 div(classes = "form-input") {
                     input(type = InputType.text, name = "nome") {

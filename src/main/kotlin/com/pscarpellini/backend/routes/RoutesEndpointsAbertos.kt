@@ -1,6 +1,6 @@
 package com.pscarpellini.backend.routes
 
-import com.pscarpellini.backend.enums.endpoints.EndpointsNaoLogadosEnum
+import com.pscarpellini.backend.enums.endpoints.EndpointsAbertosEnum
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
@@ -8,7 +8,7 @@ import io.ktor.server.routing.*
 fun Application.endpointsAbertos() {
 
     routing {
-        post(EndpointsNaoLogadosEnum.LoginRequest.path) {
+        post(EndpointsAbertosEnum.LoginRequest.pathCompleto) {
             val parameters = call.receiveParameters()
             val username = parameters["username"]
             val password = parameters["password"]

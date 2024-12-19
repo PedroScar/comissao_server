@@ -1,5 +1,6 @@
 package com.pscarpellini.frontend.pages.restritos
 
+import com.pscarpellini.backend.models.dto.UserSession
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
@@ -7,7 +8,9 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import kotlinx.html.*
 
-fun HTML.homePage() {
+fun HTML.homePage(
+    sessao: UserSession
+) {
     includeHtmlHeader(
         scriptsDaPagina = arrayListOf("/static/scripts/LandingPageScript.js")
     )
@@ -16,7 +19,7 @@ fun HTML.homePage() {
     ) {
         includeMenuPrincipal()
         includeContentBodyLogado {
-            includeHeaderLogado {}
+            includeHeaderLogado(sessao)
             includeContentGrid(
                 linhas = 2,
                 colunas = 3,

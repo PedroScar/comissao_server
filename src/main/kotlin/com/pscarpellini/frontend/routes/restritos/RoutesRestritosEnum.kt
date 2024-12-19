@@ -7,4 +7,5 @@ enum class RoutesRestritosEnum(
 ): IPages {
     Home("/home"),
     AddUser("/addUser"),
+    Logout("/logout"),
 }

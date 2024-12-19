@@ -6,5 +6,5 @@ enum class FragmentsRestritosEnum(
     override val path: String,
 ): IPages {
     Menu("fragments/menu_principal"),
-    AddUser("fragments/addUser")
+    HeaderDashboard("fragments/header_dashboard")
 }
