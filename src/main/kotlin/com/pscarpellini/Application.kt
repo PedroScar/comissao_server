@@ -1,10 +1,6 @@
 package com.pscarpellini
 
-import com.pscarpellini.backend.plugins.configureDI
-import com.pscarpellini.backend.plugins.configureDatabases
-import com.pscarpellini.backend.plugins.configureEndpoints
-import com.pscarpellini.backend.plugins.configureSessions
-import com.pscarpellini.backend.plugins.configurePages
+import com.pscarpellini.backend.plugins.*
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
