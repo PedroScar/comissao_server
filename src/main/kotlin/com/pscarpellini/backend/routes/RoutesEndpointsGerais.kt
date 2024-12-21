@@ -9,19 +9,16 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.lang.management.ManagementFactory
 
-fun Application.endpointsGerais() {
-
-    routing {
-        get(EndpointsControleEnum.Ping.pathCompleto) {
-            call.respond(
-                HttpStatusCode.OK,
-                ServerStatus(
-                    ip = call.request.local.remoteHost,
-                    uptime = ManagementFactory.getRuntimeMXBean().uptime,
-                    usuariosCadastrados = 0,
-                    clientesCadastrados = 0,
-                )
+fun Route.endpointsGerais() {
+    get(EndpointsControleEnum.Ping.pathCompleto) {
+        call.respond(
+            HttpStatusCode.OK,
+            ServerStatus(
+                ip = call.request.local.remoteHost,
+                uptime = ManagementFactory.getRuntimeMXBean().uptime,
+                usuariosCadastrados = 0,
+                clientesCadastrados = 0,
             )
-        }
+        )
     }
 }

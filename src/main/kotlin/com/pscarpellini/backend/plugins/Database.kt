@@ -5,7 +5,6 @@ import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.*
 
 fun Application.configureDatabases() {
-
     if (AmbientController.isDevelopment)
         Database.connect(
             "jdbc:postgresql://localhost:5432/decor_bonus_db",

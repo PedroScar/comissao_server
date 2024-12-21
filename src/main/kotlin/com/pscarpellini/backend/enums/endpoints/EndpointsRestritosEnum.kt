@@ -8,5 +8,12 @@ enum class EndpointsRestritosEnum(
     override val method: FormMethod,
 ): IEndpointEnum {
     LoginRequest("login", FormMethod.post),
-    CriarUserRequest("addUser", FormMethod.post)
+
+    ObterClientes("clientes", FormMethod.get),
+    AdicionarCliente("adicionarCliente", FormMethod.post),
+    AtualizarCliente("atualizarCliente", FormMethod.post),
+    DesativarCliente("desativarCliente", FormMethod.post),
+
+    ObterUsuarios("usuarios", FormMethod.get),
+    CriarUserRequest("usuarios", FormMethod.post)
 }

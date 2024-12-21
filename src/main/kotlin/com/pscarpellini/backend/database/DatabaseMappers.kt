@@ -1,15 +1,13 @@
 package com.pscarpellini.backend.database
 
 import com.pscarpellini.backend.database.daos.ClienteDAO
-import com.pscarpellini.backend.database.daos.ContaDAO
 import com.pscarpellini.backend.database.daos.ContratoDAO
 import com.pscarpellini.backend.database.daos.ServicoDAO
-import com.pscarpellini.backend.models.Cliente
-import com.pscarpellini.backend.models.Conta
-import com.pscarpellini.backend.models.Contrato
-import com.pscarpellini.backend.models.Servico
+import com.pscarpellini.backend.models.vos.ClienteVO
+import com.pscarpellini.backend.models.vos.Contrato
+import com.pscarpellini.backend.models.vos.Servico
 
-fun clienteDaoToModel(dao: ClienteDAO) = Cliente(
+fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.id.value,
     dao.nome,
     dao.endereco,
@@ -34,17 +32,17 @@ fun contratoDaoToModel(dao: ContratoDAO) = Contrato(
     dao.dataContrato
 )
 
-fun contaDaoToModel(dao: ContaDAO) = Conta(
-    dao.id.value,
-    clienteDaoToModel(dao.clienteId),
-    dao.tipoConta,
-    dao.nome,
-    dao.cpf,
-    dao.endereco,
-    dao.email,
-    dao.telefone,
-    dao.status,
-    dao.usuario,
-    dao.senha,
-    dao.dataCriacao
-)
+//fun contaDaoToModel(dao: ContaDAO) = Conta(
+//    dao.id.value,
+//    clienteDaoToModel(dao.clienteId),
+//    dao.tipoConta,
+//    dao.nome,
+//    dao.cpf,
+//    dao.endereco,
+//    dao.email,
+//    dao.telefone,
+//    dao.status,
+//    dao.usuario,
+//    dao.senha,
+//    dao.dataCriacao
+//)

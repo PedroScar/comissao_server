@@ -5,13 +5,11 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
-fun Application.endpointsAbertos() {
-
-    routing {
-        post(EndpointsAbertosEnum.LoginRequest.pathCompleto) {
-            val parameters = call.receiveParameters()
-            val username = parameters["username"]
-            val password = parameters["password"]
+fun Route.endpointsAbertos() {
+    post(EndpointsAbertosEnum.LoginRequest.pathCompleto) {
+        val parameters = call.receiveParameters()
+        val username = parameters["username"]
+        val password = parameters["password"]
 //            if (loginRepository.validarLogin(username.toString(), password.toString()))
 //                call.respondRedirect(PagesEnum.Home.path)
 //            else {
@@ -21,6 +19,5 @@ fun Application.endpointsAbertos() {
 //                )
 //                call.respondRedirect("/?error=$encodedErrorMessage")
 //            }
-        }
     }
 }

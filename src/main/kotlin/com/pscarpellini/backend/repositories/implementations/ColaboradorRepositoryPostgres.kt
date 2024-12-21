@@ -3,6 +3,8 @@ package com.pscarpellini.backend.repositories.implementations
 import com.pscarpellini.backend.repositories.interfaces.ColaboradorRepository
 
 class ColaboradorRepositoryPostgres : ColaboradorRepository {
+
+
 //    override suspend fun adicionarUsuario(funcionario: Colaborador): Boolean = suspendTransaction {
 //        runCatching {
 //            FuncionarioDAO.new {
