@@ -34,8 +34,6 @@ enum class EndpointsRestritosEnum(
     override val path: String,
     override val method: FormMethod,
 ): IEndpointEnum {
-    LoginRequest("login", FormMethod.post),
-
     ObterClientes("clientes", FormMethod.get),
     AdicionarCliente("adicionarCliente", FormMethod.post),
     AtualizarCliente("atualizarCliente", FormMethod.post),

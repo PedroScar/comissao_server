@@ -18,7 +18,7 @@ fun Application.configureDI() {
     install(Koin) {
         slf4jLogger()
         modules(module {
-            single<ContasRepository> { ContasRepositoryPostgres(get()) }
+            single<ContasRepository> { ContasRepositoryPostgres() }
             single<ColaboradorRepository> { ColaboradorRepositoryPostgres() }
             single<LoginRepository> { LoginRepositoryPostgres() }
             single<ClienteRepository> { ClienteRepositoryPostgres() }

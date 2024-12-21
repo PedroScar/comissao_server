@@ -1,5 +1,8 @@
 package com.pscarpellini.models.vos
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ContaVO(
     val clientId: Int,
     val nome: String,

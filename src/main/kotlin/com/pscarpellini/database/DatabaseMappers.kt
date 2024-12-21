@@ -1,9 +1,11 @@
 package com.pscarpellini.database
 
 import com.pscarpellini.database.daos.ClienteDAO
+import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.daos.ContratoDAO
 import com.pscarpellini.database.daos.ServicoDAO
 import com.pscarpellini.models.vos.ClienteVO
+import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.ContratoVO
 import com.pscarpellini.models.vos.ServicoVO
 
@@ -31,17 +33,15 @@ fun contratoDaoToModel(dao: ContratoDAO) = ContratoVO(
     dao.dataContrato
 )
 
-//fun contaDaoToModel(dao: ContaDAO) = Conta(
-//    dao.id.value,
-//    clienteDaoToModel(dao.clienteId),
-//    dao.tipoConta,
-//    dao.nome,
-//    dao.cpf,
-//    dao.endereco,
-//    dao.email,
-//    dao.telefone,
-//    dao.status,
-//    dao.usuario,
-//    dao.senha,
-//    dao.dataCriacao
-//)
+fun contaDaoToModel(dao: ContaDAO) = ContaVO(
+    dao.id.value,
+    dao.tipoConta,
+    dao.nome,
+    dao.cpf,
+    dao.endereco,
+    dao.email,
+    dao.telefone,
+    dao.status,
+    dao.usuario,
+    dao.senha
+)

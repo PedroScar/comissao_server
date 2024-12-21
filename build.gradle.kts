@@ -48,6 +48,9 @@ dependencies {
     implementation(libs.ktor.server.config.yaml)
     implementation(libs.ktor.server.sessions)
 
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
     // Adicione as dependências do Koin
     implementation("io.insert-koin:koin-core:3.5.0")
     implementation("io.insert-koin:koin-ktor:3.5.0")

@@ -1,8 +1,8 @@
 package com.pscarpellini.repositories.interfaces
 
+import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
 
 interface ContasRepository {
-    suspend fun obterContas(): List<String>
-    suspend fun adicionarConta(contaVO: ContaVO)
+    suspend fun validarLogin(usuario: String, senha: String): DbResponse<ContaVO>
 }
