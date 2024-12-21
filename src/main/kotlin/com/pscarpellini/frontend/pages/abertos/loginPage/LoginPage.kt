@@ -1,6 +1,8 @@
 package com.pscarpellini.frontend.pages.abertos.loginPage
 
 import com.pscarpellini.AmbientController
+import com.pscarpellini.frontend.fragments.geral.button.TipoBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.button.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
@@ -29,9 +31,9 @@ fun HTML.loginPage() {
                     }
                 }
             }
-            div(classes = "flex flex-row flex-grow rounded-3xl bg-high-pure mx-6 lg:mx-12 mb-6 lg:mb-12") {
+            div(classes = "flex flex-row flex-grow rounded-lg bg-high-pure mx-6 lg:mx-12 mb-6 lg:mb-12") {
                 div(classes = "flex-grow flex flex-row lg:items-center justify-center px-6 py-4") {
-                    div(classes = "flex flex-col") {
+                    div(classes = "flex flex-col gap-2") {
                         h1(classes = "text-xl font-semibold text-low-pure") {
                             +"Olá, boas vindas à lumen"
                         }
@@ -44,7 +46,7 @@ fun HTML.loginPage() {
                                     htmlFor = "usuário"
                                     +"Usuário"
                                 }
-                                input(classes = "mt-1 w-full px-4 py-2 rounded-2xl focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
+                                input(classes = "mt-1 w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
                                     type = InputType.text
                                     id = "usuário"
                                     placeholder = "Digite seu usuário"
@@ -57,7 +59,7 @@ fun HTML.loginPage() {
                                     +"Senha"
                                 }
                                 div {
-                                    input(classes = "mt-1 w-full px-4 py-2 rounded-2xl focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
+                                    input(classes = "mt-1 w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
                                         type = InputType.password
                                         id = "password"
                                         placeholder = "Digite sua senha"
@@ -68,13 +70,10 @@ fun HTML.loginPage() {
                                 }
                             }
 
-                            button(classes = "w-full py-2 px-4 bg-brand-pure text-low-pure rounded-full transition-all hover:bg-brand-medium") {
-                                type = ButtonType.submit
+                            botao(tipo = TipoBotaoEnum.PRIMARY, classes = "w-full", type = ButtonType.submit) {
                                 +"Entrar"
                             }
-
-                            button(classes = "w-full text-sm text-low-pure hover:underline") {
-                                type = ButtonType.button
+                            botao(tipo = TipoBotaoEnum.SUBTLE, small = true, classes = "w-full", type = ButtonType.button) {
                                 +"Esqueci minha senha"
                             }
                         }

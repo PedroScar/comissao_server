@@ -1,10 +1,12 @@
 package com.pscarpellini.frontend.pages.abertos.landingPage
 
 import com.pscarpellini.AmbientController
+import com.pscarpellini.frontend.fragments.geral.button.TipoBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.button.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
-import com.pscarpellini.rotas.EndpointsRestritosEnum
+import com.pscarpellini.rotas.PaginasAbertasEnum
 import kotlinx.html.*
 
 fun HTML.landingPage() {
@@ -33,17 +35,15 @@ fun HTML.landingPage() {
                     method = FormMethod.get
                 ) {
                     attributes["target"] = "_blank"
-                    button(classes = "botao-especialista hover:bg-high-pure text-sm lg:text-lg", type = ButtonType.submit) {
+
+                    botao(tipo = TipoBotaoEnum.NEUTRAL, type = ButtonType.submit) {
                         +"Falar com especialista"
                         img(classes = "ic-whatsapp", src = "/static/ic_whatsapp.svg", alt = "Ícone")
                     }
                 }
 
-//                form(action = RoutesAbertosEnum.Login.path, method = FormMethod.get) {
-//                    button(classes = "botao-verde hover:bg-brand-medium hidden lg:block", type = ButtonType.submit) { +"Entrar" }
-//                }
-                form(action = EndpointsRestritosEnum.AdicionarCliente.pathCompleto, method = FormMethod.post) {
-                    button(classes = "botao-verde hover:bg-brand-medium hidden lg:block", type = ButtonType.submit) { +"Entrar" }
+                form(action = PaginasAbertasEnum.Login.path, method = FormMethod.get) {
+                    botao(tipo = TipoBotaoEnum.PRIMARY, type = ButtonType.submit) { +"Entrar" }
                 }
             }
         }

@@ -18,6 +18,7 @@ fun HTML.includeHtmlHeader(
 
 //        TailwindCSS
         script(src = "https://cdn.tailwindcss.com") {}
+        script(src = "/static/css/styles.css", type = "text/tailwindcss") {}
         script(src = "/static/scripts/TailWindScript.js") {}
 
         scriptsDaPagina.forEach { script(src = it) {} }
