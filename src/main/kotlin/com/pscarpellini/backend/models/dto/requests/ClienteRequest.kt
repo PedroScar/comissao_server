@@ -1,14 +1,12 @@
-package com.pscarpellini.backend.models
+package com.pscarpellini.backend.models.dto.requests
 
-import java.time.LocalDateTime
+import kotlinx.serialization.Serializable
 
-data class Cliente(
-    val id: Int,
+data class ClienteRequest(
     val nome: String,
     val endereco: String,
     val cnpj: String,
     val email: String,
     val telefone: String,
     val status: String,
-    val dataCriacao: LocalDateTime
 )

@@ -1,18 +1,14 @@
-package com.pscarpellini.backend.models
+package com.pscarpellini.backend.models.vos
 
 import java.time.LocalDateTime
 
-data class Conta(
+data class ClienteVO(
     val id: Int,
-    val cliente: Cliente,
-    val tipoConta: String,
     val nome: String,
-    val cpf: String,
     val endereco: String,
+    val cnpj: String,
     val email: String,
     val telefone: String,
     val status: String,
-    val usuario: String,
-    val senha: String,
     val dataCriacao: LocalDateTime
 )

@@ -1,4 +1,4 @@
-package com.pscarpellini.backend.models
+package com.pscarpellini.backend.models.vos
 
 import java.time.LocalDateTime
 
