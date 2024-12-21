@@ -1,6 +1,6 @@
 package com.pscarpellini.frontend.pages.restritos
 
-import com.pscarpellini.backend.models.dto.UserSession
+import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
@@ -9,7 +9,7 @@ import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPri
 import kotlinx.html.*
 
 fun HTML.homePage(
-    sessao: UserSession
+    sessao: SessaoUsuarioVO
 ) {
     includeHtmlHeader(
         scriptsDaPagina = arrayListOf("/static/scripts/LandingPageScript.js")

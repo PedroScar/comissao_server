@@ -1,9 +1,9 @@
 package com.pscarpellini.frontend.pages.restritos
 
-import com.pscarpellini.backend.enums.ContaStatusEnum
-import com.pscarpellini.backend.enums.ContaTipoEnum
-import com.pscarpellini.backend.enums.routes.EndpointsRestritosEnum
-import com.pscarpellini.backend.enums.routes.PagesRestritosEnum
+import com.pscarpellini.enums.ContaStatusEnum
+import com.pscarpellini.enums.ContaTipoEnum
+import com.pscarpellini.enums.routes.EndpointsRestritosEnum
+import com.pscarpellini.enums.routes.PagesRestritosEnum
 import kotlinx.html.*
 
 
