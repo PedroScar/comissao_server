@@ -1,4 +1,4 @@
-package com.pscarpellini.backend.enums.endpoints
+package com.pscarpellini.backend.enums.routes
 
 import com.pscarpellini.backend.interfaces.IEndpointEnum
 import kotlinx.html.FormMethod

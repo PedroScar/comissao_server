@@ -1,10 +1,10 @@
 package com.pscarpellini.backend.plugins
 
+import com.pscarpellini.backend.routes.fragmentsRestritos
+import com.pscarpellini.backend.routes.routesAbertos
+import com.pscarpellini.backend.routes.routesRestritos
 import com.pscarpellini.frontend.exceptions.NaoLogadoException
-import com.pscarpellini.frontend.pages.abertos.landingPage.landingPage
-import com.pscarpellini.frontend.routes.abertos.routesAbertos
-import com.pscarpellini.frontend.routes.restritos.fragments.fragmentsRestritos
-import com.pscarpellini.frontend.routes.restritos.routesRestritos
+import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -22,7 +22,7 @@ fun Application.configurePages() {
             call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
         }
         status(HttpStatusCode.NotFound) { call, status ->
-            call.respondHtml(HttpStatusCode.NotFound) { landingPage() }
+            call.respondHtml(HttpStatusCode.NotFound) { notFoundPage() }
         }
         status(HttpStatusCode.OK) { _, _ -> }
     }

@@ -1,5 +1,6 @@
-package com.pscarpellini.frontend.routes.restritos.fragments
+package com.pscarpellini.backend.routes
 
+import com.pscarpellini.backend.enums.routes.FragmentsRestritosEnum
 import com.pscarpellini.frontend.extensions.obterSessao
 import com.pscarpellini.frontend.extensions.respondFragment
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado

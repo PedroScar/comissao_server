@@ -2,8 +2,8 @@ package com.pscarpellini.frontend.pages.restritos
 
 import com.pscarpellini.backend.enums.ContaStatusEnum
 import com.pscarpellini.backend.enums.ContaTipoEnum
-import com.pscarpellini.backend.enums.endpoints.EndpointsRestritosEnum
-import com.pscarpellini.frontend.routes.restritos.RoutesRestritosEnum
+import com.pscarpellini.backend.enums.routes.EndpointsRestritosEnum
+import com.pscarpellini.backend.enums.routes.PagesRestritosEnum
 import kotlinx.html.*
 
 
@@ -14,8 +14,8 @@ fun HTML.addUserPage(errorMessage: String? = null) {
     }
     body {
         div(classes = "sidebar") {
-            a(href = RoutesRestritosEnum.Home.path, classes = "sidebar-item") { +"Home" }
-            a(href = RoutesRestritosEnum.AddUser.path, classes = "sidebar-item") { +"Novo contribuidor" }
+            a(href = PagesRestritosEnum.Home.path, classes = "sidebar-item") { +"Home" }
+            a(href = PagesRestritosEnum.AddUser.path, classes = "sidebar-item") { +"Novo contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Editar contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Remover contribuidor" }
             a(href = "#", classes = "sidebar-item") { +"Adicionar saldo" }

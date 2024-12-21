@@ -1,7 +1,6 @@
 package com.pscarpellini.backend.routes
 
-import com.pscarpellini.backend.enums.endpoints.EndpointsAbertosEnum
-import io.ktor.server.application.*
+import com.pscarpellini.backend.enums.routes.EndpointsAbertosEnum
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 

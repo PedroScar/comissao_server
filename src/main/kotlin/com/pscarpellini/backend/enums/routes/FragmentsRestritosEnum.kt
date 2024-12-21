@@ -1,6 +1,6 @@
-package com.pscarpellini.frontend.routes.restritos.fragments
+package com.pscarpellini.backend.enums.routes
 
-import com.pscarpellini.frontend.interfaces.IPages
+import com.pscarpellini.backend.interfaces.IPages
 
 enum class FragmentsRestritosEnum(
     override val path: String,

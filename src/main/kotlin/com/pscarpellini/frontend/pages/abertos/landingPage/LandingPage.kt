@@ -1,11 +1,10 @@
 package com.pscarpellini.frontend.pages.abertos.landingPage
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.backend.enums.endpoints.EndpointsRestritosEnum
+import com.pscarpellini.backend.enums.routes.EndpointsRestritosEnum
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
-import com.pscarpellini.frontend.routes.abertos.RoutesAbertosEnum
 import kotlinx.html.*
 
 fun HTML.landingPage() {

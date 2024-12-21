@@ -1,11 +1,11 @@
-package com.pscarpellini.backend.enums.endpoints
+package com.pscarpellini.backend.enums.routes
 
 import com.pscarpellini.backend.interfaces.IEndpointEnum
 import kotlinx.html.FormMethod
 
-enum class EndpointsAbertosEnum(
+enum class EndpointsControleEnum(
     override val path: String,
     override val method: FormMethod,
 ): IEndpointEnum {
-    LoginRequest("login", FormMethod.post),
+    Ping("infos", FormMethod.get)
 }
