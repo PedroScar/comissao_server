@@ -6,6 +6,7 @@ import com.pscarpellini.frontend.fragments.geral.button.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
+import com.pscarpellini.rotas.EndpointsAbertosEnum
 import kotlinx.html.*
 
 fun HTML.loginPage() {
@@ -40,7 +41,10 @@ fun HTML.loginPage() {
                         p(classes = "text-low-medium text-sm mt-2") {
                             +"Faça login com seu usuário e senha cadastrados."
                         }
-                        form(classes = "w-full max-w-sm mt-6 space-y-4 flex-row") {
+                        form(
+                            classes = "w-full max-w-sm mt-6 space-y-4 flex-row",
+                            action = EndpointsAbertosEnum.LoginRequest.pathCompleto, method = FormMethod.post
+                        ) {
                             div {
                                 label(classes = "block text-sm font-medium text-low-pure") {
                                     htmlFor = "usuário"
@@ -48,7 +52,8 @@ fun HTML.loginPage() {
                                 }
                                 input(classes = "mt-1 w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
                                     type = InputType.text
-                                    id = "usuário"
+                                    id = "usuario"
+                                    name = "usuario"
                                     placeholder = "Digite seu usuário"
                                 }
                             }
@@ -62,6 +67,7 @@ fun HTML.loginPage() {
                                     input(classes = "mt-1 w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
                                         type = InputType.password
                                         id = "password"
+                                        name = "password"
                                         placeholder = "Digite sua senha"
                                     }
                                     button(classes = "absolute inset-y-0 right-3 flex items-center") {
@@ -73,7 +79,12 @@ fun HTML.loginPage() {
                             botao(tipo = TipoBotaoEnum.PRIMARY, classes = "w-full", type = ButtonType.submit) {
                                 +"Entrar"
                             }
-                            botao(tipo = TipoBotaoEnum.SUBTLE, small = true, classes = "w-full", type = ButtonType.button) {
+                            botao(
+                                tipo = TipoBotaoEnum.SUBTLE,
+                                small = true,
+                                classes = "w-full",
+                                type = ButtonType.button
+                            ) {
                                 +"Esqueci minha senha"
                             }
                         }

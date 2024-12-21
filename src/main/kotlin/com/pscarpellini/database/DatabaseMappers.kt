@@ -34,14 +34,14 @@ fun contratoDaoToModel(dao: ContratoDAO) = ContratoVO(
 )
 
 fun contaDaoToModel(dao: ContaDAO) = ContaVO(
-    dao.id.value,
-    dao.tipoConta,
-    dao.nome,
-    dao.cpf,
-    dao.endereco,
-    dao.email,
-    dao.telefone,
-    dao.status,
-    dao.usuario,
-    dao.senha
+    clientId = dao.id.value,
+    tipoConta = dao.tipoConta,
+    nome = dao.nome,
+    cpf = dao.cpf,
+    endereco = dao.endereco,
+    email = dao.email,
+    telefone = dao.telefone,
+    status = dao.status,
+    usuario = dao.usuario,
+    senha = dao.senha
 )
