@@ -1,12 +1,18 @@
 package com.pscarpellini.frontend.fragments.logados.header_logado
 
+import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.*
 
 fun FlowContent.includeHeaderLogado(
-    sessao: SessaoUsuarioVO
+    sessao: SessaoUsuarioVO,
+    tituloPagina: String = "",
 ) {
-    div(classes = "w-full h-20 flex items-center bg-brand-pure") {
-        +"Olá, ${sessao.nome}"
+
+    card(
+        showBackground = false,
+        classes = "w-full flex items-center"
+    ) {
+        tituloPagina.ifEmpty { +"Olá, ${sessao.nome}" }
     }
 }

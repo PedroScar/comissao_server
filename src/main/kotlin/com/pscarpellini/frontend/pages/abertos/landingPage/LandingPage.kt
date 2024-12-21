@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.pages.abertos.landingPage
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.frontend.fragments.geral.button.TipoBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.icone.TipoBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.button.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen

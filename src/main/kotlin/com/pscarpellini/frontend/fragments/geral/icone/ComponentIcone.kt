@@ -1,8 +1,8 @@
-package com.pscarpellini.frontend.fragments.geral.button
+package com.pscarpellini.frontend.fragments.geral.icone
 
 import kotlinx.html.*
 
-fun FlowContent.botao(
+fun FlowContent.icone(
     tipo: TipoBotaoEnum = TipoBotaoEnum.PRIMARY,
     classes: String = "",
     small: Boolean = false,
