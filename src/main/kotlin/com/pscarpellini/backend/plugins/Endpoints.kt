@@ -16,15 +16,12 @@ import org.koin.ktor.ext.inject
 
 fun Application.configureEndpoints() {
 
-    val colaboradorRepository: ColaboradorRepository by inject()
-    val loginRepository: LoginRepository by inject()
-    val funcionarioRepository: ContasRepository by inject()
-    val lojaRepository: ClienteRepository by inject()
-
     install(ContentNegotiation) { json() }
 
+    val clientesRepository: ClienteRepository by inject()
+
     routing {
-        endpointsRestritos()
+        endpointsRestritos(clientesRepository)
         endpointsGerais()
         endpointsAbertos()
     }

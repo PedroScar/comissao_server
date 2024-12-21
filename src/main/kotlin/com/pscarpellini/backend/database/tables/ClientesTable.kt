@@ -11,5 +11,5 @@ object ClientesTable : IntIdTable("clientes") {
     val email = varchar("email", 100).uniqueIndex()
     val telefone = varchar("telefone", 255)
     val status = varchar("status", 255)
-    val dataCriacao = datetime("data_criacao").clientDefault { LocalDateTime.now() }
+    val dataCriacao = datetime("data_criacao")
 }
