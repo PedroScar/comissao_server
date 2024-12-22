@@ -18,11 +18,11 @@ fun Route.endpointsAbertos(
         var username = ""
         var password = ""
 
-        runCatching {
-            val parameters = call.receiveParameters()
-            username = parameters["usuario"].toString()
-            password = parameters["password"].toString()
-        }
+//        runCatching {
+//            val parameters = call.receiveParameters()
+//            username = parameters["usuario"].toString()
+//            password = parameters["password"].toString()
+//        }
 
         if (username.isEmpty() && password.isEmpty()) {
             runCatching { call.receive<RequestData>() }
