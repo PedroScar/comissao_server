@@ -1,11 +1,11 @@
 package com.pscarpellini.plugins
 
-import com.pscarpellini.rotas.fragmentsRestritos
-import com.pscarpellini.rotas.paginasAbertas
-import com.pscarpellini.rotas.paginasRestritas
 import com.pscarpellini.exceptions.NaoLogadoException
 import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
+import com.pscarpellini.rotas.fragmentsRestritos
+import com.pscarpellini.rotas.paginasAbertas
+import com.pscarpellini.rotas.paginasRestritas
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
@@ -29,6 +29,8 @@ fun Application.configurePages() {
 
     styledRouting {
         staticResources("/static", "static")
+
+
 
         paginasAbertas()
         paginasRestritas()

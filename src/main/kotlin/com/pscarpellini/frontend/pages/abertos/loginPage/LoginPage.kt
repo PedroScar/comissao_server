@@ -6,12 +6,11 @@ import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
-import com.pscarpellini.rotas.EndpointsAbertosEnum
 import kotlinx.html.*
 
 fun HTML.loginPage() {
     includeHtmlHeader(
-        scriptsDaPagina = arrayListOf("/static/scripts/LandingPageScript.js")
+        scriptsDaPagina = arrayListOf("/static/scripts/LoginPageScript.js")
     )
     body(
         classes = "bg-high-light"
@@ -41,13 +40,11 @@ fun HTML.loginPage() {
                         p(classes = "text-low-medium text-sm mt-2") {
                             +"Faça login com seu usuário e senha cadastrados."
                         }
-                        form(
-                            classes = "w-full max-w-sm mt-6 space-y-4 flex-row",
-                            action = EndpointsAbertosEnum.LoginRequest.pathCompleto, method = FormMethod.post
-                        ) {
+                        form(classes = "w-full max-w-sm mt-6 space-y-4 flex-row") {
+                            attributes["id"] = "login-form"
                             div {
                                 label(classes = "block text-sm font-medium text-low-pure") {
-                                    htmlFor = "usuário"
+                                    htmlFor = "usuario"
                                     +"Usuário"
                                 }
                                 input(classes = "mt-1 w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
@@ -70,23 +67,23 @@ fun HTML.loginPage() {
                                         name = "password"
                                         placeholder = "Digite sua senha"
                                     }
-                                    button(classes = "absolute inset-y-0 right-3 flex items-center") {
-                                        type = ButtonType.button
-                                    }
                                 }
                             }
 
-                            botao(tipo = TiposBotaoEnum.PRIMARY, classes = "w-full", type = ButtonType.submit) {
-                                +"Entrar"
-                            }
+                            botao(
+                                tipo = TiposBotaoEnum.PRIMARY,
+                                classes = "w-full",
+                                type = ButtonType.submit,
+                                conteudo = { +"Entrar" }
+                            )
+
                             botao(
                                 tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
                                 classes = "w-full",
-                                type = ButtonType.button
-                            ) {
-                                +"Esqueci minha senha"
-                            }
+                                type = ButtonType.button,
+                                conteudo = { +"Esqueci minha senha" }
+                            )
                         }
                     }
                 }
