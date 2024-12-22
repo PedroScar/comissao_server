@@ -9,19 +9,36 @@ import io.ktor.server.request.*
 import io.ktor.server.response.respond
 import io.ktor.server.routing.*
 import kotlinx.html.FormMethod
+import kotlinx.serialization.Serializable
 
 fun Route.endpointsAbertos(
     contasRepository: ContasRepository
 ) {
     post(EndpointsAbertosEnum.LoginRequest.pathCompleto) {
-        val parameters = call.receiveParameters()
-        val username = parameters["usuario"]
-        val password = parameters["password"]
+        var username = ""
+        var password = ""
 
-        contasRepository.validarLogin(username.toString(), password.toString()).let { resposta ->
+        runCatching {
+            val parameters = call.receiveParameters()
+            username = parameters["usuario"].toString()
+            password = parameters["password"].toString()
+        }
+
+        if (username.isEmpty() && password.isEmpty()) {
+            @Serializable
+            data class RequestData(val usuario: String, val password: String)
+
+            runCatching { call.receive<RequestData>() }
+                .onSuccess {
+                    username = it.usuario
+                    password = it.password
+                }
+        }
+
+        contasRepository.validarLogin(username, password).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> {
-
+                    call.respond(HttpStatusCode.NoContent)
                 }
 
                 is DbResponse.Successo -> {
