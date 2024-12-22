@@ -25,20 +25,20 @@ fun Route.endpointsAbertos(
         }
 
         if (username.isEmpty() && password.isEmpty()) {
-            @Serializable
-            data class RequestData(val usuario: String, val password: String)
-
             runCatching { call.receive<RequestData>() }
                 .onSuccess {
                     username = it.usuario
                     password = it.password
+                }
+                .onFailure {
+                    call.respond("${it.message}")
                 }
         }
 
         contasRepository.validarLogin(username, password).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> {
-                    call.respond(HttpStatusCode.NoContent)
+                    call.respond("${resposta.mensagem}")
                 }
 
                 is DbResponse.Successo -> {
@@ -48,6 +48,9 @@ fun Route.endpointsAbertos(
         }
     }
 }
+
+@Serializable
+data class RequestData(val usuario: String, val password: String)
 
 enum class EndpointsAbertosEnum(
     override val path: String,

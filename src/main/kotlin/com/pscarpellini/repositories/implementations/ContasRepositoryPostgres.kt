@@ -17,11 +17,11 @@ class ContasRepositoryPostgres : ContasRepository {
             .firstOrNull()
 
         return@suspendTransaction if (conta == null) {
-            DbResponse.Erro(null, "Usuário não encontrado")
+            DbResponse.Erro(null, "Usuário não encontrado: $senha - $usuario")
         } else if (conta.senha == senha) {
             DbResponse.Successo(conta)
         } else {
-            DbResponse.Erro(null, "Senha incorreta")
+            DbResponse.Erro(null, "Senha incorreta: $senha - $usuario")
         }
     }
 }
