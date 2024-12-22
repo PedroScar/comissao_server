@@ -1,8 +1,11 @@
 package com.pscarpellini.frontend.pages.abertos.componentsPage
 
 import com.pscarpellini.frontend.enums.ArredondamentosEnum
-import com.pscarpellini.frontend.fragments.geral.icone.TipoBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.button.botao
+import com.pscarpellini.frontend.enums.IconesEnum
+import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.botoes.botao
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
+import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import kotlinx.html.HTML
@@ -15,93 +18,112 @@ fun HTML.componentsPage() {
         div(classes = "container flex flex-col gap-2") {
             card(arredondamento = ArredondamentosEnum.NONE, showBackground = false, showBordas = false) {
                 botao(
-                    tipo = TipoBotaoEnum.PRIMARY, small = false, enabled = true
+                    tipo = TiposBotaoEnum.WARNING_PRIMARY, small = false, enabled = true
                 ) {
                     +"Button"
                 }
             }
             card(arredondamento = ArredondamentosEnum.SM, showBackground = false, showBordas = true) {
                 botao(
-                    tipo = TipoBotaoEnum.PRIMARY, small = false, enabled = true
+                    tipo = TiposBotaoEnum.WARNING_PRIMARY, small = false, enabled = true
                 ) {
                     +"Button"
                 }
+                botao(
+                    tipo = TiposBotaoEnum.WARNING_PRIMARY, small = false, enabled = true
+                ) {
+                    +"Acessar o app"
+                    icone(icone = IconesEnum.APP, usarPadding = false)
+                }
+                botao(
+                    tipo = TiposBotaoEnum.PRIMARY, small = false, enabled = true
+                ) {
+                    icone(icone = IconesEnum.ARROW_LEFT)
+                }
+                botaoIcone(icone = IconesEnum.ARROW_LEFT)
+                botaoIcone(icone = IconesEnum.ARROW_RIGHT)
+                botaoIcone(icone = IconesEnum.AJUDA)
+
+
+
+                icone(icone = IconesEnum.AJUDA, usarPadding = false)
+                icone(icone = IconesEnum.INFO)
             }
             card(arredondamento = ArredondamentosEnum.MD, showBackground = true, showBordas = false) {
                 botao(
-                    tipo = TipoBotaoEnum.PRIMARY, small = false, enabled = true
+                    tipo = TiposBotaoEnum.PRIMARY, small = false, enabled = true
                 ) {
                     +"Button"
                 }
             }
             card(arredondamento = ArredondamentosEnum.LG, showBackground = true, showBordas = true) {
                 botao(
-                    tipo = TipoBotaoEnum.PRIMARY, small = false, enabled = true
+                    tipo = TiposBotaoEnum.PRIMARY, small = false, enabled = true
                 ) {
                     +"Button"
                 }
             }
             card(arredondamento = ArredondamentosEnum.PILL) {
                 botao(
-                    tipo = TipoBotaoEnum.PRIMARY, small = false, enabled = true
+                    tipo = TiposBotaoEnum.PRIMARY, small = false, enabled = true
                 ) {
                     +"Button"
                 }
             }
             botao(
-                tipo = TipoBotaoEnum.PRIMARY, small = true, enabled = true
+                tipo = TiposBotaoEnum.PRIMARY, small = true, enabled = true
             ) {
                 +"Button"
             }
             botao(
-                tipo = TipoBotaoEnum.PRIMARY, small = false, enabled = false
+                tipo = TiposBotaoEnum.PRIMARY, small = false, enabled = false
             ) {
                 +"Button"
             }
             botao(
-                tipo = TipoBotaoEnum.PRIMARY, small = true, enabled = false
-            ) {
-                +"Button"
-            }
-
-            botao(
-                tipo = TipoBotaoEnum.NEUTRAL, small = false, enabled = true
-            ) {
-                +"Button"
-            }
-            botao(
-                tipo = TipoBotaoEnum.NEUTRAL, small = true, enabled = true
-            ) {
-                +"Button"
-            }
-            botao(
-                tipo = TipoBotaoEnum.NEUTRAL, small = false, enabled = false
-            ) {
-                +"Button"
-            }
-            botao(
-                tipo = TipoBotaoEnum.NEUTRAL, small = true, enabled = false
+                tipo = TiposBotaoEnum.PRIMARY, small = true, enabled = false
             ) {
                 +"Button"
             }
 
             botao(
-                tipo = TipoBotaoEnum.SUBTLE, small = false, enabled = true
+                tipo = TiposBotaoEnum.NEUTRAL, small = false, enabled = true
             ) {
                 +"Button"
             }
             botao(
-                tipo = TipoBotaoEnum.SUBTLE, small = true, enabled = true
+                tipo = TiposBotaoEnum.NEUTRAL, small = true, enabled = true
             ) {
                 +"Button"
             }
             botao(
-                tipo = TipoBotaoEnum.SUBTLE, small = false, enabled = false
+                tipo = TiposBotaoEnum.NEUTRAL, small = false, enabled = false
             ) {
                 +"Button"
             }
             botao(
-                tipo = TipoBotaoEnum.SUBTLE, small = true, enabled = false
+                tipo = TiposBotaoEnum.NEUTRAL, small = true, enabled = false
+            ) {
+                +"Button"
+            }
+
+            botao(
+                tipo = TiposBotaoEnum.SUBTLE, small = false, enabled = true
+            ) {
+                +"Button"
+            }
+            botao(
+                tipo = TiposBotaoEnum.SUBTLE, small = true, enabled = true
+            ) {
+                +"Button"
+            }
+            botao(
+                tipo = TiposBotaoEnum.SUBTLE, small = false, enabled = false
+            ) {
+                +"Button"
+            }
+            botao(
+                tipo = TiposBotaoEnum.SUBTLE, small = true, enabled = false
             ) {
                 +"Button"
             }

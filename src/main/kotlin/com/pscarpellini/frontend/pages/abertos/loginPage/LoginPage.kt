@@ -1,8 +1,8 @@
 package com.pscarpellini.frontend.pages.abertos.loginPage
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.frontend.fragments.geral.icone.TipoBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.button.botao
+import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
@@ -76,11 +76,11 @@ fun HTML.loginPage() {
                                 }
                             }
 
-                            botao(tipo = TipoBotaoEnum.PRIMARY, classes = "w-full", type = ButtonType.submit) {
+                            botao(tipo = TiposBotaoEnum.PRIMARY, classes = "w-full", type = ButtonType.submit) {
                                 +"Entrar"
                             }
                             botao(
-                                tipo = TipoBotaoEnum.SUBTLE,
+                                tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
                                 classes = "w-full",
                                 type = ButtonType.button

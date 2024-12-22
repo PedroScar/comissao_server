@@ -1,8 +1,8 @@
 package com.pscarpellini.frontend.pages.abertos.landingPage
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.frontend.fragments.geral.icone.TipoBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.button.botao
+import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
@@ -36,14 +36,14 @@ fun HTML.landingPage() {
                 ) {
                     attributes["target"] = "_blank"
 
-                    botao(tipo = TipoBotaoEnum.NEUTRAL, type = ButtonType.submit) {
+                    botao(tipo = TiposBotaoEnum.NEUTRAL, type = ButtonType.submit) {
                         +"Falar com especialista"
                         img(classes = "ic-whatsapp", src = "/static/ic_whatsapp.svg", alt = "Ícone")
                     }
                 }
 
                 form(action = PaginasAbertasEnum.Login.path, method = FormMethod.get) {
-                    botao(tipo = TipoBotaoEnum.PRIMARY, type = ButtonType.submit) { +"Entrar" }
+                    botao(tipo = TiposBotaoEnum.PRIMARY, type = ButtonType.submit) { +"Entrar" }
                 }
             }
         }

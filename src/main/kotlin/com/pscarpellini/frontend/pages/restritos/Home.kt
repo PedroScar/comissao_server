@@ -1,16 +1,17 @@
 package com.pscarpellini.frontend.pages.restritos
 
 import com.pscarpellini.frontend.enums.ArredondamentosEnum
-import com.pscarpellini.frontend.fragments.geral.icone.TipoBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.button.botao
+import com.pscarpellini.frontend.enums.IconesEnum
+import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.card.card
-import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import kotlinx.html.*
+import com.pscarpellini.models.vos.SessaoUsuarioVO
+import kotlinx.html.HTML
+import kotlinx.html.body
 
 fun HTML.homePage(
     sessao: SessaoUsuarioVO
@@ -21,7 +22,7 @@ fun HTML.homePage(
     body(
         classes = "bg-high-light flex flex-row"
     ) {
-        includeMenuPrincipal()
+        includeMenuPrincipal(sessao)
         includeContentBodyLogado {
             includeHeaderLogado(sessao)
             includeContentGrid(
@@ -29,20 +30,20 @@ fun HTML.homePage(
                 colunas = 4,
                 classes = "w-full"
             ) {
-                card(arredondamento = ArredondamentosEnum.PILL) {
-                    botao(tipo = TipoBotaoEnum.PRIMARY) { +"+" }
+                card(arredondamento = ArredondamentosEnum.PILL, classes = "gap-2") {
+                    icone(IconesEnum.ADICIONAR, showBackground = true)
                     +"Criar nova promoção"
                 }
-                card(arredondamento = ArredondamentosEnum.PILL) {
-                    botao(tipo = TipoBotaoEnum.PRIMARY) { +"+" }
+                card(arredondamento = ArredondamentosEnum.PILL, classes = "gap-2") {
+                    icone(IconesEnum.PRECO, showBackground = true)
                     +"Modificar saldo"
                 }
-                card(arredondamento = ArredondamentosEnum.PILL) {
-                    botao(tipo = TipoBotaoEnum.PRIMARY) { +"+" }
+                card(arredondamento = ArredondamentosEnum.PILL, classes = "gap-2") {
+                    icone(IconesEnum.USUARIOS, showBackground = true)
                     +"Cadastrar novo usuário"
                 }
-                card(arredondamento = ArredondamentosEnum.PILL) {
-                    botao(tipo = TipoBotaoEnum.PRIMARY) { +"+" }
+                card(arredondamento = ArredondamentosEnum.PILL, classes = "gap-2") {
+                    icone(IconesEnum.APP, showBackground = true)
                     +"Configurações do app"
                 }
             }

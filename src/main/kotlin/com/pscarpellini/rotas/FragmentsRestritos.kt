@@ -10,7 +10,8 @@ import kotlinx.html.FormMethod
 
 fun Route.fragmentsRestritos() {
     post(FragmentsRestritosEnum.Menu.path) {
-        call.respondFragment { includeMenuPrincipal() }
+        val sessao = obterSessao()
+        call.respondFragment { includeMenuPrincipal(sessao) }
     }
     post(FragmentsRestritosEnum.HeaderDashboard.path) {
         val sessao = obterSessao()
