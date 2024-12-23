@@ -10,9 +10,10 @@ fun FlowContent.card(
     direcao: DirecoesEnum = DirecoesEnum.HORIZONTAL,
     showBordas: Boolean = false,
     showBackground: Boolean = true,
+    usarPadding: Boolean = true,
     conteudo: FlowContent.() -> Unit
 ) {
-    div(classes = "p-4 ${if(showBackground) "bg-high-pure" else "bg-transparent"} ${if(showBordas) "border border-high-dark" else ""} ${direcao.cssProprio} ${arredondamento.cssProprio} $classes") {
+    div(classes = " ${if (usarPadding) "p-4" else ""} ${if(showBackground) "bg-high-pure" else "bg-transparent"} ${if(showBordas) "border border-high-dark" else ""} ${direcao.cssProprio} ${arredondamento.cssProprio} $classes") {
         conteudo(this)
     }
 }

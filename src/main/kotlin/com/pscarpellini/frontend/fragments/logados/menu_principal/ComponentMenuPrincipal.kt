@@ -12,13 +12,12 @@ fun FlowContent.includeMenuPrincipal(
     sessao: SessaoUsuarioVO,
 ) {
     div(classes = "flex flex-col h-screen w-80 p-4 bg-high-pure px-6") {
-        div("flex items-center gap-2 font-bold text-lg mb-4") {
-            +"🔗 Comissão"
-        }
+        includeMenuSeletorProduto(nome = "Comissão", classes = "")
+        includeMenuCliente("Pinturas Prime", classes = "mt-4")
 
-        div("flex-grow overflow-y-auto space-y-1") {
+        div("flex-grow overflow-y-auto space-y-1 mt-4") {
             sessao.menusDisponiveis.forEach {
-                if(it.tipo == TiposItensMenuEnum.ITEM) includeMenuItem(nome = it.nome, icone = it.icone ?: IconesEnum.MENU, link = "")
+                if(it.tipo == TiposItensMenuEnum.ITEM) includeMenuItem(nome = it.nome, link = it.caminho, icone = it.icone ?: IconesEnum.MENU, isSelecionado = it == sessao.menuSelecionado)
                 else includeMenuCategoria(it.nome)
             }
         }
