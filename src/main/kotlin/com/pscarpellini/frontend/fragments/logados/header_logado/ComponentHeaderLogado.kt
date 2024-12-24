@@ -1,5 +1,6 @@
 package com.pscarpellini.frontend.fragments.logados.header_logado
 
+import com.pscarpellini.frontend.enums.CoresEnum
 import com.pscarpellini.frontend.enums.IconesEnum
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.icone.icone
@@ -23,7 +24,7 @@ fun FlowContent.includeHeaderLogado(
                 +"Central de ajuda"
             }
         }
-        icone(IconesEnum.USUARIO, showBackground = true)
+        icone(IconesEnum.USUARIO, showBackground = true, corFundo = CoresEnum.HIGH_PURE)
         icone(IconesEnum.CHEVRON_DOWN)
     }
 }
