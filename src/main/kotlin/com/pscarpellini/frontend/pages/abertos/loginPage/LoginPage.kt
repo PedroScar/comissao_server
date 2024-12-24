@@ -43,7 +43,7 @@ fun HTML.loginPage() {
                         }
                         form(
                             classes = "w-full max-w-sm mt-6 space-y-4 flex-row",
-                            action = EndpointsAbertosInternoEnum.LoginRequest.pathCompleto,
+                            action = EndpointsAbertosInternoEnum.LoginRequest.path,
                             method = FormMethod.post
                         ) {
                             div {
