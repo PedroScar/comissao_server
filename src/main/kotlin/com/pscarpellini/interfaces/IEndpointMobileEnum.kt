@@ -7,5 +7,5 @@ interface IEndpointMobileEnum : ICaminho {
     override val method: FormMethod
 
     override val pathCompleto: String
-        get() = "/interno/$path"
+        get() = "/api/$path"
 }
