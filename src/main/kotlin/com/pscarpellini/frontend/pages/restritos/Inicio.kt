@@ -1,9 +1,6 @@
 package com.pscarpellini.frontend.pages.restritos
 
-import com.pscarpellini.frontend.enums.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.ItensMenuEnum
-import com.pscarpellini.frontend.enums.ItensMenuPilulaEnum
+import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
