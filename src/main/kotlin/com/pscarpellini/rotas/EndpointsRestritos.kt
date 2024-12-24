@@ -1,6 +1,6 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.interfaces.IEndpointEnum
+import com.pscarpellini.interfaces.IEndpointInternoEnum
 import com.pscarpellini.models.requests.ClienteRequest
 import com.pscarpellini.repositories.interfaces.ClienteRepository
 import io.ktor.http.*
@@ -13,11 +13,11 @@ fun Route.endpointsRestritos(
     clientesRepository: ClienteRepository
 ) {
 
-    get(EndpointsRestritosEnum.ObterClientes.pathCompleto) {
+    get(EndpointsRestritosInternoEnum.ObterClientes.pathCompleto) {
         call.respond(clientesRepository.obterClientes())
     }
 
-    post(EndpointsRestritosEnum.AdicionarCliente.pathCompleto) {
+    post(EndpointsRestritosInternoEnum.AdicionarCliente.pathCompleto) {
         runCatching {
             val request = call.receive<ClienteRequest>()
             clientesRepository.adicionarCliente(request)
@@ -30,10 +30,10 @@ fun Route.endpointsRestritos(
     }
 }
 
-enum class EndpointsRestritosEnum(
+enum class EndpointsRestritosInternoEnum(
     override val path: String,
     override val method: FormMethod,
-): IEndpointEnum {
+): IEndpointInternoEnum {
     ObterClientes("clientes", FormMethod.get),
     AdicionarCliente("adicionarCliente", FormMethod.post),
     AtualizarCliente("atualizarCliente", FormMethod.post),

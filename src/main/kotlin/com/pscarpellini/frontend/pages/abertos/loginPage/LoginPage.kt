@@ -6,11 +6,12 @@ import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
+import com.pscarpellini.rotas.EndpointsAbertosInternoEnum
 import kotlinx.html.*
 
 fun HTML.loginPage() {
     includeHtmlHeader(
-        scriptsDaPagina = arrayListOf("/static/scripts/LoginPageScript.js")
+        scriptsDaPagina = arrayListOf()
     )
     body(
         classes = "bg-high-light"
@@ -40,8 +41,11 @@ fun HTML.loginPage() {
                         p(classes = "text-low-medium text-sm mt-2") {
                             +"Faça login com seu usuário e senha cadastrados."
                         }
-                        form(classes = "w-full max-w-sm mt-6 space-y-4 flex-row") {
-                            attributes["id"] = "login-form"
+                        form(
+                            classes = "w-full max-w-sm mt-6 space-y-4 flex-row",
+                            action = EndpointsAbertosInternoEnum.LoginRequest.pathCompleto,
+                            method = FormMethod.post
+                        ) {
                             div {
                                 label(classes = "block text-sm font-medium text-low-pure") {
                                     htmlFor = "usuario"

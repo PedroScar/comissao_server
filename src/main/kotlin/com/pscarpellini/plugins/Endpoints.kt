@@ -2,6 +2,7 @@ package com.pscarpellini.plugins
 
 import com.pscarpellini.repositories.interfaces.ClienteRepository
 import com.pscarpellini.repositories.interfaces.ContasRepository
+import com.pscarpellini.rotas.apiMobile
 import com.pscarpellini.rotas.endpointsAbertos
 import com.pscarpellini.rotas.endpointsControle
 import com.pscarpellini.rotas.endpointsRestritos
@@ -15,6 +16,8 @@ fun Application.configureEndpoints() {
     val contasRepository: ContasRepository by inject()
 
     routing {
+        apiMobile(contasRepository)
+
         endpointsRestritos(clientesRepository)
         endpointsControle()
         endpointsAbertos(contasRepository)
