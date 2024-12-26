@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.nao_logadas.landingPage
+package com.pscarpellini.frontend.pages.abertos.landing
 
 import baseBotaoArredondado
 import baseHeader

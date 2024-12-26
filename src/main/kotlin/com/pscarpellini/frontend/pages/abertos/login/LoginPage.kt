@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.abertos.loginPage
+package com.pscarpellini.frontend.pages.abertos.login
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.enums.TiposBotaoEnum
@@ -6,8 +6,8 @@ import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
+import com.pscarpellini.frontend.fragments.geral.toast.toastContainer
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
-import com.pscarpellini.rotas.EndpointsAbertosInternoEnum
 import com.pscarpellini.rotas.PaginasAbertasEnum
 import kotlinx.html.*
 
@@ -18,6 +18,7 @@ fun HTML.loginPage() {
     body(
         classes = "bg-high-light"
     ) {
+        toastContainer()
         div(classes = "flex flex-col h-screen") {
             includeHeaderMenu(
                 classes = "flex flex-row space-between items-center"
@@ -42,11 +43,6 @@ fun HTML.loginPage() {
                         }
                         p(classes = "text-low-medium text-sm mt-2") {
                             +"Faça login com seu usuário e senha cadastrados."
-                        }
-
-                        p {
-                            attributes["id"] = "resultado"
-                            +"SEM NENHUMA MENSAGEM"
                         }
 
                         form(
@@ -84,7 +80,8 @@ fun HTML.loginPage() {
                                 tipo = TiposBotaoEnum.PRIMARY,
                                 classes = "w-full",
                                 hxPath = PaginasAbertasEnum.Login.path,
-                                hxTarget = "resultado",
+                                hxTarget = "toast-container",
+                                hxSwap = "beforeend"
                             ) { +"Entrar" }
 
                             botaoLink(

@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.abertos.componentsPage
+package com.pscarpellini.frontend.pages.abertos.componentes
 
 import com.pscarpellini.frontend.enums.ArredondamentosEnum
 import com.pscarpellini.frontend.enums.IconesEnum

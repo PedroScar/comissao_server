@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.abertos.landingPage
+package com.pscarpellini.frontend.pages.abertos.landing
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.enums.TiposBotaoEnum

@@ -1,7 +1,10 @@
 package com.pscarpellini.frontend.fragments.geral.toast
 
 import com.pscarpellini.frontend.enums.TiposToastEnum
-import kotlinx.html.*
+import kotlinx.html.FlowContent
+import kotlinx.html.div
+import kotlinx.html.script
+import kotlinx.html.unsafe
 
 /**
  * Exiba uma mensagem toast na página.
@@ -16,7 +19,7 @@ fun FlowContent.toast(
 ) {
     val duracaoFinal = (duracao ?: tipo.duracao) * 1000
 
-    div(classes = "fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-${tipo.corFundo.cssProprio} text-${tipo.corTexto.cssProprio} px-4 py-2 rounded-pill shadow-md opacity-100 transition-all duration-300 ease-out animate-slide-in") {
+    div(classes = "bg-${tipo.corFundo.cssProprio} text-${tipo.corTexto.cssProprio} px-4 py-2 rounded-lg shadow-md opacity-100 transition-all ease-out animate-slide-in") {
         attributes["id"] = id
         +texto
 
@@ -24,27 +27,27 @@ fun FlowContent.toast(
             unsafe {
                 +"""
                     (() => {
-                        const mensagem = document.getElementById('$id');
-                        if (!mensagem) return;
+                        const toast = document.getElementById('$id');
+                        if (!toast) return;
 
                         let timeoutId;
                         const removerMensagem = () => {
-                            mensagem.classList.add('hidden');
-                            setTimeout(() => mensagem.remove(), 300); // Aguarda transição para remover
+                            toast.classList.remove('animate-slide-in');
+                            toast.classList.add('animate-slide-out');
+                            setTimeout(() => toast.remove(), 300);
                         };
 
                         const iniciarTemporizador = () => {
-                            timeoutId = setTimeout(removerMensagem, ${duracaoFinal * 1000});
+                            timeoutId = setTimeout(removerMensagem, ${duracaoFinal});
                         };
 
                         const pausarTemporizador = () => {
                             clearTimeout(timeoutId);
                         };
 
-                        mensagem.addEventListener('mouseenter', pausarTemporizador);
-                        mensagem.addEventListener('mouseleave', iniciarTemporizador);
+                        toast.addEventListener('mouseenter', pausarTemporizador);
+                        toast.addEventListener('mouseleave', iniciarTemporizador);
 
-                        // Inicia temporizador ao adicionar à tela
                         iniciarTemporizador();
                     })();
                 """.trimIndent()

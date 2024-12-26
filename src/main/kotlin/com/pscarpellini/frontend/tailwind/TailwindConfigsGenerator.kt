@@ -3,10 +3,8 @@ package com.pscarpellini.frontend.tailwind
 import com.pscarpellini.extensions.formatarNomeTailwind
 import com.pscarpellini.frontend.enums.ArredondamentosEnum
 import com.pscarpellini.frontend.enums.CoresEnum
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.enums.EnumEntries
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -31,7 +29,22 @@ tailwind.config = {
     fontFamily: {
       sans: ['Nunito', 'sans-serif'],
     },
-    extend: ${extendProperties.toJSObject()},
+    extend: {
+      animation: {
+        'slide-in': 'slideIn 0.3s ease-out',
+        'slide-out': 'slideOut 0.3s ease-in',
+      },
+      keyframes: {
+        slideIn: {
+          '0%': { transform: 'translateY(100%)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideOut: {
+          '0%': { transform: 'translateY(0)', opacity: '1' },
+          '100%': { transform: 'translateY(100%)', opacity: '0' },
+        },
+      },
+    },
     container: {
       center: true,
     }

@@ -1,28 +1,21 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.enums.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
-import com.pscarpellini.frontend.pages.abertos.componentsPage.componentsPage
-import com.pscarpellini.frontend.pages.abertos.landingPage.landingPage
-import com.pscarpellini.frontend.pages.abertos.loginPage.loginPage
-import com.pscarpellini.frontend.pages.restritos.inicio
+import com.pscarpellini.frontend.pages.abertos.componentes.componentsPage
+import com.pscarpellini.frontend.pages.abertos.landing.landingPage
+import com.pscarpellini.frontend.pages.abertos.login.loginPage
+import com.pscarpellini.frontend.pages.abertos.senha.esqueciMinhaSenhaPage
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.models.DbResponse
-import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import io.ktor.http.*
 import io.ktor.server.html.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.sessions.*
-import kotlinx.css.h1
 import kotlinx.html.body
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 fun Route.paginasAbertas(
     contasRepository: ContasRepository
@@ -49,7 +42,7 @@ fun Route.paginasAbertas(
     }
 
     get(PaginasAbertasEnum.EsqueciMinhaSenha.path) {
-        call.respondHtml(HttpStatusCode.OK) { body { +"Esqueci minha senha" } }
+        call.respondHtml(HttpStatusCode.OK) { esqueciMinhaSenhaPage() }
     }
 
     get(PaginasAbertasEnum.Components.path) {

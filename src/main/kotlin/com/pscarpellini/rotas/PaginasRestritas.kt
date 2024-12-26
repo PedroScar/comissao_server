@@ -4,7 +4,7 @@ import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.interfaces.IPaginaEnum
-import com.pscarpellini.frontend.pages.abertos.landingPage.landingPage
+import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.restritos.inicio
 import io.ktor.http.*
 import io.ktor.server.html.*
