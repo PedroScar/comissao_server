@@ -3,10 +3,12 @@ package com.pscarpellini.frontend.pages.abertos.loginPage
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.enums.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
 import com.pscarpellini.rotas.EndpointsAbertosInternoEnum
+import com.pscarpellini.rotas.PaginasAbertasEnum
 import kotlinx.html.*
 
 fun HTML.loginPage() {
@@ -41,10 +43,14 @@ fun HTML.loginPage() {
                         p(classes = "text-low-medium text-sm mt-2") {
                             +"Faça login com seu usuário e senha cadastrados."
                         }
+
+                        p {
+                            attributes["id"] = "resultado"
+                            +"SEM NENHUMA MENSAGEM"
+                        }
+
                         form(
                             classes = "w-full max-w-sm mt-6 space-y-4 flex-row",
-                            action = EndpointsAbertosInternoEnum.LoginRequest.path,
-                            method = FormMethod.post
                         ) {
                             div {
                                 label(classes = "block text-sm font-medium text-low-pure") {
@@ -77,17 +83,16 @@ fun HTML.loginPage() {
                             botao(
                                 tipo = TiposBotaoEnum.PRIMARY,
                                 classes = "w-full",
-                                type = ButtonType.submit,
-                                conteudo = { +"Entrar" }
-                            )
+                                hxPath = PaginasAbertasEnum.Login.path,
+                                hxTarget = "resultado",
+                            ) { +"Entrar" }
 
-                            botao(
+                            botaoLink(
                                 tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
-                                classes = "w-full",
-                                type = ButtonType.button,
-                                conteudo = { +"Esqueci minha senha" }
-                            )
+                                classes = "block",
+                                link = PaginasAbertasEnum.EsqueciMinhaSenha.path
+                            ) { +"Esqueci minha senha" }
                         }
                     }
                 }

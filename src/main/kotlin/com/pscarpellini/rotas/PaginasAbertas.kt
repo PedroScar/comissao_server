@@ -1,23 +1,57 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.extensions.obterSessao
+import com.pscarpellini.extensions.redirecionarFormHTMX
+import com.pscarpellini.extensions.respondFragment
+import com.pscarpellini.frontend.enums.TiposToastEnum
+import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.pages.abertos.componentsPage.componentsPage
 import com.pscarpellini.frontend.pages.abertos.landingPage.landingPage
 import com.pscarpellini.frontend.pages.abertos.loginPage.loginPage
+import com.pscarpellini.frontend.pages.restritos.inicio
 import com.pscarpellini.interfaces.IPaginaEnum
+import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.SessaoUsuarioVO
+import com.pscarpellini.repositories.interfaces.ContasRepository
 import io.ktor.http.*
 import io.ktor.server.html.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
+import kotlinx.css.h1
+import kotlinx.html.body
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
-fun Route.paginasAbertas() {
+fun Route.paginasAbertas(
+    contasRepository: ContasRepository
+) {
     get(PaginasAbertasEnum.Landing.path) {
         call.respondHtml(HttpStatusCode.OK) { landingPage() }
     }
+
     get(PaginasAbertasEnum.Login.path) {
-        call.sessions.set(SessaoUsuarioVO(nome = "Otávio Luiz"))
         call.respondHtml(HttpStatusCode.OK) { loginPage() }
     }
+    post(PaginasAbertasEnum.Login.path) {
+        val parameters = call.receiveParameters()
+
+        val username = parameters["usuario"].toString()
+        val password = parameters["password"].toString()
+
+        contasRepository.validarLogin(username, password).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Successo -> call.redirecionarFormHTMX(PaginasRestritasEnum.INICIO.path)
+            }
+        }
+    }
+
+    get(PaginasAbertasEnum.EsqueciMinhaSenha.path) {
+        call.respondHtml(HttpStatusCode.OK) { body { +"Esqueci minha senha" } }
+    }
+
     get(PaginasAbertasEnum.Components.path) {
         call.respondHtml(HttpStatusCode.OK) { componentsPage() }
     }
@@ -28,5 +62,6 @@ enum class PaginasAbertasEnum(
 ) : IPaginaEnum {
     Landing("/"),
     Login("/login"),
+    EsqueciMinhaSenha("/esqueciMinhaSenha"),
     Components("/components"),
 }

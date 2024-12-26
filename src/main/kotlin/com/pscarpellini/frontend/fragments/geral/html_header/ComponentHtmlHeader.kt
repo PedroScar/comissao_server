@@ -16,6 +16,9 @@ fun HTML.includeHtmlHeader(
         )
         meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
 
+//        HTMX
+        script(src = "https://unpkg.com/htmx.org") {}
+
 //        TailwindCSS
         script(src = "https://cdn.tailwindcss.com") {}
         script(src = "/static/css/styles.css", type = "text/tailwindcss") {}

@@ -3,6 +3,8 @@ package com.pscarpellini.plugins
 import com.pscarpellini.exceptions.NaoLogadoException
 import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
+import com.pscarpellini.repositories.interfaces.ClienteRepository
+import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.rotas.fragmentsRestritos
 import com.pscarpellini.rotas.paginasAbertas
 import com.pscarpellini.rotas.paginasRestritas
@@ -12,8 +14,13 @@ import io.ktor.server.html.*
 import io.ktor.server.http.content.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
+import org.koin.ktor.ext.inject
 
 fun Application.configurePages() {
+
+    val clientesRepository: ClienteRepository by inject()
+    val contasRepository: ContasRepository by inject()
+
     install(StatusPages) {
         exception<NaoLogadoException> { call, cause ->
             call.respondText(text = "Você não poderia estar aqui!", status = HttpStatusCode.Forbidden)
@@ -30,9 +37,7 @@ fun Application.configurePages() {
     styledRouting {
         staticResources("/static", "static")
 
-
-
-        paginasAbertas()
+        paginasAbertas(contasRepository)
         paginasRestritas()
 
         fragmentsRestritos()
