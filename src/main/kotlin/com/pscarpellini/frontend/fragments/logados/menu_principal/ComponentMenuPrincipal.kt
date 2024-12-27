@@ -12,7 +12,7 @@ import org.h2.engine.Session
 fun FlowContent.includeMenuPrincipal(
     sessao: SessaoUsuarioVO,
 ) {
-    nav(classes = "flex flex-col h-screen w-80 p-4 bg-high-pure px-6") {
+    nav(classes = "fixed flex flex-col h-full w-80 p-4 bg-high-pure px-6") {
         includeMenuSeletorProduto(nome = "Comissão", classes = "")
         includeMenuCliente("Pinturas Prime", classes = "mt-4")
 

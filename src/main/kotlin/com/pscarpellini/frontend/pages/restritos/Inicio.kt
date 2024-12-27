@@ -21,7 +21,7 @@ fun HTML.inicio(
     ) {
         includeMenuPrincipal(sessao)
         includeContentBodyLogado {
-            includeHeaderLogado(sessao)
+            includeHeaderLogado(sessao = sessao, mostrarBack = true)
             includeContentGrid(
                 linhas = 1,
                 colunas = 4,

@@ -1,12 +1,9 @@
 package com.pscarpellini.frontend.fragments.logados.menu_principal
 
-import com.pscarpellini.frontend.enums.CoresEnum
 import com.pscarpellini.frontend.enums.IconesEnum
 import com.pscarpellini.frontend.enums.PosicoesDropdownEnum
 import com.pscarpellini.frontend.fragments.geral.dropdown.dropdown
-import com.pscarpellini.frontend.fragments.geral.dropdown.dropdownItem
 import com.pscarpellini.frontend.fragments.geral.icone.icone
-import kotlinx.css.head
 import kotlinx.html.*
 
 fun FlowContent.includeMenuSeletorProduto(
@@ -21,7 +18,7 @@ fun FlowContent.includeMenuSeletorProduto(
                 div(classes = "font-bold text-xl") {
                     +nome
                 }
-            }
+            },
         )
     }
 }

@@ -2,6 +2,7 @@ package com.pscarpellini.frontend.fragments.geral.dropdown
 
 import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
+import com.pscarpellini.frontend.fragments.geral.divider.divider
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import kotlinx.css.button
 import kotlinx.css.div
@@ -11,18 +12,25 @@ fun FlowContent.dropdown(
     botao: FlowContent.() -> Unit,
     showChevron: Boolean = true,
     posicao: PosicoesDropdownEnum = PosicoesDropdownEnum.ESQUERDA,
-    dropdown: FlowContent.() -> Unit = {}
+    opcoes: ArrayList<DropdownElement> = arrayListOf()
 ) {
     nav(classes = "relative inline-block text-left group") {
         attributes["ktDropdown"] = ""
         button(classes = "flex flex-row items-center justify-center") {
             id = "dropdownButton"
             botao()
-            if(showChevron) dropdownChevron()
+            if(opcoes.isNotEmpty() && showChevron) dropdownChevron()
         }
-        div(classes = "p-2 bg-${CoresEnum.HIGH_PURE} ${ArredondamentosEnum.SM} shadow-lg min-w-56 z-50 font-semibold border border-high-dark hidden group-hover:block flex flex-row $posicao") {
-            id = "dropdownMenu"
-            dropdown(this)
+        if(opcoes.isNotEmpty()) {
+            div(classes = "p-2 ${CoresEnum.HIGH_PURE.bg} ${ArredondamentosEnum.SM} shadow-lg min-w-56 z-50 font-semibold border ${CoresEnum.HIGH_DARK.border} hidden group-hover:flex flex-col gap-2 $posicao") {
+                id = "dropdownMenu"
+                opcoes.forEach { opcao ->
+                    when(opcao) {
+                        is DropdownDivider -> divider()
+                        is DropdownItem -> dropdownItem(nome = opcao.nome, link = opcao.link, corTexto = opcao.corTexto)
+                    }
+                }
+            }
         }
     }
 }
@@ -31,9 +39,17 @@ private fun FlowContent.dropdownChevron() {
     icone(IconesEnum.CHEVRON_DOWN, usarPadding = false, classes = "group-hover:rotate-180 transition-all duration-300")
 }
 
-fun FlowContent.dropdownItem(nome: String, link: String, corTexto: CoresEnum = CoresEnum.LOW_PURE) {
+private fun FlowContent.dropdownItem(nome: String, link: String, corTexto: CoresEnum) {
     a(
-        classes = "bg-none hover:bg-high-light rounded-sm font-semibold text-$corTexto py-2 px-6 cursor-pointer flex flex-row items-center ${AlinhamentosEnum.START} transition-all duration-300",
+        classes = "${CoresEnum.TRANSPARENT.bg} hover:${CoresEnum.HIGH_LIGHT.bg} rounded-sm font-semibold text-$corTexto py-2 px-6 cursor-pointer flex flex-row items-center ${AlinhamentosEnum.START} transition-all duration-300",
         href = link
     ) { +nome }
 }
+
+interface DropdownElement
+class DropdownDivider : DropdownElement
+class DropdownItem(
+    val nome: String,
+    val link: String,
+    val corTexto: CoresEnum = CoresEnum.LOW_PURE
+) : DropdownElement

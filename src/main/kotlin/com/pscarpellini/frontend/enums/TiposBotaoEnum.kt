@@ -5,27 +5,27 @@ enum class TiposBotaoEnum(
     val cssDesabilitado: String,
 ) {
     PRIMARY(
-        cssProprio = "bg-brand-pure hover:bg-brand-medium rounded-pill text-low-pure",
-        cssDesabilitado = "rounded-pill bg-high-dark text-low-light"
+        cssProprio = "${CoresEnum.BRAND_PURE.bg} hover:${CoresEnum.BRAND_MEDIUM.bg} rounded-pill ${CoresEnum.LOW_PURE.text}",
+        cssDesabilitado = "rounded-pill ${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text}"
     ),
     NEUTRAL(
-        cssProprio = "bg-high-light hover:bg-high-medium rounded-pill text-low-pure",
-        cssDesabilitado = "rounded-pill bg-high-dark text-low-light"
+        cssProprio = "${CoresEnum.HIGH_LIGHT.bg} hover:${CoresEnum.HIGH_MEDIUM.bg} rounded-pill ${CoresEnum.LOW_PURE.text}",
+        cssDesabilitado = "rounded-pill ${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text}"
     ),
     SUBTLE(
-        cssProprio = "bg-none border border-transparent hover:border hover:border-high-dark rounded-pill text-low-pure",
-        cssDesabilitado = "rounded-pill bg-high-dark text-low-light"
+        cssProprio = "${CoresEnum.TRANSPARENT.bg} border ${CoresEnum.TRANSPARENT.border} hover:border hover:${CoresEnum.HIGH_DARK.border} rounded-pill ${CoresEnum.LOW_PURE.text}",
+        cssDesabilitado = "rounded-pill ${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text}"
     ),
     WARNING_PRIMARY(
-        cssProprio = "bg-alert-dark hover:bg-alert-pure rounded-md text-alert-light",
-        cssDesabilitado = "rounded-md bg-high-dark text-low-light"
+        cssProprio = "${CoresEnum.ALERT_DARK.bg} hover:${CoresEnum.ALERT_PURE.bg} rounded-md ${CoresEnum.ALERT_LIGHT.text}",
+        cssDesabilitado = "rounded-md ${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text}"
     ),
     WARNING_SUBTLE(
-        cssProprio = "bg-transparent hover:bg-alert-light rounded-md text-alert-dark",
-        cssDesabilitado = "rounded-md bg-high-dark text-low-light"
+        cssProprio = "${CoresEnum.TRANSPARENT.bg} hover:${CoresEnum.ALERT_LIGHT.bg} rounded-md ${CoresEnum.ALERT_DARK.text}",
+        cssDesabilitado = "rounded-md ${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text}"
     ),
     TRANSPARENT(
-        cssProprio = "bg-none text-low-pure hover:bg-high-light rounded-sm",
-        cssDesabilitado = "rounded-pill bg-high-dark text-low-light"
+        cssProprio = "${CoresEnum.TRANSPARENT.bg} ${CoresEnum.LOW_PURE.text} hover:${CoresEnum.HIGH_LIGHT.bg} rounded-sm",
+        cssDesabilitado = "rounded-pill ${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text}"
     ),
 }

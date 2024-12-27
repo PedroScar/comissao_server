@@ -6,6 +6,7 @@ import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.restritos.inicio
+import com.pscarpellini.frontend.pages.restritos.meuPerfil
 import io.ktor.http.*
 import io.ktor.server.html.*
 import io.ktor.server.response.*
@@ -19,6 +20,13 @@ fun Route.paginasRestritas() {
         sessao.menuSelecionado = ItensMenuEnum.INICIO
         call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
     }
+
+    get(PaginasRestritasEnum.MEU_PERFIL.path) {
+        val sessao = obterSessao()
+        sessao.menuSelecionado = ItensMenuEnum.INICIO
+        call.respondHtml(HttpStatusCode.OK) { meuPerfil(sessao) }
+    }
+
     get(PaginasRestritasEnum.PROMOCOES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
@@ -68,6 +76,7 @@ enum class PaginasRestritasEnum(
     override val path: String
 ): IPaginaEnum {
     INICIO(ItensMenuEnum.INICIO.caminho),
+    MEU_PERFIL("/int/meu_perfil"),
     PROMOCOES(ItensMenuEnum.PROMOCOES.caminho),
     SALDOS_DOS_PROMOTORES(ItensMenuEnum.SALDOS_DOS_PROMOTORES.caminho),
     RELATORIOS(ItensMenuEnum.RELATORIOS.caminho),
