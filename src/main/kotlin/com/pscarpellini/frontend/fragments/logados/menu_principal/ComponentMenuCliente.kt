@@ -1,7 +1,5 @@
 package com.pscarpellini.frontend.fragments.logados.menu_principal
 
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.fragments.geral.icone.icone
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 import kotlinx.html.img

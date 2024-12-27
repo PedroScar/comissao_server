@@ -13,13 +13,12 @@ class ContasRepositoryPostgres : ContasRepository {
         val conta = ContaDAO
             .find { (ContasTable.usuario eq usuario) }
             .limit(1)
-            .map(::contaDaoToModel)
             .firstOrNull()
 
         return@suspendTransaction if (conta == null) {
             DbResponse.Erro(null, "Usuário não encontrado: $senha - $usuario")
         } else if (conta.senha == senha) {
-            DbResponse.Successo(conta)
+            DbResponse.Successo(contaDaoToModel(conta))
         } else {
             DbResponse.Erro(null, "Senha incorreta: $senha - $usuario")
         }

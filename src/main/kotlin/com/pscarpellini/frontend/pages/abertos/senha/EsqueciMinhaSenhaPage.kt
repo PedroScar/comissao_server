@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.abertos.login
+package com.pscarpellini.frontend.pages.abertos.senha
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.enums.TiposBotaoEnum
@@ -11,10 +11,9 @@ import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeader
 import com.pscarpellini.rotas.PaginasAbertasEnum
 import kotlinx.html.*
 
-fun HTML.loginPage() {
+fun HTML.esqueciMinhaSenhaPage() {
     includeHtmlHeader(
-        scriptsDaPagina = arrayListOf(),
-        incluirScriptsFuncionais = false
+        scriptsDaPagina = arrayListOf()
     )
     body(
         classes = "bg-high-light"
@@ -40,10 +39,10 @@ fun HTML.loginPage() {
                 div(classes = "flex-grow flex flex-row lg:items-center justify-center px-6 py-4") {
                     div(classes = "flex flex-col gap-2") {
                         h1(classes = "text-xl font-semibold text-low-pure") {
-                            +"Olá, boas vindas à lumen"
+                            +"Esqueceu sua senha?"
                         }
                         p(classes = "text-low-medium text-sm mt-2") {
-                            +"Faça login com seu usuário e senha cadastrados."
+                            +"Digite o seu número de telefone"
                         }
 
                         form(
@@ -89,8 +88,10 @@ fun HTML.loginPage() {
                                 tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
                                 classes = "block",
-                                link = PaginasAbertasEnum.EsqueciMinhaSenha.path
-                            ) { +"Esqueci minha senha" }
+                                link = PaginasAbertasEnum.Login.path
+                            ) {
+                                +"Já lembrei, posso voltar"
+                            }
                         }
                     }
                 }

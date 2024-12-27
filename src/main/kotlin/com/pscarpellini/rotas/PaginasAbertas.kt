@@ -1,5 +1,6 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.enums.TiposToastEnum
@@ -10,22 +11,28 @@ import com.pscarpellini.frontend.pages.abertos.login.loginPage
 import com.pscarpellini.frontend.pages.abertos.senha.esqueciMinhaSenhaPage
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import io.ktor.http.*
 import io.ktor.server.html.*
 import io.ktor.server.request.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.html.body
+import io.ktor.server.sessions.*
 
 fun Route.paginasAbertas(
     contasRepository: ContasRepository
 ) {
     get(PaginasAbertasEnum.Landing.path) {
-        call.respondHtml(HttpStatusCode.OK) { landingPage() }
+        runCatching { obterSessao() }
+            .onSuccess { call.respondHtml(HttpStatusCode.OK) { landingPage(it) } }
+            .onFailure { call.respondHtml(HttpStatusCode.OK) { landingPage() } }
     }
 
     get(PaginasAbertasEnum.Login.path) {
-        call.respondHtml(HttpStatusCode.OK) { loginPage() }
+        runCatching { obterSessao() }
+            .onFailure { call.respondHtml(HttpStatusCode.OK) { loginPage() } }
+            .onSuccess { call.respondRedirect(PaginasRestritasEnum.INICIO.path) }
     }
     post(PaginasAbertasEnum.Login.path) {
         val parameters = call.receiveParameters()
@@ -36,7 +43,10 @@ fun Route.paginasAbertas(
         contasRepository.validarLogin(username, password).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
-                is DbResponse.Successo -> call.redirecionarFormHTMX(PaginasRestritasEnum.INICIO.path)
+                is DbResponse.Successo -> {
+                    call.sessions.set(SessaoUsuarioVO(cliente = resposta.data))
+                    call.redirecionarFormHTMX(PaginasRestritasEnum.INICIO.path)
+                }
             }
         }
     }

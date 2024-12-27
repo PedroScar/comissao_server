@@ -10,5 +10,7 @@ enum class ArredondamentosEnum(
     SM(cssProprio = "rounded-sm", valor = "8px"),
     MD(cssProprio = "rounded-md", valor = "16px"),
     LG(cssProprio = "rounded-lg", valor = "24px"),
-    PILL(cssProprio = "rounded-pill", valor = "9999px"),
+    PILL(cssProprio = "rounded-pill", valor = "9999px");
+
+    override fun toString() = this.cssProprio
 }

@@ -15,7 +15,7 @@ fun FlowContent.toast(
     texto: String,
     tipo: TiposToastEnum = TiposToastEnum.DEFAULT,
     duracao: Int? = null,
-    id: String = "mensagem-${System.currentTimeMillis()}"
+    id: String = "mensagem-${System.currentTimeMillis()}",
 ) {
     val duracaoFinal = (duracao ?: tipo.duracao) * 1000
 

@@ -12,10 +12,13 @@ fun FlowContent.icone(
     corFundo: CoresEnum = CoresEnum.BRAND_PURE,
     size: Int? = null,
     classes: String = "",
-    usarPadding: Boolean = true
+    usarPadding: Boolean = true,
+    id: String = "icone-${System.currentTimeMillis()}",
 ) {
     img(
         classes = "aspect-square ${if (usarPadding) "p-2" else ""} ${if(size != null) "size-[${size}rem]" else ""} ${if(showBackground) "bg-${corFundo.cssProprio} rounded-pill" else "bg-transparent"} $classes",
         src = if(usarPreenchido) icone.caminhoDoIconePreenchido ?: icone.caminhoDoIcone else icone.caminhoDoIcone
-    )
+    ) {
+        attributes["id"] = id
+    }
 }

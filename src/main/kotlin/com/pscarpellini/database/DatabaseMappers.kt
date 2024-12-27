@@ -42,6 +42,5 @@ fun contaDaoToModel(dao: ContaDAO) = ContaVO(
     email = dao.email,
     telefone = dao.telefone,
     status = dao.status,
-    usuario = dao.usuario,
-    senha = dao.senha
+    usuario = dao.usuario
 )

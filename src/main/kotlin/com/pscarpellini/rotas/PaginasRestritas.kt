@@ -8,12 +8,14 @@ import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.restritos.inicio
 import io.ktor.http.*
 import io.ktor.server.html.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 
 fun Route.paginasRestritas() {
     get(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
+        if(sessao.cliente == null) println("================================================= CLIENTE DA SESSÃO NULO")
         sessao.menuSelecionado = ItensMenuEnum.INICIO
         call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
     }
@@ -58,7 +60,7 @@ fun Route.paginasRestritas() {
 
     get(PaginasRestritasEnum.LOGOUT.path) {
         call.sessions.clear<SessaoUsuarioVO>()
-        call.respondHtml(HttpStatusCode.OK) { landingPage() }
+        call.respondRedirect(PaginasAbertasEnum.Landing.path)
     }
 }
 

@@ -46,4 +46,6 @@ enum class CoresEnum(
 
     override val cssProprio: String
         get() = this.name.formatarNomeTailwind()
+
+    override fun toString() = this.cssProprio
 }

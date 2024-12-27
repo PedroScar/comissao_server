@@ -4,7 +4,8 @@ import kotlinx.html.*
 
 fun HTML.includeHtmlHeader(
     nomeDaPagina: String = "Lumen Apps",
-    scriptsDaPagina: ArrayList<String> = arrayListOf()
+    scriptsDaPagina: ArrayList<String> = arrayListOf(),
+    incluirScriptsFuncionais: Boolean = true,
 ) {
     head {
         title(nomeDaPagina)
@@ -16,14 +17,12 @@ fun HTML.includeHtmlHeader(
         )
         meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
 
-//        HTMX
-        script(src = "https://unpkg.com/htmx.org") {}
-
 //        TailwindCSS
         script(src = "https://cdn.tailwindcss.com") {}
         script(src = "/static/css/styles.css", type = "text/tailwindcss") {}
-//        script(src = "/static/scripts/TailWindScript.js") {}
         script(src = "/static/scripts/TailwindScript_tmp.js") {}
+
+        includeScriptsFuncionais()
 
         scriptsDaPagina.forEach { script(src = it) {} }
     }

@@ -6,8 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SessaoUsuarioVO(
     val email: String? = null,
-    val nome: String? = null,
-    val cliente: String? = null,
+    val cliente: ContaVO? = null,
     var menuSelecionado: ItensMenuEnum = ItensMenuEnum.INICIO,
     var menusDisponiveis: ArrayList<ItensMenuEnum> = ArrayList(ItensMenuEnum.entries),
 //    val tipoConta: TipoContaEnum,
