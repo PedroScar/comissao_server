@@ -3,10 +3,12 @@ package com.pscarpellini.database
 import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.daos.ContratoDAO
+import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.daos.ServicoDAO
 import com.pscarpellini.models.vos.ClienteVO
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.ContratoVO
+import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.models.vos.ServicoVO
 
 fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
@@ -44,4 +46,13 @@ fun contaDaoToModel(dao: ContaDAO) = ContaVO(
     saldo = dao.saldo,
     status = dao.status,
     usuario = dao.usuario
+)
+
+fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
+    clientId = dao.id.value,
+    titulo = dao.titulo,
+    subtitulo = dao.subtitulo,
+    conteudo = dao.conteudo,
+    imagem = dao.imagem,
+    dataValidade = dao.dataValidade
 )

@@ -8,6 +8,8 @@ import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.implementations.ContasRepositoryPostgres
 import com.pscarpellini.repositories.interfaces.LoginRepository
 import com.pscarpellini.repositories.implementations.LoginRepositoryPostgres
+import com.pscarpellini.repositories.implementations.PromocoesRepositoryPostgres
+import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import org.koin.dsl.module
@@ -22,6 +24,7 @@ fun Application.configureDI() {
             single<ColaboradorRepository> { ColaboradorRepositoryPostgres() }
             single<LoginRepository> { LoginRepositoryPostgres() }
             single<ClienteRepository> { ClienteRepositoryPostgres() }
+            single<PromocoesRepository> { PromocoesRepositoryPostgres() }
         })
     }
 }

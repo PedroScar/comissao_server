@@ -3,16 +3,20 @@ package com.pscarpellini.rotas
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.requests.LoginRequest
 import com.pscarpellini.models.vos.ContaVO
+import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
+import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 
 fun Route.apiMobile(
-    contasRepository: ContasRepository
+    contasRepository: ContasRepository,
+    promocoesRepository: PromocoesRepository
 ) {
     route("/api") {
         post("/login") {
@@ -29,6 +33,21 @@ fun Route.apiMobile(
 
                     is DbResponse.Successo -> {
                         call.respond(HttpStatusCode.OK, resposta.data as ContaVO)
+                    }
+                }
+            }
+        }
+
+        get("/promocoes/{clientId}") {
+            val clientId = call.parameters["clientId"]
+            promocoesRepository.carregarPromocoes(clientId?.toInt() ?: 0).let {  resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> {
+                        call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")
+                    }
+
+                    is DbResponse.Successo -> {
+                        call.respond(HttpStatusCode.OK, resposta.data as List<PromocaoVO>)
                     }
                 }
             }
