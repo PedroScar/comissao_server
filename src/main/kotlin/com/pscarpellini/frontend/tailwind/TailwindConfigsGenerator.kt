@@ -9,7 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 class TailwindConfigsGenerator {
-    private val outputFile = "src/main/resources/static/scripts/TailwindScript_tmp.js"
+    private val outputFile = Paths.get("static/scripts/TailwindScript_tmp.js").toString()
 
     fun generate() {
         val overrideProperties = mapOf(
@@ -53,7 +53,11 @@ tailwind.config = {
     """.trimIndent()
 
         // Salvar no arquivo
+//        val outputPath = Paths.get(outputFile)
+//        Files.write(outputPath, tailwindConfig.toByteArray())
+
         val outputPath = Paths.get(outputFile)
+        Files.createDirectories(outputPath.parent) // Garante que os diretórios existam
         Files.write(outputPath, tailwindConfig.toByteArray())
 
         println("Tailwind config file generated: ${outputPath.toAbsolutePath()}")
