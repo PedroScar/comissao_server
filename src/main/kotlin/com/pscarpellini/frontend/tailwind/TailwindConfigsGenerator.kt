@@ -9,7 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 class TailwindConfigsGenerator {
-    private val outputFile = Paths.get("static/scripts/TailwindScript_tmp.js").toString()
+    private val outputFile = "src/main/resources/static/scripts/TailwindScript_tmp.js"
 
     fun generate() {
         val overrideProperties = mapOf(

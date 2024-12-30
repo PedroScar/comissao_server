@@ -34,4 +34,3 @@ out/
 
 ### VS Code ###
 .vscode/
-/src/main/resources/static/scripts/TailwindScript_tmp.js
