@@ -2,6 +2,7 @@ package com.pscarpellini
 
 import com.pscarpellini.frontend.tailwind.TailwindConfigsGenerator
 import com.pscarpellini.plugins.*
+import com.pscarpellini.rotas.configureStatics
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
@@ -26,4 +27,5 @@ fun Application.module() {
     configurePages()
     configureEndpoints()
     configureSessions()
+    configureStatics()
 }
