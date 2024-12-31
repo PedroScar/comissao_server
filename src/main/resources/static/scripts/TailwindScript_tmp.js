@@ -23,5 +23,17 @@ tailwind.config = {
     container: {
       center: true,
     }
-  }
+  },
+  plugins: [
+    function({ addBase }) {
+      addBase({
+        'h1': { fontSize: '32px', fontWeight: '600', color: '#141414' },
+        'h2': { fontSize: '26px', fontWeight: '600', color: '#141414' },
+        'h3': { fontSize: '22px', fontWeight: '600', color: '#141414' },
+        'h4': { fontSize: '20px', fontWeight: '600', color: '#141414' },
+        'h5': { fontSize: '18px', fontWeight: '600', color: '#141414' },
+        'h6': { fontSize: '16px', fontWeight: '600', color: '#141414' },
+      });
+    }
+  ],
 };

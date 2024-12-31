@@ -48,7 +48,19 @@ tailwind.config = {
     container: {
       center: true,
     }
-  }
+  },
+  plugins: [
+    function({ addBase }) {
+      addBase({
+        'h1': { fontSize: '32px', fontWeight: '600', color: '${CoresEnum.LOW_DARK.valor}' },
+        'h2': { fontSize: '26px', fontWeight: '600', color: '${CoresEnum.LOW_DARK.valor}' },
+        'h3': { fontSize: '22px', fontWeight: '600', color: '${CoresEnum.LOW_DARK.valor}' },
+        'h4': { fontSize: '20px', fontWeight: '600', color: '${CoresEnum.LOW_DARK.valor}' },
+        'h5': { fontSize: '18px', fontWeight: '600', color: '${CoresEnum.LOW_DARK.valor}' },
+        'h6': { fontSize: '16px', fontWeight: '600', color: '${CoresEnum.LOW_DARK.valor}' },
+      });
+    }
+  ],
 };
     """.trimIndent()
 

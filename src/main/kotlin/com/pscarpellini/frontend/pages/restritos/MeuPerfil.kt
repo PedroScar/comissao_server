@@ -1,12 +1,15 @@
 package com.pscarpellini.frontend.pages.restritos
 
 import com.pscarpellini.frontend.enums.CoresEnum
+import com.pscarpellini.frontend.enums.IconesEnum
 import com.pscarpellini.frontend.enums.TiposAvatarEnum
 import com.pscarpellini.frontend.enums.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
+import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
@@ -28,11 +31,11 @@ fun HTML.meuPerfil(
                 linhas = 1,
                 colunas = 1,
             ) {
-                card(classes = "flex flex-col") {
-                    div(classes = "flex flex-row gap-6 justify-items-start") {
+                card(classes = "flex flex-col gap-8") {
+                    div(classes = "flex flex-row gap-6 w-full") {
                         avatar(nome = sessao.cliente?.nome ?: "", imagemUrl = "", tipo = TiposAvatarEnum.EXTRA_LARGE_CIRCLE)
                         img(src = "", classes = "rounded-pill size-30")
-                        div(classes = "flex flex-col gap-4") {
+                        div(classes = "flex flex-col gap-4 justify-center") {
                             span (classes = CoresEnum.LOW_LIGHT.text) {
                                 +"Esta imagem é destinada apenas ao perfil interno e não será compartilhada"
                                 br
@@ -44,10 +47,40 @@ fun HTML.meuPerfil(
                             }
                         }
                     }
-                    div {
-                        +"Nome completo"
+
+                    div(classes = "grid grid-cols-2 grid-rows-2 gap-6 w-full") {
+                        div {
+                            h5 { +"Nome completo" }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.nome ?: "") }
+                        }
+                        div {
+                            h5 { +"Email" }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.email ?: "") }
+                        }
+                        div {
+                            h5 { +"CPF" }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.cpf ?: "") }
+                        }
+                        div {
+                            h5 { +"Telefone" }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.telefone ?: "") }
+                        }
+                    }
+
+                    div(classes = "flex flex-col gap-4 w-full") {
+                        h2 { +"Senha" }
+                        span (classes = CoresEnum.LOW_LIGHT.text) {
+                            +"Proteja sua conta com uma senha exclusiva. Lembre-se, você pode atualizá-la"
+                            br
+                            +"sempre que necessário."
+                        }
+                        botaoLink(link = "#", tipo = TiposBotaoEnum.NEUTRAL, classes = "self-start") { +"Alterar senha" }
                     }
                 }
+            }
+            botaoLink(link = "#", classes = "self-end gap-2") {
+                icone(IconesEnum.EDITAR, usarPadding = false)
+                +"Editar perfil"
             }
         }
     }
