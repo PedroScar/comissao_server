@@ -1,6 +1,6 @@
 package com.pscarpellini.models.vos
 
-import kotlinx.serialization.Contextual
+import com.pscarpellini.database.utils.LocalDateTimeSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 
@@ -11,6 +11,6 @@ data class PromocaoVO(
     val subtitulo: String,
     val conteudo: String,
     val imagem: String,
-    @Contextual val dataValidade: LocalDateTime,
-    @Contextual val dataCriacao: LocalDateTime,
+    @Serializable(with = LocalDateTimeSerializer::class) val dataValidade: LocalDateTime,
+    @Serializable(with = LocalDateTimeSerializer::class) val dataCriacao: LocalDateTime,
 )

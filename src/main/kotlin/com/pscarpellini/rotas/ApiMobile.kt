@@ -39,9 +39,9 @@ fun Route.apiMobile(
         }
 
         get("/promocoes") {
-            val clientId = call.parameters["clientId"]
+            val clientId = call.request.queryParameters["clienteId"]?.toIntOrNull() ?: 0
 
-            promocoesRepository.carregarPromocoes(clientId?.toInt() ?: 0).let {  resposta ->
+            promocoesRepository.carregarPromocoes(clientId).let {  resposta ->
                 when (resposta) {
                     is DbResponse.Erro -> {
                         call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")

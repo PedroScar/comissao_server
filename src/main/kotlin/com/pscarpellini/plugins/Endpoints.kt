@@ -18,9 +18,9 @@ fun Application.configureEndpoints() {
     val promocoesRepository: PromocoesRepository by inject()
 
     routing {
+        apiMobile(contasRepository, promocoesRepository)
         endpointsRestritos(clientesRepository)
         endpointsControle()
         endpointsAbertos(contasRepository)
-        apiMobile(contasRepository, promocoesRepository)
     }
 }

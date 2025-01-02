@@ -1,6 +1,6 @@
 package com.pscarpellini.repositories.implementations
 
-import com.pscarpellini.database.contaDaoToModel
+import com.pscarpellini.database.utils.contaDaoToModel
 import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.tables.ContasTable
 import com.pscarpellini.models.DbResponse

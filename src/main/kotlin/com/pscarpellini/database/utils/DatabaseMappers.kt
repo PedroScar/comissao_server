@@ -1,4 +1,4 @@
-package com.pscarpellini.database
+package com.pscarpellini.database.utils
 
 import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.database.daos.ContaDAO

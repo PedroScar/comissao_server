@@ -8,7 +8,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 class PromocaoDAO(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<PromocaoDAO>(PromocoesTable)
 
-    var clienteId by PromocaoDAO referencedOn PromocoesTable.clienteId
+    var clienteId by ClienteDAO referencedOn PromocoesTable.clienteId
     var titulo by PromocoesTable.titulo
     var subtitulo by PromocoesTable.subtitulo
     var conteudo by PromocoesTable.conteudo

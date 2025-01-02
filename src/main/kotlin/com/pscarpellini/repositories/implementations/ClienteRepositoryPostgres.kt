@@ -1,6 +1,6 @@
 package com.pscarpellini.repositories.implementations
 
-import com.pscarpellini.database.clienteDaoToModel
+import com.pscarpellini.database.utils.clienteDaoToModel
 import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.models.requests.ClienteRequest
 import com.pscarpellini.models.vos.ClienteVO
