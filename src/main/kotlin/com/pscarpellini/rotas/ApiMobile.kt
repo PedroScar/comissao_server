@@ -38,7 +38,7 @@ fun Route.apiMobile(
             }
         }
 
-        get("/promocoes/{clientId}") {
+        get("/promocoes") {
             val clientId = call.parameters["clientId"]
             promocoesRepository.carregarPromocoes(clientId?.toInt() ?: 0).let {  resposta ->
                 when (resposta) {
