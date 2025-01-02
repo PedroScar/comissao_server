@@ -40,6 +40,7 @@ fun Route.apiMobile(
 
         get("/promocoes") {
             val clientId = call.parameters["clientId"]
+
             promocoesRepository.carregarPromocoes(clientId?.toInt() ?: 0).let {  resposta ->
                 when (resposta) {
                     is DbResponse.Erro -> {

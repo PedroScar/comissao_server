@@ -10,6 +10,6 @@ object PromocoesTable : IntIdTable("promocoes") {
     val subtitulo = varchar("subtitulo", 255)
     val conteudo = text("conteudo")
     val imagem = text("imagem")
-    val dataValidade = datetime("data_criacao").clientDefault { LocalDateTime.now().plusDays(30) }
+    val dataValidade = datetime("data_validade").clientDefault { LocalDateTime.now().plusDays(30) }
     val dataCriacao = datetime("data_criacao").clientDefault { LocalDateTime.now() }
 }
