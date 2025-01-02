@@ -25,7 +25,7 @@ fun FlowContent.includeHeaderLogado(
         showBackground = false,
         classes = "w-full flex items-center"
     ) {
-        if(!mostrarBack) {
+        if(mostrarBack) {
             a(href = PaginasRestritasEnum.INICIO.path, classes = "hover:underline") {
                 icone(IconesEnum.ARROW_LEFT, size = 2)
             }

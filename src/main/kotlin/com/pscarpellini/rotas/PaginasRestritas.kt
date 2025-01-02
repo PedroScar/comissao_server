@@ -5,6 +5,7 @@ import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage
+import com.pscarpellini.frontend.pages.restritos.gerenciamentoDeUsuarios
 import com.pscarpellini.frontend.pages.restritos.inicio
 import com.pscarpellini.frontend.pages.restritos.meuPerfil
 import io.ktor.http.*
@@ -42,11 +43,13 @@ fun Route.paginasRestritas() {
         sessao.menuSelecionado = ItensMenuEnum.RELATORIOS
         call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
     }
+
     get(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
-        call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
+        call.respondHtml(HttpStatusCode.OK) { gerenciamentoDeUsuarios(sessao) }
     }
+
     get(PaginasRestritasEnum.CONFIGURACOES_DO_APP.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP

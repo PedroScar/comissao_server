@@ -26,7 +26,7 @@ fun HTML.meuPerfil(
     ) {
         includeMenuPrincipal(sessao)
         includeContentBodyLogado {
-            includeHeaderLogado(sessao = sessao, tituloPagina = "Meu perfil", mostrarBack = false)
+            includeHeaderLogado(sessao = sessao, tituloPagina = "Meu perfil", mostrarBack = true)
             includeContentGrid(
                 linhas = 1,
                 colunas = 1,
