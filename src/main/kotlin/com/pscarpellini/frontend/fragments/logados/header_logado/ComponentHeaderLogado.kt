@@ -27,7 +27,7 @@ fun FlowContent.includeHeaderLogado(
     ) {
         if(mostrarBack) {
             a(href = PaginasRestritasEnum.INICIO.path, classes = "hover:underline") {
-                icone(IconesEnum.ARROW_LEFT, size = 2)
+                icone(IconesEnum.ARROW_LEFT, size = 2f)
             }
         }
         span(classes = "font-semibold text-xl") {
@@ -37,7 +37,7 @@ fun FlowContent.includeHeaderLogado(
         spacer()
         a(href = "", classes = "hover:underline") {
             card(showBackground = false, usarPadding = false, classes = "mx-6") {
-                icone(IconesEnum.AJUDA, size = 2)
+                icone(IconesEnum.AJUDA, size = 2f)
                 +"Central de ajuda"
             }
         }

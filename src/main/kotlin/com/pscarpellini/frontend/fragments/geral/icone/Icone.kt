@@ -10,7 +10,7 @@ fun FlowContent.icone(
     showBackground: Boolean = false,
     usarPreenchido: Boolean = false,
     corFundo: CoresEnum = CoresEnum.BRAND_PURE,
-    size: Int? = null,
+    size: Float? = null,
     classes: String = "",
     usarPadding: Boolean = true,
     id: String = "icone-${System.currentTimeMillis()}",
