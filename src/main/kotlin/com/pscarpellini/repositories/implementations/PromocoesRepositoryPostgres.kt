@@ -13,7 +13,6 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
         val listaPromocoes = runCatching {
             PromocaoDAO
                 .find { (PromocoesTable.clienteId eq clienteId) }
-                .toList()
         }.onFailure {
             println("Erro DB: ${it.message}")
             println(it.stackTrace.toString())
@@ -28,7 +27,6 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                     "imagem ${pDao.imagem}\n" +
                     "dataValidade ${pDao.dataValidade}\n" +
                     "dataCriacao ${pDao.dataCriacao}\n")
-
         }
 
         var listaFinal: List<PromocaoVO> = emptyList()
