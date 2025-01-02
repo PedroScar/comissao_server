@@ -10,11 +10,17 @@ import com.pscarpellini.suspendTransaction
 
 class PromocoesRepositoryPostgres : PromocoesRepository {
     override suspend fun carregarPromocoes(clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
-        val listaPromocoes = PromocaoDAO
-            .find { (PromocoesTable.clienteId eq clienteId) }
-            .map(::promocaoDaoToModel)
+        val listaPromocoes = runCatching {
+            PromocaoDAO
+                .find { (PromocoesTable.clienteId eq clienteId) }
+                .map(::promocaoDaoToModel)
+        }.onFailure {
+            println("Erro DB: ${it.message}")
+            println(it.stackTrace)
+            return@suspendTransaction DbResponse.Erro(null, "Erro DB: ${it.message}\n\n\n${it.stackTrace}")
+        }.getOrDefault(emptyList())
 
-        return@suspendTransaction if (listaPromocoes.isEmpty()) {
+        if (listaPromocoes.isEmpty()) {
             DbResponse.Erro(null, "Lista vazia")
         } else {
             DbResponse.Successo(listaPromocoes)
