@@ -54,5 +54,6 @@ fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
     subtitulo = dao.subtitulo,
     conteudo = dao.conteudo,
     imagem = dao.imagem,
-    dataValidade = dao.dataValidade
+    dataValidade = dao.dataValidade,
+    dataCriacao = dao.dataCriacao
 )

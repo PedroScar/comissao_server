@@ -12,4 +12,5 @@ data class PromocaoVO(
     val conteudo: String,
     val imagem: String,
     @Contextual val dataValidade: LocalDateTime,
+    @Contextual val dataCriacao: LocalDateTime,
 )

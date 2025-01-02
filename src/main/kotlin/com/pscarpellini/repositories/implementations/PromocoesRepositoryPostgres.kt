@@ -13,17 +13,36 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
         val listaPromocoes = runCatching {
             PromocaoDAO
                 .find { (PromocoesTable.clienteId eq clienteId) }
-                .map(::promocaoDaoToModel)
+                .toList()
         }.onFailure {
             println("Erro DB: ${it.message}")
-            println(it.stackTrace)
+            println(it.stackTrace.toString())
             return@suspendTransaction DbResponse.Erro(null, "Erro DB: ${it.message}\n\n\n${it.stackTrace}")
         }.getOrDefault(emptyList())
 
-        if (listaPromocoes.isEmpty()) {
+        listaPromocoes.forEach { pDao ->
+            println("clienteId ${pDao.clienteId}\n" +
+                    "titulo ${pDao.titulo}\n" +
+                    "subtitulo ${pDao.subtitulo}\n" +
+                    "conteudo ${pDao.conteudo}\n" +
+                    "imagem ${pDao.imagem}\n" +
+                    "dataValidade ${pDao.dataValidade}\n" +
+                    "dataCriacao ${pDao.dataCriacao}\n")
+
+        }
+
+        var listaFinal: List<PromocaoVO> = emptyList()
+
+        runCatching {
+            listaFinal = listaPromocoes.map(::promocaoDaoToModel)
+        }.onFailure {
+            println("Erro no mapper: ${it.message}")
+        }
+
+       return@suspendTransaction if (listaFinal.isEmpty()) {
             DbResponse.Erro(null, "Lista vazia")
         } else {
-            DbResponse.Successo(listaPromocoes)
+            DbResponse.Successo(listaFinal)
         }
     }
 }
