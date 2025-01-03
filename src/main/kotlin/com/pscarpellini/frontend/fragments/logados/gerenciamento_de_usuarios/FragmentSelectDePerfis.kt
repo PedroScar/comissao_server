@@ -31,6 +31,7 @@ fun FlowContent.includeSelectDePerfis(
     selectField(
         label = label,
         hint = hint,
+        nomeDoCampo = "perfilDeAcesso",
         isObrigatorio = isObrigatorio,
         opcoes = perfisDeAcesso?.map { it.id.toString() to it.nome } ?: arrayListOf()
     )

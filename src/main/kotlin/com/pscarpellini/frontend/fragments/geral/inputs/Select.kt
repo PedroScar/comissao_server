@@ -15,7 +15,7 @@ fun FlowContent.selectField(
     opcaoDefault: String? = null,
     label: String? = null,
     isObrigatorio: Boolean = false,
-    nomeDoCampo: String = "",
+    nomeDoCampo: String,
     onIconClick: (() -> Unit)? = null,
 ) {
     div(classes = "flex flex-col $classes") {

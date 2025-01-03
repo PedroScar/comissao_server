@@ -28,7 +28,7 @@ fun contratoDaoToModel(dao: ContratoDAO) = ContratoVO(
 )
 
 fun contaDaoToModel(dao: ContaDAO) = ContaVO(
-    clientId = dao.id.value,
+    cliente = clienteDaoToModel(dao.clienteId),
     tipoConta = dao.tipoConta,
     nome = dao.nome,
     cpf = dao.cpf,

@@ -1,23 +1,19 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.extensions.criarNomeDeUsuario
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.extensions.obterSessao
-import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondFragment
-import com.pscarpellini.frontend.enums.ItensMenuEnum
-import com.pscarpellini.frontend.enums.TiposToastEnum
+import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
 import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
 import com.pscarpellini.interfaces.IPaginaEnum
-import com.pscarpellini.frontend.pages.abertos.landing.landingPage
-import com.pscarpellini.frontend.pages.restritos.gerenciamentoDeUsuarios
-import com.pscarpellini.frontend.pages.restritos.inicio
-import com.pscarpellini.frontend.pages.restritos.meuPerfil
-import com.pscarpellini.frontend.pages.restritos.novoUsuario
+import com.pscarpellini.frontend.pages.restritos.*
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PerfisDeAcessoRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
@@ -27,6 +23,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
+import kotlinx.html.*
 
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
@@ -53,7 +50,7 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.PROMOCOES_WIDGET.path) {
         val sessao = obterSessao()
 
-        promocoesRepository.carregarPromocoes(sessao.cliente?.clientId!!).let { resposta ->
+        promocoesRepository.carregarPromocoes(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
                 is DbResponse.Successo -> { call.respondFragment { includeListaDePromocoesWidget(promocoes = resposta.data) } }
@@ -79,7 +76,7 @@ fun Route.paginasRestritas(
     }
     post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
         val sessao = obterSessao()
-        contasRepository.carregarUsuarios(sessao.cliente?.clientId!!).let { resposta ->
+        contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
                 is DbResponse.Successo -> { call.respondFragment { includeListaDeUsuarios(contas = resposta.data) } }
@@ -101,17 +98,59 @@ fun Route.paginasRestritas(
     get(PaginasRestritasEnum.NOVO_USUARIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
-        perfisDeAcessoRepository.carregarPerfis(sessao.cliente?.clientId!!).let { resposta ->
+        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
                 is DbResponse.Successo -> call.respondHtml(HttpStatusCode.OK) { novoUsuario(sessao, perfisDeAcesso = resposta.data) }
             }
         }
+    }
+    post(PaginasRestritasEnum.NOVO_USUARIO.path) {
+        val sessao = obterSessao()
 
+        val parameters = call.receiveParameters()
+
+        val nome = parameters["nome"].toString()
+        val email = parameters["email"].toString()
+        val telefone = parameters["telefone"].toString()
+        val perfilDeAcesso = parameters["perfilDeAcesso"].toString()
+
+        println("=========================================================================================")
+        println("CRIANDO NOVO USUÁRIO")
+        println("nome: $nome")
+        println("email: $email")
+        println("telefone: $telefone")
+        println("perfilDeAcesso: $perfilDeAcesso")
+        println("=========================================================================================")
+
+        val novaConta = ContaVO(
+            cliente = sessao.conta?.cliente!!,
+            nome = nome,
+            foto = "",
+            endereco = "",
+            cpf = "",
+            email = email,
+            telefone = telefone,
+            saldo = 0.0,
+            usuario = criarNomeDeUsuario(nome),
+            status = "ATIVO",
+            tipoConta = perfilDeAcesso,
+        )
+        contasRepository.criarUsuario(novaConta)
+
+        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                    includeFormNovoUsuario()
+                    toast("Usuário criado com sucesso", tipo = TiposToastEnum.SUCCESS)
+                }
+            }
+        }
     }
     post(PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path) {
         val sessao = obterSessao()
-        perfisDeAcessoRepository.carregarPerfis(sessao.cliente?.clientId!!).let { resposta ->
+        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
                 is DbResponse.Successo -> call.respondFragment { includeSelectDePerfis(perfisDeAcesso = resposta.data) }
@@ -120,7 +159,7 @@ fun Route.paginasRestritas(
     }
     post(PaginasRestritasEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path) {
         val sessao = obterSessao()
-        perfisDeAcessoRepository.carregarPerfis(sessao.cliente?.clientId!!).let { resposta ->
+        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
                 is DbResponse.Successo -> call.respondFragment { includeCardDePerfis(perfisDeAcesso = resposta.data) }

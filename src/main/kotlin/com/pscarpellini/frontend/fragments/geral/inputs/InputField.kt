@@ -12,7 +12,7 @@ fun FlowContent.inputField(
     hint: String = "",
     label: String? = null,
     isObrigatorio: Boolean = false,
-    nomeDoCampo: String = "",
+    nomeDoCampo: String,
     icone: IconesEnum? = null,
     onIconClick: (() -> Unit)? = null,
 ) {
@@ -34,7 +34,7 @@ fun FlowContent.inputField(
                 name = nomeDoCampo
                 placeholder = hint
                 if (!enabled) attributes["disabled"] = "disabled"
-                if (!isObrigatorio) attributes["required"] = "required"
+                if (isObrigatorio) attributes["required"] = "required"
             }
             // Ícone no Lado Direito
             if (icone != null) {

@@ -45,7 +45,7 @@ fun Route.paginasAbertas(
                 is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
                 is DbResponse.Successo -> {
                     val sessao = SessaoUsuarioVO()
-                    sessao.cliente = resposta.data
+                    sessao.conta = resposta.data
                     call.sessions.set(sessao)
                     call.redirecionarFormHTMX(PaginasRestritasEnum.INICIO.path)
                 }

@@ -31,7 +31,7 @@ fun FlowContent.includeHeaderLogado(
             }
         }
         span(classes = "font-semibold text-xl") {
-            if(tituloPagina.isBlank()) +"Olá, ${sessao.cliente?.nome}"
+            if(tituloPagina.isBlank()) +"Olá, ${sessao.conta?.nome}"
             else +tituloPagina
         }
         spacer()

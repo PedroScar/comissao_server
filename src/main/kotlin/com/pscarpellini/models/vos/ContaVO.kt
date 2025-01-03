@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ContaVO(
-    val clientId: Int,
+    val cliente: ClienteVO,
     val nome: String,
     val foto: String = "",
     val endereco: String,

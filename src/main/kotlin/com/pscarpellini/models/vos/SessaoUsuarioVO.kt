@@ -8,5 +8,5 @@ data class SessaoUsuarioVO(
     var menuSelecionado: ItensMenuEnum = ItensMenuEnum.INICIO,
     var menusDisponiveis: ArrayList<ItensMenuEnum> = ArrayList(ItensMenuEnum.entries),
 ) {
-    var cliente: ContaVO? = null
+    var conta: ContaVO? = null
 }

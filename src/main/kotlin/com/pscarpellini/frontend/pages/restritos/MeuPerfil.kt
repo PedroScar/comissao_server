@@ -33,7 +33,7 @@ fun HTML.meuPerfil(
             ) {
                 card(classes = "flex flex-col gap-8") {
                     div(classes = "flex flex-row gap-6 w-full") {
-                        avatar(nome = sessao.cliente?.nome ?: "", imagemUrl = "", tipo = TiposAvatarEnum.EXTRA_LARGE_CIRCLE)
+                        avatar(nome = sessao.conta?.nome ?: "", imagemUrl = "", tipo = TiposAvatarEnum.EXTRA_LARGE_CIRCLE)
                         img(src = "", classes = "rounded-pill size-30")
                         div(classes = "flex flex-col gap-4 justify-center") {
                             span (classes = CoresEnum.LOW_LIGHT.text) {
@@ -51,19 +51,19 @@ fun HTML.meuPerfil(
                     div(classes = "grid grid-cols-2 grid-rows-2 gap-6 w-full") {
                         div {
                             h5 { +"Nome completo" }
-                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.nome ?: "") }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.nome ?: "") }
                         }
                         div {
                             h5 { +"Email" }
-                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.email ?: "") }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.email ?: "") }
                         }
                         div {
                             h5 { +"CPF" }
-                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.cpf ?: "") }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.cpf ?: "") }
                         }
                         div {
                             h5 { +"Telefone" }
-                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.cliente?.telefone ?: "") }
+                            span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.telefone ?: "") }
                         }
                     }
 
