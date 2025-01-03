@@ -8,6 +8,7 @@ import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
+import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.restritos.gerenciamentoDeUsuarios
@@ -15,6 +16,7 @@ import com.pscarpellini.frontend.pages.restritos.inicio
 import com.pscarpellini.frontend.pages.restritos.meuPerfil
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
+import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import io.ktor.http.*
 import io.ktor.server.html.*
 import io.ktor.server.request.*
@@ -23,7 +25,8 @@ import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 
 fun Route.paginasRestritas(
-    contasRepository: ContasRepository
+    contasRepository: ContasRepository,
+    promocoesRepository: PromocoesRepository,
 ) {
     get(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
@@ -42,6 +45,17 @@ fun Route.paginasRestritas(
         sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
         call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
     }
+    post(PaginasRestritasEnum.PROMOCOES_WIDGET.path) {
+        val sessao = obterSessao()
+
+        promocoesRepository.carregarPromocoes(sessao.cliente?.clientId!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Successo -> { call.respondFragment { includeListaDePromocoesWidget(promocoes = resposta.data) } }
+            }
+        }
+    }
+
     get(PaginasRestritasEnum.SALDOS_DOS_PROMOTORES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.SALDOS_DOS_PROMOTORES
@@ -60,8 +74,6 @@ fun Route.paginasRestritas(
     }
     post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
         val sessao = obterSessao()
-        sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
-
         contasRepository.carregarUsuarios(sessao.cliente?.clientId!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
@@ -101,6 +113,7 @@ enum class PaginasRestritasEnum(
     INICIO(ItensMenuEnum.INICIO.caminho),
     MEU_PERFIL("/int/meu_perfil"),
     PROMOCOES(ItensMenuEnum.PROMOCOES.caminho),
+    PROMOCOES_WIDGET("/int/promocoes/widget"),
     SALDOS_DOS_PROMOTORES(ItensMenuEnum.SALDOS_DOS_PROMOTORES.caminho),
     RELATORIOS(ItensMenuEnum.RELATORIOS.caminho),
     GERENCIAMENTO_DE_USUARIOS(ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS.caminho),
