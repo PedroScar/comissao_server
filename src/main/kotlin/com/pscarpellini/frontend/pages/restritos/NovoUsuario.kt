@@ -1,0 +1,72 @@
+package com.pscarpellini.frontend.pages.restritos
+
+import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
+import com.pscarpellini.frontend.fragments.geral.avatar.avatar
+import com.pscarpellini.frontend.fragments.geral.botoes.botao
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
+import com.pscarpellini.frontend.fragments.geral.card.card
+import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
+import com.pscarpellini.frontend.fragments.geral.icone.icone
+import com.pscarpellini.frontend.fragments.geral.inputs.inputField
+import com.pscarpellini.frontend.fragments.geral.inputs.selectField
+import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
+import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
+import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
+import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
+import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
+import com.pscarpellini.models.vos.SessaoUsuarioVO
+import com.pscarpellini.rotas.PaginasRestritasEnum
+import kotlinx.html.*
+
+fun HTML.novoUsuario(
+    sessao: SessaoUsuarioVO
+) {
+    includeHtmlHeader()
+    body(
+        classes = "bg-high-light flex flex-row"
+    ) {
+        includeMenuPrincipal(sessao)
+        includeContentBodyLogado {
+            includeHeaderLogado(sessao = sessao, tituloPagina = "Novo usuário", mostrarBack = true)
+            includeContentGrid(
+                linhas = 1,
+                colunas = 1,
+            ) {
+                card(classes = "flex flex-col gap-8") {
+                    div(classes = "grid grid-cols-2 grid-rows-2 gap-6 w-full") {
+                        inputField(
+                            label = "Nome completo",
+                            inputType = InputType.text,
+                            hint = "Digite o nome completo",
+                            isObrigatorio = true
+                        )
+                        inputField(
+                            label = "E-mail",
+                            inputType = InputType.email,
+                            hint = "exemplo@email.com",
+                            isObrigatorio = true
+                        )
+                        autoLoaderFragment(id = "select_perfil_de_acesso", path = PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path)
+                        inputField(
+                            label = "Telefone (opcional)",
+                            inputType = InputType.tel,
+                            hint = "(00) 00000-0000"
+                        )
+                    }
+                }
+            }
+            div(classes = "self-end flex flex-row gap-2") {
+                botaoLink(tipo = TiposBotaoEnum.SUBTLE, link = LinksEnum.PAGINA_ANTERIOR.link) {
+                    +"Cancelar"
+                }
+                botaoLink(link = "#") {
+                    +"Salvar"
+                }
+            }
+        }
+    }
+}

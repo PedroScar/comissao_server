@@ -44,7 +44,7 @@ fun HTML.gerenciamentoDeUsuarios(
                         icone(IconesEnum.FILTRO, usarPadding = false, size = 2f)
                         +"Filtro"
                     }
-                    botao(tipo = TiposBotaoEnum.SUBTLE) {
+                    botaoLink(tipo = TiposBotaoEnum.SUBTLE, link = PaginasRestritasEnum.NOVO_USUARIO.path) {
                         icone(IconesEnum.ADICIONAR, usarPadding = false, size = 2f)
                         +"Adicionar usuário"
                     }

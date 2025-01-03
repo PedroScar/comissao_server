@@ -3,17 +3,19 @@ package com.pscarpellini.frontend.fragments.geral.inputs
 import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import io.ktor.server.html.*
+import kotlinx.css.option
 import kotlinx.html.*
+import javax.swing.Icon
 
-fun FlowContent.inputField(
+fun FlowContent.selectField(
     classes: String = "",
     enabled: Boolean = true,
-    inputType: InputType,
     hint: String = "",
+    opcoes: List<Pair<String, String>> = arrayListOf(),
+    opcaoDefault: String? = null,
     label: String? = null,
     isObrigatorio: Boolean = false,
     nomeDoCampo: String = "",
-    icone: IconesEnum? = null,
     onIconClick: (() -> Unit)? = null,
 ) {
     div(classes = "flex flex-col $classes") {
@@ -28,20 +30,22 @@ fun FlowContent.inputField(
         // Container do Input e Ícone
         div(classes = "relative mt-1") {
             // Campo de Input
-            input(classes = "${if (enabled) "${CoresEnum.HIGH_LIGHT.bg} hover:${CoresEnum.HIGH_MEDIUM.bg} ${CoresEnum.LOW_PURE.text}" else "${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text} pointer-events-none"} ring-inset w-full px-4 py-2 font-semibold ${ArredondamentosEnum.MD} focus:ring-1 focus:ring-${CoresEnum.LOW_PURE}") {
-                type = inputType
+            select (classes = "peer appearance-none ${if (enabled) "${CoresEnum.HIGH_LIGHT.bg} hover:${CoresEnum.HIGH_MEDIUM.bg} ${CoresEnum.LOW_PURE.text}" else "${CoresEnum.HIGH_DARK.bg} ${CoresEnum.LOW_LIGHT.text} pointer-events-none"} ring-inset w-full px-4 py-2 font-semibold ${ArredondamentosEnum.MD} focus:ring-1 focus:ring-${CoresEnum.LOW_PURE}") {
                 id = nomeDoCampo
                 name = nomeDoCampo
-                placeholder = hint
                 if (!enabled) attributes["disabled"] = "disabled"
                 if (!isObrigatorio) attributes["required"] = "required"
-            }
-            // Ícone no Lado Direito
-            if (icone != null) {
-                div(classes = "absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer") {
-                    onIconClick?.let { onClick -> attributes["onClick"] = "(${onClick::class.simpleName})()" }
-                    icone(icone, usarPadding = false)
+
+                opcoes.forEach { (value, text) ->
+                    option {
+                        this.value = value
+                        if (opcaoDefault == value) attributes["selected"] = "selected"
+                        +text
+                    }
                 }
+            }
+            div(classes = "pointer-events-none absolute inset-y-0 right-2 flex items-center peer-focus:rotate-180 transition-all duration-300") {
+                icone(IconesEnum.CHEVRON_DOWN, size = 2f)
             }
         }
     }

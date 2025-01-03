@@ -10,7 +10,7 @@ import kotlinx.html.a
 fun FlowContent.itemMenuPilula(
     item: ItensMenuPilulaEnum,
 ) {
-    a(href = item.itemMenu.caminho) {
+    a(href = item.caminho) {
         card(arredondamento = ArredondamentosEnum.PILL, classes = "gap-2 cursor-pointer hover:scale-105 hover:shadow-sm transition-all") {
             icone(item.icone, showBackground = true)
             +item.textoCTA

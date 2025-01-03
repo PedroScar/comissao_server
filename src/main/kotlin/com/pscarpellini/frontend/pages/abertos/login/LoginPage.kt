@@ -2,6 +2,7 @@ package com.pscarpellini.frontend.pages.abertos.login
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.enums.CoresEnum
+import com.pscarpellini.frontend.enums.LinksEnum
 import com.pscarpellini.frontend.enums.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
@@ -30,7 +31,7 @@ fun HTML.loginPage() {
                     +"Alguma dúvida?"
                     a(
                         classes = "botao-login-contato hover:underline",
-                        href = "https://wa.me/${AmbientController.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações"
+                        href = LinksEnum.WHATSAPP.link
                     ) {
                         attributes["target"] = "_blank"
                         +"Entre em contato"

@@ -8,12 +8,14 @@ import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
 import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.restritos.gerenciamentoDeUsuarios
 import com.pscarpellini.frontend.pages.restritos.inicio
 import com.pscarpellini.frontend.pages.restritos.meuPerfil
+import com.pscarpellini.frontend.pages.restritos.novoUsuario
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
@@ -27,6 +29,7 @@ import io.ktor.server.sessions.*
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
     promocoesRepository: PromocoesRepository,
+//    perfisDeAcessoRepository: PerfisDeAcessoRepository,
 ) {
     get(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
@@ -93,8 +96,22 @@ fun Route.paginasRestritas(
         call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
     }
 
-
-
+    get(PaginasRestritasEnum.NOVO_USUARIO.path) {
+        val sessao = obterSessao()
+        sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+        call.respondHtml(HttpStatusCode.OK) { novoUsuario(sessao) }
+    }
+    post(PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path) {
+        val sessao = obterSessao()
+        call.respondFragment { includeSelectDePerfis(opcoes = arrayListOf("teste" to "Teste", "blabla" to "Blabla")) }
+//        perfisDeAcessoRepository()
+//        contasRepository.carregarUsuarios(sessao.cliente?.clientId!!).let { resposta ->
+//            when (resposta) {
+//                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
+//                is DbResponse.Successo -> { call.respondFragment { includeListaDeUsuarios(contas = resposta.data) } }
+//            }
+//        }
+    }
 
 
 
@@ -111,14 +128,20 @@ enum class PaginasRestritasEnum(
     override val path: String
 ): IPaginaEnum {
     INICIO(ItensMenuEnum.INICIO.caminho),
+
+    PROMOCOES_WIDGET("/int/promocoes/widget"),
+
     MEU_PERFIL("/int/meu_perfil"),
     PROMOCOES(ItensMenuEnum.PROMOCOES.caminho),
-    PROMOCOES_WIDGET("/int/promocoes/widget"),
     SALDOS_DOS_PROMOTORES(ItensMenuEnum.SALDOS_DOS_PROMOTORES.caminho),
     RELATORIOS(ItensMenuEnum.RELATORIOS.caminho),
     GERENCIAMENTO_DE_USUARIOS(ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS.caminho),
     CONFIGURACOES_DO_APP(ItensMenuEnum.CONFIGURACOES_DO_APP.caminho),
     HISTORICO_DE_TRANSACOES(ItensMenuEnum.HISTORICO_DE_TRANSACOES.caminho),
+
+    NOVO_USUARIO("/int/novo_usuario"),
+
+    FRAGMENT_SELECT_PERFIS_DE_ACESSO("/int/fragment/select_perfis_de_acesso"),
 
     LOGOUT("/logout"),
 }
