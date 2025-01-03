@@ -9,7 +9,7 @@ fun Application.configureSessions() {
     install(Sessions) {
         cookie<SessaoUsuarioVO>("user_session") {
             cookie.httpOnly = true
-            cookie.maxAgeInSeconds = Duration.ofMinutes(30).seconds
+//            cookie.maxAgeInSeconds = Duration.ofMinutes(30).seconds
         }
     }
 }

@@ -1,15 +1,7 @@
 package com.pscarpellini.database.utils
 
-import com.pscarpellini.database.daos.ClienteDAO
-import com.pscarpellini.database.daos.ContaDAO
-import com.pscarpellini.database.daos.ContratoDAO
-import com.pscarpellini.database.daos.PromocaoDAO
-import com.pscarpellini.database.daos.ServicoDAO
-import com.pscarpellini.models.vos.ClienteVO
-import com.pscarpellini.models.vos.ContaVO
-import com.pscarpellini.models.vos.ContratoVO
-import com.pscarpellini.models.vos.PromocaoVO
-import com.pscarpellini.models.vos.ServicoVO
+import com.pscarpellini.database.daos.*
+import com.pscarpellini.models.vos.*
 
 fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.id.value,
@@ -56,4 +48,10 @@ fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
     imagem = dao.imagem,
     dataValidade = dao.dataValidade,
     dataCriacao = dao.dataCriacao
+)
+
+fun perfilDeAcessoDaoToModel(dao: PerfilDeAcessoDAO) = PerfilDeAcessoVO(
+    id = dao.id.value,
+    nome = dao.nome,
+    descricao = dao.descricao,
 )

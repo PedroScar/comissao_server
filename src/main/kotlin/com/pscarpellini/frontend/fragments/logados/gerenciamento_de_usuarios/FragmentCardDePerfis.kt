@@ -1,9 +1,6 @@
 package com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios
 
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.PosicoesDropdownEnum
-import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownDivider
@@ -17,21 +14,21 @@ import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.PerfilDeAcessoVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.rotas.PaginasRestritasEnum
-import kotlinx.html.FlowContent
-import kotlinx.html.a
-import kotlinx.html.div
-import kotlinx.html.span
+import kotlinx.css.h5
+import kotlinx.html.*
 
-fun FlowContent.includeSelectDePerfis(
-    label: String = "Tipo de conta",
-    hint: String = "",
-    isObrigatorio: Boolean = true,
+fun FlowContent.includeCardDePerfis(
     perfisDeAcesso: List<PerfilDeAcessoVO>?
 ) {
-    selectField(
-        label = label,
-        hint = hint,
-        isObrigatorio = isObrigatorio,
-        opcoes = perfisDeAcesso?.map { it.id.toString() to it.nome } ?: arrayListOf()
-    )
+    div(classes = "${CoresEnum.BRAND_LIGHT.bg} ${ArredondamentosEnum.MD} py-4 px-6 w-full") {
+        span { +"Tipos de contas:" }
+        ul (classes = "list-disc ms-6") {
+            perfisDeAcesso?.forEach {
+                li {
+                    b { +"${it.nome}: " }
+                    +it.descricao
+                }
+            }
+        }
+    }
 }

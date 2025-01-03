@@ -7,6 +7,7 @@ import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
 import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
@@ -18,6 +19,7 @@ import com.pscarpellini.frontend.pages.restritos.meuPerfil
 import com.pscarpellini.frontend.pages.restritos.novoUsuario
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
+import com.pscarpellini.repositories.interfaces.PerfisDeAcessoRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import io.ktor.http.*
 import io.ktor.server.html.*
@@ -29,7 +31,7 @@ import io.ktor.server.sessions.*
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
     promocoesRepository: PromocoesRepository,
-//    perfisDeAcessoRepository: PerfisDeAcessoRepository,
+    perfisDeAcessoRepository: PerfisDeAcessoRepository,
 ) {
     get(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
@@ -99,18 +101,31 @@ fun Route.paginasRestritas(
     get(PaginasRestritasEnum.NOVO_USUARIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
-        call.respondHtml(HttpStatusCode.OK) { novoUsuario(sessao) }
+        perfisDeAcessoRepository.carregarPerfis(sessao.cliente?.clientId!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Successo -> call.respondHtml(HttpStatusCode.OK) { novoUsuario(sessao, perfisDeAcesso = resposta.data) }
+            }
+        }
+
     }
     post(PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path) {
         val sessao = obterSessao()
-        call.respondFragment { includeSelectDePerfis(opcoes = arrayListOf("teste" to "Teste", "blabla" to "Blabla")) }
-//        perfisDeAcessoRepository()
-//        contasRepository.carregarUsuarios(sessao.cliente?.clientId!!).let { resposta ->
-//            when (resposta) {
-//                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
-//                is DbResponse.Successo -> { call.respondFragment { includeListaDeUsuarios(contas = resposta.data) } }
-//            }
-//        }
+        perfisDeAcessoRepository.carregarPerfis(sessao.cliente?.clientId!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Successo -> call.respondFragment { includeSelectDePerfis(perfisDeAcesso = resposta.data) }
+            }
+        }
+    }
+    post(PaginasRestritasEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path) {
+        val sessao = obterSessao()
+        perfisDeAcessoRepository.carregarPerfis(sessao.cliente?.clientId!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Successo -> call.respondFragment { includeCardDePerfis(perfisDeAcesso = resposta.data) }
+            }
+        }
     }
 
 
@@ -142,6 +157,7 @@ enum class PaginasRestritasEnum(
     NOVO_USUARIO("/int/novo_usuario"),
 
     FRAGMENT_SELECT_PERFIS_DE_ACESSO("/int/fragment/select_perfis_de_acesso"),
+    FRAGMENT_CARD_PERFIS_DE_ACESSO("/int/fragment/card_perfis_de_acesso"),
 
     LOGOUT("/logout"),
 }

@@ -14,16 +14,19 @@ import com.pscarpellini.frontend.fragments.geral.inputs.selectField
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
+import com.pscarpellini.models.vos.PerfilDeAcessoVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.rotas.PaginasRestritasEnum
 import kotlinx.html.*
 
 fun HTML.novoUsuario(
-    sessao: SessaoUsuarioVO
+    sessao: SessaoUsuarioVO,
+    perfisDeAcesso: List<PerfilDeAcessoVO>?
 ) {
     includeHtmlHeader()
     body(
@@ -50,17 +53,36 @@ fun HTML.novoUsuario(
                             hint = "exemplo@email.com",
                             isObrigatorio = true
                         )
-                        autoLoaderFragment(id = "select_perfil_de_acesso", path = PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path)
+                        selectField(
+                            label = "Tipo de conta",
+                            isObrigatorio = true,
+                            opcoes = perfisDeAcesso?.map { it.id.toString() to it.nome } ?: arrayListOf()
+                        )
+//                        includeSelectDePerfis(perfisDeAcesso = perfisDeAcesso)
+//                        autoLoaderFragment(id = "select_perfil_de_acesso", path = PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path)
                         inputField(
                             label = "Telefone (opcional)",
                             inputType = InputType.tel,
                             hint = "(00) 00000-0000"
                         )
                     }
+                    div(classes = "${CoresEnum.BRAND_LIGHT.bg} ${ArredondamentosEnum.MD} py-4 px-6 w-full") {
+                        span { +"Tipos de contas:" }
+                        ul (classes = "list-disc ms-6") {
+                            perfisDeAcesso?.forEach {
+                                li {
+                                    b { +"${it.nome}: " }
+                                    +it.descricao
+                                }
+                            }
+                        }
+                    }
+//                    includeCardDePerfis(perfisDeAcesso = perfisDeAcesso)
+//                    autoLoaderFragment(id = "tipos_de_conta", path = PaginasRestritasEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path, classes = "w-full")
                 }
             }
             div(classes = "self-end flex flex-row gap-2") {
-                botaoLink(tipo = TiposBotaoEnum.SUBTLE, link = LinksEnum.PAGINA_ANTERIOR.link) {
+                botaoLink(tipo = TiposBotaoEnum.SUBTLE, link = "javascript:history.back()") {
                     +"Cancelar"
                 }
                 botaoLink(link = "#") {

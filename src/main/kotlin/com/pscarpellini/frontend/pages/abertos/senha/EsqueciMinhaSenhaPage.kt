@@ -1,7 +1,6 @@
 package com.pscarpellini.frontend.pages.abertos.senha
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.frontend.enums.LinksEnum
 import com.pscarpellini.frontend.enums.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
@@ -29,7 +28,7 @@ fun HTML.esqueciMinhaSenhaPage() {
                     +"Alguma dúvida?"
                     a(
                         classes = "botao-login-contato hover:underline",
-                        href = LinksEnum.WHATSAPP.link
+                        href = "https://wa.me/${AmbientController.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações"
                     ) {
                         attributes["target"] = "_blank"
                         +"Entre em contato"

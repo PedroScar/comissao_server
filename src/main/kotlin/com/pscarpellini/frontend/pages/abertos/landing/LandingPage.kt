@@ -1,7 +1,6 @@
 package com.pscarpellini.frontend.pages.abertos.landing
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.frontend.enums.LinksEnum
 import com.pscarpellini.frontend.enums.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
@@ -37,7 +36,7 @@ fun HTML.landingPage(
                 }
             }
             div(classes = "flex flex-row gap-2 text-sm lg:text-lg") {
-                botaoLink(tipo = TiposBotaoEnum.NEUTRAL, link = LinksEnum.WHATSAPP.link) {
+                botaoLink(tipo = TiposBotaoEnum.NEUTRAL, link = "https://wa.me/${AmbientController.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações") {
                     attributes["target"] = "_blank"
                     +"Falar com especialista"
                     img(classes = "ic-whatsapp", src = "/static/ic_whatsapp.svg", alt = "Ícone")

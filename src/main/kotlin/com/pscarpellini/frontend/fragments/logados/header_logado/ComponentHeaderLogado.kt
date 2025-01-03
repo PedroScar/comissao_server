@@ -2,7 +2,6 @@ package com.pscarpellini.frontend.fragments.logados.header_logado
 
 import com.pscarpellini.frontend.enums.CoresEnum
 import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.LinksEnum
 import com.pscarpellini.frontend.enums.PosicoesDropdownEnum
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownDivider
@@ -27,7 +26,7 @@ fun FlowContent.includeHeaderLogado(
         classes = "w-full flex items-center"
     ) {
         if(mostrarBack) {
-            a(href = LinksEnum.PAGINA_ANTERIOR.link, classes = "hover:underline") {
+            a(href = "javascript:history.back()", classes = "hover:underline") {
                 icone(IconesEnum.ARROW_LEFT, size = 2f)
             }
         }

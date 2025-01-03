@@ -5,6 +5,7 @@ import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
 import com.pscarpellini.repositories.interfaces.ClienteRepository
 import com.pscarpellini.repositories.interfaces.ContasRepository
+import com.pscarpellini.repositories.interfaces.PerfisDeAcessoRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.rotas.fragmentsRestritos
 import com.pscarpellini.rotas.paginasAbertas
@@ -22,6 +23,7 @@ fun Application.configurePages() {
     val clientesRepository: ClienteRepository by inject()
     val contasRepository: ContasRepository by inject()
     val promocoesRepository: PromocoesRepository by inject()
+    val perfisDeAcessoRepository: PerfisDeAcessoRepository by inject()
 
     install(StatusPages) {
         exception<NaoLogadoException> { call, cause ->
@@ -40,7 +42,7 @@ fun Application.configurePages() {
         staticResources("/static", "static")
 
         paginasAbertas(contasRepository)
-        paginasRestritas(contasRepository, promocoesRepository)
+        paginasRestritas(contasRepository, promocoesRepository, perfisDeAcessoRepository)
 
         fragmentsRestritos()
     }
