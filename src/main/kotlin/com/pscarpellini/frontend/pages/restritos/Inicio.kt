@@ -1,6 +1,7 @@
 package com.pscarpellini.frontend.pages.restritos
 
 import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
@@ -9,6 +10,7 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.frontend.fragments.logados.menu_pilula.itemMenuPilula
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.models.vos.SessaoUsuarioVO
+import com.pscarpellini.rotas.PaginasRestritasEnum
 import kotlinx.html.HTML
 import kotlinx.html.body
 
@@ -35,16 +37,28 @@ fun HTML.inicio(
             includeContentGrid(
                 linhas = 2,
                 colunas = 3,
-                classes = "h-full"
+                classes = "grow"
             ) {
                 card(classes = "col-span-2") {
-
+                    autoLoaderFragment(
+                        id = "tabela_de_usuarios",
+                        path = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path,
+                        classes = "w-full grow"
+                    )
                 }
                 card(classes = "") {
-
+                    autoLoaderFragment(
+                        id = "tabela_de_usuarios",
+                        path = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path,
+                        classes = "w-full grow"
+                    )
                 }
                 card(classes = "col-span-3") {
-
+                    autoLoaderFragment(
+                        id = "tabela_de_usuarios",
+                        path = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path,
+                        classes = "w-full grow"
+                    )
                 }
             }
         }

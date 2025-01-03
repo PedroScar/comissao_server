@@ -2,19 +2,29 @@ package com.pscarpellini.rotas
 
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.extensions.obterSessao
+import com.pscarpellini.extensions.redirecionarFormHTMX
+import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.enums.ItensMenuEnum
+import com.pscarpellini.frontend.enums.TiposToastEnum
+import com.pscarpellini.frontend.fragments.geral.toast.toast
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.restritos.gerenciamentoDeUsuarios
 import com.pscarpellini.frontend.pages.restritos.inicio
 import com.pscarpellini.frontend.pages.restritos.meuPerfil
+import com.pscarpellini.models.DbResponse
+import com.pscarpellini.repositories.interfaces.ContasRepository
 import io.ktor.http.*
 import io.ktor.server.html.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 
-fun Route.paginasRestritas() {
+fun Route.paginasRestritas(
+    contasRepository: ContasRepository
+) {
     get(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
         if(sessao.cliente == null) println("================================================= CLIENTE DA SESSÃO NULO")
@@ -48,6 +58,17 @@ fun Route.paginasRestritas() {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
         call.respondHtml(HttpStatusCode.OK) { gerenciamentoDeUsuarios(sessao) }
+    }
+    post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
+        val sessao = obterSessao()
+        sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+
+        contasRepository.carregarUsuarios(sessao.cliente?.clientId!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Successo -> { call.respondFragment { includeListaDeUsuarios(contas = resposta.data) } }
+            }
+        }
     }
 
     get(PaginasRestritasEnum.CONFIGURACOES_DO_APP.path) {

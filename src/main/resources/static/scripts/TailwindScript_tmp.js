@@ -8,6 +8,7 @@ tailwind.config = {
       animation: {
         'slide-in': 'slideIn 0.3s ease-out',
         'slide-out': 'slideOut 0.3s ease-in',
+        spin: 'spin 2s linear infinite',
       },
       keyframes: {
         slideIn: {
@@ -17,6 +18,10 @@ tailwind.config = {
         slideOut: {
           '0%': { transform: 'translateY(0)', opacity: '1' },
           '100%': { transform: 'translateY(100%)', opacity: '0' },
+        },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
     },

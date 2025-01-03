@@ -38,7 +38,7 @@ fun Application.configurePages() {
         staticResources("/static", "static")
 
         paginasAbertas(contasRepository)
-        paginasRestritas()
+        paginasRestritas(contasRepository)
 
         fragmentsRestritos()
     }
