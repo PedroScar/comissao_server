@@ -27,7 +27,6 @@ fun Route.paginasRestritas(
 ) {
     get(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
-        if(sessao.cliente == null) println("================================================= CLIENTE DA SESSÃO NULO")
         sessao.menuSelecionado = ItensMenuEnum.INICIO
         call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
     }
