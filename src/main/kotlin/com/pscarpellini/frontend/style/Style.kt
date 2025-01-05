@@ -4,6 +4,7 @@ import baseBody
 import baseBotaoArredondado
 import com.pscarpellini.frontend.pages.abertos.landing.landingPageStyle
 import com.pscarpellini.frontend.pages.abertos.login.loginPageStyle
+import com.pscarpellini.frontend.pages.basePageStyle
 import io.ktor.http.ContentType
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCall
@@ -26,6 +27,7 @@ fun Application.styledRouting(configuration: Routing.() -> Unit): RoutingRoot {
             call.respondCss {
                 body { baseBody() }
 
+                basePageStyle()
                 loginPageStyle()
                 landingPageStyle()
 

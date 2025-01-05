@@ -8,6 +8,7 @@ fun HEAD.includeScriptsFuncionais(
 
 //    HTMX
     script(src = "https://unpkg.com/htmx.org") {}
+    script(src = "/static/scripts/HTMXConfigs.js") {}
 
 //    MENU DROPDOWN
     script(src = "/static/scripts/DropdownScript.js") {}

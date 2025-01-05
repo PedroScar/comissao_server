@@ -16,6 +16,7 @@ fun FlowContent.botao(
     hxMethod: FormMethod = FormMethod.post,
     hxPath: String = "",
     hxTarget: String = "#",
+    hxIndicator: String = "#",
     hxSwap: String = "innerHTML",
     conteudo: FlowContent.() -> Unit
 ) {
@@ -26,6 +27,7 @@ fun FlowContent.botao(
         attributes["hx-${hxMethod.name}"] = hxPath
         attributes["hx-target"] = "#$hxTarget"
         attributes["hx-swap"] = hxSwap
+        attributes["hx-indicator"] = "#$hxIndicator"
 
         if (!enabled) attributes["disabled"] = "disabled"
         div(classes = "flex flex-row items-center $alinhamento") {
