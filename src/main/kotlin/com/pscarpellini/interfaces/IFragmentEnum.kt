@@ -5,6 +5,7 @@ import kotlinx.html.FormMethod
 interface IFragmentEnum: ICaminho {
     override val path: String
     override val method: FormMethod
+        get() = FormMethod.post
 
     override val pathCompleto: String
         get() = "/fragments/$path"

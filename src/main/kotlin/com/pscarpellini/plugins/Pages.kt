@@ -10,6 +10,7 @@ import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.rotas.fragmentsRestritos
 import com.pscarpellini.rotas.paginasAbertas
 import com.pscarpellini.rotas.paginasRestritas
+import com.pscarpellini.rotas.widgetsInicio
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
@@ -44,6 +45,8 @@ fun Application.configurePages() {
         paginasAbertas(contasRepository)
         paginasRestritas(contasRepository, promocoesRepository, perfisDeAcessoRepository)
 
-        fragmentsRestritos()
+        widgetsInicio(promocoesRepository)
+
+        fragmentsRestritos(contasRepository, promocoesRepository, perfisDeAcessoRepository)
     }
 }

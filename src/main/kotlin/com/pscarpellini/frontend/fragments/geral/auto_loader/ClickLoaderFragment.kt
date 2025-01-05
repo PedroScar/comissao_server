@@ -1,25 +1,24 @@
 package com.pscarpellini.frontend.fragments.geral.auto_loader
 
+import com.pscarpellini.frontend.enums.IconesEnum
+import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.loading.loading
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 
-fun FlowContent.autoLoaderFragment(
+fun FlowContent.clickLoaderFragment(
     id: String,
     path: String,
-    usarDiferenciadorId: Boolean = true,
     isVerticalLoading: Boolean = false,
-    hxReplaceUrl: String? = null,
     classes: String = "",
-): String {
-    val idDoConteudo = if(usarDiferenciadorId) "$id-${System.currentTimeMillis()}" else id
+) {
+    val idDoConteudo = "$id-${System.currentTimeMillis()}"
     div(classes = classes) {
         attributes["hx-post"] = path
-        attributes["hx-trigger"] = "load"
+        attributes["hx-trigger"] = "click"
         attributes["hx-target"] = "#$idDoConteudo"
         attributes["id"] = idDoConteudo
-        hxReplaceUrl?.let { attributes["hx-replace-url"] = it }
+
         loading(id = id, isVertical = isVerticalLoading)
     }
-    return idDoConteudo
 }

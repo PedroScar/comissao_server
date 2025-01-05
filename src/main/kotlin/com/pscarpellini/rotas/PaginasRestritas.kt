@@ -9,6 +9,7 @@ import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
+import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.restritos.*
@@ -30,81 +31,98 @@ fun Route.paginasRestritas(
     promocoesRepository: PromocoesRepository,
     perfisDeAcessoRepository: PerfisDeAcessoRepository,
 ) {
-    get(PaginasRestritasEnum.INICIO.path) {
+    get(PaginasRestritasEnum.INTERNO.path) {
         val sessao = obterSessao()
-        sessao.menuSelecionado = ItensMenuEnum.INICIO
-        call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
+        call.respondHtml(HttpStatusCode.OK) {
+            val caminho = call.parameters["path"] ?: PaginasRestritasEnum.INICIO.path
+            interno(sessao = sessao, caminho = caminho)
+        }
     }
 
-    get(PaginasRestritasEnum.MEU_PERFIL.path) {
+    post(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.INICIO
-        call.respondHtml(HttpStatusCode.OK) { meuPerfil(sessao) }
+        call.respondFragment (HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            inicio(sessao)
+        }
     }
 
-    get(PaginasRestritasEnum.PROMOCOES.path) {
+    post(PaginasRestritasEnum.PROMOCOES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
-        call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
-    }
-    post(PaginasRestritasEnum.PROMOCOES_WIDGET.path) {
-        val sessao = obterSessao()
-
-        promocoesRepository.carregarPromocoes(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
-                is DbResponse.Successo -> { call.respondFragment { includeListaDePromocoesWidget(promocoes = resposta.data) } }
-            }
+        call.respondFragment (HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            inicio(sessao)
         }
     }
 
-    get(PaginasRestritasEnum.SALDOS_DOS_PROMOTORES.path) {
+    post(PaginasRestritasEnum.SALDOS_DOS_PROMOTORES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.SALDOS_DOS_PROMOTORES
-        call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
+        call.respondFragment (HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            inicio(sessao)
+        }
     }
-    get(PaginasRestritasEnum.RELATORIOS.path) {
+    post(PaginasRestritasEnum.RELATORIOS.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.RELATORIOS
-        call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
-    }
-
-    get(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
-        val sessao = obterSessao()
-        sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
-        call.respondHtml(HttpStatusCode.OK) { gerenciamentoDeUsuarios(sessao) }
-    }
-    post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
-        val sessao = obterSessao()
-        contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
-                is DbResponse.Successo -> { call.respondFragment { includeListaDeUsuarios(contas = resposta.data) } }
-            }
+        call.respondFragment (HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            inicio(sessao)
         }
     }
 
-    get(PaginasRestritasEnum.CONFIGURACOES_DO_APP.path) {
+    post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
         val sessao = obterSessao()
-        sessao.menuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP
-        call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
-    }
-    get(PaginasRestritasEnum.HISTORICO_DE_TRANSACOES.path) {
-        val sessao = obterSessao()
-        sessao.menuSelecionado = ItensMenuEnum.HISTORICO_DE_TRANSACOES
-        call.respondHtml(HttpStatusCode.OK) { inicio(sessao) }
+        sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+        call.respondFragment(HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            gerenciamentoDeUsuarios(sessao)
+        }
     }
 
-    get(PaginasRestritasEnum.NOVO_USUARIO.path) {
+    post(PaginasRestritasEnum.CONFIGURACOES_DO_APP.path) {
+        val sessao = obterSessao()
+        sessao.menuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP
+        call.respondFragment (HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            inicio(sessao)
+        }
+    }
+    post(PaginasRestritasEnum.HISTORICO_DE_TRANSACOES.path) {
+        val sessao = obterSessao()
+        sessao.menuSelecionado = ItensMenuEnum.HISTORICO_DE_TRANSACOES
+        call.respondFragment (HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            inicio(sessao)
+        }
+    }
+
+    post(PaginasRestritasEnum.MEU_PERFIL.path) {
+        val sessao = obterSessao()
+        sessao.menuSelecionado = null
+        call.respondFragment (HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            meuPerfil(sessao)
+        }
+    }
+
+    post(PaginasRestritasEnum.NOVO_USUARIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
         perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
-                is DbResponse.Successo -> call.respondHtml(HttpStatusCode.OK) { novoUsuario(sessao, perfisDeAcesso = resposta.data) }
+                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                    includeMenuPrincipal(sessao)
+                    novoUsuario(sessao, perfisDeAcesso = resposta.data)
+                }
             }
         }
     }
+
     post(PaginasRestritasEnum.NOVO_USUARIO.path) {
         val sessao = obterSessao()
 
@@ -114,14 +132,6 @@ fun Route.paginasRestritas(
         val email = parameters["email"].toString()
         val telefone = parameters["telefone"].toString()
         val perfilDeAcesso = parameters["perfilDeAcesso"].toString()
-
-        println("=========================================================================================")
-        println("CRIANDO NOVO USUÁRIO")
-        println("nome: $nome")
-        println("email: $email")
-        println("telefone: $telefone")
-        println("perfilDeAcesso: $perfilDeAcesso")
-        println("=========================================================================================")
 
         val novaConta = ContaVO(
             cliente = sessao.conta?.cliente!!,
@@ -148,28 +158,6 @@ fun Route.paginasRestritas(
             }
         }
     }
-    post(PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path) {
-        val sessao = obterSessao()
-        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
-                is DbResponse.Successo -> call.respondFragment { includeSelectDePerfis(perfisDeAcesso = resposta.data) }
-            }
-        }
-    }
-    post(PaginasRestritasEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path) {
-        val sessao = obterSessao()
-        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
-                is DbResponse.Successo -> call.respondFragment { includeCardDePerfis(perfisDeAcesso = resposta.data) }
-            }
-        }
-    }
-
-
-
-
 
 
     get(PaginasRestritasEnum.LOGOUT.path) {
@@ -181,11 +169,11 @@ fun Route.paginasRestritas(
 enum class PaginasRestritasEnum(
     override val path: String
 ): IPaginaEnum {
+    INTERNO("/int/{path}"),
+
     INICIO(ItensMenuEnum.INICIO.caminho),
 
-    PROMOCOES_WIDGET("/int/promocoes/widget"),
 
-    MEU_PERFIL("/int/meu_perfil"),
     PROMOCOES(ItensMenuEnum.PROMOCOES.caminho),
     SALDOS_DOS_PROMOTORES(ItensMenuEnum.SALDOS_DOS_PROMOTORES.caminho),
     RELATORIOS(ItensMenuEnum.RELATORIOS.caminho),
@@ -194,9 +182,7 @@ enum class PaginasRestritasEnum(
     HISTORICO_DE_TRANSACOES(ItensMenuEnum.HISTORICO_DE_TRANSACOES.caminho),
 
     NOVO_USUARIO("/int/novo_usuario"),
-
-    FRAGMENT_SELECT_PERFIS_DE_ACESSO("/int/fragment/select_perfis_de_acesso"),
-    FRAGMENT_CARD_PERFIS_DE_ACESSO("/int/fragment/card_perfis_de_acesso"),
+    MEU_PERFIL("/int/meu_perfil"),
 
     LOGOUT("/logout"),
 }

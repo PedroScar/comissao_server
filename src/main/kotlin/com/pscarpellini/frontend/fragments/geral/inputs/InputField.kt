@@ -14,6 +14,10 @@ fun FlowContent.inputField(
     isObrigatorio: Boolean = false,
     nomeDoCampo: String,
     icone: IconesEnum? = null,
+    useHx: Boolean = false,
+    hxTrigger: String = "keyup changed delay:1s",
+    hxPost: String = "",
+    hxTarget: String = "",
     onIconClick: (() -> Unit)? = null,
 ) {
     div(classes = "flex flex-col $classes") {
@@ -33,6 +37,13 @@ fun FlowContent.inputField(
                 id = nomeDoCampo
                 name = nomeDoCampo
                 placeholder = hint
+
+                if(useHx) {
+                    attributes["hx-trigger"] = hxTrigger
+                    attributes["hx-post"] = hxPost
+                    attributes["hx-target"] = "#$hxTarget"
+                }
+
                 if (!enabled) attributes["disabled"] = "disabled"
                 if (isObrigatorio) attributes["required"] = "required"
             }

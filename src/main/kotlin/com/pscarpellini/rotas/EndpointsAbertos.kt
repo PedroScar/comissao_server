@@ -35,7 +35,8 @@ fun Route.endpointsAbertos(
                         }
 
                         is DbResponse.Successo -> {
-                            call.respondHtml(HttpStatusCode.OK) { inicio(obterSessao()) }
+                            call.respondRedirect("/int/inicio")
+//                            call.respondHtml(HttpStatusCode.OK) { inicio(obterSessao()) }
                         }
                     }
                 }

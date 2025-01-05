@@ -21,25 +21,18 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.models.vos.PerfilDeAcessoVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
+import com.pscarpellini.rotas.FragmentsRestritosEnum
 import com.pscarpellini.rotas.PaginasAbertasEnum
 import com.pscarpellini.rotas.PaginasRestritasEnum
 import kotlinx.html.*
 
-fun HTML.novoUsuario(
+fun FlowContent.novoUsuario(
     sessao: SessaoUsuarioVO,
     perfisDeAcesso: List<PerfilDeAcessoVO>?
 ) {
-    includeHtmlHeader()
-    body(
-        classes = "bg-high-light flex flex-row"
-    ) {
-        includeMenuPrincipal(sessao)
-        includeContentBodyLogado {
-            includeHeaderLogado(sessao = sessao, tituloPagina = "Novo usuário", mostrarBack = true)
-            includeFormNovoUsuario()
+    includeHeaderLogado(sessao = sessao, tituloPagina = "Novo usuário", mostrarBack = true)
+    includeFormNovoUsuario()
 //            includeFormNovoUsuario(perfisDeAcesso = perfisDeAcesso)
-        }
-    }
 }
 
 fun FlowContent.includeFormNovoUsuario(
@@ -73,7 +66,7 @@ fun FlowContent.includeFormNovoUsuario(
 //                        opcoes = perfisDeAcesso?.map { it.id.toString() to it.nome } ?: arrayListOf()
 //                    )
                     //                        includeSelectDePerfis(perfisDeAcesso = perfisDeAcesso)
-                    autoLoaderFragment(id = "select_perfil_de_acesso", path = PaginasRestritasEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path)
+                    autoLoaderFragment(id = "select_perfil_de_acesso", path = FragmentsRestritosEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path)
                     inputField(
                         label = "Telefone (opcional)",
                         inputType = InputType.tel,
@@ -93,7 +86,7 @@ fun FlowContent.includeFormNovoUsuario(
 //                    }
 //                }
                 //                    includeCardDePerfis(perfisDeAcesso = perfisDeAcesso)
-                autoLoaderFragment(id = "tipos_de_conta", path = PaginasRestritasEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path, classes = "w-full")
+                autoLoaderFragment(id = "tipos_de_conta", path = FragmentsRestritosEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path, classes = "w-full")
             }
         }
         div(classes = "self-end flex flex-row gap-2") {

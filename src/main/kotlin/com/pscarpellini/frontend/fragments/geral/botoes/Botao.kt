@@ -54,3 +54,28 @@ fun FlowContent.botaoLink(
         conteudo(this)
     }
 }
+
+fun FlowContent.botaoHX(
+    tipo: TiposBotaoEnum = TiposBotaoEnum.PRIMARY,
+    classes: String = "",
+    interativo: Boolean = true,
+    link: String,
+    target: String = "conteudo-interno",
+    alinhamento: AlinhamentosEnum = AlinhamentosEnum.CENTER,
+    small: Boolean = false,
+    enabled: Boolean = true,
+    conteudo: FlowContent.() -> Unit
+) {
+    div (
+        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "py-1" else "py-2"} px-6 ${if(interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
+    ) {
+        attributes["hx-post"] = link
+        attributes["hx-trigger"] = "click"
+        attributes["hx-target"] = "#$target"
+        attributes["hx-replace-url"] = link
+        attributes["hx-swap"] = "innerHTML"
+
+        if (!enabled) attributes["disabled"] = "disabled"
+        conteudo(this)
+    }
+}
