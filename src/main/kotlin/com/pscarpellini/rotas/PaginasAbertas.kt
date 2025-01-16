@@ -1,9 +1,10 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondFragment
-import com.pscarpellini.frontend.enums.TiposToastEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.pages.abertos.componentes.componentsPage
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage

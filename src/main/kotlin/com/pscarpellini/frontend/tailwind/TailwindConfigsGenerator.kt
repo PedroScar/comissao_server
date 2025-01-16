@@ -1,8 +1,8 @@
 package com.pscarpellini.frontend.tailwind
 
 import com.pscarpellini.extensions.formatarNomeTailwind
-import com.pscarpellini.frontend.enums.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.nio.file.Files

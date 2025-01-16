@@ -1,8 +1,8 @@
 package com.pscarpellini.frontend.fragments.geral.botoes
 
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import kotlinx.html.*
 

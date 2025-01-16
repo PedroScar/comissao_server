@@ -1,6 +1,6 @@
 package com.pscarpellini.frontend.fragments.geral.loading
 
-import com.pscarpellini.frontend.enums.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import kotlinx.html.FlowContent
 import kotlinx.html.div

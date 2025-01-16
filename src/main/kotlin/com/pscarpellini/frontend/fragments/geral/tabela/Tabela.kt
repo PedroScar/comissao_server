@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.fragments.geral.tabela
 
-import com.pscarpellini.frontend.enums.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import kotlinx.html.*
 
 fun FlowContent.tabelaComHeadersFixos(

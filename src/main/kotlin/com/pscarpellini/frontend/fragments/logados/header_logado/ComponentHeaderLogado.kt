@@ -1,17 +1,21 @@
 package com.pscarpellini.frontend.fragments.logados.header_logado
 
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.PosicoesDropdownEnum
+import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.PosicoesDropdownEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownDivider
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownItem
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownItemLink
 import com.pscarpellini.frontend.fragments.geral.dropdown.dropdown
 import com.pscarpellini.frontend.fragments.geral.icone.icone
+import com.pscarpellini.frontend.fragments.geral.navigation.navigationLink
 import com.pscarpellini.frontend.fragments.geral.spacer.spacer
+import com.pscarpellini.frontend.fragments.logados.breadcrumbs.breadcrumbs
 import com.pscarpellini.models.vos.SessaoUsuarioVO
-import com.pscarpellini.rotas.PaginasRestritasEnum
 import kotlinx.html.FlowContent
 import kotlinx.html.a
 import kotlinx.html.div
@@ -19,41 +23,47 @@ import kotlinx.html.span
 
 fun FlowContent.includeHeaderLogado(
     sessao: SessaoUsuarioVO,
-    tituloPagina: String = "",
-    mostrarBack: Boolean = false,
 ) {
-    card(
-        showBackground = false,
-        classes = "w-full flex items-center"
-    ) {
-        if(mostrarBack) {
-            a(href = "javascript:history.back()", classes = "hover:underline") {
-                icone(IconesEnum.ARROW_LEFT, size = 2f)
-            }
-        }
-        span(classes = "font-semibold text-xl") {
-            if(tituloPagina.isBlank()) +"Olá, ${sessao.conta?.nome}"
-            else +tituloPagina
-        }
-        spacer()
-        a(href = "", classes = "hover:underline") {
-            card(showBackground = false, usarPadding = false, classes = "mx-6") {
-                icone(IconesEnum.AJUDA, size = 2f)
-                +"Central de ajuda"
-            }
-        }
-        dropdown(
-            posicao = PosicoesDropdownEnum.DIREITA,
-            botao = {
-                div(classes = "flex flex-row") {
-                    icone(IconesEnum.USUARIO, showBackground = true, corFundo = CoresEnum.HIGH_PURE)
+    div(classes = "w-full flex flex-col") {
+        card(
+            showBackground = false,
+            classes = "w-full flex items-center"
+        ) {
+            if (sessao.paginaAtual.showBack) {
+                a(href = "javascript:history.back()", classes = "hover:underline") {
+                    icone(IconesEnum.ARROW_LEFT, size = 2f)
                 }
-            },
-            opcoes = arrayListOf(
-                DropdownItem(nome = "Meu perfil", link = PaginasRestritasEnum.MEU_PERFIL.path),
-                DropdownDivider(),
-                DropdownItemLink(nome = "Sair da conta", link = PaginasRestritasEnum.LOGOUT.path, corTexto = CoresEnum.ALERT_DARK),
+            }
+            span(classes = "font-semibold text-xl") {
+                if (sessao.paginaAtual == PaginasRestritasEnum.INICIO) +"Olá, ${sessao.conta?.nome}"
+                else +sessao.paginaAtual.titulo
+            }
+            spacer()
+            navigationLink(icone = IconesEnum.AJUDA, texto = "Central de ajuda", classes = "mx-6")
+            dropdown(
+                posicao = PosicoesDropdownEnum.DIREITA,
+                botao = {
+                    div(classes = "flex flex-row") {
+                        icone(IconesEnum.USUARIO, showBackground = true, corFundo = CoresEnum.HIGH_PURE)
+                    }
+                },
+                opcoes = arrayListOf(
+                    DropdownItem(nome = "Meu perfil", link = PaginasRestritasEnum.MEU_PERFIL.path),
+                    DropdownDivider(),
+                    DropdownItemLink(nome = "Sair da conta", link = PaginasRestritasEnum.LOGOUT.path, corTexto = CoresEnum.ALERT_DARK),
+                )
             )
-        )
+        }
+        if (sessao.paginaAtual.showBreadcrumbs && sessao.paginaAtual.breadcrumbs.isNotEmpty()) breadcrumbs(sessao.paginaAtual)
+        if (sessao.paginaAtual.sublinks.isNotEmpty()) {
+            div(classes = "flex") {
+                sessao.paginaAtual.sublinks.forEach {
+                    botaoHX(tipo = TiposBotaoEnum.PRIMARY, link = it.path, small = true) {
+                        icone(it.icone)
+                        +it.nome
+                    }
+                }
+            }
+        }
     }
 }

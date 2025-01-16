@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.fragments.geral.avatar
 
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.TiposAvatarEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 import kotlinx.html.img

@@ -1,6 +1,7 @@
 package com.pscarpellini.frontend.pages.restritos
 
-import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
@@ -11,14 +12,16 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.models.vos.PerfilDeAcessoVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.rotas.FragmentsRestritosEnum
-import com.pscarpellini.rotas.PaginasRestritasEnum
-import kotlinx.html.*
+import kotlinx.html.FlowContent
+import kotlinx.html.InputType
+import kotlinx.html.div
+import kotlinx.html.form
 
 fun FlowContent.novoUsuario(
     sessao: SessaoUsuarioVO,
     perfisDeAcesso: List<PerfilDeAcessoVO>?
 ) {
-    includeHeaderLogado(sessao = sessao, tituloPagina = "Novo usuário", mostrarBack = true)
+    includeHeaderLogado(sessao = sessao)
     includeFormNovoUsuario()
 //            includeFormNovoUsuario(perfisDeAcesso = perfisDeAcesso)
 }

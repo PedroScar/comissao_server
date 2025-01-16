@@ -1,26 +1,23 @@
 package com.pscarpellini.frontend.pages.restritos
 
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.TiposAvatarEnum
-import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.card.card
-import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.icone.icone
-import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
-import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.*
 
 fun FlowContent.meuPerfil(
     sessao: SessaoUsuarioVO
 ) {
-    includeHeaderLogado(sessao = sessao, tituloPagina = "Meu perfil", mostrarBack = true)
+    includeHeaderLogado(sessao = sessao)
     includeContentGrid(
         linhas = 1,
         colunas = 1,

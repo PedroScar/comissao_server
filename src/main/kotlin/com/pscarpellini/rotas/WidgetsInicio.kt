@@ -2,7 +2,7 @@ package com.pscarpellini.rotas
 
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
-import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
 import com.pscarpellini.interfaces.IPaginaEnum

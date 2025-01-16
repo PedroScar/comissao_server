@@ -1,8 +1,8 @@
 package com.pscarpellini.frontend.pages.abertos.componentes
 
-import com.pscarpellini.frontend.enums.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
 import com.pscarpellini.frontend.fragments.geral.icone.icone

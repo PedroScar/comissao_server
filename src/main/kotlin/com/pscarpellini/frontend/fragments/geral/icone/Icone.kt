@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.fragments.geral.icone
 
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import kotlinx.html.FlowContent
 import kotlinx.html.img
 

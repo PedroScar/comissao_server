@@ -1,11 +1,10 @@
 package com.pscarpellini.frontend.fragments.geral.inputs
 
-import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.fragments.geral.icone.icone
-import io.ktor.server.html.*
-import kotlinx.css.option
 import kotlinx.html.*
-import javax.swing.Icon
 
 fun FlowContent.selectField(
     classes: String = "",

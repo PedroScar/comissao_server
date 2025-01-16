@@ -1,54 +1,49 @@
 package com.pscarpellini.frontend.enums
 
+import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.produtos.comissao.PaginasComissaoEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.interfaces.IItensMenuEnum
+import com.pscarpellini.interfaces.IPaginaEnum
+
 enum class ItensMenuEnum(
-    val nome: String,
+    override val nome: String,
     val icone: IconesEnum? = null,
-    val tipo: TiposItensMenuEnum = TiposItensMenuEnum.ITEM,
-    val caminho: String = "",
-) {
+    val pagina: IPaginaEnum,
+) : IItensMenuEnum {
     INICIO(
         nome = "Início",
         icone = IconesEnum.HOME,
-        tipo = TiposItensMenuEnum.ITEM,
-        caminho = "/int/inicio",
+        pagina = PaginasRestritasEnum.INICIO,
     ),
     PROMOCOES(
         nome = "Promoções",
         icone = IconesEnum.CARRINHO,
-        tipo = TiposItensMenuEnum.ITEM,
-        caminho = "/int/promocoes",
+        pagina = PaginasComissaoEnum.PROMOCOES,
     ),
     SALDOS_DOS_PROMOTORES(
         nome = "Saldos dos promotores",
         icone = IconesEnum.PRECO,
-        tipo = TiposItensMenuEnum.ITEM,
-        caminho = "/int/saldos",
+        pagina = PaginasComissaoEnum.SALDOS_DOS_PROMOTORES,
     ),
     RELATORIOS(
         nome = "Relatórios",
         icone = IconesEnum.DOCUMENTO,
-        tipo = TiposItensMenuEnum.ITEM,
-        caminho = "/int/relatorios",
+        pagina = PaginasComissaoEnum.RELATORIOS,
     ),
-
-    ADMINISTRACAO(nome = "administração", tipo = TiposItensMenuEnum.CATEGORIA),
-
     GERENCIAMENTO_DE_USUARIOS(
         nome = "Gerenciamento de usuários",
         icone = IconesEnum.USUARIOS,
-        tipo = TiposItensMenuEnum.ITEM,
-        caminho = "/int/usuarios",
+        pagina = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS,
     ),
     CONFIGURACOES_DO_APP(
         nome = "Configurações do app",
         icone = IconesEnum.APP,
-        tipo = TiposItensMenuEnum.ITEM,
-        caminho = "/int/configuracoes",
+        pagina = PaginasRestritasEnum.CONFIGURACOES_DO_APP,
     ),
     HISTORICO_DE_TRANSACOES(
         nome = "Histórico de transações",
         icone = IconesEnum.HISTORICO,
-        tipo = TiposItensMenuEnum.ITEM,
-        caminho = "/int/historico",
+        pagina = PaginasComissaoEnum.HISTORICO_DE_TRANSACOES,
     ),
 }

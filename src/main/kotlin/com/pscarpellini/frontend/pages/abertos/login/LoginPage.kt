@@ -1,8 +1,8 @@
 package com.pscarpellini.frontend.pages.abertos.login
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader

@@ -1,6 +1,6 @@
 package com.pscarpellini.frontend.fragments.geral.toast
 
-import com.pscarpellini.frontend.enums.TiposToastEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 import kotlinx.html.script

@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.fragments.geral.card
 
-import com.pscarpellini.frontend.enums.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.DirecoesEnum
+import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
+import com.pscarpellini.frontend.enums.designsystem.DirecoesEnum
 import kotlinx.html.*
 
 fun FlowContent.card(

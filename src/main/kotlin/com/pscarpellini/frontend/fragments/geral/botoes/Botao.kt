@@ -1,8 +1,7 @@
 package com.pscarpellini.frontend.fragments.geral.botoes
 
-import com.pscarpellini.frontend.enums.AlinhamentosEnum
-import com.pscarpellini.frontend.enums.CoresEnum
-import com.pscarpellini.frontend.enums.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.designsystem.AlinhamentosEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import kotlinx.html.*
 
 fun FlowContent.botao(

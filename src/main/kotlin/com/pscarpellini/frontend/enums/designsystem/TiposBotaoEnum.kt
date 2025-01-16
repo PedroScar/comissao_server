@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.enums
+package com.pscarpellini.frontend.enums.designsystem
 
 enum class TiposBotaoEnum(
     val cssProprio: String,

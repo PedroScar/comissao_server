@@ -1,6 +1,8 @@
 package com.pscarpellini.frontend.pages.restritos
 
-import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
@@ -10,15 +12,16 @@ import com.pscarpellini.frontend.fragments.geral.inputs.inputField
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.rotas.FragmentsRestritosEnum
-import com.pscarpellini.rotas.PaginasRestritasEnum
-import kotlinx.html.*
+import kotlinx.html.FlowContent
+import kotlinx.html.InputType
+import kotlinx.html.div
 
 fun FlowContent.promocoes(
     sessao: SessaoUsuarioVO
 ) {
     val idDaTabela = "tabela_de_promocoes-${System.currentTimeMillis()}"
 
-    includeHeaderLogado(sessao = sessao, tituloPagina = "Promoções", mostrarBack = false)
+    includeHeaderLogado(sessao = sessao)
     card(classes = "flex flex-col gap-8 h-full") {
         div(classes = "flex flex-row w-full items-center gap-4") {
             inputField(

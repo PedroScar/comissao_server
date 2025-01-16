@@ -1,18 +1,15 @@
 package com.pscarpellini.frontend.pages.restritos
 
 import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.card.card
-import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.icone.icone
-import com.pscarpellini.frontend.fragments.logados.content_body.includeContentBodyLogado
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_pilula.itemMenuPilula
-import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.rotas.FragmentsRestritosEnum
-import com.pscarpellini.rotas.PaginasRestritasEnum
 import com.pscarpellini.rotas.WidgetsInicioEnum
 import kotlinx.html.*
 

@@ -1,16 +1,18 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.produtos.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.criarNomeDeUsuario
-import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
-import com.pscarpellini.frontend.enums.*
+import com.pscarpellini.frontend.enums.ItensMenuEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.restritos.*
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
+import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PerfisDeAcessoRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
@@ -37,33 +39,37 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.INICIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.INICIO
-        call.respondFragment (HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasRestritasEnum.INICIO
+        call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             inicio(sessao)
         }
     }
 
-    post(PaginasRestritasEnum.PROMOCOES.path) {
+    post(PaginasComissaoEnum.PROMOCOES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
-        call.respondFragment (HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasComissaoEnum.PROMOCOES
+        call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             promocoes(sessao)
         }
     }
 
-    post(PaginasRestritasEnum.SALDOS_DOS_PROMOTORES.path) {
+    post(PaginasComissaoEnum.SALDOS_DOS_PROMOTORES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.SALDOS_DOS_PROMOTORES
-        call.respondFragment (HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasComissaoEnum.SALDOS_DOS_PROMOTORES
+        call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             inicio(sessao)
         }
     }
-    post(PaginasRestritasEnum.RELATORIOS.path) {
+    post(PaginasComissaoEnum.RELATORIOS.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.RELATORIOS
-        call.respondFragment (HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasComissaoEnum.RELATORIOS
+        call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             inicio(sessao)
         }
@@ -72,6 +78,7 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+        sessao.paginaAtual = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             gerenciamentoDeUsuarios(sessao)
@@ -81,15 +88,17 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.CONFIGURACOES_DO_APP.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP
-        call.respondFragment (HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasRestritasEnum.CONFIGURACOES_DO_APP
+        call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             inicio(sessao)
         }
     }
-    post(PaginasRestritasEnum.HISTORICO_DE_TRANSACOES.path) {
+    post(PaginasComissaoEnum.HISTORICO_DE_TRANSACOES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.HISTORICO_DE_TRANSACOES
-        call.respondFragment (HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasComissaoEnum.HISTORICO_DE_TRANSACOES
+        call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             inicio(sessao)
         }
@@ -98,7 +107,8 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.MEU_PERFIL.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = null
-        call.respondFragment (HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasRestritasEnum.MEU_PERFIL
+        call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             meuPerfil(sessao)
         }
@@ -107,6 +117,7 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.NOVO_USUARIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+        sessao.paginaAtual = PaginasRestritasEnum.NOVO_USUARIO
         perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
@@ -159,25 +170,4 @@ fun Route.paginasRestritas(
         call.sessions.clear<SessaoUsuarioVO>()
         call.respondRedirect(PaginasAbertasEnum.Landing.path)
     }
-}
-
-enum class PaginasRestritasEnum(
-    override val path: String
-): IPaginaEnum {
-    INTERNO("/int/{path}"),
-
-    INICIO(ItensMenuEnum.INICIO.caminho),
-
-
-    PROMOCOES(ItensMenuEnum.PROMOCOES.caminho),
-    SALDOS_DOS_PROMOTORES(ItensMenuEnum.SALDOS_DOS_PROMOTORES.caminho),
-    RELATORIOS(ItensMenuEnum.RELATORIOS.caminho),
-    GERENCIAMENTO_DE_USUARIOS(ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS.caminho),
-    CONFIGURACOES_DO_APP(ItensMenuEnum.CONFIGURACOES_DO_APP.caminho),
-    HISTORICO_DE_TRANSACOES(ItensMenuEnum.HISTORICO_DE_TRANSACOES.caminho),
-
-    NOVO_USUARIO("/int/novo_usuario"),
-    MEU_PERFIL("/int/meu_perfil"),
-
-    LOGOUT("/logout"),
 }

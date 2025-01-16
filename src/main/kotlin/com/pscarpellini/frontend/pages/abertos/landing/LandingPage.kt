@@ -1,15 +1,14 @@
 package com.pscarpellini.frontend.pages.abertos.landing
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.frontend.enums.TiposBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.botoes.botao
+import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.rotas.PaginasAbertasEnum
-import com.pscarpellini.rotas.PaginasRestritasEnum
 import kotlinx.html.*
 
 fun HTML.landingPage(

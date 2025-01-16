@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.enums
+package com.pscarpellini.frontend.enums.designsystem
 
 import com.pscarpellini.extensions.formatarNomeTailwind
 import com.pscarpellini.frontend.tailwind.PropriedadeTailwind

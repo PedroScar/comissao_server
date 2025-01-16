@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.fragments.logados.menu_principal
 
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.PosicoesDropdownEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.frontend.enums.designsystem.PosicoesDropdownEnum
 import com.pscarpellini.frontend.fragments.geral.dropdown.dropdown
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import kotlinx.html.*

@@ -1,13 +1,13 @@
 package com.pscarpellini.frontend.fragments.logados.menu_principal
 
-import com.pscarpellini.frontend.enums.IconesEnum
-import com.pscarpellini.frontend.enums.TiposItensMenuEnum
-import com.pscarpellini.frontend.fragments.geral.toast.toastContainer
+import com.pscarpellini.extensions.obterListaGeral
+import com.pscarpellini.frontend.enums.CategoriasMenuEnum
+import com.pscarpellini.frontend.enums.ItensMenuEnum
+import com.pscarpellini.interfaces.IItensMenuEnum
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 import kotlinx.html.nav
-import org.h2.engine.Session
 
 
 fun FlowContent.includeMenuPrincipal(
@@ -20,9 +20,11 @@ fun FlowContent.includeMenuPrincipal(
         includeMenuCliente("Pinturas Prime", classes = "mt-4")
 
         div("flex-grow overflow-y-auto space-y-1 mt-4") {
-            sessao.menusDisponiveis.forEach {
-                if(it.tipo == TiposItensMenuEnum.ITEM) includeMenuItem(item = it, isSelecionado = it == sessao.menuSelecionado)
-                else includeMenuCategoria(it.nome)
+            sessao.menusDisponiveis.obterListaGeral().forEach {
+                when(it) {
+                    is ItensMenuEnum -> includeMenuItem(item = it, isSelecionado = it == sessao.menuSelecionado)
+                    is CategoriasMenuEnum -> includeMenuCategoria(it.nome)
+                }
             }
         }
     }

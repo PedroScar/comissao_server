@@ -4,6 +4,10 @@ enum class PapeisDeAcessoEnum(
     val nome: String,
     val slug: String
 ) {
+    VISUALIZAR_PROMOCOES(nome = "Visualizar usuários", slug = "visualizar_usuario"),
+    NOVA_PROMOCAO(nome = "Visualizar usuários", slug = "visualizar_usuario"),
+    EDITAR_PROMOCAO(nome = "Visualizar usuários", slug = "visualizar_usuario"),
+
     VISUALIZAR_USUARIOS(nome = "Visualizar usuários", slug = "visualizar_usuario"),
     EDITAR_USUARIO(nome = "Editar usuário", slug = "editar_usuario"),
     CRIAR_USUARIO(nome = "Criar usuário", slug = "criar_usuario"),
