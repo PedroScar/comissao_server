@@ -2,6 +2,7 @@ package com.pscarpellini.frontend.pages.restritos
 
 import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
+import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.icone.icone
@@ -12,12 +13,12 @@ import com.pscarpellini.rotas.FragmentsRestritosEnum
 import com.pscarpellini.rotas.PaginasRestritasEnum
 import kotlinx.html.*
 
-fun FlowContent.gerenciamentoDeUsuarios(
+fun FlowContent.promocoes(
     sessao: SessaoUsuarioVO
 ) {
-    val idDaTabela = "tabela_de_usuarios-${System.currentTimeMillis()}"
+    val idDaTabela = "tabela_de_promocoes-${System.currentTimeMillis()}"
 
-    includeHeaderLogado(sessao = sessao, tituloPagina = "Gerenciamento de usuários", mostrarBack = false)
+    includeHeaderLogado(sessao = sessao, tituloPagina = "Promoções", mostrarBack = false)
     card(classes = "flex flex-col gap-8 h-full") {
         div(classes = "flex flex-row w-full items-center gap-4") {
             inputField(
@@ -31,10 +32,10 @@ fun FlowContent.gerenciamentoDeUsuarios(
                 hxTarget = idDaTabela,
                 icone = IconesEnum.BUSCAR
             )
-//            botao(tipo = TiposBotaoEnum.NEUTRAL) {
-//                icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
-//                +"Filtro"
-//            }
+            botao(tipo = TiposBotaoEnum.NEUTRAL) {
+                icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
+                +"Filtro"
+            }
             botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = PaginasRestritasEnum.NOVO_USUARIO.path) {
                 icone(IconesEnum.ADICIONAR, usarPadding = false, size = 1.4f)
                 +"Adicionar usuário"

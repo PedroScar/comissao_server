@@ -6,11 +6,7 @@ import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.fragments.geral.toast.toast
-import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
-import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeListaDeUsuarios
-import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.frontend.pages.restritos.*
 import com.pscarpellini.models.DbResponse
@@ -24,7 +20,6 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
-import kotlinx.html.*
 
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
@@ -53,7 +48,7 @@ fun Route.paginasRestritas(
         sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
         call.respondFragment (HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
-            inicio(sessao)
+            promocoes(sessao)
         }
     }
 

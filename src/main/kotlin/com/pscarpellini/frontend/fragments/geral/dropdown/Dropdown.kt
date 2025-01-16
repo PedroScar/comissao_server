@@ -28,6 +28,7 @@ fun FlowContent.dropdown(
                     when(opcao) {
                         is DropdownDivider -> divider()
                         is DropdownItem -> dropdownItem(nome = opcao.nome, link = opcao.link, corTexto = opcao.corTexto)
+                        is DropdownItemLink -> dropdownItemLink(nome = opcao.nome, link = opcao.link, corTexto = opcao.corTexto)
                     }
                 }
             }
@@ -62,6 +63,11 @@ private fun FlowContent.dropdownItem(nome: String, link: String, corTexto: Cores
 interface DropdownElement
 class DropdownDivider : DropdownElement
 class DropdownItem(
+    val nome: String,
+    val link: String,
+    val corTexto: CoresEnum = CoresEnum.LOW_PURE
+) : DropdownElement
+class DropdownItemLink(
     val nome: String,
     val link: String,
     val corTexto: CoresEnum = CoresEnum.LOW_PURE

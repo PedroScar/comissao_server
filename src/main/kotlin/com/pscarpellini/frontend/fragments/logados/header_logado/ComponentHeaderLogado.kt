@@ -6,6 +6,7 @@ import com.pscarpellini.frontend.enums.PosicoesDropdownEnum
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownDivider
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownItem
+import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownItemLink
 import com.pscarpellini.frontend.fragments.geral.dropdown.dropdown
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.spacer.spacer
@@ -51,7 +52,7 @@ fun FlowContent.includeHeaderLogado(
             opcoes = arrayListOf(
                 DropdownItem(nome = "Meu perfil", link = PaginasRestritasEnum.MEU_PERFIL.path),
                 DropdownDivider(),
-                DropdownItem(nome = "Sair da conta", link = PaginasRestritasEnum.LOGOUT.path, corTexto = CoresEnum.ALERT_DARK),
+                DropdownItemLink(nome = "Sair da conta", link = PaginasRestritasEnum.LOGOUT.path, corTexto = CoresEnum.ALERT_DARK),
             )
         )
     }
