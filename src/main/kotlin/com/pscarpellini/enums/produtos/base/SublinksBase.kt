@@ -1,17 +1,17 @@
 package com.pscarpellini.enums.produtos.base
 
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
 
 enum class SublinksBaseEnum(
-    override val nome: String,
-    override val path: String,
     override val icone: IconesEnum,
+    override val nome: String,
+    override val caminho: IPaginaEnum,
 ) : ISublinksRestritosEnum {
     NOVO_USUARIO(
         nome = "Novo usuário",
-        path = "/int/novo_usuario",
+        caminho = CaminhosBaseEnum.NOVO_USUARIO,
         icone = IconesEnum.ADICIONAR
     ),
 }

@@ -1,11 +1,7 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.extensions.obterSessao
-import com.pscarpellini.frontend.pages.restritos.inicio
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.html.respondHtml
 import io.ktor.server.request.*
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.*

@@ -73,7 +73,7 @@ fun HTML.loginPage() {
                             botao(
                                 tipo = TiposBotaoEnum.PRIMARY,
                                 classes = "w-full",
-                                hxPath = PaginasAbertasEnum.Login.path,
+                                hxPath = PaginasAbertasEnum.Login, // TODO: Criar um CaminhosAbertosEnum
                                 hxTarget = "toast-container",
                                 hxSwap = "beforeend",
                                 hxIndicator = "loading-login"
@@ -83,7 +83,7 @@ fun HTML.loginPage() {
                                 tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
                                 classes = "block",
-                                link = PaginasAbertasEnum.EsqueciMinhaSenha.path
+                                link = PaginasAbertasEnum.EsqueciMinhaSenha.path // TODO: Criar um CaminhosAbertosEnum
                             ) { +"Esqueci minha senha" }
                         }
                     }

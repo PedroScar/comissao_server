@@ -1,6 +1,6 @@
-package com.pscarpellini.frontend.pages.restritos
+package com.pscarpellini.frontend.pages.restritos.base
 
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
@@ -38,7 +38,7 @@ fun FlowContent.gerenciamentoDeUsuarios(
 //                icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
 //                +"Filtro"
 //            }
-            botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = PaginasRestritasEnum.NOVO_USUARIO.path) {
+            botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = CaminhosBaseEnum.NOVO_USUARIO) {
                 icone(IconesEnum.ADICIONAR, usarPadding = false, size = 1.4f)
                 +"Adicionar usuário"
             }

@@ -1,6 +1,7 @@
 package com.pscarpellini.enums.produtos.comissao
 
 import com.pscarpellini.enums.PapeisDeAcessoEnum
+import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.IPaginaRestritaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
 
@@ -11,13 +12,13 @@ enum class PaginasComissaoEnum(
     override val papelNecessario: PapeisDeAcessoEnum? = null,
     override val showBreadcrumbs: Boolean = false,
     override val breadcrumbs: ArrayList<IPaginaRestritaEnum> = arrayListOf(),
-    override val path: String
+    override val caminho: IPaginaEnum,
 ) : IPaginaRestritaEnum {
     PROMOCOES(
         titulo = "Promoções",
         sublinks = arrayListOf(SublinksComissaoEnum.CRIAR_NOVA_PROMOCAO),
         papelNecessario = PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
-        path = "/int/promocoes"
+        caminho = CaminhosComissaoEnum.PROMOCOES
     ),
     NOVA_PROMOCAO(
         titulo = "Nova promoção",
@@ -26,7 +27,7 @@ enum class PaginasComissaoEnum(
         papelNecessario = PapeisDeAcessoEnum.NOVA_PROMOCAO,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(PROMOCOES),
-        path = SublinksComissaoEnum.CRIAR_NOVA_PROMOCAO.path
+        caminho = CaminhosComissaoEnum.NOVA_PROMOCAO
     ),
     EDITAR_PROMOCAO(
         titulo = "Exibir promoção",
@@ -35,23 +36,23 @@ enum class PaginasComissaoEnum(
         papelNecessario = PapeisDeAcessoEnum.EDITAR_PROMOCAO,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(PROMOCOES),
-        path = "/int/promocoes"
+        caminho = CaminhosComissaoEnum.EDITAR_PROMOCAO
     ),
 
     SALDOS_DOS_PROMOTORES(
         titulo = "Saldos dos promotores",
         sublinks = arrayListOf(SublinksComissaoEnum.MODIFICAR_SALDO),
-        path = SublinksComissaoEnum.MODIFICAR_SALDO.path
+        caminho = CaminhosComissaoEnum.SALDOS_DOS_PROMOTORES
     ),
 
     RELATORIOS(
         titulo = "Relatórios",
         sublinks = arrayListOf(),
-        path = "/int/relatorios"
+        caminho = CaminhosComissaoEnum.RELATORIOS
     ),
 
     HISTORICO_DE_TRANSACOES(
         titulo = "Histórico de transações",
-        path = "/int/historico"
+        caminho = CaminhosComissaoEnum.HISTORICO_DE_TRANSACOES
     ),
 }

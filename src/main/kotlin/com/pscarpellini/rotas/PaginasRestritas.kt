@@ -1,6 +1,8 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.produtos.comissao.CaminhosComissaoEnum
 import com.pscarpellini.enums.produtos.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.criarNomeDeUsuario
 import com.pscarpellini.extensions.obterSessao
@@ -9,7 +11,8 @@ import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.frontend.pages.restritos.*
+import com.pscarpellini.frontend.pages.restritos.base.*
+import com.pscarpellini.frontend.pages.restritos.comissao.promocoes
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
@@ -28,15 +31,15 @@ fun Route.paginasRestritas(
     promocoesRepository: PromocoesRepository,
     perfisDeAcessoRepository: PerfisDeAcessoRepository,
 ) {
-    get(PaginasRestritasEnum.INTERNO.path) {
+    get(CaminhosBaseEnum.INTERNO.path) {
         val sessao = obterSessao()
         call.respondHtml(HttpStatusCode.OK) {
-            val caminho = call.parameters["path"] ?: PaginasRestritasEnum.INICIO.path
+            val caminho = call.parameters["path"] ?: CaminhosBaseEnum.INICIO.path
             interno(sessao = sessao, caminho = caminho)
         }
     }
 
-    post(PaginasRestritasEnum.INICIO.path) {
+    post(CaminhosBaseEnum.INICIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.INICIO
         sessao.paginaAtual = PaginasRestritasEnum.INICIO
@@ -46,7 +49,7 @@ fun Route.paginasRestritas(
         }
     }
 
-    post(PaginasComissaoEnum.PROMOCOES.path) {
+    post(CaminhosComissaoEnum.PROMOCOES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
         sessao.paginaAtual = PaginasComissaoEnum.PROMOCOES
@@ -56,7 +59,7 @@ fun Route.paginasRestritas(
         }
     }
 
-    post(PaginasComissaoEnum.SALDOS_DOS_PROMOTORES.path) {
+    post(CaminhosComissaoEnum.SALDOS_DOS_PROMOTORES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.SALDOS_DOS_PROMOTORES
         sessao.paginaAtual = PaginasComissaoEnum.SALDOS_DOS_PROMOTORES
@@ -65,7 +68,7 @@ fun Route.paginasRestritas(
             inicio(sessao)
         }
     }
-    post(PaginasComissaoEnum.RELATORIOS.path) {
+    post(CaminhosComissaoEnum.RELATORIOS.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.RELATORIOS
         sessao.paginaAtual = PaginasComissaoEnum.RELATORIOS
@@ -75,7 +78,7 @@ fun Route.paginasRestritas(
         }
     }
 
-    post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.path) {
+    post(CaminhosBaseEnum.GERENCIAMENTO_DE_USUARIOS.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
         sessao.paginaAtual = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS
@@ -85,7 +88,7 @@ fun Route.paginasRestritas(
         }
     }
 
-    post(PaginasRestritasEnum.CONFIGURACOES_DO_APP.path) {
+    post(CaminhosBaseEnum.CONFIGURACOES_DO_APP.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP
         sessao.paginaAtual = PaginasRestritasEnum.CONFIGURACOES_DO_APP
@@ -94,7 +97,7 @@ fun Route.paginasRestritas(
             inicio(sessao)
         }
     }
-    post(PaginasComissaoEnum.HISTORICO_DE_TRANSACOES.path) {
+    post(CaminhosComissaoEnum.HISTORICO_DE_TRANSACOES.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.HISTORICO_DE_TRANSACOES
         sessao.paginaAtual = PaginasComissaoEnum.HISTORICO_DE_TRANSACOES
@@ -104,7 +107,7 @@ fun Route.paginasRestritas(
         }
     }
 
-    post(PaginasRestritasEnum.MEU_PERFIL.path) {
+    post(CaminhosBaseEnum.MEU_PERFIL.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = null
         sessao.paginaAtual = PaginasRestritasEnum.MEU_PERFIL
@@ -114,7 +117,7 @@ fun Route.paginasRestritas(
         }
     }
 
-    post(PaginasRestritasEnum.NOVO_USUARIO.path) {
+    post(CaminhosBaseEnum.NOVO_USUARIO.path) {
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
         sessao.paginaAtual = PaginasRestritasEnum.NOVO_USUARIO
@@ -129,7 +132,7 @@ fun Route.paginasRestritas(
         }
     }
 
-    post(PaginasRestritasEnum.NOVO_USUARIO.path) {
+    post(CaminhosBaseEnum.FORMULARIO_NOVO_USUARIO.path) {
         val sessao = obterSessao()
 
         val parameters = call.receiveParameters()
@@ -166,7 +169,7 @@ fun Route.paginasRestritas(
     }
 
 
-    get(PaginasRestritasEnum.LOGOUT.path) {
+    get(CaminhosBaseEnum.LOGOUT.path) {
         call.sessions.clear<SessaoUsuarioVO>()
         call.respondRedirect(PaginasAbertasEnum.Landing.path)
     }

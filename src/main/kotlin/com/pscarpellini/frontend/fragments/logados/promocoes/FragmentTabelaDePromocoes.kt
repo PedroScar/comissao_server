@@ -1,6 +1,7 @@
 package com.pscarpellini.frontend.fragments.logados.promocoes
 
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.models.vos.PromocaoVO
@@ -30,7 +31,7 @@ private fun exibirLinhaPromocao(promocao: PromocaoVO): List<FlowContent.() -> Un
         { +"Ativa" },
         { +"483" },
         {
-            botaoHX(tipo = TiposBotaoEnum.TRANSPARENT, link = "") { +"Abrir" }
+            botao(tipo = TiposBotaoEnum.TRANSPARENT) { +"Abrir" }
 //            div(classes = "flex flex-row gap-2") {
 //                botaoIcone(icone = IconesEnum.EDITAR, tipo = TiposBotaoEnum.NEUTRAL, enabled = conta.acoes.contains("Editar"))
 //                botaoIcone(icone = IconesEnum.OLHO_ABERTO, tipo = TiposBotaoEnum.NEUTRAL, enabled = conta.acoes.contains("Visualizar"))

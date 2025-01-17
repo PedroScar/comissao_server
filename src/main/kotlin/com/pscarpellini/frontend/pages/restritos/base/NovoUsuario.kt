@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.restritos
+package com.pscarpellini.frontend.pages.restritos.base
 
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
@@ -83,7 +83,7 @@ fun FlowContent.includeFormNovoUsuario(
         div(classes = "self-end flex flex-row gap-2") {
             botaoLink(tipo = TiposBotaoEnum.SUBTLE, link = "javascript:history.back()") { +"Cancelar" }
             botao(
-                hxPath = PaginasRestritasEnum.NOVO_USUARIO.path,
+                hxPath = PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho,
                 hxTarget = "form-novo-usuario",
                 hxSwap = "outerHTML"
             ) { +"Salvar" }

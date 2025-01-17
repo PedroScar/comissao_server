@@ -1,6 +1,8 @@
 package com.pscarpellini.frontend.enums
 
+import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.produtos.comissao.CaminhosComissaoEnum
 import com.pscarpellini.enums.produtos.comissao.PaginasComissaoEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.interfaces.IItensMenuEnum
@@ -14,36 +16,36 @@ enum class ItensMenuEnum(
     INICIO(
         nome = "Início",
         icone = IconesEnum.HOME,
-        pagina = PaginasRestritasEnum.INICIO,
+        pagina = CaminhosBaseEnum.INICIO,
     ),
     PROMOCOES(
         nome = "Promoções",
         icone = IconesEnum.CARRINHO,
-        pagina = PaginasComissaoEnum.PROMOCOES,
+        pagina = CaminhosComissaoEnum.PROMOCOES,
     ),
     SALDOS_DOS_PROMOTORES(
         nome = "Saldos dos promotores",
         icone = IconesEnum.PRECO,
-        pagina = PaginasComissaoEnum.SALDOS_DOS_PROMOTORES,
+        pagina = CaminhosComissaoEnum.SALDOS_DOS_PROMOTORES,
     ),
     RELATORIOS(
         nome = "Relatórios",
         icone = IconesEnum.DOCUMENTO,
-        pagina = PaginasComissaoEnum.RELATORIOS,
+        pagina = CaminhosComissaoEnum.RELATORIOS,
     ),
     GERENCIAMENTO_DE_USUARIOS(
         nome = "Gerenciamento de usuários",
         icone = IconesEnum.USUARIOS,
-        pagina = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS,
+        pagina = CaminhosBaseEnum.GERENCIAMENTO_DE_USUARIOS,
     ),
     CONFIGURACOES_DO_APP(
         nome = "Configurações do app",
         icone = IconesEnum.APP,
-        pagina = PaginasRestritasEnum.CONFIGURACOES_DO_APP,
+        pagina = CaminhosBaseEnum.CONFIGURACOES_DO_APP,
     ),
     HISTORICO_DE_TRANSACOES(
         nome = "Histórico de transações",
         icone = IconesEnum.HISTORICO,
-        pagina = PaginasComissaoEnum.HISTORICO_DE_TRANSACOES,
+        pagina = CaminhosComissaoEnum.HISTORICO_DE_TRANSACOES,
     ),
 }

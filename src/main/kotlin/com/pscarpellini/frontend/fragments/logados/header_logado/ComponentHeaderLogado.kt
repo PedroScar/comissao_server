@@ -1,5 +1,6 @@
 package com.pscarpellini.frontend.fragments.logados.header_logado
 
+import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
@@ -48,9 +49,9 @@ fun FlowContent.includeHeaderLogado(
                     }
                 },
                 opcoes = arrayListOf(
-                    DropdownItem(nome = "Meu perfil", link = PaginasRestritasEnum.MEU_PERFIL.path),
+                    DropdownItem(nome = "Meu perfil", link = CaminhosBaseEnum.MEU_PERFIL),
                     DropdownDivider(),
-                    DropdownItemLink(nome = "Sair da conta", link = PaginasRestritasEnum.LOGOUT.path, corTexto = CoresEnum.ALERT_DARK),
+                    DropdownItemLink(nome = "Sair da conta", link = CaminhosBaseEnum.LOGOUT, corTexto = CoresEnum.ALERT_DARK),
                 )
             )
         }
@@ -58,7 +59,7 @@ fun FlowContent.includeHeaderLogado(
         if (sessao.paginaAtual.sublinks.isNotEmpty()) {
             div(classes = "flex") {
                 sessao.paginaAtual.sublinks.forEach {
-                    botaoHX(tipo = TiposBotaoEnum.PRIMARY, link = it.path, small = true) {
+                    botaoHX(tipo = TiposBotaoEnum.PRIMARY, link = it.caminho, small = true) {
                         icone(it.icone)
                         +it.nome
                     }

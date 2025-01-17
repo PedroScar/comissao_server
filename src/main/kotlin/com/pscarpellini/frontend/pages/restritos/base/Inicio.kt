@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.restritos
+package com.pscarpellini.frontend.pages.restritos.base
 
 import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum

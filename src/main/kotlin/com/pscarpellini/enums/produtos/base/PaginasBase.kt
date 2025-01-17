@@ -1,6 +1,7 @@
 package com.pscarpellini.enums.produtos.base
 
 import com.pscarpellini.enums.PapeisDeAcessoEnum
+import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.IPaginaRestritaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
 
@@ -11,28 +12,33 @@ enum class PaginasRestritasEnum(
     override val papelNecessario: PapeisDeAcessoEnum? = null,
     override val showBreadcrumbs: Boolean = false,
     override val breadcrumbs: ArrayList<IPaginaRestritaEnum> = arrayListOf(),
-    override val path: String
-): IPaginaRestritaEnum {
-    INTERNO(titulo = "", path = "/int/{path}"),
+    override val caminho: IPaginaEnum,
+) : IPaginaRestritaEnum {
+    INTERNO(titulo = "", caminho = CaminhosBaseEnum.INTERNO),
 
-    INICIO(titulo = "Olá!", path = "/int/inicio"),
+    INICIO(titulo = "Olá!", caminho = CaminhosBaseEnum.INICIO),
 
     GERENCIAMENTO_DE_USUARIOS(
         titulo = "Gerenciamento de usuários",
         sublinks = arrayListOf(SublinksBaseEnum.NOVO_USUARIO),
-        path = "/int/usuarios"
+        caminho = CaminhosBaseEnum.GERENCIAMENTO_DE_USUARIOS
     ),
     NOVO_USUARIO(
         titulo = "Novo usuário",
         showBack = true,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(GERENCIAMENTO_DE_USUARIOS),
-        path = SublinksBaseEnum.NOVO_USUARIO.path
+        caminho = CaminhosBaseEnum.NOVO_USUARIO
+    ),
+
+    FORMULARIO_NOVO_USUARIO(
+        titulo = "Novo usuário",
+        caminho = CaminhosBaseEnum.FORMULARIO_NOVO_USUARIO
     ),
 
     CONFIGURACOES_DO_APP(
         titulo = "Configurações do app",
-        path = "/int/configuracoes"
+        caminho = CaminhosBaseEnum.CONFIGURACOES_DO_APP
     ),
 
     MEU_PERFIL(
@@ -40,8 +46,8 @@ enum class PaginasRestritasEnum(
         showBack = true,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(INICIO),
-        path = "/int/meu_perfil"
+        caminho = CaminhosBaseEnum.MEU_PERFIL
     ),
 
-    LOGOUT(titulo = "", path = "/logout"),
+    LOGOUT(titulo = "", caminho = CaminhosBaseEnum.LOGOUT),
 }

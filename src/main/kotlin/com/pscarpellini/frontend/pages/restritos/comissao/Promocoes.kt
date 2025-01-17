@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.restritos
+package com.pscarpellini.frontend.pages.restritos.comissao
 
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
@@ -39,7 +39,7 @@ fun FlowContent.promocoes(
                 icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
                 +"Filtro"
             }
-            botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = PaginasRestritasEnum.NOVO_USUARIO.path) {
+            botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = PaginasRestritasEnum.NOVO_USUARIO.caminho) {
                 icone(IconesEnum.ADICIONAR, usarPadding = false, size = 1.4f)
                 +"Adicionar usuário"
             }

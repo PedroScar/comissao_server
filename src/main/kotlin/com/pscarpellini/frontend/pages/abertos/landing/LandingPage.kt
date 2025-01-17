@@ -1,6 +1,7 @@
 package com.pscarpellini.frontend.pages.abertos.landing
 
 import com.pscarpellini.AmbientController
+import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
@@ -41,8 +42,8 @@ fun HTML.landingPage(
                     img(classes = "ic-whatsapp", src = "/static/ic_whatsapp.svg", alt = "Ícone")
                 }
 
-                if(sessao != null) botaoLink(tipo = TiposBotaoEnum.PRIMARY, link = PaginasRestritasEnum.INICIO.path) { +"Início" }
-                else botaoLink(tipo = TiposBotaoEnum.PRIMARY, link = PaginasAbertasEnum.Login.path) { +"Entrar" }
+                if(sessao != null) botaoLink(tipo = TiposBotaoEnum.PRIMARY, link = CaminhosBaseEnum.INICIO.path) { +"Início" }
+                else botaoLink(tipo = TiposBotaoEnum.PRIMARY, link = PaginasAbertasEnum.Login.path) { +"Entrar" } // TODO: Criar um CaminhosAbertosEnum
             }
         }
 

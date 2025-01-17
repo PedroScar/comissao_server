@@ -79,7 +79,7 @@ fun HTML.esqueciMinhaSenhaPage() {
                             botao(
                                 tipo = TiposBotaoEnum.PRIMARY,
                                 classes = "w-full",
-                                hxPath = PaginasAbertasEnum.Login.path,
+                                hxPath = PaginasAbertasEnum.Login, // TODO: Criar um CaminhosAbertosEnum
                                 hxTarget = "toast-container",
                                 hxSwap = "beforeend"
                             ) { +"Entrar" }
@@ -88,7 +88,7 @@ fun HTML.esqueciMinhaSenhaPage() {
                                 tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
                                 classes = "block",
-                                link = PaginasAbertasEnum.Login.path
+                                link = PaginasAbertasEnum.Login.path // TODO: Criar um CaminhosAbertosEnum
                             ) {
                                 +"Já lembrei, posso voltar"
                             }

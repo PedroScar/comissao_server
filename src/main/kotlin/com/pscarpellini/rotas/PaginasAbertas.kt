@@ -1,5 +1,6 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
@@ -33,7 +34,7 @@ fun Route.paginasAbertas(
     get(PaginasAbertasEnum.Login.path) {
         runCatching { obterSessao() }
             .onFailure { call.respondHtml(HttpStatusCode.OK) { loginPage() } }
-            .onSuccess { call.respondRedirect(PaginasRestritasEnum.INICIO.path) }
+            .onSuccess { call.respondRedirect(CaminhosBaseEnum.INICIO.path) }
     }
     post(PaginasAbertasEnum.Login.path) {
         val parameters = call.receiveParameters()
@@ -48,7 +49,7 @@ fun Route.paginasAbertas(
                     val sessao = SessaoUsuarioVO()
                     sessao.conta = resposta.data
                     call.sessions.set(sessao)
-                    call.redirecionarFormHTMX(PaginasRestritasEnum.INICIO.path)
+                    call.redirecionarFormHTMX(CaminhosBaseEnum.INICIO.path)
                 }
             }
         }

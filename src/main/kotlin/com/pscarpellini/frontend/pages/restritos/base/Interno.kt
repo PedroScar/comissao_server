@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.pages.restritos
+package com.pscarpellini.frontend.pages.restritos.base
 
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
