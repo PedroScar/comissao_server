@@ -12,4 +12,8 @@ object PromocoesTable : IntIdTable("promocoes") {
     val imagem = text("imagem")
     val dataValidade = datetime("data_validade").clientDefault { LocalDateTime.now() }
     val dataCriacao = datetime("data_criacao").clientDefault { LocalDateTime.now() }
+    val dataVisivel = datetime("data_visivel").clientDefault { LocalDateTime.now() }
+    val dataDisponivel = datetime("data_disponivel").clientDefault { LocalDateTime.now() }
+    val status = varchar("status", 60)
+    val duracaoIndeterminada = bool("duracao_indeterminada")
 }

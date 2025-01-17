@@ -21,7 +21,7 @@ fun FlowContent.gerenciamentoDeUsuarios(
     val idDaTabela = "tabela_de_usuarios-${System.currentTimeMillis()}"
 
     includeHeaderLogado(sessao = sessao)
-    card(classes = "flex flex-col gap-8 h-full") {
+    card(classes = "flex flex-col gap-8 grow") {
         div(classes = "flex flex-row w-full items-center gap-4") {
             inputField(
                 inputType = InputType.text,

@@ -9,7 +9,7 @@ fun FlowContent.tabelaComHeadersFixos(
     linhas: List<List<FlowContent.() -> Unit>>,
     classes: String = ""
 ) {
-    div(classes = "overflow-y-auto h-72 w-full") {
+    div(classes = "overflow-y-auto w-full") {
         table(classes = "table-auto ${ArredondamentosEnum.SM.cantosSuperiores} overflow-hidden w-full") {
             thead(classes = "${CoresEnum.HIGH_LIGHT.bg} border-b border-b-${CoresEnum.HIGH_MEDIUM}") {
                 tr {

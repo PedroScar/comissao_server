@@ -47,7 +47,11 @@ fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
     conteudo = dao.conteudo,
     imagem = dao.imagem,
     dataValidade = dao.dataValidade,
-    dataCriacao = dao.dataCriacao
+    dataCriacao = dao.dataCriacao,
+    dataVisivel = dao.dataVisivel,
+    dataDisponivel = dao.dataDisponivel,
+    status = dao.status,
+    duracaoIndeterminada = dao.duracaoIndeterminada,
 )
 
 fun perfilDeAcessoDaoToModel(dao: PerfilDeAcessoDAO) = PerfilDeAcessoVO(

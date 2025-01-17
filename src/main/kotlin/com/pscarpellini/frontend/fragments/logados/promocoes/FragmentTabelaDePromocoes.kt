@@ -1,5 +1,7 @@
 package com.pscarpellini.frontend.fragments.logados.promocoes
 
+import com.pscarpellini.extensions.formatarIntervaloDeDatas
+import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
@@ -26,9 +28,14 @@ fun FlowContent.includeTabelaDePromocoes(
 
 private fun exibirLinhaPromocao(promocao: PromocaoVO): List<FlowContent.() -> Unit> {
     return listOf(
-        { +promocao.titulo },
-        { +promocao.dataValidade.toString() },
-        { +"Ativa" },
+        {
+            div (classes = "flex flex-row items-center gap-4") {
+                img (classes = "aspect-square size-16 ${ArredondamentosEnum.MD}", src = "data:image/png;base64, ${promocao.imagem}")
+                +promocao.titulo
+            }
+        },
+        { +formatarIntervaloDeDatas(promocao.dataDisponivel, promocao.dataValidade) },
+        { +promocao.status },
         { +"483" },
         {
             botao(tipo = TiposBotaoEnum.TRANSPARENT) { +"Abrir" }

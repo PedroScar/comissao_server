@@ -22,7 +22,7 @@ fun HTML.interno(
         includeMenuPrincipal(sessao)
         div(classes = "grow flex flex-col ml-80 p-6 gap-6") {
             includeHeaderLogado(sessao = sessao)
-            autoLoaderFragment(id = "conteudo-interno", usarDiferenciadorId = false, path = caminho, isVerticalLoading = true, hxReplaceUrl = caminho)
+            autoLoaderFragment(id = "conteudo-interno", usarDiferenciadorId = false, path = caminho, isVerticalLoading = true, hxReplaceUrl = caminho, classes = "grow flex flex-col")
         }
     }
 }

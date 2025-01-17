@@ -21,7 +21,7 @@ fun FlowContent.includeListaDePromocoesWidget(
 private fun exibirPromocao(promocao: PromocaoVO): List<FlowContent.() -> Unit> {
     return listOf(
         { +promocao.titulo },
-        { +formatarIntervaloDeDatas(promocao.dataCriacao, promocao.dataValidade) },
+        { +formatarIntervaloDeDatas(promocao.dataDisponivel, promocao.dataValidade) },
         { +promocao.subtitulo },
     )
 }

@@ -58,7 +58,7 @@ fun Route.paginasRestritas(
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             includeHeaderLogado(sessao)
-            promocoes(sessao)
+            promocoes()
         }
     }
 
