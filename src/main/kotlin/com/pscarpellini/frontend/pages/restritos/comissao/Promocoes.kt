@@ -21,7 +21,7 @@ fun FlowContent.promocoes(
 ) {
     val idDaTabela = "tabela_de_promocoes-${System.currentTimeMillis()}"
 
-    includeHeaderLogado(sessao = sessao)
+//    includeHeaderLogado(sessao = sessao)
     card(classes = "flex flex-col gap-8 h-full") {
         div(classes = "flex flex-row w-full items-center gap-4") {
             inputField(

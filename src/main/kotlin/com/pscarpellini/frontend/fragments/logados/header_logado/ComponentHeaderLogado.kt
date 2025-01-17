@@ -25,7 +25,10 @@ import kotlinx.html.span
 fun FlowContent.includeHeaderLogado(
     sessao: SessaoUsuarioVO,
 ) {
+    val idDoHeader = "header-interno"
     div(classes = "w-full flex flex-col") {
+        attributes["id"] = idDoHeader
+        attributes["hx-swap-oob"] = "true"
         card(
             showBackground = false,
             classes = "w-full flex items-center"
@@ -60,7 +63,7 @@ fun FlowContent.includeHeaderLogado(
             div(classes = "flex") {
                 sessao.paginaAtual.sublinks.forEach {
                     botaoHX(tipo = TiposBotaoEnum.PRIMARY, link = it.caminho, small = true) {
-                        icone(it.icone)
+                        icone(it.icone, size = 2f)
                         +it.nome
                     }
                 }

@@ -10,6 +10,7 @@ import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
+import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.base.*
 import com.pscarpellini.frontend.pages.restritos.comissao.promocoes
@@ -45,6 +46,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasRestritasEnum.INICIO
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             inicio(sessao)
         }
     }
@@ -55,6 +57,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasComissaoEnum.PROMOCOES
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             promocoes(sessao)
         }
     }
@@ -65,6 +68,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasComissaoEnum.SALDOS_DOS_PROMOTORES
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             inicio(sessao)
         }
     }
@@ -74,6 +78,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasComissaoEnum.RELATORIOS
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             inicio(sessao)
         }
     }
@@ -84,6 +89,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             gerenciamentoDeUsuarios(sessao)
         }
     }
@@ -94,6 +100,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasRestritasEnum.CONFIGURACOES_DO_APP
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             inicio(sessao)
         }
     }
@@ -103,6 +110,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasComissaoEnum.HISTORICO_DE_TRANSACOES
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             inicio(sessao)
         }
     }
@@ -113,6 +121,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasRestritasEnum.MEU_PERFIL
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
             meuPerfil(sessao)
         }
     }
@@ -126,6 +135,7 @@ fun Route.paginasRestritas(
                 is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
                 is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
                     includeMenuPrincipal(sessao)
+                    includeHeaderLogado(sessao)
                     novoUsuario(sessao, perfisDeAcesso = resposta.data)
                 }
             }

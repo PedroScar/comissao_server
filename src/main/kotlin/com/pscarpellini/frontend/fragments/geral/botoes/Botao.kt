@@ -21,7 +21,7 @@ fun FlowContent.botao(
     conteudo: FlowContent.() -> Unit
 ) {
     button(
-        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "py-1" else "py-2"} px-6 ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
+        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
         type = type
     ) {
         attributes["hx-${hxMethod.name}"] = hxPath?.path ?: ""
@@ -47,7 +47,7 @@ fun FlowContent.botaoLink(
     conteudo: FlowContent.() -> Unit
 ) {
     a(
-        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "py-1" else "py-2"} px-6 ${if(interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
+        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
         href = link
     ) {
         if (!enabled) attributes["disabled"] = "disabled"
@@ -67,7 +67,7 @@ fun FlowContent.botaoHX(
     conteudo: FlowContent.() -> Unit
 ) {
     div (
-        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "py-1" else "py-2"} px-6 ${if(interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
+        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
     ) {
         attributes["hx-post"] = link.path
         attributes["hx-trigger"] = "click"

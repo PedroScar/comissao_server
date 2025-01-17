@@ -16,54 +16,55 @@ import kotlinx.html.*
 fun FlowContent.inicio(
     sessao: SessaoUsuarioVO
 ) {
-    includeHeaderLogado(sessao = sessao)
-    includeContentGrid(
-        linhas = 1,
-        colunas = 4,
-        classes = "w-full"
-    ) {
-        itemMenuPilula(ItensMenuPilulaEnum.CRIAR_NOVA_PROMOCAO)
-        itemMenuPilula(ItensMenuPilulaEnum.MODIFICAR_SALDO)
-        itemMenuPilula(ItensMenuPilulaEnum.CADASTRAR_NOVO_USUARIO)
-        itemMenuPilula(ItensMenuPilulaEnum.CONFIGURACOES_DO_APP)
-    }
-    includeContentGrid(
-        linhas = 2,
-        colunas = 3,
-        classes = "grow"
-    ) {
-        card(classes = "col-span-2 flex flex-col gap-3") {
-            div(classes = "flex flex-row w-full items-center justify-start") {
-                span(classes = "text-base font-semibold") { +"Promoções mais utilizadas" }
-                icone(IconesEnum.INFO, size = 2f)
-            }
-            autoLoaderFragment(
-                id = "promocoes_mais_utilizadas",
-                path = WidgetsInicioEnum.PROMOCOES_WIDGET.path,
-                classes = "w-full grow"
-            )
+    div(classes = "grow flex flex-col gap-6") {
+        includeContentGrid(
+            linhas = 1,
+            colunas = 4,
+            classes = "w-full"
+        ) {
+            itemMenuPilula(ItensMenuPilulaEnum.CRIAR_NOVA_PROMOCAO)
+            itemMenuPilula(ItensMenuPilulaEnum.MODIFICAR_SALDO)
+            itemMenuPilula(ItensMenuPilulaEnum.CADASTRAR_NOVO_USUARIO)
+            itemMenuPilula(ItensMenuPilulaEnum.CONFIGURACOES_DO_APP)
         }
-        card(classes = "flex flex-col gap-3") {
-            div(classes = "flex flex-row w-full items-center justify-start") {
-                span(classes = "text-base font-semibold") { +"Visão geral" }
-                icone(IconesEnum.INFO, size = 2f)
+        includeContentGrid(
+            linhas = 2,
+            colunas = 3,
+            classes = "grow"
+        ) {
+            card(classes = "col-span-2 flex flex-col gap-3") {
+                div(classes = "flex flex-row w-full items-center justify-start") {
+                    span(classes = "text-base font-semibold") { +"Promoções mais utilizadas" }
+                    icone(IconesEnum.INFO, size = 2f)
+                }
+                autoLoaderFragment(
+                    id = "promocoes_mais_utilizadas",
+                    path = WidgetsInicioEnum.PROMOCOES_WIDGET.path,
+                    classes = "w-full grow"
+                )
             }
-            autoLoaderFragment(
-                id = "tabela_de_usuarios",
-                path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
-                classes = "w-full grow"
-            )
-        }
-        card(classes = "col-span-3 flex flex-col gap-3") {
-            div(classes = "flex flex-row w-full items-center justify-start") {
-                span(classes = "text-base font-semibold") { +"Transações recentes" }
-                icone(IconesEnum.INFO, size = 2f)
+            card(classes = "flex flex-col gap-3") {
+                div(classes = "flex flex-row w-full items-center justify-start") {
+                    span(classes = "text-base font-semibold") { +"Visão geral" }
+                    icone(IconesEnum.INFO, size = 2f)
+                }
+                autoLoaderFragment(
+                    id = "tabela_de_usuarios",
+                    path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
+                    classes = "w-full grow"
+                )
             }
-            autoLoaderFragment(
-                id = "tabela_de_usuarios",
-                path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
-                classes = "w-full grow"
-            )
+            card(classes = "col-span-3 flex flex-col gap-3") {
+                div(classes = "flex flex-row w-full items-center justify-start") {
+                    span(classes = "text-base font-semibold") { +"Transações recentes" }
+                    icone(IconesEnum.INFO, size = 2f)
+                }
+                autoLoaderFragment(
+                    id = "tabela_de_usuarios",
+                    path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
+                    classes = "w-full grow"
+                )
+            }
         }
     }
 }
