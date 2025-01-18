@@ -9,6 +9,7 @@ fun HTML.includeHtmlHeader(
 ) {
     head {
         title(nomeDaPagina)
+        link(rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css")
         link(rel = "stylesheet", href = "/styles.css", type = "text/css")
         link(rel = "icon", type = "image/x-icon", href = "/static/favicon.ico")
         link(

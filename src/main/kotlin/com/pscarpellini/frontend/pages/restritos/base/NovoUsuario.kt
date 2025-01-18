@@ -6,6 +6,7 @@ import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.card.card
+import com.pscarpellini.frontend.fragments.geral.formulario.formulario
 import com.pscarpellini.frontend.fragments.geral.inputs.inputField
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
@@ -15,7 +16,6 @@ import com.pscarpellini.rotas.FragmentsRestritosEnum
 import kotlinx.html.FlowContent
 import kotlinx.html.InputType
 import kotlinx.html.div
-import kotlinx.html.form
 
 fun FlowContent.novoUsuario(
     sessao: SessaoUsuarioVO,
@@ -23,14 +23,11 @@ fun FlowContent.novoUsuario(
 ) {
     includeHeaderLogado(sessao = sessao)
     includeFormNovoUsuario()
-//            includeFormNovoUsuario(perfisDeAcesso = perfisDeAcesso)
 }
 
 fun FlowContent.includeFormNovoUsuario(
-//    perfisDeAcesso: List<PerfilDeAcessoVO>?
 ) {
-    form(classes = "flex flex-col gap-6") {
-        attributes["id"] = "form-novo-usuario"
+    formulario(id = "form-novo-usuario", classes = "flex flex-col gap-6", autoValidar = true) {
         includeContentGrid(
             linhas = 1,
             colunas = 1,
@@ -51,12 +48,6 @@ fun FlowContent.includeFormNovoUsuario(
                         isObrigatorio = true,
                         nomeDoCampo = "email"
                     )
-//                    selectField(
-//                        label = "Tipo de conta",
-//                        isObrigatorio = true,
-//                        opcoes = perfisDeAcesso?.map { it.id.toString() to it.nome } ?: arrayListOf()
-//                    )
-                    //                        includeSelectDePerfis(perfisDeAcesso = perfisDeAcesso)
                     autoLoaderFragment(id = "select_perfil_de_acesso", path = FragmentsRestritosEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path)
                     inputField(
                         label = "Telefone (opcional)",
@@ -65,18 +56,6 @@ fun FlowContent.includeFormNovoUsuario(
                         nomeDoCampo = "telefone"
                     )
                 }
-//                div(classes = "${CoresEnum.BRAND_LIGHT.bg} ${ArredondamentosEnum.MD} py-4 px-6 w-full") {
-//                    span { +"Tipos de contas:" }
-//                    ul (classes = "list-disc ms-6") {
-//                        perfisDeAcesso?.forEach {
-//                            li {
-//                                b { +"${it.nome}: " }
-//                                +it.descricao
-//                            }
-//                        }
-//                    }
-//                }
-                //                    includeCardDePerfis(perfisDeAcesso = perfisDeAcesso)
                 autoLoaderFragment(id = "tipos_de_conta", path = FragmentsRestritosEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path, classes = "w-full")
             }
         }
@@ -85,7 +64,8 @@ fun FlowContent.includeFormNovoUsuario(
             botao(
                 hxPath = PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho,
                 hxTarget = "form-novo-usuario",
-                hxSwap = "outerHTML"
+                hxSwap = "outerHTML",
+                enabled = false,
             ) { +"Salvar" }
         }
     }

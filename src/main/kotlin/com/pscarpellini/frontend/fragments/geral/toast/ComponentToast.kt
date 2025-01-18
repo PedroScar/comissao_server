@@ -8,54 +8,13 @@ import kotlinx.html.unsafe
 
 /**
  * Exiba uma mensagem toast na página.
- *
- * Utilize duração em segundos
  */
 fun FlowContent.toast(
-    texto: String,
-    tipo: TiposToastEnum = TiposToastEnum.DEFAULT,
-    duracao: Int? = null,
-    id: String = "mensagem-${System.currentTimeMillis()}",
+    mensagem: String,
+    tipo: TiposToastEnum = TiposToastEnum.SUCCESS,
 ) {
-    val duracaoFinal = (duracao ?: tipo.duracao) * 1000
-
-    div(classes = "") {
-        attributes["hx-swap-oob"] = "beforeend:#toast-container"
-        div(classes = "bg-${tipo.corFundo.cssProprio} text-${tipo.corTexto.cssProprio} px-4 py-2 rounded-lg shadow-md opacity-100 transition-all ease-out animate-slide-in") {
-            attributes["id"] = id
-
-            +texto
-
-            script {
-                unsafe {
-                    +"""
-                        (() => {
-                            const toast = document.getElementById('$id');
-                            if (!toast) return;
-    
-                            let timeoutId;
-                            const removerMensagem = () => {
-                                toast.classList.remove('animate-slide-in');
-                                toast.classList.add('animate-slide-out');
-                                setTimeout(() => toast.remove(), 300);
-                            };
-    
-                            const iniciarTemporizador = () => {
-                                timeoutId = setTimeout(removerMensagem, ${duracaoFinal});
-                            };
-    
-                            const pausarTemporizador = () => {
-                                clearTimeout(timeoutId);
-                            };
-    
-                            toast.addEventListener('mouseenter', pausarTemporizador);
-                            toast.addEventListener('mouseleave', iniciarTemporizador);
-    
-                            iniciarTemporizador();
-                        })();
-                    """.trimIndent()
-                }
-            }
-        }
+    div {
+        attributes["lm-toast-tipo"] = tipo.nome
+        attributes["lm-toast-mensagem"] = mensagem
     }
 }

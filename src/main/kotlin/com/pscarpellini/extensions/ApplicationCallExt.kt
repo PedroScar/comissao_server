@@ -1,5 +1,7 @@
 package com.pscarpellini.extensions
 
+import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
+import com.pscarpellini.frontend.fragments.geral.toast.toast
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
@@ -14,6 +16,14 @@ suspend fun ApplicationCall.respondFragment(
     this.respondHtml(status) {
         body { fragment.invoke(this) }
     }
+}
+
+suspend fun ApplicationCall.respondToast(
+    tipo: TiposToastEnum,
+    mensagem: String,
+) {
+    this.response.headers.append("HX-Trigger", "toast-message")
+    this.respondFragment { toast(mensagem = mensagem, tipo = tipo) }
 }
 
 suspend fun ApplicationCall.redirecionarFormHTMX(path: String) {

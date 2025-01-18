@@ -6,7 +6,6 @@ import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
-import com.pscarpellini.frontend.fragments.geral.toast.toastContainer
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
 import com.pscarpellini.rotas.PaginasAbertasEnum
 import kotlinx.html.*
@@ -18,7 +17,6 @@ fun HTML.esqueciMinhaSenhaPage() {
     body(
         classes = "bg-high-light"
     ) {
-        toastContainer()
         div(classes = "flex flex-col h-screen") {
             includeHeaderMenu(
                 classes = "flex flex-row space-between items-center"
@@ -80,7 +78,6 @@ fun HTML.esqueciMinhaSenhaPage() {
                                 tipo = TiposBotaoEnum.PRIMARY,
                                 classes = "w-full",
                                 hxPath = PaginasAbertasEnum.Login, // TODO: Criar um CaminhosAbertosEnum
-                                hxTarget = "toast-container",
                                 hxSwap = "beforeend"
                             ) { +"Entrar" }
 

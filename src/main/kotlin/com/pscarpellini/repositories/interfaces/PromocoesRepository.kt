@@ -5,4 +5,5 @@ import com.pscarpellini.models.vos.PromocaoVO
 
 interface PromocoesRepository {
     suspend fun carregarPromocoes(clienteId: Int): DbResponse<List<PromocaoVO>>
+    suspend fun contagemDePromocoesAtivas(clienteId: Int): DbResponse<Int>
 }

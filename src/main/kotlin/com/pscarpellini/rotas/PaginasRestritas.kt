@@ -7,6 +7,7 @@ import com.pscarpellini.enums.produtos.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.criarNomeDeUsuario
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
+import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
@@ -132,7 +133,7 @@ fun Route.paginasRestritas(
         sessao.paginaAtual = PaginasRestritasEnum.NOVO_USUARIO
         perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao buscar perfis de acesso")
                 is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
                     includeMenuPrincipal(sessao)
                     includeHeaderLogado(sessao)
@@ -147,10 +148,14 @@ fun Route.paginasRestritas(
 
         val parameters = call.receiveParameters()
 
-        val nome = parameters["nome"].toString()
-        val email = parameters["email"].toString()
-        val telefone = parameters["telefone"].toString()
-        val perfilDeAcesso = parameters["perfilDeAcesso"].toString()
+        val nome = (parameters["nome"] ?: "").toString()
+        val email = (parameters["email"] ?: "").toString()
+        val telefone = (parameters["telefone"] ?: "").toString()
+        val perfilDeAcesso = (parameters["perfilDeAcesso"] ?: "").toString()
+
+        if (nome.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "O campo nome deve estar preenchido")
+        if (email.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "O campo e-mail deve estar preenchido")
+        if (perfilDeAcesso.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Selecione um perfil de acesso válido")
 
         val novaConta = ContaVO(
             cliente = sessao.conta?.cliente!!,
@@ -169,10 +174,10 @@ fun Route.paginasRestritas(
 
         perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao cadastrar usuário")
                 is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
                     includeFormNovoUsuario()
-                    toast("Usuário criado com sucesso", tipo = TiposToastEnum.SUCCESS)
+                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Usuário cadastrado com sucesso")
                 }
             }
         }

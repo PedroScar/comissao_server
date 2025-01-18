@@ -2,8 +2,8 @@ package com.pscarpellini.rotas
 
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
+import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
-import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeTabelaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
@@ -42,7 +42,7 @@ fun Route.fragmentsRestritos(
         val sessao = obterSessao()
         promocoesRepository.carregarPromocoes(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
                 is DbResponse.Successo -> { call.respondFragment { includeTabelaDePromocoes(promocoes = resposta.data) } }
             }
         }
@@ -52,7 +52,7 @@ fun Route.fragmentsRestritos(
         val sessao = obterSessao()
         contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
                 is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
             }
         }
@@ -63,7 +63,7 @@ fun Route.fragmentsRestritos(
         val sessao = obterSessao()
         perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao buscar perfis de acesso")
                 is DbResponse.Successo -> call.respondFragment { includeSelectDePerfis(perfisDeAcesso = resposta.data) }
             }
         }
@@ -72,7 +72,7 @@ fun Route.fragmentsRestritos(
         val sessao = obterSessao()
         perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Falha ao buscar perfis de acesso", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao buscar perfis de acesso")
                 is DbResponse.Successo -> call.respondFragment { includeCardDePerfis(perfisDeAcesso = resposta.data) }
             }
         }

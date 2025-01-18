@@ -1,12 +1,10 @@
 package com.pscarpellini.rotas
 
 import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
-import com.pscarpellini.extensions.respondFragment
+import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
-import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.pages.abertos.componentes.componentsPage
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.abertos.login.loginPage
@@ -39,12 +37,15 @@ fun Route.paginasAbertas(
     post(PaginasAbertasEnum.Login.path) {
         val parameters = call.receiveParameters()
 
-        val username = parameters["usuario"].toString()
-        val password = parameters["password"].toString()
+        val username = (parameters["usuario"] ?: "").toString()
+        val password = (parameters["password"] ?: "").toString()
+
+        if (username.isEmpty()) call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "Digite o seu nome de usuário")
+        if (password.isEmpty()) call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "Digite sua senha")
 
         contasRepository.validarLogin(username, password).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondFragment { toast("Credenciais inválidas, tente novamente.", tipo = TiposToastEnum.ALERT) }
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha no login")
                 is DbResponse.Successo -> {
                     val sessao = SessaoUsuarioVO()
                     sessao.conta = resposta.data

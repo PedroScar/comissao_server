@@ -39,6 +39,28 @@ fun Application.styledRouting(configuration: Routing.() -> Unit): RoutingRoot {
                     width = 145.px
                     height = 30.px
                 }
+
+                rule(".notyf__toast") {
+                    put("max-width", "none !important")
+                }
+                rule(".notyf__toast--upper") {
+                    put("margin", "none !important")
+                }
+                rule(".notyf__wrapper") {
+                    put("padding", "0px !important")
+                }
+                rule(".notyf__toast-container") {
+                    put("gap", "2px !important")
+                }
+
+                rule(".notyf__wrapper:has(.notyf__dismiss)") {
+                    put("padding-right", "20px !important")
+                }
+
+                rule(".notyf__message") {
+                    put("margin-top", "8px !important")
+                    put("margin-bottom", "8px !important")
+                }
             }
         }
     }

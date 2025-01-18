@@ -16,7 +16,7 @@ fun FlowContent.botaoIcone(
     type: ButtonType = ButtonType.submit,
 ) {
     button(
-        classes = "${if(enabled) tipo.cssProprio else "${tipo.cssDesabilitado} pointer-events-none"} font-semibold ${if(small) "p-1" else "p-2"} ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) CoresEnum.LOW_LIGHT.text else ""} $classes",
+        classes = "${tipo.cssProprio} disabled:pointer-events-none font-semibold ${if(small) "p-1" else "p-2"} ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) CoresEnum.LOW_LIGHT.text else ""} $classes",
         type = type
     ) {
         if (!enabled) attributes["disabled"] = "disabled"
