@@ -44,8 +44,6 @@ enum class PaginasRestritasEnum(
     MEU_PERFIL(
         titulo = "Meu perfil",
         showBack = true,
-        showBreadcrumbs = true,
-        breadcrumbs = arrayListOf(INICIO),
         caminho = CaminhosBaseEnum.MEU_PERFIL
     ),
 

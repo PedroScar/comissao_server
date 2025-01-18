@@ -14,7 +14,9 @@ import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.base.*
+import com.pscarpellini.frontend.pages.restritos.comissao.historicoDeTransacoes
 import com.pscarpellini.frontend.pages.restritos.comissao.promocoes
+import com.pscarpellini.frontend.pages.restritos.comissao.saldosDosPromotores
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
@@ -70,7 +72,7 @@ fun Route.paginasRestritas(
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             includeHeaderLogado(sessao)
-            inicio(sessao)
+            saldosDosPromotores()
         }
     }
     post(CaminhosComissaoEnum.RELATORIOS.path) {
@@ -102,7 +104,7 @@ fun Route.paginasRestritas(
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             includeHeaderLogado(sessao)
-            inicio(sessao)
+            configuracoesDoApp(sessao)
         }
     }
     post(CaminhosComissaoEnum.HISTORICO_DE_TRANSACOES.path) {
@@ -112,7 +114,7 @@ fun Route.paginasRestritas(
         call.respondFragment(HttpStatusCode.OK) {
             includeMenuPrincipal(sessao)
             includeHeaderLogado(sessao)
-            inicio(sessao)
+            historicoDeTransacoes()
         }
     }
 

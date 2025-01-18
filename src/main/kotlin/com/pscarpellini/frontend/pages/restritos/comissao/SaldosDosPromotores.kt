@@ -16,8 +16,8 @@ import kotlinx.html.FlowContent
 import kotlinx.html.InputType
 import kotlinx.html.div
 
-fun FlowContent.promocoes() {
-    val idDaTabela = "tabela_de_promocoes-${System.currentTimeMillis()}"
+fun FlowContent.saldosDosPromotores() {
+    val idDaTabela = "saldos_dos_promotores-${System.currentTimeMillis()}"
 
     card(classes = "flex flex-col gap-8 grow") {
         div(classes = "flex flex-row w-full items-center gap-4") {
@@ -36,11 +36,15 @@ fun FlowContent.promocoes() {
                 icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
                 +"Filtro"
             }
+            botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = PaginasRestritasEnum.NOVO_USUARIO.caminho) {
+                icone(IconesEnum.ADICIONAR, usarPadding = false, size = 1.4f)
+                +"Adicionar promotor"
+            }
         }
         autoLoaderFragment(
             id = idDaTabela,
             usarDiferenciadorId = false,
-            path = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
+            path = FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path,
             classes = "w-full grow"
         )
     }

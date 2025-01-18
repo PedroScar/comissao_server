@@ -16,8 +16,8 @@ import kotlinx.html.FlowContent
 import kotlinx.html.InputType
 import kotlinx.html.div
 
-fun FlowContent.promocoes() {
-    val idDaTabela = "tabela_de_promocoes-${System.currentTimeMillis()}"
+fun FlowContent.historicoDeTransacoes() {
+    val idDaTabela = "historico_de_transacoes-${System.currentTimeMillis()}"
 
     card(classes = "flex flex-col gap-8 grow") {
         div(classes = "flex flex-row w-full items-center gap-4") {
@@ -40,7 +40,7 @@ fun FlowContent.promocoes() {
         autoLoaderFragment(
             id = idDaTabela,
             usarDiferenciadorId = false,
-            path = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
+            path = FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path,
             classes = "w-full grow"
         )
     }

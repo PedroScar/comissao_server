@@ -12,7 +12,7 @@ fun FlowContent.breadcrumbs(
 ) {
     div(classes = "flex gap-2") {
         paginaAtual.breadcrumbs.forEach { breadcrumb ->
-            navigationHX(texto = breadcrumb.titulo, hxPath = breadcrumb.caminho, classes = CoresEnum.BRAND_DARK.text)
+            navigationHX(texto = breadcrumb.titulo, hxPath = breadcrumb.caminho, hxTarget = "conteudo-interno", classes = CoresEnum.BRAND_DARK.text)
             +"/"
         }
         span { +paginaAtual.titulo }

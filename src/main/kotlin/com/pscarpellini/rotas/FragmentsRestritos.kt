@@ -58,6 +58,26 @@ fun Route.fragmentsRestritos(
         }
     }
 
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) {
+        val sessao = obterSessao()
+        contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
+                is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
+            }
+        }
+    }
+
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) {
+        val sessao = obterSessao()
+        contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
+                is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
+            }
+        }
+    }
+
 
     post(FragmentsRestritosEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path) {
         val sessao = obterSessao()
@@ -88,6 +108,8 @@ enum class FragmentsRestritosEnum(
 
     FRAGMENT_TABELA_PROMOCOES("/int/fragment/promocoes"),
     FRAGMENT_TABELA_USUARIOS("/int/fragment/tabela_usuarios"),
+    FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES("/int/fragment/historico_de_transacoes"),
+    FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES("/int/fragment/saldos_dos_promotores"),
 
     FRAGMENT_SELECT_PERFIS_DE_ACESSO("/int/fragment/select_perfis_de_acesso"),
     FRAGMENT_CARD_PERFIS_DE_ACESSO("/int/fragment/card_perfis_de_acesso"),

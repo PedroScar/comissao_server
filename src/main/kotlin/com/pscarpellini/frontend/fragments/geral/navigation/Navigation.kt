@@ -11,7 +11,7 @@ fun FlowContent.navigationHX(
     hxMethod: FormMethod = FormMethod.post,
     hxPath: IPaginaEnum,
     hxTarget: String = "#",
-    hxIndicator: String = "#",
+    hxIndicator: String = "",
     hxSwap: String = "innerHTML",
     texto: String,
     icone: IconesEnum? = null
@@ -20,7 +20,7 @@ fun FlowContent.navigationHX(
         attributes["hx-${hxMethod.name}"] = hxPath.path
         attributes["hx-target"] = "#$hxTarget"
         attributes["hx-swap"] = hxSwap
-        attributes["hx-indicator"] = "#$hxIndicator"
+        if(hxIndicator.isNotEmpty()) attributes["hx-indicator"] = "#$hxIndicator"
         card(showBackground = false, usarPadding = false, classes = classes) {
             icone?.let { icone(it, size = 2f) }
             +texto
