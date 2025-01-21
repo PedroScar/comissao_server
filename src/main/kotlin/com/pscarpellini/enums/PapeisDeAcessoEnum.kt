@@ -4,9 +4,15 @@ enum class PapeisDeAcessoEnum(
     val nome: String,
     val slug: String
 ) {
-    VISUALIZAR_PROMOCOES(nome = "Visualizar usuários", slug = "visualizar_usuario"),
-    NOVA_PROMOCAO(nome = "Visualizar usuários", slug = "visualizar_usuario"),
-    EDITAR_PROMOCAO(nome = "Visualizar usuários", slug = "visualizar_usuario"),
+    INICIO(nome = "Início", slug = "inicio"),
+
+    VISUALIZAR_PROMOCOES(nome = "Visualizar promoções", slug = "visualizar_promocoes"),
+    NOVA_PROMOCAO(nome = "Nova promoção", slug = "nova_promocao"),
+    EDITAR_PROMOCAO(nome = "Editar promoção", slug = "editar_promocao"),
+
+    VISUALIZAR_SALDOS(nome = "Visualizar saldos", slug = "visualizar_saldos"),
+
+    VISUALIZAR_RELATORIOS(nome = "Visualizar relatórios", slug = "visualizar_relatorios"),
 
     VISUALIZAR_USUARIOS(nome = "Visualizar usuários", slug = "visualizar_usuario"),
     EDITAR_USUARIO(nome = "Editar usuário", slug = "editar_usuario"),
@@ -14,4 +20,7 @@ enum class PapeisDeAcessoEnum(
     REENVIAR_SENHA(nome = "Reenviar senha", slug = "reenviar_senha"),
     DESATIVAR_USUARIO(nome = "Desativar usuário", slug = "desativar_usuario"),
 
+    VISUALIZAR_CONFIGURACOES_DO_APP(nome = "Visualizar configurações do app", slug = "visualizar_configuracoes_do_app"),
+
+    VISUALIZAR_HISTORICO_DE_TRANSACOES(nome = "Visualizar histórico de transações", slug = "visualizar_historico_de_transacoes"),
 }

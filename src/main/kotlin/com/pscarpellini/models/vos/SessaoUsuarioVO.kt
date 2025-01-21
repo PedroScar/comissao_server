@@ -1,17 +1,25 @@
 package com.pscarpellini.models.vos
 
+import com.pscarpellini.enums.PapeisDeAcessoEnum
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.CategoriasMenuEnum
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.interfaces.IItensMenuEnum
 import com.pscarpellini.interfaces.IPaginaRestritaEnum
 import kotlinx.serialization.Serializable
+import java.time.LocalDateTime
 
 @Serializable
 data class SessaoUsuarioVO(
     var paginaAtual: IPaginaRestritaEnum = PaginasRestritasEnum.INICIO,
     var menuSelecionado: ItensMenuEnum? = ItensMenuEnum.INICIO,
 ) {
+    var papeisDeAcesso: ArrayList<PapeisDeAcessoEnum> = arrayListOf()
+    var servico = ServicoVO(
+        id = 0,
+        nome = "Comissão",
+        dataCriacao = LocalDateTime.now()
+    )
     var conta: ContaVO? = null
     var menusDisponiveis: ArrayList<IItensMenuEnum> = arrayListOf(
         ItensMenuEnum.INICIO,

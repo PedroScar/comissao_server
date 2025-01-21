@@ -15,5 +15,14 @@ enum class GruposDePapeisEnum(
             PapeisDeAcessoEnum.REENVIAR_SENHA,
             PapeisDeAcessoEnum.DESATIVAR_USUARIO,
         )
+    ),
+    GERENCIAMENTO_DE_PROMOCOES(
+        nome = "Gerenciamento de promoções",
+        descricao = "Papéis para gerenciar promoções",
+        papeis = arrayListOf(
+            PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
+            PapeisDeAcessoEnum.NOVA_PROMOCAO,
+            PapeisDeAcessoEnum.EDITAR_PROMOCAO,
+        )
     )
 }

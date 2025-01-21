@@ -17,7 +17,6 @@ fun Application.configureDI() {
             single<LoginRepository> { LoginRepositoryPostgres() }
             single<ClienteRepository> { ClienteRepositoryPostgres() }
             single<PromocoesRepository> { PromocoesRepositoryPostgres() }
-            single<PerfisDeAcessoRepository> { PerfisDeAcessoRepositoryPostgres() }
         })
     }
 }

@@ -14,26 +14,28 @@ import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.base.*
-import com.pscarpellini.frontend.pages.restritos.comissao.historicoDeTransacoes
-import com.pscarpellini.frontend.pages.restritos.comissao.promocoes
-import com.pscarpellini.frontend.pages.restritos.comissao.saldosDosPromotores
+import com.pscarpellini.frontend.pages.restritos.comissao.*
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
+import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
-import com.pscarpellini.repositories.interfaces.PerfisDeAcessoRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.server.html.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
+import io.ktor.utils.io.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Base64
 
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
     promocoesRepository: PromocoesRepository,
-    perfisDeAcessoRepository: PerfisDeAcessoRepository,
 ) {
     get(CaminhosBaseEnum.INTERNO.path) {
         val sessao = obterSessao()
@@ -62,6 +64,16 @@ fun Route.paginasRestritas(
             includeMenuPrincipal(sessao)
             includeHeaderLogado(sessao)
             promocoes()
+        }
+    }
+    post(CaminhosComissaoEnum.NOVA_PROMOCAO.path) {
+        val sessao = obterSessao()
+        sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
+        sessao.paginaAtual = PaginasComissaoEnum.NOVA_PROMOCAO
+        call.respondFragment(HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
+            novaPromocao(sessao)
         }
     }
 
@@ -133,15 +145,10 @@ fun Route.paginasRestritas(
         val sessao = obterSessao()
         sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
         sessao.paginaAtual = PaginasRestritasEnum.NOVO_USUARIO
-        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao buscar perfis de acesso")
-                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                    includeMenuPrincipal(sessao)
-                    includeHeaderLogado(sessao)
-                    novoUsuario(sessao, perfisDeAcesso = resposta.data)
-                }
-            }
+        call.respondFragment(HttpStatusCode.OK) {
+            includeMenuPrincipal(sessao)
+            includeHeaderLogado(sessao)
+            novoUsuario(sessao)
         }
     }
 
@@ -174,14 +181,69 @@ fun Route.paginasRestritas(
         )
         contasRepository.criarUsuario(novaConta)
 
-        perfisDeAcessoRepository.carregarPerfis(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao cadastrar usuário")
-                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                    includeFormNovoUsuario()
-                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Usuário cadastrado com sucesso")
+        call.respondFragment(HttpStatusCode.OK) {
+            includeFormNovoUsuario()
+            toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Usuário cadastrado com sucesso")
+        }
+    }
+
+
+    post(CaminhosComissaoEnum.FORMULARIO_NOVA_PROMOCAO.path) {
+        val sessao = obterSessao()
+
+        val multipart = call.receiveMultipart()
+
+        var nome = ""
+        var descricao = ""
+        var dataDeInicio = ""
+        var dataDeEncerramento = ""
+        var imagemDeExibicao = ""
+        var precoDeExibicao = ""
+        var valorAnterior = ""
+        var valorAtual = ""
+
+        multipart.forEachPart { part ->
+            when (part) {
+                is PartData.FormItem -> {
+                    // Processa campos de texto
+                    when (part.name) {
+                        "nome" -> nome = part.value
+                        "descricao" -> descricao = part.value
+                        "data_de_inicio" -> dataDeInicio = part.value
+                        "data_de_encerramento" -> dataDeEncerramento = part.value
+                        "preco_de_exibicao" -> precoDeExibicao = part.value
+                        "valor_anterior" -> valorAnterior = part.value
+                        "valor_atual" -> valorAtual = part.value
+                    }
                 }
+                is PartData.FileItem -> {
+                    val fileBytes = part.provider().toByteArray()
+                    imagemDeExibicao = Base64.getEncoder().encodeToString(fileBytes)
+                }
+                else -> Unit
             }
+
+            part.dispose()
+        }
+
+        val novaPromocao = PromocaoVO(
+            clientId = sessao.conta?.cliente?.id ?: -1,
+            titulo = nome,
+            subtitulo = descricao,
+            conteudo = "",
+            imagem = imagemDeExibicao,
+            dataValidade = LocalDate.parse(dataDeEncerramento).atTime(23, 59),
+            dataCriacao = LocalDateTime.now(),
+            dataVisivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
+            dataDisponivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
+            status = "INATIVA",
+            duracaoIndeterminada = false,
+        )
+        promocoesRepository.criarPromocao(novaPromocao)
+
+        call.respondFragment(HttpStatusCode.OK) {
+            includeFormNovaPromocao()
+            toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção cadastrada com sucesso")
         }
     }
 

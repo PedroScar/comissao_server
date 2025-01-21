@@ -1,5 +1,6 @@
 package com.pscarpellini.frontend.pages.restritos.base
 
+import com.pscarpellini.enums.PerfisDeAcessoEnum
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
@@ -9,8 +10,9 @@ import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.formulario.formulario
 import com.pscarpellini.frontend.fragments.geral.inputs.inputField
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
-import com.pscarpellini.models.vos.PerfilDeAcessoVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.rotas.FragmentsRestritosEnum
 import kotlinx.html.FlowContent
@@ -19,7 +21,6 @@ import kotlinx.html.div
 
 fun FlowContent.novoUsuario(
     sessao: SessaoUsuarioVO,
-    perfisDeAcesso: List<PerfilDeAcessoVO>?
 ) {
     includeHeaderLogado(sessao = sessao)
     includeFormNovoUsuario()
@@ -33,7 +34,7 @@ fun FlowContent.includeFormNovoUsuario(
             colunas = 1,
         ) {
             card(classes = "flex flex-col gap-8") {
-                div(classes = "grid grid-cols-2 grid-rows-2 gap-6 w-full") {
+                includeContentGrid(linhas = 2, colunas = 2, classes = "w-full") {
                     inputField(
                         label = "Nome completo",
                         inputType = InputType.text,
@@ -48,7 +49,7 @@ fun FlowContent.includeFormNovoUsuario(
                         isObrigatorio = true,
                         nomeDoCampo = "email"
                     )
-                    autoLoaderFragment(id = "select_perfil_de_acesso", path = FragmentsRestritosEnum.FRAGMENT_SELECT_PERFIS_DE_ACESSO.path)
+                    includeSelectDePerfis()
                     inputField(
                         label = "Telefone (opcional)",
                         inputType = InputType.tel,
@@ -56,7 +57,7 @@ fun FlowContent.includeFormNovoUsuario(
                         nomeDoCampo = "telefone"
                     )
                 }
-                autoLoaderFragment(id = "tipos_de_conta", path = FragmentsRestritosEnum.FRAGMENT_CARD_PERFIS_DE_ACESSO.path, classes = "w-full")
+                includeCardDePerfis()
             }
         }
         div(classes = "self-end flex flex-row gap-2") {

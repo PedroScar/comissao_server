@@ -1,12 +1,62 @@
 package com.pscarpellini.enums
 
 enum class PerfisDeAcessoEnum(
+    val slug: String,
     val nome: String,
     val descricao: String,
     val papeis: ArrayList<PapeisDeAcessoEnum> = arrayListOf()
 ) {
-    FUNCIONARIO(nome = "Funcionário", descricao = "Funcionário: gerencia promoções e saldos dos promotores com acesso limitado a relatórios"),
-    PROMOTOR(nome = "Promotor", descricao = "Promotor: usa o app para visualizar saldo, extrato e promoções disponíveis para clientes"),
-    ADMINISTRADOR(nome = "Administrador", descricao = "Administrador: acesso total ao sistema, gerenciamento de promoções, usuários e relatórios"),
-    PERSONALIZADO(nome = "Personalizado", descricao = "Personalizado"),
+    FUNCIONARIO(
+        slug = "funcionario",
+        nome = "Funcionário",
+        descricao = "Funcionário: gerencia promoções e saldos dos promotores com acesso limitado a relatórios",
+        papeis = arrayListOf(
+            PapeisDeAcessoEnum.INICIO,
+            PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
+            PapeisDeAcessoEnum.NOVA_PROMOCAO,
+            PapeisDeAcessoEnum.EDITAR_PROMOCAO,
+        )
+    ),
+    PROMOTOR(
+        slug = "promotor",
+        nome = "Promotor",
+        descricao = "Promotor: usa o app para visualizar saldo, extrato e promoções disponíveis para clientes",
+        papeis = arrayListOf(
+            PapeisDeAcessoEnum.INICIO,
+        )
+    ),
+    ADMINISTRADOR(
+        slug = "administrador",
+        nome = "Administrador",
+        descricao = "Administrador: acesso total ao sistema, gerenciamento de promoções, usuários e relatórios",
+        papeis = arrayListOf(
+            PapeisDeAcessoEnum.INICIO,
+            PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
+            PapeisDeAcessoEnum.NOVA_PROMOCAO,
+            PapeisDeAcessoEnum.EDITAR_PROMOCAO,
+            PapeisDeAcessoEnum.VISUALIZAR_USUARIOS,
+            PapeisDeAcessoEnum.EDITAR_USUARIO,
+            PapeisDeAcessoEnum.CRIAR_USUARIO,
+            PapeisDeAcessoEnum.REENVIAR_SENHA,
+            PapeisDeAcessoEnum.DESATIVAR_USUARIO,
+
+            PapeisDeAcessoEnum.VISUALIZAR_SALDOS,
+            PapeisDeAcessoEnum.VISUALIZAR_RELATORIOS,
+            PapeisDeAcessoEnum.VISUALIZAR_CONFIGURACOES_DO_APP,
+            PapeisDeAcessoEnum.VISUALIZAR_HISTORICO_DE_TRANSACOES,
+        )
+    ),
+    PERSONALIZADO(
+        slug = "personalizado",
+        nome = "Personalizado",
+        descricao = "Personalizado: Personalize as permissões de acesso para o usuário",
+        papeis = arrayListOf(
+            PapeisDeAcessoEnum.INICIO,
+        )
+    );
+
+    companion object {
+        fun obterPerfisDisponiveis() = arrayListOf(FUNCIONARIO, PROMOTOR, ADMINISTRADOR)
+        fun obterEnumPeloSlug(slug: String) = entries.firstOrNull { it.slug == slug } ?: FUNCIONARIO
+    }
 }

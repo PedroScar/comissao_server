@@ -4,10 +4,11 @@ import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.PosicoesDropdownEnum
 import com.pscarpellini.frontend.fragments.geral.dropdown.dropdown
 import com.pscarpellini.frontend.fragments.geral.icone.icone
+import com.pscarpellini.models.vos.ServicoVO
 import kotlinx.html.*
 
-fun FlowContent.includeMenuSeletorProduto(
-    nome: String,
+fun FlowContent.includeMenuSeletorServico(
+    servico: ServicoVO,
     classes: String = "",
 ) {
     div("flex flex-row items-center mb-4 $classes") {
@@ -16,7 +17,7 @@ fun FlowContent.includeMenuSeletorProduto(
             posicao = PosicoesDropdownEnum.ESQUERDA,
             botao = {
                 div(classes = "font-bold text-xl") {
-                    +nome
+                    +servico.nome
                 }
             },
         )

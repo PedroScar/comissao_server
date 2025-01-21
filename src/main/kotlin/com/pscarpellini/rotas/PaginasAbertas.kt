@@ -1,5 +1,6 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.enums.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
 import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
@@ -47,8 +48,14 @@ fun Route.paginasAbertas(
             when (resposta) {
                 is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha no login")
                 is DbResponse.Successo -> {
+                    val tipoDeConta = resposta.data?.tipoConta ?: ""
+                    val perfilDeAcesso = obterEnumPeloSlug(tipoDeConta)
+                    println("Tipo de conta: $tipoDeConta")
+                    println("Tipo de conta no ENUM: $perfilDeAcesso")
+
                     val sessao = SessaoUsuarioVO()
                     sessao.conta = resposta.data
+                    sessao.papeisDeAcesso = perfilDeAcesso.papeis
                     call.sessions.set(sessao)
                     call.redirecionarFormHTMX(CaminhosBaseEnum.INICIO.path)
                 }

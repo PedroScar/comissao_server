@@ -42,7 +42,7 @@ class ContasRepositoryPostgres : ContasRepository {
             ?: throw IllegalArgumentException("Cliente com ID ${conta.cliente.id} não encontrado")
 
         runCatching {
-            val novaConta = ContaDAO.new {
+            ContaDAO.new {
                 clienteId = cliente
                 tipoConta = conta.tipoConta
                 nome = conta.nome

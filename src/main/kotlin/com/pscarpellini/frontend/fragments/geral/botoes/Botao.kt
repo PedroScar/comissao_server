@@ -18,6 +18,7 @@ fun FlowContent.botao(
     hxTarget: String = "",
     hxIndicator: String = "",
     hxSwap: String = "innerHTML",
+    hxEncoding: String = "",
     isAutovalidateButton: Boolean = true,
     conteudo: FlowContent.() -> Unit
 ) {
@@ -32,6 +33,7 @@ fun FlowContent.botao(
             attributes["hx-swap"] = hxSwap
         } else attributes["hx-swap"] = "none"
         if(hxIndicator.isNotEmpty()) attributes["hx-indicator"] = "#$hxIndicator"
+        if(hxEncoding.isNotEmpty()) attributes["hx-encoding"] = hxEncoding
 
         if (!enabled) attributes["disabled"] = "disabled"
         div(classes = "flex flex-row items-center $alinhamento") {

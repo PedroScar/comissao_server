@@ -1,6 +1,7 @@
 package com.pscarpellini.frontend.pages.restritos.comissao
 
 import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.produtos.comissao.CaminhosComissaoEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment

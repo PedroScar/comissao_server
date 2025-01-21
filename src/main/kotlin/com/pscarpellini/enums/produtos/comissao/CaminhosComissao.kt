@@ -10,8 +10,9 @@ enum class CaminhosComissaoEnum(
     override val path: String,
 ) : IPaginaEnum {
     PROMOCOES(path = "/int/promocoes"),
-    NOVA_PROMOCAO(path = "/int/promocoes"),
+    NOVA_PROMOCAO(path = "/int/nova_promocao"),
     EDITAR_PROMOCAO(path = "/int/promocoes"),
+    FORMULARIO_NOVA_PROMOCAO(path = "/forms/promocoes/nova_promocao"),
 
     SALDOS_DOS_PROMOTORES(path = "/int/saldos"),
 
