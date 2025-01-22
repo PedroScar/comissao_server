@@ -1,4 +1,4 @@
-package com.pscarpellini.enums
+package com.pscarpellini.enums.base
 
 enum class ContaTipoEnum(val id: Int) {
     ADMIN(0),

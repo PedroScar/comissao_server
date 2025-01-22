@@ -1,7 +1,7 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.enums.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
-import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
+import com.pscarpellini.enums.base.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
+import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondToast

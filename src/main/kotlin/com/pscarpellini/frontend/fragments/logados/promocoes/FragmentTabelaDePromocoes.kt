@@ -35,7 +35,7 @@ private fun exibirLinhaPromocao(promocao: PromocaoVO): List<FlowContent.() -> Un
             }
         },
         { +formatarIntervaloDeDatas(promocao.dataDisponivel, promocao.dataValidade) },
-        { +promocao.status },
+        { +promocao.status.nome }, // TODO: Incluir componente de tag
         { +"483" },
         {
             botao(tipo = TiposBotaoEnum.TRANSPARENT) { +"Abrir" }

@@ -1,6 +1,6 @@
 package com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios
 
-import com.pscarpellini.enums.PerfisDeAcessoEnum
+import com.pscarpellini.enums.base.PerfisDeAcessoEnum
 import com.pscarpellini.frontend.fragments.geral.inputs.selectField
 import kotlinx.html.FlowContent
 

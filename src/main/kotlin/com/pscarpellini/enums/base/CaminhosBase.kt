@@ -1,9 +1,6 @@
-package com.pscarpellini.enums.produtos.base
+package com.pscarpellini.enums.base
 
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS
-import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.interfaces.IPaginaEnum
-import com.pscarpellini.interfaces.ISublinksRestritosEnum
 
 enum class CaminhosBaseEnum(
     override val path: String,

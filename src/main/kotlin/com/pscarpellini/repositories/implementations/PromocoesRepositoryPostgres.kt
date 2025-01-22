@@ -45,14 +45,12 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                 conteudo = promocao.conteudo
                 imagem = promocao.imagem
                 dataValidade = promocao.dataValidade
-//            dataValidade = dataDeEncerramento
                 dataCriacao = promocao.dataCriacao
-                dataVisivel = promocao.dataVisivel
-//            dataVisivel = dataDeInicio
                 dataDisponivel = promocao.dataDisponivel
-//            dataDisponivel = dataDeInicio
-                status = promocao.status
                 duracaoIndeterminada = promocao.duracaoIndeterminada
+                exibirPreco = promocao.exibirPreco
+                valorAnterior = promocao.valorAnterior
+                valorAtual = promocao.valorAtual
             }
         }.onFailure {
             println("=============================================================================")

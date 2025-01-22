@@ -1,7 +1,7 @@
 package com.pscarpellini.models.vos
 
-import com.pscarpellini.enums.PapeisDeAcessoEnum
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
+import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.CategoriasMenuEnum
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.interfaces.IItensMenuEnum

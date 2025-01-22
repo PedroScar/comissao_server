@@ -1,6 +1,6 @@
-package com.pscarpellini.enums.produtos.comissao
+package com.pscarpellini.enums.comissao
 
-import com.pscarpellini.enums.PapeisDeAcessoEnum
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.IPaginaRestritaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
@@ -28,6 +28,14 @@ enum class PaginasComissaoEnum(
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(PROMOCOES),
         caminho = CaminhosComissaoEnum.NOVA_PROMOCAO
+    ),
+    EXIBIR_PROMOCAO(
+        titulo = "Exibir promoção",
+        showBack = true,
+        papelNecessario = PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
+        showBreadcrumbs = true,
+        breadcrumbs = arrayListOf(PROMOCOES),
+        caminho = CaminhosComissaoEnum.EXIBIR_PROMOCAO
     ),
     EDITAR_PROMOCAO(
         titulo = "Exibir promoção",

@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.fragments.logados.header_logado
 
-import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.base.CaminhosBaseEnum
+import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.PosicoesDropdownEnum

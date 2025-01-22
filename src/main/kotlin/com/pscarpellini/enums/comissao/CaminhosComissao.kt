@@ -1,17 +1,14 @@
-package com.pscarpellini.enums.produtos.comissao
+package com.pscarpellini.enums.comissao
 
-import com.pscarpellini.enums.PapeisDeAcessoEnum
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS
-import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.interfaces.IPaginaEnum
-import com.pscarpellini.interfaces.ISublinksRestritosEnum
 
 enum class CaminhosComissaoEnum(
     override val path: String,
 ) : IPaginaEnum {
     PROMOCOES(path = "/int/promocoes"),
     NOVA_PROMOCAO(path = "/int/nova_promocao"),
-    EDITAR_PROMOCAO(path = "/int/promocoes"),
+    EXIBIR_PROMOCAO(path = "/int/promocao/exibir/{id_promocao}"),
+    EDITAR_PROMOCAO(path = "/int/promocao/editar/{id_promocao}"),
     FORMULARIO_NOVA_PROMOCAO(path = "/forms/promocoes/nova_promocao"),
 
     SALDOS_DOS_PROMOTORES(path = "/int/saldos"),

@@ -1,10 +1,8 @@
 package com.pscarpellini.frontend.pages.restritos.comissao
 
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
-import com.pscarpellini.enums.produtos.comissao.CaminhosComissaoEnum
+import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.card.card
@@ -14,7 +12,6 @@ import com.pscarpellini.frontend.fragments.geral.inputs.inputFileUpload
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.models.vos.SessaoUsuarioVO
-import com.pscarpellini.rotas.FragmentsRestritosEnum
 import kotlinx.html.*
 
 fun FlowContent.novaPromocao(

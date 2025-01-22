@@ -1,11 +1,9 @@
 package com.pscarpellini.extensions
 
-import com.pscarpellini.enums.PapeisDeAcessoEnum
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.frontend.enums.CategoriasMenuEnum
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.interfaces.IItensMenuEnum
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 fun ArrayList<IItensMenuEnum>.obterListaGeral(papeisDeAcesso: ArrayList<PapeisDeAcessoEnum>): ArrayList<IItensMenuEnum> {
     val listaGeral = arrayListOf<IItensMenuEnum>()

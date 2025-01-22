@@ -1,8 +1,7 @@
 package com.pscarpellini.frontend.pages.abertos.landing
 
 import com.pscarpellini.AmbientController
-import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
+import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader

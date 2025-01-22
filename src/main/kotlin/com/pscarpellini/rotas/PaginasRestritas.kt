@@ -1,9 +1,9 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
-import com.pscarpellini.enums.produtos.comissao.CaminhosComissaoEnum
-import com.pscarpellini.enums.produtos.comissao.PaginasComissaoEnum
+import com.pscarpellini.enums.base.CaminhosBaseEnum
+import com.pscarpellini.enums.base.PaginasRestritasEnum
+import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
+import com.pscarpellini.enums.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.criarNomeDeUsuario
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
@@ -15,7 +15,6 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.base.*
 import com.pscarpellini.frontend.pages.restritos.comissao.*
-import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
@@ -187,6 +186,15 @@ fun Route.paginasRestritas(
         }
     }
 
+    post(PaginasComissaoEnum.EXIBIR_PROMOCAO.caminho.path) {
+        println("=======================================================================")
+        println("=======================================================================")
+        println("=======================================================================")
+        println("Acessou aqui: ${call.parameters["id_promocao"]}")
+        println("=======================================================================")
+        println("=======================================================================")
+        println("=======================================================================")
+    }
 
     post(CaminhosComissaoEnum.FORMULARIO_NOVA_PROMOCAO.path) {
         val sessao = obterSessao()
@@ -205,7 +213,6 @@ fun Route.paginasRestritas(
         multipart.forEachPart { part ->
             when (part) {
                 is PartData.FormItem -> {
-                    // Processa campos de texto
                     when (part.name) {
                         "nome" -> nome = part.value
                         "descricao" -> descricao = part.value
@@ -234,10 +241,11 @@ fun Route.paginasRestritas(
             imagem = imagemDeExibicao,
             dataValidade = LocalDate.parse(dataDeEncerramento).atTime(23, 59),
             dataCriacao = LocalDateTime.now(),
-            dataVisivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
             dataDisponivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
-            status = "INATIVA",
             duracaoIndeterminada = false,
+            exibirPreco = precoDeExibicao.isEmpty(), // TODO: Corrigir este campo
+            valorAnterior = valorAnterior.toDouble(),
+            valorAtual = valorAtual.toDouble(),
         )
         promocoesRepository.criarPromocao(novaPromocao)
 

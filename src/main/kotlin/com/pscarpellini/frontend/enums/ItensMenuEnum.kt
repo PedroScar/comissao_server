@@ -1,10 +1,8 @@
 package com.pscarpellini.frontend.enums
 
-import com.pscarpellini.enums.PapeisDeAcessoEnum
-import com.pscarpellini.enums.produtos.base.CaminhosBaseEnum
-import com.pscarpellini.enums.produtos.base.PaginasRestritasEnum
-import com.pscarpellini.enums.produtos.comissao.CaminhosComissaoEnum
-import com.pscarpellini.enums.produtos.comissao.PaginasComissaoEnum
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
+import com.pscarpellini.enums.base.CaminhosBaseEnum
+import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.interfaces.IItensMenuEnum
 import com.pscarpellini.interfaces.IPaginaEnum

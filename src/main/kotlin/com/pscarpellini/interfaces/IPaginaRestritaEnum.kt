@@ -1,6 +1,6 @@
 package com.pscarpellini.interfaces
 
-import com.pscarpellini.enums.PapeisDeAcessoEnum
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 
 interface IPaginaRestritaEnum {
     val titulo: String

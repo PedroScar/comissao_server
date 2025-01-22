@@ -1,6 +1,5 @@
-package com.pscarpellini.enums.produtos.base
+package com.pscarpellini.enums.base
 
-import com.pscarpellini.enums.PapeisDeAcessoEnum
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.IPaginaRestritaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
