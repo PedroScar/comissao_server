@@ -12,7 +12,7 @@ data class PromocaoVO(
     val subtitulo: String,
     val conteudo: String,
     val imagem: String,
-    @Serializable(with = LocalDateTimeSerializer::class) val dataValidade: LocalDateTime,
+    @Serializable(with = LocalDateTimeSerializer::class) val dataValidade: LocalDateTime? = null,
     @Serializable(with = LocalDateTimeSerializer::class) val dataCriacao: LocalDateTime,
     @Serializable(with = LocalDateTimeSerializer::class) val dataDisponivel: LocalDateTime,
     val duracaoIndeterminada: Boolean,

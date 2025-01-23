@@ -15,6 +15,7 @@ fun FlowContent.inputField(
     isObrigatorio: Boolean = false,
     nomeDoCampo: String,
     icone: IconesEnum? = null,
+    maxLength: Int? = null,
     useHx: Boolean = false,
     hxTrigger: String = "keyup changed delay:1s",
     hxPost: String = "",
@@ -38,6 +39,7 @@ fun FlowContent.inputField(
                 id = nomeDoCampo
                 name = nomeDoCampo
                 placeholder = hint
+                if(maxLength != null) this.maxLength = maxLength.toString()
 
                 if(useHx) {
                     attributes["hx-trigger"] = hxTrigger

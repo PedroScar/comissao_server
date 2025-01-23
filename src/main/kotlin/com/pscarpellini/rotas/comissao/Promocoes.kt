@@ -26,6 +26,20 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
+suspend fun RoutingContext.handleFragmentTabelaPromocoes(promocoesRepository: PromocoesRepository) {
+    val parameters = call.receiveParameters()
+
+    val busca = parameters["busca"] ?: ""
+
+    val sessao = obterSessao()
+    promocoesRepository.carregarPromocoes(termo = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
+            is DbResponse.Successo -> { call.respondFragment { includeTabelaDePromocoes(promocoes = resposta.data) } }
+        }
+    }
+}
+
 suspend fun RoutingContext.handlePromocoes() {
     val sessao = obterSessao()
     sessao.menuSelecionado = ItensMenuEnum.PROMOCOES

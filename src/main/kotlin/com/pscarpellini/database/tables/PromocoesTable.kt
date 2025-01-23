@@ -10,7 +10,7 @@ object PromocoesTable : IntIdTable("promocoes") {
     val subtitulo = varchar("subtitulo", 255)
     val conteudo = text("conteudo")
     val imagem = text("imagem")
-    val dataValidade = datetime("data_validade").clientDefault { LocalDateTime.now() }
+    val dataValidade = datetime("data_validade").clientDefault { LocalDateTime.now() }.nullable()
     val dataCriacao = datetime("data_criacao").clientDefault { LocalDateTime.now() }
     val dataDisponivel = datetime("data_disponivel").clientDefault { LocalDateTime.now() }
     val duracaoIndeterminada = bool("duracao_indeterminada")

@@ -36,7 +36,7 @@ fun Route.paginasRestritas(
 ) {
     get(PaginasRestritasEnum.INTERNO.caminho.path) { handleInterno() }
     post(PaginasRestritasEnum.INICIO.caminho.path) { handleInicio() }
-    post(PaginasRestritasEnum.LOGOUT.caminho.path) { handleLogout() }
+    get(PaginasRestritasEnum.LOGOUT.caminho.path) { handleLogout() }
     post(PaginasRestritasEnum.CONFIGURACOES_DO_APP.caminho.path) { handleConfiguracoesDoApp() }
 
     post(PaginasComissaoEnum.PROMOCOES.caminho.path) { handlePromocoes() }

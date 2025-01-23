@@ -24,7 +24,8 @@ fun FlowContent.promocoes() {
                 nomeDoCampo = "busca",
                 classes = "grow",
                 useHx = true,
-                hxPost = "buscar",
+                hxPost = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
+                hxTrigger = "keyup changed",
                 hxTarget = idDaTabela,
                 icone = IconesEnum.BUSCAR
             )

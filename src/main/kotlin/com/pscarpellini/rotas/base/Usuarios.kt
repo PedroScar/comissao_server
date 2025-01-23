@@ -9,6 +9,7 @@ import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
+import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeTabelaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.base.gerenciamentoDeUsuarios
@@ -17,6 +18,7 @@ import com.pscarpellini.frontend.pages.restritos.base.meuPerfil
 import com.pscarpellini.frontend.pages.restritos.base.novoUsuario
 import com.pscarpellini.frontend.pages.restritos.comissao.includeFormNovaPromocao
 import com.pscarpellini.frontend.pages.restritos.comissao.novaPromocao
+import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
@@ -29,6 +31,16 @@ import io.ktor.utils.io.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
+
+suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: ContasRepository) {
+    val sessao = obterSessao()
+    contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
+            is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
+        }
+    }
+}
 
 suspend fun RoutingContext.handleGerenciamentoDeUsuarios() {
     val sessao = obterSessao()

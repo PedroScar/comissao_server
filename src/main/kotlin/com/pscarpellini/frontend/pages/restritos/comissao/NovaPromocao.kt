@@ -34,6 +34,7 @@ fun FlowContent.includeFormNovaPromocao() {
                         inputType = InputType.text,
                         hint = "Digite algo breve e chamativo",
                         isObrigatorio = true,
+                        maxLength = 100,
                         nomeDoCampo = "nome",
                         classes = "col-span-2"
                     )
@@ -41,6 +42,7 @@ fun FlowContent.includeFormNovaPromocao() {
                         label = "Descrição (opcional)",
                         inputType = InputType.text,
                         hint = "Detalhe melhor sua promoção",
+                        maxLength = 255,
                         nomeDoCampo = "descricao",
                         classes = "col-span-2"
                     )

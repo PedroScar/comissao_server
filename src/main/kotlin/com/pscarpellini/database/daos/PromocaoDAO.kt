@@ -13,7 +13,7 @@ class PromocaoDAO(id: EntityID<Int>) : IntEntity(id) {
     var subtitulo by PromocoesTable.subtitulo
     var conteudo by PromocoesTable.conteudo
     var imagem by PromocoesTable.imagem
-    var dataValidade  by PromocoesTable.dataValidade
+    var dataValidade by PromocoesTable.dataValidade
     var dataCriacao by PromocoesTable.dataCriacao
     var dataDisponivel by PromocoesTable.dataDisponivel
     var duracaoIndeterminada by PromocoesTable.duracaoIndeterminada

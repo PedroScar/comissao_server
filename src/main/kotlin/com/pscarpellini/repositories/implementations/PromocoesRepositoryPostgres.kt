@@ -1,12 +1,10 @@
 package com.pscarpellini.repositories.implementations
 
 import com.pscarpellini.database.daos.ClienteDAO
-import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.daos.PromocaoDAO
-import com.pscarpellini.database.utils.promocaoDaoToModel
 import com.pscarpellini.database.tables.PromocoesTable
+import com.pscarpellini.database.utils.promocaoDaoToModel
 import com.pscarpellini.models.DbResponse
-import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.suspendTransaction
@@ -18,10 +16,34 @@ import org.jetbrains.exposed.sql.or
 import java.time.LocalDateTime
 
 class PromocoesRepositoryPostgres : PromocoesRepository {
-    override suspend fun carregarPromocoes(clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
+    override suspend fun carregarPromocoes(termo: String, clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
+        val now = LocalDateTime.now()
+
         val listaPromocoes = runCatching {
             PromocaoDAO
-                .find { (PromocoesTable.clienteId eq clienteId) }
+                .find {
+                    (PromocoesTable.clienteId eq clienteId)
+                        .and(
+                            (PromocoesTable.titulo.like("%$termo%"))
+                                .or(PromocoesTable.subtitulo.like("%$termo%"))
+                                .or(PromocoesTable.conteudo.like("%$termo%"))
+                        )
+                }
+                .sortedBy {
+                    when {
+                        // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
+                        it.duracaoIndeterminada || (
+                                now >= it.dataDisponivel &&
+                                        (it.dataValidade == null || now <= it.dataValidade)
+                                ) -> 1
+
+                        // Promoção agendada (não disponível ainda)
+                        now < it.dataDisponivel -> 2
+
+                        // Promoção encerrada (fora do intervalo ou validade já passou)
+                        else -> 3
+                    }
+                }
                 .map(::promocaoDaoToModel)
         }.onFailure { it.printStackTrace() }.getOrThrow()
         DbResponse.Successo(listaPromocoes)
@@ -43,7 +65,7 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
     override suspend fun contagemDePromocoesAtivas(clienteId: Int): DbResponse<Int> = suspendTransaction {
         val now = LocalDateTime.now()
         val quantidadePromocoesAtivas = PromocaoDAO
-            .count (
+            .count(
                 (PromocoesTable.clienteId eq clienteId)
                     .and(PromocoesTable.dataDisponivel.lessEq(now))
                     .and((PromocoesTable.duracaoIndeterminada eq true) or (PromocoesTable.dataValidade greater now))

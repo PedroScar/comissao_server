@@ -16,7 +16,7 @@ fun Route.widgetsInicio(
     post(WidgetsInicioEnum.PROMOCOES_WIDGET.path) {
         val sessao = obterSessao()
 
-        promocoesRepository.carregarPromocoes(sessao.conta?.cliente?.id!!).let { resposta ->
+        promocoesRepository.carregarPromocoes(clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao carregar promoções")
                 is DbResponse.Successo -> { call.respondFragment { includeListaDePromocoesWidget(promocoes = resposta.data) } }

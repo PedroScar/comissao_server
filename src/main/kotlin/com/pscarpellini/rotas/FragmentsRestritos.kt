@@ -14,7 +14,12 @@ import com.pscarpellini.frontend.fragments.logados.promocoes.includeTabelaDeProm
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
+import com.pscarpellini.rotas.base.handleFragmentTabelaUsuarios
+import com.pscarpellini.rotas.comissao.handleFragmentTabelaHistoricoDeTransacoes
+import com.pscarpellini.rotas.comissao.handleFragmentTabelaPromocoes
+import com.pscarpellini.rotas.comissao.handleFragmentTabelaSaldosDosPromotores
 import io.ktor.http.*
+import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
 fun Route.fragmentsRestritos(
@@ -36,45 +41,12 @@ fun Route.fragmentsRestritos(
     }
 
 
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path) {
-        val sessao = obterSessao()
-        promocoesRepository.carregarPromocoes(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-                is DbResponse.Successo -> { call.respondFragment { includeTabelaDePromocoes(promocoes = resposta.data) } }
-            }
-        }
-    }
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path) { handleFragmentTabelaPromocoes(promocoesRepository) }
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path) { handleFragmentTabelaUsuarios(contasRepository) }
 
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path) {
-        val sessao = obterSessao()
-        contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-                is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
-            }
-        }
-    }
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) { handleFragmentTabelaHistoricoDeTransacoes(contasRepository) }
 
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) {
-        val sessao = obterSessao()
-        contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-                is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
-            }
-        }
-    }
-
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) {
-        val sessao = obterSessao()
-        contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-                is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
-            }
-        }
-    }
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) { handleFragmentTabelaSaldosDosPromotores(contasRepository) }
 }
 
 enum class FragmentsRestritosEnum(
