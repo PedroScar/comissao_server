@@ -15,6 +15,6 @@ object PromocoesTable : IntIdTable("promocoes") {
     val dataDisponivel = datetime("data_disponivel").clientDefault { LocalDateTime.now() }
     val duracaoIndeterminada = bool("duracao_indeterminada")
     val exibirPreco = bool("exibir_preco")
-    val valorAnterior = double("valor_anterior")
-    val valorAtual = double("valor_atual")
+    val valorAnterior = double("valor_anterior").nullable()
+    val valorAtual = double("valor_atual").nullable()
 }

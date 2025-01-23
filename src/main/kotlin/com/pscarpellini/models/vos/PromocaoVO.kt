@@ -17,8 +17,8 @@ data class PromocaoVO(
     @Serializable(with = LocalDateTimeSerializer::class) val dataDisponivel: LocalDateTime,
     val duracaoIndeterminada: Boolean,
     val exibirPreco: Boolean,
-    val valorAnterior: Double,
-    val valorAtual: Double,
+    val valorAnterior: Double?,
+    val valorAtual: Double?,
 ) {
     val status: StatusPromocoesEnum
         get() {

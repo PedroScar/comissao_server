@@ -11,23 +11,42 @@ import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.suspendTransaction
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.greater
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.lessEq
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.or
 import java.time.LocalDateTime
 
 class PromocoesRepositoryPostgres : PromocoesRepository {
     override suspend fun carregarPromocoes(clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
-        val listaPromocoes = PromocaoDAO
-            .find { (PromocoesTable.clienteId eq clienteId) }
-            .map(::promocaoDaoToModel)
-
+        val listaPromocoes = runCatching {
+            PromocaoDAO
+                .find { (PromocoesTable.clienteId eq clienteId) }
+                .map(::promocaoDaoToModel)
+        }.onFailure { it.printStackTrace() }.getOrThrow()
         DbResponse.Successo(listaPromocoes)
     }
 
+    override suspend fun carregarPromocao(promocaoId: Int, clienteId: Int): DbResponse<PromocaoVO> = suspendTransaction {
+        val promocao = runCatching {
+            PromocaoDAO
+                .find { (PromocoesTable.id eq promocaoId) and (PromocoesTable.clienteId eq clienteId) }
+                .firstOrNull() // Garante que será retornada no máximo uma promoção
+                ?.let(::promocaoDaoToModel) // Converte para o modelo caso exista
+        }.onFailure { it.printStackTrace() }.getOrThrow()
+
+        // Verifica se a promoção foi encontrada e responde adequadamente
+        if (promocao != null) DbResponse.Successo(promocao)
+        else DbResponse.Erro(message = "Promoção não encontrada ou não pertence ao cliente especificado.")
+    }
+
     override suspend fun contagemDePromocoesAtivas(clienteId: Int): DbResponse<Int> = suspendTransaction {
+        val now = LocalDateTime.now()
         val quantidadePromocoesAtivas = PromocaoDAO
             .count (
                 (PromocoesTable.clienteId eq clienteId)
-//                    .and(PromocoesTable.status eq "ATIVA")
+                    .and(PromocoesTable.dataDisponivel.lessEq(now))
+                    .and((PromocoesTable.duracaoIndeterminada eq true) or (PromocoesTable.dataValidade greater now))
             )
 
         DbResponse.Successo(quantidadePromocoesAtivas.toInt())
@@ -52,11 +71,7 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                 valorAnterior = promocao.valorAnterior
                 valorAtual = promocao.valorAtual
             }
-        }.onFailure {
-            println("=============================================================================")
-            println("ERRO AQUI: ${it.stackTrace}")
-            println("=============================================================================")
-        }.onSuccess {
+        }.onFailure { it.printStackTrace() }.onSuccess {
             DbResponse.Successo(promocao)
         }
         DbResponse.Successo(promocao)

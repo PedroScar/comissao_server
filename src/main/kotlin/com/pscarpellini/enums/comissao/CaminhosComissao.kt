@@ -7,8 +7,8 @@ enum class CaminhosComissaoEnum(
 ) : IPaginaEnum {
     PROMOCOES(path = "/int/promocoes"),
     NOVA_PROMOCAO(path = "/int/nova_promocao"),
-    EXIBIR_PROMOCAO(path = "/int/promocao/exibir/{id_promocao}"),
-    EDITAR_PROMOCAO(path = "/int/promocao/editar/{id_promocao}"),
+    EXIBIR_PROMOCAO(path = "/int/promocao/exibir"),
+    EDITAR_PROMOCAO(path = "/int/promocao/editar"),
     FORMULARIO_NOVA_PROMOCAO(path = "/forms/promocoes/nova_promocao"),
 
     SALDOS_DOS_PROMOTORES(path = "/int/saldos"),

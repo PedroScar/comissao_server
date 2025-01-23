@@ -13,7 +13,7 @@ enum class ItensMenuPilulaEnum(
     CRIAR_NOVA_PROMOCAO(
         textoCTA = "Criar nova promoção",
         icone = IconesEnum.CARRINHO,
-        pagina = CaminhosComissaoEnum.PROMOCOES
+        pagina = CaminhosComissaoEnum.NOVA_PROMOCAO
     ),
     MODIFICAR_SALDO(
         textoCTA = "Modificar saldo",

@@ -4,6 +4,8 @@ import com.pscarpellini.frontend.enums.designsystem.AlinhamentosEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.interfaces.IPaginaEnum
 import kotlinx.html.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 fun FlowContent.botao(
     tipo: TiposBotaoEnum = TiposBotaoEnum.PRIMARY,
@@ -15,8 +17,50 @@ fun FlowContent.botao(
     alinhamento: AlinhamentosEnum = AlinhamentosEnum.CENTER,
     hxMethod: FormMethod = FormMethod.post,
     hxPath: IPaginaEnum? = null,
+    hxParams: Map<String, String> = mapOf(),
     hxTarget: String = "",
     hxIndicator: String = "",
+    hxReplaceUrl: String = "",
+    hxSwap: String = "innerHTML",
+    hxEncoding: String = "",
+    isAutovalidateButton: Boolean = true,
+    conteudo: FlowContent.() -> Unit
+) {
+    botao(
+        tipo = tipo,
+        classes = classes,
+        interativo = interativo,
+        small = small,
+        enabled = enabled,
+        type = type,
+        alinhamento = alinhamento,
+        hxMethod = hxMethod,
+        hxPath = hxPath?.path ?: "",
+        hxParams = hxParams,
+        hxTarget = hxTarget,
+        hxIndicator = hxIndicator,
+        hxReplaceUrl = hxReplaceUrl,
+        hxSwap = hxSwap,
+        hxEncoding = hxEncoding,
+        isAutovalidateButton = isAutovalidateButton,
+        conteudo = conteudo,
+    )
+}
+
+fun FlowContent.botao(
+    tipo: TiposBotaoEnum = TiposBotaoEnum.PRIMARY,
+    classes: String = "",
+    interativo: Boolean = true,
+    small: Boolean = false,
+    enabled: Boolean = true,
+    type: ButtonType = ButtonType.submit,
+    alinhamento: AlinhamentosEnum = AlinhamentosEnum.CENTER,
+    hxMethod: FormMethod = FormMethod.post,
+    hxPath: String,
+    hxParams: Map<String, String> = mapOf(),
+    hxTarget: String = "",
+    hxIndicator: String = "",
+    hxReplaceUrl: String = "",
     hxSwap: String = "innerHTML",
     hxEncoding: String = "",
     isAutovalidateButton: Boolean = true,
@@ -27,13 +71,15 @@ fun FlowContent.botao(
         type = type
     ) {
         if(isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
-        attributes["hx-${hxMethod.name}"] = hxPath?.path ?: ""
+        attributes["hx-${hxMethod.name}"] = hxPath
         if(hxTarget.isNotEmpty()) {
             attributes["hx-target"] = "#$hxTarget"
             attributes["hx-swap"] = hxSwap
         } else attributes["hx-swap"] = "none"
         if(hxIndicator.isNotEmpty()) attributes["hx-indicator"] = "#$hxIndicator"
         if(hxEncoding.isNotEmpty()) attributes["hx-encoding"] = hxEncoding
+        attributes["hx-vals"] = Json.encodeToString(hxParams)
+        if(hxReplaceUrl.isNotEmpty()) attributes["hx-replace-url"] = hxReplaceUrl
 
         if (!enabled) attributes["disabled"] = "disabled"
         div(classes = "flex flex-row items-center $alinhamento") {

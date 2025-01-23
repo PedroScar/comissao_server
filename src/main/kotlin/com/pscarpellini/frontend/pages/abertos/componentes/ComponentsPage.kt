@@ -8,6 +8,7 @@ import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
 import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
+import com.pscarpellini.frontend.fragments.geral.tag.tag
 import kotlinx.html.HTML
 import kotlinx.html.body
 import kotlinx.html.div
@@ -16,6 +17,16 @@ fun HTML.componentsPage() {
     includeHtmlHeader()
     body(classes = "bg-high-light") {
         div(classes = "container flex flex-col gap-2") {
+            div(classes = "flex flex-row items-center") {
+                tag(texto = "Tag 01", clicavel = true)
+                tag(texto = "Tag 02", clicavel = true)
+                tag(texto = "Tag 03", clicavel = true)
+                tag(texto = "Tag 04", clicavel = true)
+                tag(texto = "Tag 05", clicavel = true)
+                tag(texto = "Tag 06", clicavel = true)
+                tag(texto = "Tag 07", clicavel = true)
+                tag(texto = "Tag 08", clicavel = true)
+            }
             card(arredondamento = ArredondamentosEnum.NONE, showBackground = false, showBordas = false) {
                 botao(
                     tipo = TiposBotaoEnum.WARNING_PRIMARY, small = false, enabled = true

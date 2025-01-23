@@ -6,10 +6,7 @@ import com.pscarpellini.frontend.style.styledRouting
 import com.pscarpellini.repositories.interfaces.ClienteRepository
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
-import com.pscarpellini.rotas.fragmentsRestritos
-import com.pscarpellini.rotas.paginasAbertas
-import com.pscarpellini.rotas.paginasRestritas
-import com.pscarpellini.rotas.widgetsInicio
+import com.pscarpellini.rotas.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
@@ -39,6 +36,8 @@ fun Application.configurePages() {
 
     styledRouting {
         staticResources("/static", "static")
+
+        fragmentsComponentes()
 
         paginasAbertas(contasRepository)
         paginasRestritas(contasRepository, promocoesRepository)

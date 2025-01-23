@@ -7,3 +7,7 @@ fun formatarIntervaloDeDatas(dataInicio: LocalDateTime, dataFim: LocalDateTime):
     val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     return "${dataInicio.format(formatter)} → ${dataFim.format(formatter)}"
 }
+
+fun LocalDateTime?.formatarData(): String {
+    return this?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) ?: "Data inválida"
+}
