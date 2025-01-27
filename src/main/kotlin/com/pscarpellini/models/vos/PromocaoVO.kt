@@ -24,9 +24,15 @@ data class PromocaoVO(
         get() {
             val today = LocalDateTime.now()
             return when {
-                duracaoIndeterminada -> StatusPromocoesEnum.ATIVA
+                // Promoção cancelada (data de validade passou e está indisponível)
+                dataValidade != null && today.isAfter(dataValidade) && today.isBefore(dataDisponivel) -> StatusPromocoesEnum.CANCELADA
+                // Promoção ativa (duração indeterminada ou ainda válida)
+                duracaoIndeterminada || (today.isAfter(dataDisponivel) && (dataValidade == null || today.isBefore(dataValidade))) -> StatusPromocoesEnum.ATIVA
+                // Promoção agendada (não disponível ainda)
                 today.isBefore(dataDisponivel) -> StatusPromocoesEnum.AGENDADA
-                today.isAfter(dataValidade) -> StatusPromocoesEnum.ENCERRADA
+                // Promoção encerrada (data de validade passou)
+                dataValidade != null && today.isAfter(dataValidade) -> StatusPromocoesEnum.ENCERRADA
+                // Caso padrão
                 else -> StatusPromocoesEnum.ATIVA
             }
         }

@@ -9,4 +9,5 @@ interface PromocoesRepository {
     suspend fun carregarPromocao(promocaoId: Int, clienteId: Int): DbResponse<PromocaoVO>
     suspend fun contagemDePromocoesAtivas(clienteId: Int): DbResponse<Int>
     suspend fun criarPromocao(promocao: PromocaoVO): DbResponse<PromocaoVO>
+    suspend fun encerrarPromocao(promocaoId: Int, clienteId: Int): DbResponse<PromocaoVO>
 }

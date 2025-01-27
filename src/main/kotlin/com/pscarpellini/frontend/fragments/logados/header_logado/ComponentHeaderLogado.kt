@@ -2,6 +2,7 @@ package com.pscarpellini.frontend.fragments.logados.header_logado
 
 import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.PosicoesDropdownEnum
@@ -62,9 +63,11 @@ fun FlowContent.includeHeaderLogado(
         if (sessao.paginaAtual.sublinks.isNotEmpty()) {
             div(classes = "flex") {
                 sessao.paginaAtual.sublinks.forEach {
-                    botaoHX(tipo = TiposBotaoEnum.PRIMARY, link = it.caminho, small = true) {
-                        icone(it.icone, size = 2f)
-                        +it.nome
+                    if(it.papelNecessario == null || sessao.papeisDeAcesso.contains(it.papelNecessario)) {
+                        botaoHX(tipo = TiposBotaoEnum.PRIMARY, link = it.caminho, small = true) {
+                            icone(it.icone, size = 2f)
+                            +it.nome
+                        }
                     }
                 }
             }

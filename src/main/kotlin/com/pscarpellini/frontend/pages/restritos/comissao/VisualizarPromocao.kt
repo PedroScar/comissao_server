@@ -1,7 +1,9 @@
 package com.pscarpellini.frontend.pages.restritos.comissao
 
 import com.pscarpellini.enums.base.PaginasRestritasEnum
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
+import com.pscarpellini.enums.comissao.StatusPromocoesEnum
 import com.pscarpellini.extensions.formatarData
 import com.pscarpellini.extensions.formatarValorMonetario
 import com.pscarpellini.frontend.enums.designsystem.*
@@ -22,7 +24,8 @@ import kotlinx.html.*
 
 fun FlowContent.visualizarPromocao(
     sessao: SessaoUsuarioVO,
-    promocao: PromocaoVO?
+    promocao: PromocaoVO?,
+    idPromocao: Int
 ) {
     includeHeaderLogado(sessao = sessao)
     div(classes = "flex flex-col gap-6") {
@@ -41,21 +44,27 @@ fun FlowContent.visualizarPromocao(
             }
         }
         div(classes = "self-end flex flex-row gap-2") {
-            botao(
-                tipo = TiposBotaoEnum.NEUTRAL,
-                hxPath = PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho,
-                hxTarget = "conteudo-interno",
-                hxSwap = "outerHTML",
-                enabled = true,
-            ) {
-                icone(icone = IconesEnum.EDITAR)
-                +"Editar"
+            if(sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_PROMOCAO) && promocao?.status != StatusPromocoesEnum.ENCERRADA) {
+                botao(
+                    tipo = TiposBotaoEnum.NEUTRAL,
+                    hxPath = PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho,
+                    hxTarget = "conteudo-interno",
+                    hxSwap = "outerHTML",
+                    enabled = true,
+                ) {
+                    icone(icone = IconesEnum.EDITAR)
+                    +"Editar"
+                }
+                botao(
+                    tipo = TiposBotaoEnum.PRIMARY,
+                    hxPath = CaminhosComissaoEnum.FORMULARIO_ENCERRAR_PROMOCAO,
+                    hxParams = mapOf("id_promocao" to idPromocao.toString()),
+                    enabled = true,
+                ) {
+                    if(promocao?.status == StatusPromocoesEnum.ATIVA) +"Encerrar promoção"
+                    else +"Cancelar promoção"
+                }
             }
-            botao(
-                tipo = TiposBotaoEnum.PRIMARY,
-                hxPath = PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho,
-                enabled = true,
-            ) { +"Encerrar promoção" }
         }
     }
 }

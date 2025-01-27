@@ -17,7 +17,7 @@ import io.ktor.server.routing.*
 
 suspend fun RoutingContext.handleFragmentTabelaSaldosDosPromotores(contasRepository: ContasRepository) {
     val sessao = obterSessao()
-    contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
+    contasRepository.carregarUsuarios(clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
             is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }

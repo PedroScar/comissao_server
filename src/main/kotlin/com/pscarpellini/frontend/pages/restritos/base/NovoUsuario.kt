@@ -44,7 +44,8 @@ fun FlowContent.includeFormNovoUsuario(
                         inputType = InputType.email,
                         hint = "exemplo@email.com",
                         isObrigatorio = true,
-                        nomeDoCampo = "email"
+                        nomeDoCampo = "email",
+                        classes = "lowercase"
                     )
                     includeSelectDePerfis()
                     inputField(

@@ -3,11 +3,20 @@ package com.pscarpellini.repositories.implementations
 import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.database.utils.contaDaoToModel
 import com.pscarpellini.database.daos.ContaDAO
+import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.tables.ContasTable
+import com.pscarpellini.database.tables.PromocoesTable
+import com.pscarpellini.database.utils.promocaoDaoToModel
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
+import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.suspendTransaction
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.lowerCase
+import org.jetbrains.exposed.sql.or
 import java.time.LocalDateTime
 
 class ContasRepositoryPostgres : ContasRepository {
@@ -26,12 +35,19 @@ class ContasRepositoryPostgres : ContasRepository {
         }
     }
 
-    override suspend fun carregarUsuarios(clienteId: Int): DbResponse<List<ContaVO>> = suspendTransaction {
+    override suspend fun carregarUsuarios(nome: String, clienteId: Int): DbResponse<List<ContaVO>> = suspendTransaction {
         val cliente = ClienteDAO.findById(clienteId)
             ?: throw IllegalArgumentException("Cliente com ID $clienteId não encontrado")
 
         val listaUsuarios = ContaDAO
-            .find { (ContasTable.clienteId eq cliente.id) }
+            .find {
+                (ContasTable.clienteId eq cliente.id)
+                    .and(
+                        (ContasTable.nome.lowerCase().like("%${nome.lowercase()}%"))
+                            .or(ContasTable.usuario.lowerCase().like("%${nome.lowercase()}%"))
+                            .or(ContasTable.email.lowerCase().like("%${nome.lowercase()}%"))
+                    )
+            }
             .map(::contaDaoToModel)
 
         DbResponse.Successo(listaUsuarios)
@@ -48,11 +64,11 @@ class ContasRepositoryPostgres : ContasRepository {
                 nome = conta.nome
                 cpf = conta.cpf
                 endereco = conta.endereco
-                email = conta.email
+                email = conta.email.lowercase()
                 telefone = conta.telefone
                 saldo = conta.saldo
                 status = conta.status
-                usuario = conta.usuario
+                usuario = conta.usuario.lowercase()
                 senha = "12345678"
                 dataCriacao = LocalDateTime.now()
             }

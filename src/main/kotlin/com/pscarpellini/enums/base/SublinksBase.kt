@@ -8,10 +8,12 @@ enum class SublinksBaseEnum(
     override val icone: IconesEnum,
     override val nome: String,
     override val caminho: IPaginaEnum,
+    override val papelNecessario: PapeisDeAcessoEnum? = null,
 ) : ISublinksRestritosEnum {
     NOVO_USUARIO(
         nome = "Novo usuário",
         caminho = CaminhosBaseEnum.NOVO_USUARIO,
+        papelNecessario = PapeisDeAcessoEnum.CRIAR_USUARIO,
         icone = IconesEnum.ADICIONAR
     ),
 }

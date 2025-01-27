@@ -10,6 +10,7 @@ enum class CaminhosComissaoEnum(
     EXIBIR_PROMOCAO(path = "/int/promocao/exibir"),
     EDITAR_PROMOCAO(path = "/int/promocao/editar"),
     FORMULARIO_NOVA_PROMOCAO(path = "/forms/promocoes/nova_promocao"),
+    FORMULARIO_ENCERRAR_PROMOCAO(path = "/forms/promocoes/encerrar_promocao"),
 
     SALDOS_DOS_PROMOTORES(path = "/int/saldos"),
 

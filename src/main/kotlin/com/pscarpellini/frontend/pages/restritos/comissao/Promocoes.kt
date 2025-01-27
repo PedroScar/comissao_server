@@ -27,6 +27,7 @@ fun FlowContent.promocoes() {
                 hxPost = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
                 hxTrigger = "keyup changed",
                 hxTarget = idDaTabela,
+                hxIndicator = "loading_$idDaTabela",
                 icone = IconesEnum.BUSCAR
             )
             botao(tipo = TiposBotaoEnum.NEUTRAL) {
@@ -37,6 +38,7 @@ fun FlowContent.promocoes() {
         autoLoaderFragment(
             id = idDaTabela,
             usarDiferenciadorId = false,
+            textoLoading = "Buscando promoções",
             path = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
             classes = "w-full grow"
         )

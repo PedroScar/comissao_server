@@ -40,7 +40,8 @@ fun FlowContent.inicio(
                 autoLoaderFragment(
                     id = "promocoes_mais_utilizadas",
                     path = WidgetsInicioEnum.PROMOCOES_WIDGET.path,
-                    classes = "w-full grow max-h-64 overflow-y-auto overflow-x-hidden"
+                    textoLoading = "Buscando promoções",
+                    classes = "w-full grow h-60 overflow-y-auto overflow-x-hidden"
                 )
             }
             card(classes = "flex flex-col gap-3") {
@@ -51,7 +52,8 @@ fun FlowContent.inicio(
                 autoLoaderFragment(
                     id = "contagem_promocoes_ativas",
                     path = WidgetsInicioEnum.CONTAGEM_PROMOCOES_WIDGET.path,
-                    classes = "w-full grow max-h-64 overflow-y-auto overflow-x-hidden"
+                    textoLoading = "Contando promoções",
+                    classes = "w-full grow h-60 overflow-y-auto overflow-x-hidden"
                 )
             }
             card(classes = "col-span-3 flex flex-col gap-3") {
@@ -62,7 +64,8 @@ fun FlowContent.inicio(
                 autoLoaderFragment(
                     id = "tabela_de_usuarios",
                     path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
-                    classes = "w-full grow max-h-64 overflow-y-auto overflow-x-hidden"
+                    textoLoading = "Buscando usuários",
+                    classes = "w-full grow h-60 overflow-y-auto overflow-x-hidden"
                 )
             }
         }

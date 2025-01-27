@@ -1,5 +1,6 @@
 package com.pscarpellini.frontend.fragments.geral.auto_loader
 
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.fragments.geral.loading.loading
 import kotlinx.html.FlowContent
 import kotlinx.html.div
@@ -9,17 +10,25 @@ fun FlowContent.autoLoaderFragment(
     path: String,
     usarDiferenciadorId: Boolean = true,
     isVerticalLoading: Boolean = false,
+    textoLoading: String = "Carregando",
     hxReplaceUrl: String? = null,
     classes: String = "",
 ): String {
     val idDoConteudo = if(usarDiferenciadorId) "$id-${System.currentTimeMillis()}" else id
-    div(classes = classes) {
+    val idDoLoading = "loading_$id"
+    div(classes = "relative $classes") {
         attributes["hx-post"] = path
         attributes["hx-trigger"] = "load"
         attributes["hx-target"] = "#$idDoConteudo"
-        attributes["id"] = idDoConteudo
+        attributes["hx-indicator"] = "#$idDoLoading"
         hxReplaceUrl?.let { attributes["hx-replace-url"] = it }
-        loading(id = id, isVertical = isVerticalLoading)
+        div(classes = "w-full h-full") {
+            attributes["id"] = idDoConteudo
+        }
+        div(classes = "absolute inset-0 ${CoresEnum.HIGH_PURE.bg} bg-opacity-75 flex items-center justify-center z-10 collapse") {
+            attributes["id"] = idDoLoading
+            loading(id = idDoLoading, isVertical = isVerticalLoading, textoLoading = textoLoading)
+        }
     }
     return idDoConteudo
 }

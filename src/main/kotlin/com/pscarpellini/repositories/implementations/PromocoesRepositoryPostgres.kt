@@ -12,6 +12,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.greater
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.lessEq
 import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.lowerCase
 import org.jetbrains.exposed.sql.or
 import java.time.LocalDateTime
 
@@ -24,18 +25,18 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                 .find {
                     (PromocoesTable.clienteId eq clienteId)
                         .and(
-                            (PromocoesTable.titulo.like("%$termo%"))
-                                .or(PromocoesTable.subtitulo.like("%$termo%"))
-                                .or(PromocoesTable.conteudo.like("%$termo%"))
+                            (PromocoesTable.titulo.lowerCase().like("%${termo.lowercase()}%"))
+                                .or(PromocoesTable.subtitulo.lowerCase().like("%${termo.lowercase()}%"))
+                                .or(PromocoesTable.conteudo.lowerCase().like("%${termo.lowercase()}%"))
                         )
                 }
                 .sortedBy {
                     when {
+                        // Promoção cancelada (já passou da data de validade e está indisponível)
+                        (it.dataValidade != null) && now >= it.dataValidade && now <= it.dataDisponivel -> 4
+
                         // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
-                        it.duracaoIndeterminada || (
-                                now >= it.dataDisponivel &&
-                                        (it.dataValidade == null || now <= it.dataValidade)
-                                ) -> 1
+                        it.duracaoIndeterminada || (now >= it.dataDisponivel && (it.dataValidade == null || now <= it.dataValidade)) -> 1
 
                         // Promoção agendada (não disponível ainda)
                         now < it.dataDisponivel -> 2
@@ -97,5 +98,25 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
             DbResponse.Successo(promocao)
         }
         DbResponse.Successo(promocao)
+    }
+
+    override suspend fun encerrarPromocao(promocaoId: Int, clienteId: Int): DbResponse<PromocaoVO> = suspendTransaction {
+        val promocaoDAO = PromocaoDAO.find {
+            (PromocoesTable.id eq promocaoId).and(PromocoesTable.clienteId eq clienteId)
+        }.firstOrNull()
+
+        if (promocaoDAO == null) return@suspendTransaction DbResponse.Erro(message = "Promoção não encontrada.")
+
+        runCatching {
+            promocaoDAO.apply {
+                // Marca a promoção como encerrada
+                dataValidade = LocalDateTime.now().minusSeconds(1) // Ajusta a validade para antes do momento atual
+            }
+        }.onFailure {
+            it.printStackTrace()
+            return@suspendTransaction DbResponse.Erro(message = "Erro ao encerrar a promoção.")
+        }
+
+        DbResponse.Successo(promocaoDaoToModel(promocaoDAO))
     }
 }

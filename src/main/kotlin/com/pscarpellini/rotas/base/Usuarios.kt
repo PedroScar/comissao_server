@@ -33,8 +33,12 @@ import java.time.LocalDateTime
 import java.util.*
 
 suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: ContasRepository) {
+    val parameters = call.receiveParameters()
+
+    val busca = parameters["busca"] ?: ""
+
     val sessao = obterSessao()
-    contasRepository.carregarUsuarios(sessao.conta?.cliente?.id!!).let { resposta ->
+    contasRepository.carregarUsuarios(nome = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
             is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }

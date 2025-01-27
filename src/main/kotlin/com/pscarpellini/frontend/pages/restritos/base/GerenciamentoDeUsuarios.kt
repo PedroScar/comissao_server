@@ -30,8 +30,10 @@ fun FlowContent.gerenciamentoDeUsuarios(
                 nomeDoCampo = "busca",
                 classes = "grow",
                 useHx = true,
-                hxPost = "buscar",
+                hxPost = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
+                hxTrigger = "keyup changed",
                 hxTarget = idDaTabela,
+                hxIndicator = "loading_$idDaTabela",
                 icone = IconesEnum.BUSCAR
             )
 //            botao(tipo = TiposBotaoEnum.NEUTRAL) {
@@ -46,6 +48,7 @@ fun FlowContent.gerenciamentoDeUsuarios(
         autoLoaderFragment(
             id = idDaTabela,
             usarDiferenciadorId = false,
+            textoLoading = "Buscando usuários",
             path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
             classes = "w-full grow"
         )

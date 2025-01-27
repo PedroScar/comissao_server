@@ -68,18 +68,18 @@ suspend fun RoutingContext.handleExibirPromocao(
     val sessao = obterSessao()
     val parameters = call.receiveParameters()
 
-    runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess {
+    runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
         sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
         sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_PROMOCAO
 
-        promocoesRepository.carregarPromocao(promocaoId = it, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+        promocoesRepository.carregarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção selecionada")
                 is DbResponse.Successo -> {
                     call.respondFragment(HttpStatusCode.OK) {
                         includeMenuPrincipal(sessao)
                         includeHeaderLogado(sessao)
-                        visualizarPromocao(sessao, resposta.data)
+                        visualizarPromocao(sessao, resposta.data, idPromocao)
                     }
                 }
             }
@@ -154,5 +154,20 @@ suspend fun RoutingContext.handleFormularioNovaPromocao(
     call.respondFragment(HttpStatusCode.OK) {
         includeFormNovaPromocao()
         toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção cadastrada com sucesso")
+    }
+}
+
+
+suspend fun RoutingContext.handleEncerrarPromocao(promocoesRepository: PromocoesRepository) {
+    val sessao = obterSessao()
+    val parameters = call.receiveParameters()
+
+    runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
+        promocoesRepository.encerrarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao encerrar a promoção")
+                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) { visualizarPromocao(sessao, resposta.data, idPromocao) }
+            }
+        }
     }
 }

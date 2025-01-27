@@ -22,7 +22,7 @@ fun FlowContent.tabelaComHeadersFixos(
             }
             tbody {
                 linhas.forEach { linha ->
-                    tr(classes = "even:${CoresEnum.HIGH_LIGHT} border-b border-b-${CoresEnum.HIGH_MEDIUM}") {
+                    tr(classes = "even:${CoresEnum.HIGH_LIGHT} border-b border-b-${CoresEnum.HIGH_MEDIUM} last:border-b-0") {
                         linha.forEach { celula ->
                             td(classes = "px-4 py-4") {
                                 celula(this)

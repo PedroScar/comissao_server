@@ -18,6 +18,7 @@ fun FlowContent.inputField(
     maxLength: Int? = null,
     useHx: Boolean = false,
     hxTrigger: String = "keyup changed delay:1s",
+    hxIndicator: String = "",
     hxPost: String = "",
     hxTarget: String = "",
     onIconClick: (() -> Unit)? = null,
@@ -45,6 +46,7 @@ fun FlowContent.inputField(
                     attributes["hx-trigger"] = hxTrigger
                     attributes["hx-post"] = hxPost
                     attributes["hx-target"] = "#$hxTarget"
+                    if(hxIndicator.isNotEmpty()) attributes["hx-indicator"] = "#$hxIndicator"
                 }
 
                 if (!enabled) attributes["disabled"] = "disabled"

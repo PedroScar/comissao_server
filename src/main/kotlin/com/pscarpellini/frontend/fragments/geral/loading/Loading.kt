@@ -7,13 +7,15 @@ import kotlinx.html.div
 
 fun FlowContent.loading(
     id: String,
+    usarDiferenciadorId: Boolean = true,
+    textoLoading: String = "Carregando",
     isVertical: Boolean = false
 ): String {
-    val idDoConteudo = "$id-${System.currentTimeMillis()}"
-    div(classes = "w-full h-full flex ${if(isVertical) "flex-col" else "flex-row"} justify-center items-center") {
+    val idDoConteudo = if(usarDiferenciadorId) "$id-${System.currentTimeMillis()}" else id
+    div(classes = "w-full h-full flex ${if(isVertical) "flex-col" else "flex-row"} justify-center items-center cursor-progress") {
         attributes["id"] = idDoConteudo
         icone(icone = IconesEnum.LOADER, classes = "animate-spin")
-        +"Carregando"
+        +textoLoading
     }
     return idDoConteudo
 }

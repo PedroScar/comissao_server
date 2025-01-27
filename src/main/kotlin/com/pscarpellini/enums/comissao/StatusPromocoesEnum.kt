@@ -17,6 +17,11 @@ enum class StatusPromocoesEnum(
         slug = "encerrada",
         tipoTag = TiposTagsEnum.DANGER
     ),
+    CANCELADA(
+        nome = "Cancelada",
+        slug = "cancelada",
+        tipoTag = TiposTagsEnum.DANGER
+    ),
     AGENDADA(
         nome = "Agendada",
         slug = "agendada",
