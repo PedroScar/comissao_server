@@ -21,26 +21,25 @@ class VideosRepositoryPostgres : VideosRepository {
         DbResponse.Successo(listaVideos)
     }
 
-    override suspend fun carregarVideosPaginacao(clienteId: Int, pagina: Int): DbResponse<VideosPaginacao> {
-        val itensPorPagina = 5
-        val offset = ((pagina - 1) * itensPorPagina).toLong()
+    override suspend fun carregarVideosPaginacao(clienteId: Int, pagina: Int): DbResponse<VideosPaginacao> =
+        suspendTransaction {
+            val itensPorPagina = 5
+            val offset = ((pagina - 1) * itensPorPagina).toLong()
 
-        val listaVideos = runCatching {
-            VideoDAO
-                .find { VideosTable.clienteId eq clienteId }
-                .limit(itensPorPagina + 1, offset)
-                .map(::videoDaoToModel)
-        }.onFailure {
-            return DbResponse.Erro(message = "${it.message}", data = null)
-        }.getOrThrow()
+            val listaVideos = runCatching {
+                VideoDAO
+                    .find { VideosTable.clienteId eq clienteId }
+                    .limit(itensPorPagina + 1, offset)
+                    .map(::videoDaoToModel)
+            }.onFailure { DbResponse.Erro(message = "${it.message}", data = null) }.getOrThrow()
 
-        val temNovaPagina = listaVideos.size > itensPorPagina
+            val temNovaPagina = listaVideos.size > itensPorPagina
 
-        return DbResponse.Successo(
-            VideosPaginacao(
-                lista = listaVideos.take(itensPorPagina),
-                novaPagina = temNovaPagina
+            DbResponse.Successo(
+                VideosPaginacao(
+                    lista = listaVideos.take(itensPorPagina),
+                    novaPagina = temNovaPagina
+                )
             )
-        )
-    }
+        }
 }
