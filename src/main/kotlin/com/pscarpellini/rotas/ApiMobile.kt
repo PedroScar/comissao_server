@@ -2,6 +2,7 @@ package com.pscarpellini.rotas
 
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.requests.LoginRequest
+import com.pscarpellini.models.response.VideosPaginacao
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.models.vos.VideoVO
@@ -44,7 +45,7 @@ fun Route.apiMobile(
         get("/promocoes") {
             val clientId = call.request.queryParameters["clienteId"]?.toIntOrNull() ?: 0
 
-            promocoesRepository.carregarPromocoes(clienteId = clientId).let {  resposta ->
+            promocoesRepository.carregarPromocoes(clienteId = clientId).let { resposta ->
                 when (resposta) {
                     is DbResponse.Erro -> {
                         call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")
@@ -57,10 +58,10 @@ fun Route.apiMobile(
             }
         }
 
-        get("/videos") {
+        get("/videosDestaque") {
             val clientId = call.request.queryParameters["clienteId"]?.toIntOrNull() ?: 0
 
-            videosRepository.carregarVideos(clienteId = clientId).let {  resposta ->
+            videosRepository.carregarVideosDestaque(clienteId = clientId).let { resposta ->
                 when (resposta) {
                     is DbResponse.Erro -> {
                         call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")
@@ -68,6 +69,23 @@ fun Route.apiMobile(
 
                     is DbResponse.Successo -> {
                         call.respond(HttpStatusCode.OK, resposta.data as List<VideoVO>)
+                    }
+                }
+            }
+        }
+
+        get("/videosPaginacao") {
+            val clientId = call.request.queryParameters["clienteId"]?.toIntOrNull() ?: 0
+            val pagina = call.request.queryParameters["pagina"]?.toIntOrNull() ?: 0
+
+            videosRepository.carregarVideosPaginacao(clienteId = clientId, pagina = pagina).let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> {
+                        call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")
+                    }
+
+                    is DbResponse.Successo -> {
+                        call.respond(HttpStatusCode.OK, resposta.data as VideosPaginacao)
                     }
                 }
             }

@@ -12,5 +12,6 @@ class VideoDAO(id: EntityID<Int>) : IntEntity(id) {
     var titulo by VideosTable.titulo
     var video_id by VideosTable.video_id
     var habilitado by VideosTable.habilitado
+    var destaque by VideosTable.destaque
     var thumb by VideosTable.thumb
 }

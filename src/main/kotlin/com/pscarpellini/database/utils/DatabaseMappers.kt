@@ -60,5 +60,6 @@ fun videoDaoToModel(dao: VideoDAO) = VideoVO(
     titulo = dao.titulo,
     video_id = dao.video_id,
     habilitado = dao.habilitado,
+    destaque = dao.destaque,
     thumb = dao.thumb,
 )

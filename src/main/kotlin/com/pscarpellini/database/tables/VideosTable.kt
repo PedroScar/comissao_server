@@ -7,5 +7,6 @@ object VideosTable  : IntIdTable("videos") {
     val titulo = text("titulo")
     val video_id = varchar("video_id", 255)
     val habilitado = bool("habilitado")
+    val destaque = bool("destaque")
     val thumb = text("thumb")
 }

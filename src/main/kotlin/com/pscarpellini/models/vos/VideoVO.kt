@@ -8,5 +8,6 @@ data class VideoVO(
     val titulo: String,
     val video_id: String,
     val habilitado: Boolean,
+    val destaque: Boolean,
     val thumb: String,
 )
