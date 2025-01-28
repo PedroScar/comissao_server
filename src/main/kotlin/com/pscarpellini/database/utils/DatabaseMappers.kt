@@ -1,10 +1,7 @@
 package com.pscarpellini.database.utils
 
 import com.pscarpellini.database.daos.*
-import com.pscarpellini.enums.comissao.StatusPromocoesEnum
 import com.pscarpellini.models.vos.*
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.id.value,
@@ -56,4 +53,12 @@ fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
     exibirPreco = dao.exibirPreco,
     valorAnterior = dao.valorAnterior,
     valorAtual = dao.valorAtual,
+)
+
+fun videoDaoToModel(dao: VideoDAO) = VideoVO(
+    clientId = dao.id.value,
+    titulo = dao.titulo,
+    video_id = dao.video_id,
+    habilitado = dao.habilitado,
+    thumb = dao.thumb,
 )

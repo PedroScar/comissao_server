@@ -14,9 +14,9 @@ fun Application.configureDI() {
         modules(module {
             single<ContasRepository> { ContasRepositoryPostgres() }
             single<ColaboradorRepository> { ColaboradorRepositoryPostgres() }
-            single<LoginRepository> { LoginRepositoryPostgres() }
             single<ClienteRepository> { ClienteRepositoryPostgres() }
             single<PromocoesRepository> { PromocoesRepositoryPostgres() }
+            single<VideosRepository> { VideosRepositoryPostgres() }
         })
     }
 }
