@@ -1,5 +1,8 @@
 package com.pscarpellini.models.vos
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class VideoVO(
     val clientId: Int,
     val titulo: String,
