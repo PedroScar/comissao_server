@@ -67,3 +67,12 @@ fun saldoDaoToModel(dao: SaldoDAO) = SaldoVO(
     contaId = dao.contaId.id.value,
     saldo = dao.saldo,
 )
+
+fun extratoDaoToModel(dao: ExtratoDAO) = ExtratoVO(
+    contaCriacaoId = dao.contaCriacaoId.value,
+    contaDonoId = dao.contaDonoId.value,
+    promocaoId = dao.promocaoId.value,
+    dataCriacao = dao.dataCriacao,
+    valor = dao.valor,
+    isCredito = dao.isCredito,
+)
