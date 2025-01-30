@@ -27,8 +27,8 @@ fun FlowContent.visualizarPromocao(
     promocao: PromocaoVO?,
     idPromocao: Int
 ) {
-    includeHeaderLogado(sessao = sessao)
     div(classes = "flex flex-col gap-6") {
+        attributes["id"] = "visualizacao-promocao"
         card(classes = "flex flex-col gap-8") {
             includeContentGrid(colunas = 3, classes = "w-full") {
                 img (classes = "row-span-4 w-full ${ArredondamentosEnum.MD}", src = "data:image/png;base64, ${promocao?.imagem}")
@@ -38,13 +38,17 @@ fun FlowContent.visualizarPromocao(
                 }
                 linhaValor(classes = "col-span-2", titulo = "Descrição", valor = promocao?.subtitulo ?: "")
                 linhaValor(titulo = "Data de início", valor = promocao?.dataDisponivel.formatarData())
-                linhaValor(titulo = "Data de encerramento", valor = if(promocao?.duracaoIndeterminada == true) "Duração indeterminada" else promocao?.dataValidade?.formatarData() ?: "-")
+                linhaValor(titulo = "Data de encerramento", valor = if(promocao?.dataValidade == null && promocao?.duracaoIndeterminada == true) "Duração indeterminada" else promocao?.dataValidade?.formatarData() ?: "-")
                 linhaValor(titulo = "Preço de exibição anterior", valor = promocao?.valorAnterior?.formatarValorMonetario() ?: "-")
                 linhaValor(titulo = "Preço de exibição atual", valor = promocao?.valorAtual?.formatarValorMonetario() ?: "-")
             }
         }
         div(classes = "self-end flex flex-row gap-2") {
-            if(sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_PROMOCAO) && promocao?.status != StatusPromocoesEnum.ENCERRADA) {
+            if(
+                sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_PROMOCAO)
+                && promocao?.status != StatusPromocoesEnum.ENCERRADA
+                && promocao?.status != StatusPromocoesEnum.CANCELADA
+            ) {
                 botao(
                     tipo = TiposBotaoEnum.NEUTRAL,
                     hxPath = PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho,
@@ -59,6 +63,8 @@ fun FlowContent.visualizarPromocao(
                     tipo = TiposBotaoEnum.PRIMARY,
                     hxPath = CaminhosComissaoEnum.FORMULARIO_ENCERRAR_PROMOCAO,
                     hxParams = mapOf("id_promocao" to idPromocao.toString()),
+                    hxTarget = "visualizacao-promocao",
+                    hxSwap = "outerHTML",
                     enabled = true,
                 ) {
                     if(promocao?.status == StatusPromocoesEnum.ATIVA) +"Encerrar promoção"

@@ -22,18 +22,23 @@ data class PromocaoVO(
 ) {
     val status: StatusPromocoesEnum
         get() {
-            val today = LocalDateTime.now()
+            val now = LocalDateTime.now()
             return when {
-                // Promoção cancelada (data de validade passou e está indisponível)
-                dataValidade != null && today.isAfter(dataValidade) && today.isBefore(dataDisponivel) -> StatusPromocoesEnum.CANCELADA
-                // Promoção ativa (duração indeterminada ou ainda válida)
-                duracaoIndeterminada || (today.isAfter(dataDisponivel) && (dataValidade == null || today.isBefore(dataValidade))) -> StatusPromocoesEnum.ATIVA
+                // Promoção cancelada (já passou da data de validade e está indisponível)
+                (dataValidade != null) && now.isAfter(dataValidade) && now.isBefore(dataDisponivel) -> StatusPromocoesEnum.CANCELADA
+
+                // Promoção encerrada (fora do intervalo ou validade já passou)
+                (dataValidade != null) && now.isAfter(dataValidade) -> StatusPromocoesEnum.ENCERRADA
+
+                // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
+                duracaoIndeterminada && now.isAfter(dataDisponivel) && dataValidade == null
+                        || (dataValidade != null) && now.isAfter(dataDisponivel) && now.isBefore(dataValidade) -> StatusPromocoesEnum.ATIVA
+
                 // Promoção agendada (não disponível ainda)
-                today.isBefore(dataDisponivel) -> StatusPromocoesEnum.AGENDADA
-                // Promoção encerrada (data de validade passou)
-                dataValidade != null && today.isAfter(dataValidade) -> StatusPromocoesEnum.ENCERRADA
-                // Caso padrão
-                else -> StatusPromocoesEnum.ATIVA
+                now < dataDisponivel -> StatusPromocoesEnum.AGENDADA
+
+                // Promoção encerrada (fora do intervalo ou validade já passou)
+                else -> StatusPromocoesEnum.ENCERRADA
             }
         }
 }

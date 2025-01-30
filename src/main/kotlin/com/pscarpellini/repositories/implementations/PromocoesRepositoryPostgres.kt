@@ -4,6 +4,7 @@ import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.tables.PromocoesTable
 import com.pscarpellini.database.utils.promocaoDaoToModel
+import com.pscarpellini.enums.comissao.StatusPromocoesEnum
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
@@ -33,16 +34,35 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                 .sortedBy {
                     when {
                         // Promoção cancelada (já passou da data de validade e está indisponível)
-                        (it.dataValidade != null) && now >= it.dataValidade && now <= it.dataDisponivel -> 4
+                        (it.dataValidade != null) && now.isAfter(it.dataValidade) && now.isBefore(it.dataDisponivel) -> 4
+
+                        // Promoção encerrada (fora do intervalo ou validade já passou)
+                        (it.dataValidade != null) && now.isAfter(it.dataValidade) -> 3
 
                         // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
-                        it.duracaoIndeterminada || (now >= it.dataDisponivel && (it.dataValidade == null || now <= it.dataValidade)) -> 1
+                        it.duracaoIndeterminada && now.isAfter(it.dataDisponivel) && it.dataValidade == null
+                                || (it.dataValidade != null) && now.isAfter(it.dataDisponivel) && now.isBefore(it.dataValidade) -> 1
 
                         // Promoção agendada (não disponível ainda)
                         now < it.dataDisponivel -> 2
 
                         // Promoção encerrada (fora do intervalo ou validade já passou)
                         else -> 3
+
+//                        // Promoção cancelada (já passou da data de validade e está indisponível)
+//                        (it.dataValidade != null) && now >= it.dataValidade && now <= it.dataDisponivel -> 4
+//
+//                        // Promoção encerrada (fora do intervalo ou validade já passou)
+//                        (it.dataValidade != null) && now >= it.dataValidade -> 3
+//
+//                        // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
+//                        it.duracaoIndeterminada || (now >= it.dataDisponivel && (it.dataValidade == null || now <= it.dataValidade)) -> 1
+//
+//                        // Promoção agendada (não disponível ainda)
+//                        now < it.dataDisponivel -> 2
+//
+//                        // Promoção encerrada (fora do intervalo ou validade já passou)
+//                        else -> 3
                     }
                 }
                 .map(::promocaoDaoToModel)
