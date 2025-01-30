@@ -35,7 +35,6 @@ fun contaDaoToModel(dao: ContaDAO) = ContaVO(
     endereco = dao.endereco,
     email = dao.email,
     telefone = dao.telefone,
-    saldo = dao.saldo,
     status = dao.status,
     usuario = dao.usuario
 )
@@ -62,4 +61,9 @@ fun videoDaoToModel(dao: VideoDAO) = VideoVO(
     habilitado = dao.habilitado,
     destaque = dao.destaque,
     thumb = dao.thumb,
+)
+
+fun saldoDaoToModel(dao: SaldoDAO) = SaldoVO(
+    contaId = dao.contaId.id.value,
+    saldo = dao.saldo,
 )

@@ -15,7 +15,6 @@ class ContaDAO(id: EntityID<Int>) : IntEntity(id) {
     var endereco by ContasTable.endereco
     var email by ContasTable.email
     var telefone by ContasTable.telefone
-    var saldo by ContasTable.saldo
     var status by ContasTable.status
     var usuario by ContasTable.usuario
     var senha by ContasTable.senha

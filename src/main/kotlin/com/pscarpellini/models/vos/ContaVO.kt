@@ -11,7 +11,6 @@ data class ContaVO(
     val cpf: String,
     val email: String,
     val telefone: String,
-    val saldo: Double,
     val usuario: String,
     val status: String,
     val tipoConta: String,

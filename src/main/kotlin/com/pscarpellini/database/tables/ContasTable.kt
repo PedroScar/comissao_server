@@ -12,7 +12,6 @@ object ContasTable : IntIdTable("contas") {
     val endereco = varchar("endereco", 255)
     val email = varchar("email", 100)
     val telefone = varchar("telefone", 255)
-    val saldo = double("saldo")
     val status = varchar("status", 255)
     val usuario = varchar("usuario", 100).uniqueIndex()
     val senha = varchar("senha", 255)

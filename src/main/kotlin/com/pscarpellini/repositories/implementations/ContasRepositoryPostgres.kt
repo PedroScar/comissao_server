@@ -66,7 +66,6 @@ class ContasRepositoryPostgres : ContasRepository {
                 endereco = conta.endereco
                 email = conta.email.lowercase()
                 telefone = conta.telefone
-                saldo = conta.saldo
                 status = conta.status
                 usuario = conta.usuario.lowercase()
                 senha = "12345678"

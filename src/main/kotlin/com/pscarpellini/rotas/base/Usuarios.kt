@@ -103,7 +103,6 @@ suspend fun RoutingContext.handleFormularioNovoUsuario(
         cpf = "",
         email = email,
         telefone = telefone,
-        saldo = 0.0,
         usuario = criarNomeDeUsuario(nome),
         status = "ATIVO",
         tipoConta = perfilDeAcesso,

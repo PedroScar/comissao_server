@@ -5,9 +5,11 @@ import com.pscarpellini.models.requests.LoginRequest
 import com.pscarpellini.models.response.VideosPaginacao
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.PromocaoVO
+import com.pscarpellini.models.vos.SaldoVO
 import com.pscarpellini.models.vos.VideoVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
+import com.pscarpellini.repositories.interfaces.SaldosRepository
 import com.pscarpellini.repositories.interfaces.VideosRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
@@ -20,6 +22,7 @@ import io.ktor.server.routing.route
 fun Route.apiMobile(
     contasRepository: ContasRepository,
     promocoesRepository: PromocoesRepository,
+    saldosRepository: SaldosRepository,
     videosRepository: VideosRepository
 ) {
     route("/api") {
@@ -86,6 +89,22 @@ fun Route.apiMobile(
 
                     is DbResponse.Successo -> {
                         call.respond(HttpStatusCode.OK, resposta.data as VideosPaginacao)
+                    }
+                }
+            }
+        }
+
+        get("/saldoAtual") {
+            val contaId = call.request.queryParameters["contaId"]?.toIntOrNull() ?: 0
+
+            saldosRepository.carregarSaldoConta(contaId = contaId).let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> {
+                        call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")
+                    }
+
+                    is DbResponse.Successo -> {
+                        call.respond(HttpStatusCode.OK, resposta.data as SaldoVO)
                     }
                 }
             }
