@@ -43,3 +43,4 @@ suspend fun RoutingContext.handleHistoricoDeTransacoes() {
         historicoDeTransacoes()
     }
 }
+

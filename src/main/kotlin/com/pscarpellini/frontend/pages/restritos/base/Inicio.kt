@@ -62,9 +62,9 @@ fun FlowContent.inicio(
                     icone(IconesEnum.INFO, size = 2f)
                 }
                 autoLoaderFragment(
-                    id = "tabela_de_usuarios",
-                    path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
-                    textoLoading = "Buscando usuários",
+                    id = "tabela_de_transacoes",
+                    path = WidgetsInicioEnum.HISTORICO_DE_TRANSACOES_WIDGET.path,
+                    textoLoading = "Buscando transações",
                     classes = "w-full grow h-60 overflow-y-auto overflow-x-hidden"
                 )
             }

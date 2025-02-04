@@ -42,7 +42,7 @@ fun Application.configurePages() {
         paginasAbertas(contasRepository)
         paginasRestritas(contasRepository, promocoesRepository)
 
-        widgetsInicio(promocoesRepository)
+        widgetsInicio(promocoesRepository, extratosRepository, contasRepository)
 
         fragmentsRestritos(contasRepository, saldosRepository, extratosRepository, promocoesRepository)
     }

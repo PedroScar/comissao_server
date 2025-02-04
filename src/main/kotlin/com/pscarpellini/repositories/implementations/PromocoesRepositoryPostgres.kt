@@ -35,36 +35,26 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                     when {
                         // Promoção cancelada (já passou da data de validade e está indisponível)
                         (it.dataValidade != null) && now.isAfter(it.dataValidade) && now.isBefore(it.dataDisponivel) -> 4
-
                         // Promoção encerrada (fora do intervalo ou validade já passou)
                         (it.dataValidade != null) && now.isAfter(it.dataValidade) -> 3
-
                         // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
                         it.duracaoIndeterminada && now.isAfter(it.dataDisponivel) && it.dataValidade == null
                                 || (it.dataValidade != null) && now.isAfter(it.dataDisponivel) && now.isBefore(it.dataValidade) -> 1
-
                         // Promoção agendada (não disponível ainda)
                         now < it.dataDisponivel -> 2
-
                         // Promoção encerrada (fora do intervalo ou validade já passou)
                         else -> 3
-
-//                        // Promoção cancelada (já passou da data de validade e está indisponível)
-//                        (it.dataValidade != null) && now >= it.dataValidade && now <= it.dataDisponivel -> 4
-//
-//                        // Promoção encerrada (fora do intervalo ou validade já passou)
-//                        (it.dataValidade != null) && now >= it.dataValidade -> 3
-//
-//                        // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
-//                        it.duracaoIndeterminada || (now >= it.dataDisponivel && (it.dataValidade == null || now <= it.dataValidade)) -> 1
-//
-//                        // Promoção agendada (não disponível ainda)
-//                        now < it.dataDisponivel -> 2
-//
-//                        // Promoção encerrada (fora do intervalo ou validade já passou)
-//                        else -> 3
                     }
                 }
+                .map(::promocaoDaoToModel)
+        }.onFailure { it.printStackTrace() }.getOrThrow()
+        DbResponse.Successo(listaPromocoes)
+    }
+
+    override suspend fun carregarPromocoesMaisUtilizadas(clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
+        val listaPromocoes = runCatching {
+            PromocaoDAO
+                .find { (PromocoesTable.clienteId eq clienteId) }
                 .map(::promocaoDaoToModel)
         }.onFailure { it.printStackTrace() }.getOrThrow()
         DbResponse.Successo(listaPromocoes)
@@ -83,7 +73,7 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
         else DbResponse.Erro(message = "Promoção não encontrada ou não pertence ao cliente especificado.")
     }
 
-    override suspend fun contagemDePromocoesAtivas(clienteId: Int): DbResponse<Int> = suspendTransaction {
+    override suspend fun contarPromocoesAtivas(clienteId: Int): DbResponse<Int> = suspendTransaction {
         val now = LocalDateTime.now()
         val quantidadePromocoesAtivas = PromocaoDAO
             .count(

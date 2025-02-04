@@ -40,4 +40,24 @@ class ExtratosRepositoryPostgres : ExtratosRepository {
         DbResponse.Successo(extratos)
     }
 
+    override suspend fun carregarExtratosRecentes(clienteId: Int): DbResponse<List<ExtratoVO>> = suspendTransaction {
+        val contaResponsavel = ContasTable.alias("responsavel")
+        val contaSaldo = ContasTable.alias("saldo")
+        val promocao = PromocoesTable.alias("promocao")
+
+        val extratos = ExtratosTable
+            .join(contaSaldo, JoinType.INNER, additionalConstraint = { contaSaldo[ContasTable.id] eq ExtratosTable.contaSaldoId })
+            .join(contaResponsavel, JoinType.INNER, additionalConstraint = { contaResponsavel[ContasTable.id] eq ExtratosTable.contaResponsavelId })
+            .leftJoin(promocao, additionalConstraint = { promocao[PromocoesTable.id] eq ExtratosTable.promocaoId })
+            .selectAll()
+            .where {
+                (contaSaldo[ContasTable.clienteId] eq clienteId)
+                    .and(contaResponsavel[ContasTable.clienteId] eq clienteId)
+            }
+            .map(::extratoDaoToModel)
+            .sortedByDescending { it.dataCriacao }
+
+        DbResponse.Successo(extratos)
+    }
+
 }

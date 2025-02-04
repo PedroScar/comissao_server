@@ -6,4 +6,5 @@ import com.pscarpellini.models.vos.SaldoVO
 
 interface ExtratosRepository {
     suspend fun carregarExtratos(nome: String, clienteId: Int): DbResponse<List<ExtratoVO>>
+    suspend fun carregarExtratosRecentes(clienteId: Int): DbResponse<List<ExtratoVO>>
 }
