@@ -3,10 +3,7 @@ package com.pscarpellini.plugins
 import com.pscarpellini.exceptions.NaoLogadoException
 import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
-import com.pscarpellini.repositories.interfaces.ClienteRepository
-import com.pscarpellini.repositories.interfaces.ContasRepository
-import com.pscarpellini.repositories.interfaces.PromocoesRepository
-import com.pscarpellini.repositories.interfaces.SaldosRepository
+import com.pscarpellini.repositories.interfaces.*
 import com.pscarpellini.rotas.*
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -21,6 +18,7 @@ fun Application.configurePages() {
     val clientesRepository: ClienteRepository by inject()
     val contasRepository: ContasRepository by inject()
     val saldosRepository: SaldosRepository by inject()
+    val extratosRepository: ExtratosRepository by inject()
     val promocoesRepository: PromocoesRepository by inject()
 
     install(StatusPages) {
@@ -46,6 +44,6 @@ fun Application.configurePages() {
 
         widgetsInicio(promocoesRepository)
 
-        fragmentsRestritos(contasRepository, saldosRepository, promocoesRepository)
+        fragmentsRestritos(contasRepository, saldosRepository, extratosRepository, promocoesRepository)
     }
 }

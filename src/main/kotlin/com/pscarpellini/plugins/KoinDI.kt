@@ -17,6 +17,7 @@ fun Application.configureDI() {
             single<ClienteRepository> { ClienteRepositoryPostgres() }
             single<PromocoesRepository> { PromocoesRepositoryPostgres() }
             single<SaldosRepository> { SaldosRepositoryPostgres() }
+            single<ExtratosRepository> { ExtratosRepositoryPostgres() }
             single<VideosRepository> { VideosRepositoryPostgres() }
         })
     }

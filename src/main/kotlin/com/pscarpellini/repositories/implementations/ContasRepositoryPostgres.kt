@@ -54,8 +54,8 @@ class ContasRepositoryPostgres : ContasRepository {
     }
 
     override suspend fun criarUsuario(conta: ContaVO): DbResponse<ContaVO> = suspendTransaction {
-        val cliente = ClienteDAO.findById(conta.cliente.id)
-            ?: throw IllegalArgumentException("Cliente com ID ${conta.cliente.id} não encontrado")
+        val cliente = ClienteDAO.findById(conta.cliente?.id ?: -1)
+            ?: throw IllegalArgumentException("Cliente com ID ${conta.cliente?.id} não encontrado")
 
         runCatching {
             ContaDAO.new {

@@ -8,16 +8,12 @@ import com.pscarpellini.database.tables.ClientesTable
 import com.pscarpellini.database.tables.ContasTable
 import com.pscarpellini.database.tables.SaldosTable
 import com.pscarpellini.database.utils.contaDaoToModel
-import com.pscarpellini.database.utils.saldoDaoToModel
+import com.pscarpellini.database.utils.saldoRowToModel
 import com.pscarpellini.models.DbResponse
-import com.pscarpellini.models.vos.ClienteVO
-import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SaldoVO
 import com.pscarpellini.repositories.interfaces.SaldosRepository
 import com.pscarpellini.suspendTransaction
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import java.time.LocalDateTime
 import kotlin.Double
 import kotlin.Int
@@ -28,7 +24,7 @@ class SaldosRepositoryPostgres : SaldosRepository {
         val saldo = SaldoDAO
             .find { SaldosTable.contaId eq contaId }
             .limit(1)
-            .map(::saldoDaoToModel)
+            .map(::saldoRowToModel)
             .firstOrNull()
         if (saldo != null) DbResponse.Successo(saldo) else DbResponse.Erro(
             data = null,
@@ -49,44 +45,33 @@ class SaldosRepositoryPostgres : SaldosRepository {
                             .or(ContasTable.email.lowerCase().like("%${nome.lowercase()}%"))
                     )
             }
-            .map(::saldoDaoToModel)
+            .map(::saldoRowToModel)
 
         DbResponse.Successo(saldos)
     }
 
     override suspend fun modificarSaldo(
-        contaCriacaoId: Int,
-        contaDonoId: Int,
-        promocaoId: Int,
+        contaResponsavelId: Int,
+        contaSaldoId: Int,
+        promocaoId: Int?,
         valor: Double,
         isCredito: Boolean
     ): DbResponse<SaldoVO> =
         suspendTransaction {
-            val saldoDao = SaldoDAO.find { SaldosTable.contaId eq contaDonoId }.firstOrNull()
-            val contaCriacaoIdDao = ContaDAO.findById(contaCriacaoId)
-                ?: throw IllegalArgumentException("Conta $contaCriacaoId não encontrada")
-            val contaDonoIdDao = ContaDAO.findById(contaDonoId)
-                ?: throw IllegalArgumentException("Conta $contaDonoId não encontrada")
-            val promocaoId = PromocaoDAO.findById(promocaoId)
-                ?: throw IllegalArgumentException("Promocao $promocaoId não encontrada")
+            val saldoDao = SaldoDAO.find { SaldosTable.contaId eq contaSaldoId }.firstOrNull()
+            val contaResponsavelIdDao = ContaDAO.findById(contaResponsavelId)
+                ?: throw IllegalArgumentException("Conta $contaResponsavelId não encontrada")
+            val contaSaldoIdDao = ContaDAO.findById(contaSaldoId)
+                ?: throw IllegalArgumentException("Conta $contaSaldoId não encontrada")
+            val promocaoIdDao = promocaoId?.let { PromocaoDAO.findById(promocaoId) }
 
             if (saldoDao == null) return@suspendTransaction DbResponse.Erro(message = "Saldo da conta não encontrado.")
 
             runCatching {
-                saldoDao.apply {
-                    // Marca a promoção como encerrada
-                    saldo = saldoDao.saldo + if (isCredito) valor else -valor
-                }
-            }.onFailure {
-                it.printStackTrace()
-                return@suspendTransaction DbResponse.Erro(message = "Erro ao modificar saldo")
-            }
-
-            runCatching {
                 ExtratoDAO.new {
-                    this.contaCriacaoId = contaCriacaoIdDao.id
-                    this.contaDonoId = contaDonoIdDao.id
-                    this.promocaoId = promocaoId.id
+                    this.contaResponsavelId = contaResponsavelIdDao.id
+                    this.contaSaldoId = contaSaldoIdDao.id
+                    this.promocaoId = promocaoIdDao?.id
                     this.dataCriacao = LocalDateTime.now()
                     this.valor = valor
                     this.isCredito = isCredito
@@ -98,8 +83,7 @@ class SaldosRepositoryPostgres : SaldosRepository {
 
             DbResponse.Successo(
                 SaldoVO(
-                    conta = contaDaoToModel(dao = contaDonoIdDao),
-//                    contaId = contaDonoId,
+                    conta = contaDaoToModel(dao = contaSaldoIdDao),
                     saldo = saldoDao.saldo,
                 )
             )

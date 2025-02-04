@@ -24,8 +24,10 @@ fun FlowContent.historicoDeTransacoes() {
                 nomeDoCampo = "busca",
                 classes = "grow",
                 useHx = true,
-                hxPost = "buscar",
+                hxPost = FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path,
+                hxTrigger = "keyup changed",
                 hxTarget = idDaTabela,
+                hxIndicator = "loading_$idDaTabela",
                 icone = IconesEnum.BUSCAR
             )
             botao(tipo = TiposBotaoEnum.NEUTRAL) {

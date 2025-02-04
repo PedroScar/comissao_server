@@ -8,20 +8,27 @@ import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeTabelaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
+import com.pscarpellini.frontend.fragments.logados.historico_de_transacoes.includeTabelaDeHistoricoDeTransacoes
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.comissao.historicoDeTransacoes
 import com.pscarpellini.frontend.pages.restritos.comissao.saldosDosPromotores
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
+import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import io.ktor.http.*
+import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
-suspend fun RoutingContext.handleFragmentTabelaHistoricoDeTransacoes(contasRepository: ContasRepository) {
+suspend fun RoutingContext.handleFragmentTabelaHistoricoDeTransacoes(extratosRepository: ExtratosRepository) {
+    val parameters = call.receiveParameters()
+
+    val busca = parameters["busca"] ?: ""
+
     val sessao = obterSessao()
-    contasRepository.carregarUsuarios(clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+    extratosRepository.carregarExtratos(nome = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-            is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
+            is DbResponse.Successo -> { call.respondFragment { includeTabelaDeHistoricoDeTransacoes(transacoes = resposta.data) } }
         }
     }
 }

@@ -4,7 +4,9 @@ enum class IconesEnum(
     val caminhoDoIcone: String,
     val caminhoDoIconePreenchido: String? = null,
 ) {
-    LUMEN("/static/logo_preto.svg"),
+    LUMEN_COLORIDA("/static/logos/logo_icone.svg"),
+    LUMEN_BRANCA("/static/logos/logo_icone_branca.svg"),
+    LUMEN_PRETA("/static/logos/logo_icone_preta.svg"),
 
     //  ICONES GERAIS
     ADICIONAR("/static/icons/adicionar.svg"),

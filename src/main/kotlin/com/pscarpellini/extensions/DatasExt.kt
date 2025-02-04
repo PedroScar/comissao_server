@@ -11,3 +11,7 @@ fun formatarIntervaloDeDatas(dataInicio: LocalDateTime, dataFim: LocalDateTime?)
 fun LocalDateTime?.formatarData(): String {
     return this?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) ?: "Data inválida"
 }
+
+fun LocalDateTime?.formatarDataHora(): String {
+    return this?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm")) ?: "Data inválida"
+}

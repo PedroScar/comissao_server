@@ -12,7 +12,7 @@ fun FlowContent.includeMenuSeletorServico(
     classes: String = "",
 ) {
     div("flex flex-row items-center mb-4 $classes") {
-        icone(IconesEnum.LUMEN, classes = "size-12")
+        icone(IconesEnum.LUMEN_PRETA, classes = "size-12")
         dropdown(
             posicao = PosicoesDropdownEnum.ESQUERDA,
             botao = {
