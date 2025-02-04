@@ -1,10 +1,12 @@
 package com.pscarpellini.frontend.fragments.geral.logo
 
+import com.pscarpellini.frontend.enums.designsystem.TiposLogosEnum
 import kotlinx.html.*
 
 fun FlowContent.includeLogoLumen(
-    mostrarApenasIcone: Boolean = false,
-    iconeOnMobile: Boolean = true,
+    tipo: TiposLogosEnum,
+    tipoOnMobile: TiposLogosEnum = tipo,
+    classes: String = "",
     clicavel: Boolean = true,
     destinoClique: String = "https://www.lumenapps.com.br/"
 ) {
@@ -12,14 +14,7 @@ fun FlowContent.includeLogoLumen(
         classes = if(!clicavel) "pointer-events-none" else "",
         href = destinoClique,
     ) {
-        if(mostrarApenasIcone) {
-            img(classes = " w-32 h-32", src = "/static/logo_preto.svg", alt = "Lumen Apps")
-            return@a
-        } else {
-            img(classes = if(iconeOnMobile) "hidden lg:block" else "", src = "/static/header_lumen.svg", alt = "Lumen Apps")
-            if(iconeOnMobile) {
-                img(classes = "lg:hidden w-8 h-8 lg:w-auto lg:h-auto", src = "/static/logo_preto.svg", alt = "Lumen Apps")
-            }
-        }
+        img(classes = "hidden lg:block $classes", src = tipo.caminho, alt = "Lumen Apps")
+        img(classes = "lg:hidden lg:w-auto lg:h-auto $classes", src = tipoOnMobile.caminho, alt = "Lumen Apps")
     }
 }

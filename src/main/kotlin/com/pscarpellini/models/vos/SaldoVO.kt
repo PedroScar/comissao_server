@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SaldoVO(
-    val contaId: Int,
+    val conta: ContaVO,
     val saldo: Double,
 )

@@ -32,7 +32,7 @@ fun FlowContent.includeHeaderLogado(
         attributes["hx-swap-oob"] = "true"
         card(
             showBackground = false,
-            classes = "w-full flex items-center"
+            classes = "w-full flex items-center px-0"
         ) {
             if (sessao.paginaAtual.showBack) {
                 a(href = "javascript:history.back()", classes = "hover:underline") {

@@ -17,7 +17,6 @@ import kotlinx.html.*
 fun FlowContent.novaPromocao(
     sessao: SessaoUsuarioVO,
 ) {
-    includeHeaderLogado(sessao = sessao)
     includeFormNovaPromocao()
 }
 

@@ -4,12 +4,20 @@ import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.daos.ExtratoDAO
 import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.daos.SaldoDAO
+import com.pscarpellini.database.tables.ClientesTable
+import com.pscarpellini.database.tables.ContasTable
 import com.pscarpellini.database.tables.SaldosTable
+import com.pscarpellini.database.utils.contaDaoToModel
 import com.pscarpellini.database.utils.saldoDaoToModel
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.models.vos.ClienteVO
+import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SaldoVO
 import com.pscarpellini.repositories.interfaces.SaldosRepository
 import com.pscarpellini.suspendTransaction
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import java.time.LocalDateTime
 import kotlin.Double
 import kotlin.Int
@@ -18,7 +26,7 @@ class SaldosRepositoryPostgres : SaldosRepository {
 
     override suspend fun carregarSaldoConta(contaId: Int): DbResponse<SaldoVO> = suspendTransaction {
         val saldo = SaldoDAO
-            .find { (SaldosTable.contaId eq contaId) }
+            .find { SaldosTable.contaId eq contaId }
             .limit(1)
             .map(::saldoDaoToModel)
             .firstOrNull()
@@ -28,8 +36,22 @@ class SaldosRepositoryPostgres : SaldosRepository {
         )
     }
 
-    override suspend fun carregarSaldoContas(): DbResponse<SaldoVO> = suspendTransaction {
-        DbResponse.Erro(message = "NÃO IMPLEMENTADO AINDA")
+    override suspend fun carregarSaldoContas(nome: String, clienteId: Int): DbResponse<List<SaldoVO>> = suspendTransaction {
+        val saldos = SaldosTable
+            .join(ContasTable, JoinType.INNER, additionalConstraint = { SaldosTable.contaId eq ContasTable.id })
+            .join(ClientesTable, JoinType.INNER, additionalConstraint = { ContasTable.clienteId eq ClientesTable.id })
+            .selectAll()
+            .where {
+                (ContasTable.clienteId eq clienteId)
+                    .and(
+                        (ContasTable.nome.lowerCase().like("%${nome.lowercase()}%"))
+                            .or(ContasTable.usuario.lowerCase().like("%${nome.lowercase()}%"))
+                            .or(ContasTable.email.lowerCase().like("%${nome.lowercase()}%"))
+                    )
+            }
+            .map(::saldoDaoToModel)
+
+        DbResponse.Successo(saldos)
     }
 
     override suspend fun modificarSaldo(
@@ -76,7 +98,8 @@ class SaldosRepositoryPostgres : SaldosRepository {
 
             DbResponse.Successo(
                 SaldoVO(
-                    contaId = contaDonoId,
+                    conta = contaDaoToModel(dao = contaDonoIdDao),
+//                    contaId = contaDonoId,
                     saldo = saldoDao.saldo,
                 )
             )

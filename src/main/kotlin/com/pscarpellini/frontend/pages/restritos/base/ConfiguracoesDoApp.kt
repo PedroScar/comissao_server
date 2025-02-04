@@ -1,5 +1,7 @@
 package com.pscarpellini.frontend.pages.restritos.base
 
+import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
+import com.pscarpellini.extensions.formatarData
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
@@ -8,7 +10,9 @@ import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.card.card
+import com.pscarpellini.frontend.fragments.geral.formulario.formulario
 import com.pscarpellini.frontend.fragments.geral.icone.icone
+import com.pscarpellini.frontend.fragments.geral.linha_valor.linhaValor
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.models.vos.SessaoUsuarioVO
@@ -17,50 +21,38 @@ import kotlinx.html.*
 fun FlowContent.configuracoesDoApp(
     sessao: SessaoUsuarioVO
 ) {
-    includeHeaderLogado(sessao = sessao)
-    includeContentGrid(
-        linhas = 1,
-        colunas = 1,
-    ) {
-        card(classes = "flex flex-col gap-12") {
-            div(classes = "flex flex-col w-full gap-2") {
-                h4(classes = "mb-2") { +"Dados da empresa" }
-                div(classes = "grid grid-cols-2 gap-6 w-full") {
-                    div {
-                        h5 { +"Nome da empresa" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.nome ?: "") }
-                    }
-                    div {
-                        h5 { +"Contato para suporte" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.email ?: "") }
-                    }
-                    div {
-                        h5 { +"Serviços contratados" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.nome ?: "") }
-                    }
-                    div {
-                        h5 { +"CNPJ" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.email ?: "") }
+    formulario(id = "form-configuracoes-app", classes = "flex flex-col gap-6", autoValidar = true) {
+        includeContentGrid(
+            linhas = 1,
+            colunas = 1,
+        ) {
+            card(classes = "flex flex-col gap-8") {
+                div(classes = "flex flex-col w-full gap-2") {
+                    h2(classes = "grow") { +"Dados da empresa" }
+                    div(classes = "grid grid-cols-2 gap-6 w-full") {
+                        linhaValor(titulo = "Nome da empresa", valor = sessao.conta?.nome ?: "")
+                        linhaValor(titulo = "Contato para suporte", valor = sessao.conta?.email ?: "")
+                        linhaValor(titulo = "Serviços contratados", valor = sessao.conta?.nome ?: "")
+                        linhaValor(titulo = "CNPJ", valor = sessao.conta?.email ?: "")
                     }
                 }
-            }
-            div(classes = "flex flex-col w-full gap-2") {
-                h4(classes = "mb-2") { +"Tema do aplicativo" }
-                div(classes = "grid grid-cols-2 gap-6 w-full") {
-                    div(classes = "") {
-                        h5 { +"Logotipo da empresa" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.nome ?: "") }
-                    }
-                    div {
-                        h5 { +"Contato para suporte" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) { +(sessao.conta?.email ?: "") }
+                div(classes = "flex flex-col w-full gap-2") {
+                    h2(classes = "grow") { +"Tema do aplicativo" }
+                    div(classes = "grid grid-cols-2 gap-6 w-full") {
+                        linhaValor(titulo = "Logotipo da empresa", valor = sessao.conta?.email ?: "")
+                        linhaValor(titulo = "Contato para suporte", valor = sessao.conta?.email ?: "")
                     }
                 }
             }
         }
-    }
-    botaoLink(link = "#", classes = "self-end gap-2") {
-        icone(IconesEnum.EDITAR, usarPadding = false)
-        +"Editar perfil"
+        div(classes = "self-end flex flex-row gap-2") {
+            botao(
+                hxPath = CaminhosComissaoEnum.FORMULARIO_NOVA_PROMOCAO,
+                hxTarget = "form-configuracoes-app",
+                hxSwap = "outerHTML",
+                hxEncoding = "multipart/form-data",
+                enabled = false,
+            ) { +"Salvar" }
+        }
     }
 }

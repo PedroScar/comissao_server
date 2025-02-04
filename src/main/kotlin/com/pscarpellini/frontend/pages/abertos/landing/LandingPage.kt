@@ -3,6 +3,7 @@ package com.pscarpellini.frontend.pages.abertos.landing
 import com.pscarpellini.AmbientController
 import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposLogosEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
@@ -23,7 +24,7 @@ fun HTML.landingPage(
             id = "header",
             classes = "flex flex-row space-between items-center fixed top-0 bg-high-pure container"
         ) {
-            includeLogoLumen()
+            includeLogoLumen(tipo = TiposLogosEnum.HORIZONTAL, tipoOnMobile = TiposLogosEnum.ESCRITA, classes = "h-14")
             div(classes = "flex-row gap-2 hidden lg:flex") {
                 button(classes = "botao-vazado hover:underline") {
                     attributes["id"] = "btn-vantagens"
@@ -104,7 +105,7 @@ fun HTML.landingPage(
             }
             section(classes = "bg-brand-pure w-full flex mt-10") {
                 div(classes = "container flex flex-col gap-4 content-center px-4 lg:px-12 py-8") {
-                    includeLogoLumen(mostrarApenasIcone = true)
+                    includeLogoLumen(tipo = TiposLogosEnum.ICONE_PRETA, classes = "w-32 h-32")
                     p(classes = "texto-landing-inferior_lumen text-pretty") {
                         +"Na "
                         strong(classes = "font-bold") { +"lumen" }

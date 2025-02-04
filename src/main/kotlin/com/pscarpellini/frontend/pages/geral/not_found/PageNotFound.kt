@@ -1,5 +1,6 @@
 package com.pscarpellini.frontend.pages.geral.not_found
 
+import com.pscarpellini.frontend.enums.designsystem.TiposLogosEnum
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
@@ -16,7 +17,7 @@ fun HTML.notFoundPage() {
             includeHeaderMenu(
                 classes = "flex flex-row space-between items-center"
             ) {
-                includeLogoLumen()
+                includeLogoLumen(tipo = TiposLogosEnum.ESCRITA_PRETA, classes = "h-10")
             }
             div(classes = "flex flex-row flex-grow rounded-3xl bg-high-pure mx-6 lg:mx-12 mb-6 lg:mb-12") {
                 div(classes = "flex-grow flex flex-row lg:items-center justify-center px-6 py-4") {

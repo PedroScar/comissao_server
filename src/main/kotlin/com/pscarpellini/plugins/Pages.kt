@@ -6,6 +6,7 @@ import com.pscarpellini.frontend.style.styledRouting
 import com.pscarpellini.repositories.interfaces.ClienteRepository
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
+import com.pscarpellini.repositories.interfaces.SaldosRepository
 import com.pscarpellini.rotas.*
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -19,6 +20,7 @@ fun Application.configurePages() {
 
     val clientesRepository: ClienteRepository by inject()
     val contasRepository: ContasRepository by inject()
+    val saldosRepository: SaldosRepository by inject()
     val promocoesRepository: PromocoesRepository by inject()
 
     install(StatusPages) {
@@ -44,6 +46,6 @@ fun Application.configurePages() {
 
         widgetsInicio(promocoesRepository)
 
-        fragmentsRestritos(contasRepository, promocoesRepository)
+        fragmentsRestritos(contasRepository, saldosRepository, promocoesRepository)
     }
 }

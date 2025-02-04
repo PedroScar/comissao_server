@@ -14,6 +14,7 @@ import com.pscarpellini.frontend.fragments.logados.promocoes.includeTabelaDeProm
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
+import com.pscarpellini.repositories.interfaces.SaldosRepository
 import com.pscarpellini.rotas.base.handleFragmentTabelaUsuarios
 import com.pscarpellini.rotas.comissao.handleFragmentTabelaHistoricoDeTransacoes
 import com.pscarpellini.rotas.comissao.handleFragmentTabelaPromocoes
@@ -24,6 +25,7 @@ import io.ktor.server.routing.*
 
 fun Route.fragmentsRestritos(
     contasRepository: ContasRepository,
+    saldosRepository: SaldosRepository,
     promocoesRepository: PromocoesRepository,
 ) {
     post(FragmentsRestritosEnum.FRAGMENT_MENU.path) {
@@ -46,7 +48,7 @@ fun Route.fragmentsRestritos(
 
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) { handleFragmentTabelaHistoricoDeTransacoes(contasRepository) }
 
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) { handleFragmentTabelaSaldosDosPromotores(contasRepository) }
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) { handleFragmentTabelaSaldosDosPromotores(saldosRepository) }
 }
 
 enum class FragmentsRestritosEnum(

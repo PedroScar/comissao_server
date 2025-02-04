@@ -2,6 +2,7 @@ package com.pscarpellini.frontend.pages.abertos.senha
 
 import com.pscarpellini.AmbientController
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposLogosEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
@@ -21,7 +22,7 @@ fun HTML.esqueciMinhaSenhaPage() {
             includeHeaderMenu(
                 classes = "flex flex-row space-between items-center"
             ) {
-                includeLogoLumen()
+                includeLogoLumen(tipo = TiposLogosEnum.ESCRITA_PRETA, classes = "h-10")
                 div(classes = "flex flex-row gap-2 text-sm lg:text-lg") {
                     +"Alguma dúvida?"
                     a(

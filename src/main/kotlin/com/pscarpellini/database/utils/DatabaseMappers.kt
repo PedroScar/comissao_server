@@ -1,7 +1,11 @@
 package com.pscarpellini.database.utils
 
 import com.pscarpellini.database.daos.*
+import com.pscarpellini.database.tables.ClientesTable
+import com.pscarpellini.database.tables.ContasTable
+import com.pscarpellini.database.tables.SaldosTable
 import com.pscarpellini.models.vos.*
+import org.jetbrains.exposed.sql.ResultRow
 
 fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.id.value,
@@ -64,8 +68,32 @@ fun videoDaoToModel(dao: VideoDAO) = VideoVO(
 )
 
 fun saldoDaoToModel(dao: SaldoDAO) = SaldoVO(
-    contaId = dao.contaId.id.value,
+    conta = contaDaoToModel(dao.contaId),
     saldo = dao.saldo,
+)
+
+fun saldoDaoToModel(dao: ResultRow) = SaldoVO(
+//    conta = contaDaoToModel(dao.conta),
+    conta = ContaVO(
+        cliente = ClienteVO(
+            id = dao[ClientesTable.id].value,
+            nome = dao[ClientesTable.nome],
+            endereco = dao[ClientesTable.endereco],
+            cnpj = dao[ClientesTable.cnpj],
+            email = dao[ClientesTable.email],
+            telefone = dao[ClientesTable.telefone],
+            status = dao[ClientesTable.status],
+        ),
+        tipoConta = dao[ContasTable.tipoConta],
+        nome = dao[ContasTable.nome],
+        cpf = dao[ContasTable.cpf],
+        endereco = dao[ContasTable.endereco],
+        email = dao[ContasTable.email],
+        telefone = dao[ContasTable.telefone],
+        status = dao[ContasTable.status],
+        usuario = dao[ContasTable.usuario],
+    ),
+    saldo = dao[SaldosTable.saldo],
 )
 
 fun extratoDaoToModel(dao: ExtratoDAO) = ExtratoVO(
