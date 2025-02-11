@@ -4,44 +4,43 @@ import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
-import com.pscarpellini.frontend.fragments.logados.historico_de_transacoes.includeTabelaDeHistoricoDeTransacoes
-import com.pscarpellini.frontend.fragments.logados.historico_de_transacoes.includeWidgetHistoricoDeTransacoes
-import com.pscarpellini.frontend.fragments.logados.promocoes.includeListaDePromocoesWidget
+import com.pscarpellini.frontend.fragments.logados.dashboard.includeTransacoesRecentesWidget
+import com.pscarpellini.frontend.fragments.logados.dashboard.includePromocoesMaisUtilizadasWidget
+import com.pscarpellini.frontend.fragments.logados.dashboard.includeVisaoGeralWidget
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.repositories.interfaces.ContadoresDashboardViewRepository
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
-import io.ktor.http.*
-import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
 
-suspend fun RoutingContext.handleWidgetContagens(promocoesRepository: PromocoesRepository, extratosRepository: ExtratosRepository, contasRepository: ContasRepository) {
+suspend fun RoutingContext.handleWidgetVisaoGeral(contadoresDashboardViewRepository: ContadoresDashboardViewRepository) {
     val sessao = obterSessao()
-    promocoesRepository.contarPromocoesAtivas(sessao.conta?.cliente?.id!!).let { resposta ->
+    contadoresDashboardViewRepository.carregarVisaoGeral(sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao contar as promoções ativas")
-            is DbResponse.Successo -> { call.respondFragment { +"Contagem de promoções: ${resposta.data}" } }
+            is DbResponse.Successo -> { call.respondFragment { includeVisaoGeralWidget(visaoGeral = resposta.data) } }
         }
     }
 }
 
-suspend fun RoutingContext.handleWidgetPromocoes(promocoesRepository: PromocoesRepository) {
+suspend fun RoutingContext.handleWidgetPromocoesMaisUtilizadas(promocoesRepository: PromocoesRepository) {
     val sessao = obterSessao()
     promocoesRepository.carregarPromocoesMaisUtilizadas(clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao carregar promoções")
-            is DbResponse.Successo -> { call.respondFragment { includeListaDePromocoesWidget(promocoes = resposta.data) } }
+            is DbResponse.Successo -> { call.respondFragment { includePromocoesMaisUtilizadasWidget(promocoes = resposta.data) } }
         }
     }
 }
 
-suspend fun RoutingContext.handleWidgetHistoricoDeTransacoes(extratosRepository: ExtratosRepository) {
+suspend fun RoutingContext.handleWidgetTransacoesRecentes(extratosRepository: ExtratosRepository) {
     val sessao = obterSessao()
     extratosRepository.carregarExtratosRecentes(clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao carregar as últimas transações")
-            is DbResponse.Successo -> { call.respondFragment { includeWidgetHistoricoDeTransacoes(transacoes = resposta.data) } }
+            is DbResponse.Successo -> { call.respondFragment { includeTransacoesRecentesWidget(transacoes = resposta.data) } }
         }
     }
 }

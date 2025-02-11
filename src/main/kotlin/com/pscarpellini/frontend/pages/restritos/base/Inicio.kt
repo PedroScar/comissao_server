@@ -50,7 +50,7 @@ fun FlowContent.inicio(
                     icone(IconesEnum.INFO, size = 2f)
                 }
                 autoLoaderFragment(
-                    id = "contagem_promocoes_ativas",
+                    id = "contagens_dashboard",
                     path = WidgetsInicioEnum.CONTAGEM_PROMOCOES_WIDGET.path,
                     textoLoading = "Contando promoções",
                     classes = "w-full grow h-60 overflow-y-auto overflow-x-hidden"

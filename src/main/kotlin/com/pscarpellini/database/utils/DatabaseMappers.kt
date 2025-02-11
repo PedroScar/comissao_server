@@ -2,6 +2,7 @@ package com.pscarpellini.database.utils
 
 import com.pscarpellini.database.daos.*
 import com.pscarpellini.database.tables.*
+import com.pscarpellini.database.views.ContadoresDashboardView
 import com.pscarpellini.models.vos.*
 import org.jetbrains.exposed.sql.Alias
 import org.jetbrains.exposed.sql.ResultRow
@@ -73,20 +74,27 @@ fun saldoRowToModel(dao: SaldoDAO) = SaldoVO(
     saldo = dao.saldo,
 )
 
-fun saldoRowToModel(row: ResultRow) = SaldoVO(
-    conta = ContaVO(
-        cliente = clienteRowToModel(row, ClientesTable.alias("cliente")),
-        tipoConta = row[ContasTable.tipoConta],
-        nome = row[ContasTable.nome],
-        cpf = row[ContasTable.cpf],
-        endereco = row[ContasTable.endereco],
-        email = row[ContasTable.email],
-        telefone = row[ContasTable.telefone],
-        status = row[ContasTable.status],
-        usuario = row[ContasTable.usuario],
-    ),
-    saldo = row[SaldosTable.saldo],
-)
+fun saldoRowToModel(row: ResultRow): SaldoVO {
+    val cliente = runCatching {
+        val aliasCliente = ClientesTable.alias("cliente")
+        if(row[aliasCliente[ClientesTable.id]] == null) null else clienteRowToModel(row, aliasCliente)
+    }.getOrNull()
+
+    return SaldoVO(
+        conta = ContaVO(
+            cliente = cliente,
+            tipoConta = row[ContasTable.tipoConta],
+            nome = row[ContasTable.nome],
+            cpf = row[ContasTable.cpf],
+            endereco = row[ContasTable.endereco],
+            email = row[ContasTable.email],
+            telefone = row[ContasTable.telefone],
+            status = row[ContasTable.status],
+            usuario = row[ContasTable.usuario],
+        ),
+        saldo = row[SaldosTable.saldo],
+    )
+}
 
 fun extratoDaoToModel(row: ResultRow): ExtratoVO {
     return ExtratoVO(
@@ -142,5 +150,13 @@ fun promocaoRowToModel(row: ResultRow, alias: Alias<Table>): PromocaoVO? {
         exibirPreco = row[alias[PromocoesTable.exibirPreco]],
         valorAnterior = row[alias[PromocoesTable.valorAnterior]],
         valorAtual = row[alias[PromocoesTable.valorAtual]],
+    )
+}
+
+fun contadoresViewToVisaoGeralVO(row: ResultRow): VisaoGeralVO {
+    return VisaoGeralVO(
+        quantidadePromocoesAtivas = row[ContadoresDashboardView.quantidadePromocoesAtivas],
+        quantidadePromotores = row[ContadoresDashboardView.quantidadePromotores],
+        valorComissoesMesAtual = row[ContadoresDashboardView.valorComissoesMesAtual],
     )
 }

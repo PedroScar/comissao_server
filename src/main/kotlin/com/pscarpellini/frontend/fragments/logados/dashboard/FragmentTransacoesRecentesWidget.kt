@@ -1,4 +1,4 @@
-package com.pscarpellini.frontend.fragments.logados.historico_de_transacoes
+package com.pscarpellini.frontend.fragments.logados.dashboard
 
 import com.pscarpellini.extensions.formatarDataHora
 import com.pscarpellini.extensions.formatarValorMonetario
@@ -11,8 +11,7 @@ import kotlinx.html.span
 
 private val HEADERS = arrayListOf("Data e hora", "Responsável", "Tipo de transação", "Valor")
 
-
-fun FlowContent.includeWidgetHistoricoDeTransacoes(
+fun FlowContent.includeTransacoesRecentesWidget(
     transacoes: List<ExtratoVO>?
 ) {
     val extrato: List<ExtratoVO> = transacoes ?: arrayListOf()
@@ -24,8 +23,6 @@ fun FlowContent.includeWidgetHistoricoDeTransacoes(
         classes = "h-full w-full"
     )
 }
-
-
 
 private fun exibirLinhaTransacao(transacao: ExtratoVO): List<FlowContent.() -> Unit> {
     return listOf(

@@ -1,16 +1,18 @@
-package com.pscarpellini.frontend.fragments.logados.promocoes
+package com.pscarpellini.frontend.fragments.logados.dashboard
 
 import com.pscarpellini.extensions.formatarIntervaloDeDatas
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.models.vos.PromocaoVO
 import kotlinx.html.FlowContent
 
-fun FlowContent.includeListaDePromocoesWidget(
+private val HEADERS = arrayListOf("Nome da promoção", "Data de início e fim", "Vendas")
+
+fun FlowContent.includePromocoesMaisUtilizadasWidget(
     promocoes: List<PromocaoVO>?
 ) {
     val promocoesTabela: List<PromocaoVO> = promocoes ?: arrayListOf()
     tabelaComHeadersFixos(
-        headers = arrayListOf("Nome da promoção", "Data de início e fim", "Vendas"),
+        headers = HEADERS,
         linhas = promocoesTabela.map { promocao ->
             exibirPromocao(promocao)
         },

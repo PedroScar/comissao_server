@@ -15,7 +15,7 @@ import org.koin.ktor.ext.inject
 
 fun Application.configurePages() {
 
-    val clientesRepository: ClienteRepository by inject()
+    val contadoresDashboardViewRepository: ContadoresDashboardViewRepository by inject()
     val contasRepository: ContasRepository by inject()
     val saldosRepository: SaldosRepository by inject()
     val extratosRepository: ExtratosRepository by inject()
@@ -42,7 +42,7 @@ fun Application.configurePages() {
         paginasAbertas(contasRepository)
         paginasRestritas(contasRepository, promocoesRepository)
 
-        widgetsInicio(promocoesRepository, extratosRepository, contasRepository)
+        widgetsInicio(promocoesRepository, extratosRepository, contadoresDashboardViewRepository)
 
         fragmentsRestritos(contasRepository, saldosRepository, extratosRepository, promocoesRepository)
     }
