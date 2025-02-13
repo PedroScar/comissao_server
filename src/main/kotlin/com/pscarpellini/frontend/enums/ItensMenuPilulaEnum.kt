@@ -3,12 +3,14 @@ package com.pscarpellini.frontend.enums
 import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.interfaces.ICaminho
 import com.pscarpellini.interfaces.IPaginaEnum
+import com.pscarpellini.rotas.FragmentsRestritosEnum
 
 enum class ItensMenuPilulaEnum(
     val textoCTA: String,
     val icone: IconesEnum,
-    val pagina: IPaginaEnum,
+    val pagina: ICaminho,
 ) {
     CRIAR_NOVA_PROMOCAO(
         textoCTA = "Criar nova promoção",
@@ -18,7 +20,7 @@ enum class ItensMenuPilulaEnum(
     MODIFICAR_SALDO(
         textoCTA = "Modificar saldo",
         icone = IconesEnum.PRECO,
-        pagina = CaminhosComissaoEnum.SALDOS_DOS_PROMOTORES
+        pagina = FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO
     ),
     CADASTRAR_NOVO_USUARIO(
         textoCTA = "Cadastrar novo usuário",

@@ -1,5 +1,6 @@
 package com.pscarpellini.rotas.comissao
 
+import com.pscarpellini.extensions.fecharPopup
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.extensions.respondToast
@@ -20,7 +21,7 @@ suspend fun RoutingContext.handleWidgetVisaoGeral(contadoresDashboardViewReposit
     contadoresDashboardViewRepository.carregarVisaoGeral(sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao contar as promoções ativas")
-            is DbResponse.Successo -> { call.respondFragment { includeVisaoGeralWidget(visaoGeral = resposta.data) } }
+            is DbResponse.Successo -> { call.respondFragment(fecharPopupAberto = false) { includeVisaoGeralWidget(visaoGeral = resposta.data) } }
         }
     }
 }
@@ -30,7 +31,7 @@ suspend fun RoutingContext.handleWidgetPromocoesMaisUtilizadas(promocoesReposito
     promocoesRepository.carregarPromocoesMaisUtilizadas(clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao carregar promoções")
-            is DbResponse.Successo -> { call.respondFragment { includePromocoesMaisUtilizadasWidget(promocoes = resposta.data) } }
+            is DbResponse.Successo -> { call.respondFragment(fecharPopupAberto = false) { includePromocoesMaisUtilizadasWidget(promocoes = resposta.data) } }
         }
     }
 }
@@ -40,7 +41,7 @@ suspend fun RoutingContext.handleWidgetTransacoesRecentes(extratosRepository: Ex
     extratosRepository.carregarExtratosRecentes(clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha ao carregar as últimas transações")
-            is DbResponse.Successo -> { call.respondFragment { includeTransacoesRecentesWidget(transacoes = resposta.data) } }
+            is DbResponse.Successo -> { call.respondFragment(fecharPopupAberto = false) { includeTransacoesRecentesWidget(transacoes = resposta.data) } }
         }
     }
 }

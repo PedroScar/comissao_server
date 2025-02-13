@@ -20,6 +20,7 @@ import com.pscarpellini.rotas.base.handleFragmentTabelaUsuarios
 import com.pscarpellini.rotas.comissao.handleFragmentTabelaHistoricoDeTransacoes
 import com.pscarpellini.rotas.comissao.handleFragmentTabelaPromocoes
 import com.pscarpellini.rotas.comissao.handleFragmentTabelaSaldosDosPromotores
+import com.pscarpellini.rotas.comissao.handlePopupModificarSaldo
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
@@ -44,13 +45,14 @@ fun Route.fragmentsRestritos(
         }
     }
 
-
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path) { handleFragmentTabelaPromocoes(promocoesRepository) }
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path) { handleFragmentTabelaUsuarios(contasRepository) }
 
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) { handleFragmentTabelaHistoricoDeTransacoes(extratosRepository) }
 
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) { handleFragmentTabelaSaldosDosPromotores(saldosRepository) }
+
+    post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO.path) { handlePopupModificarSaldo(saldosRepository) }
 }
 
 enum class FragmentsRestritosEnum(
@@ -64,4 +66,6 @@ enum class FragmentsRestritosEnum(
     FRAGMENT_TABELA_USUARIOS("/int/fragment/tabela_usuarios"),
     FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES("/int/fragment/historico_de_transacoes"),
     FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES("/int/fragment/saldos_dos_promotores"),
+
+    FRAGMENT_POPUP_MODIFICAR_SALDO("/int/fragment/popup/modificar_saldo"),
 }

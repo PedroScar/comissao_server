@@ -11,8 +11,10 @@ import kotlinx.html.body
 
 suspend fun ApplicationCall.respondFragment(
     status: HttpStatusCode = HttpStatusCode.OK,
+    fecharPopupAberto: Boolean = true,
     fragment: BODY.() -> Unit
 ) {
+    if(fecharPopupAberto) fecharPopup()
     this.respondHtml(status) {
         body { fragment.invoke(this) }
     }
@@ -24,6 +26,18 @@ suspend fun ApplicationCall.respondToast(
 ) {
     this.response.headers.append("HX-Trigger", "toast-message")
     this.respondFragment { toast(mensagem = mensagem, tipo = tipo) }
+}
+
+suspend fun ApplicationCall.respondPopup(
+    fragment: BODY.() -> Unit
+) {
+    this.response.headers.append("HX-Trigger", "lm-popup-open")
+    this.respondFragment(fecharPopupAberto = false) { fragment() }
+}
+
+fun ApplicationCall.fecharPopup(): ApplicationCall {
+    this.response.headers.append("HX-Trigger", "lm-popup-close")
+    return this
 }
 
 suspend fun ApplicationCall.redirecionarFormHTMX(path: String) {

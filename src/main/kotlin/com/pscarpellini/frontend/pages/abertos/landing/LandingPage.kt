@@ -17,7 +17,6 @@ fun HTML.landingPage(
 ) {
     includeHtmlHeader(
         scriptsDaPagina = arrayListOf("/static/scripts/LandingPageScript.js"),
-        incluirScriptsFuncionais = false
     )
     body {
         includeHeaderMenu(

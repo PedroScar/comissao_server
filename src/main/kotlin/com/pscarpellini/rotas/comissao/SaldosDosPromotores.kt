@@ -1,14 +1,13 @@
 package com.pscarpellini.rotas.comissao
 
 import com.pscarpellini.enums.comissao.PaginasComissaoEnum
-import com.pscarpellini.extensions.obterSessao
-import com.pscarpellini.extensions.respondFragment
-import com.pscarpellini.extensions.respondToast
+import com.pscarpellini.extensions.*
 import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeTabelaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
+import com.pscarpellini.frontend.fragments.logados.saldos.includePopupModificarSaldo
 import com.pscarpellini.frontend.fragments.logados.saldos.includeTabelaDeSaldos
 import com.pscarpellini.frontend.pages.restritos.comissao.saldosDosPromotores
 import com.pscarpellini.models.DbResponse
@@ -41,4 +40,8 @@ suspend fun RoutingContext.handleSaldosDosPromotores() {
         includeHeaderLogado(sessao)
         saldosDosPromotores(sessao = sessao)
     }
+}
+
+suspend fun RoutingContext.handlePopupModificarSaldo(saldosRepository: SaldosRepository) {
+    call.respondPopup { includePopupModificarSaldo() }
 }

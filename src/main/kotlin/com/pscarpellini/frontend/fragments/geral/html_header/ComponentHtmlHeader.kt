@@ -5,7 +5,6 @@ import kotlinx.html.*
 fun HTML.includeHtmlHeader(
     nomeDaPagina: String = "Lumen Apps",
     scriptsDaPagina: ArrayList<String> = arrayListOf(),
-    incluirScriptsFuncionais: Boolean = true,
 ) {
     head {
         title(nomeDaPagina)

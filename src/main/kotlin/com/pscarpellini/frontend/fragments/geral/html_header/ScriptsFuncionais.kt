@@ -15,8 +15,12 @@ fun HEAD.includeScriptsFuncionais(
 
 //    MENU DROPDOWN
     script(src = "/static/scripts/DropdownScript.js") {}
+//    POPUP
+    script(src = "/static/scripts/PopupScript.js") {}
 //    FORMULÁRIOS
     script(src = "/static/scripts/FormularioScript.js") {}
 //    HX ERROR HANDLER
     script(src = "/static/scripts/HXErrorHandler.js") {}
+//    HX POPUP HANDLER
+    script(src = "/static/scripts/HXPopupHandler.js") {}
 }

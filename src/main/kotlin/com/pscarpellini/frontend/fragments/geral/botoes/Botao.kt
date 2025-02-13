@@ -1,13 +1,16 @@
 package com.pscarpellini.frontend.fragments.geral.botoes
 
 import com.pscarpellini.frontend.enums.designsystem.AlinhamentosEnum
+import com.pscarpellini.frontend.enums.designsystem.DefaultsIdsEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
+import com.pscarpellini.interfaces.ICaminho
 import com.pscarpellini.interfaces.IPaginaEnum
 import kotlinx.html.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 fun FlowContent.botao(
+    id: DefaultsIdsEnum,
     tipo: TiposBotaoEnum = TiposBotaoEnum.PRIMARY,
     classes: String = "",
     interativo: Boolean = true,
@@ -16,7 +19,7 @@ fun FlowContent.botao(
     type: ButtonType = ButtonType.submit,
     alinhamento: AlinhamentosEnum = AlinhamentosEnum.CENTER,
     hxMethod: FormMethod = FormMethod.post,
-    hxPath: IPaginaEnum? = null,
+    hxPath: ICaminho? = null,
     hxParams: Map<String, String> = mapOf(),
     hxTarget: String = "",
     hxIndicator: String = "",
@@ -27,6 +30,7 @@ fun FlowContent.botao(
     conteudo: FlowContent.() -> Unit
 ) {
     botao(
+        id = id.toString(),
         tipo = tipo,
         classes = classes,
         interativo = interativo,
@@ -48,6 +52,49 @@ fun FlowContent.botao(
 }
 
 fun FlowContent.botao(
+    id: String? = null,
+    tipo: TiposBotaoEnum = TiposBotaoEnum.PRIMARY,
+    classes: String = "",
+    interativo: Boolean = true,
+    small: Boolean = false,
+    enabled: Boolean = true,
+    type: ButtonType = ButtonType.submit,
+    alinhamento: AlinhamentosEnum = AlinhamentosEnum.CENTER,
+    hxMethod: FormMethod = FormMethod.post,
+    hxPath: ICaminho? = null,
+    hxParams: Map<String, String> = mapOf(),
+    hxTarget: String = "",
+    hxIndicator: String = "",
+    hxReplaceUrl: String = "",
+    hxSwap: String = "innerHTML",
+    hxEncoding: String = "",
+    isAutovalidateButton: Boolean = true,
+    conteudo: FlowContent.() -> Unit
+) {
+    botao(
+        id = id,
+        tipo = tipo,
+        classes = classes,
+        interativo = interativo,
+        small = small,
+        enabled = enabled,
+        type = type,
+        alinhamento = alinhamento,
+        hxMethod = hxMethod,
+        hxPath = hxPath?.path ?: "",
+        hxParams = hxParams,
+        hxTarget = hxTarget,
+        hxIndicator = hxIndicator,
+        hxReplaceUrl = hxReplaceUrl,
+        hxSwap = hxSwap,
+        hxEncoding = hxEncoding,
+        isAutovalidateButton = isAutovalidateButton,
+        conteudo = conteudo,
+    )
+}
+
+fun FlowContent.botao(
+    id: String? = null,
     tipo: TiposBotaoEnum = TiposBotaoEnum.PRIMARY,
     classes: String = "",
     interativo: Boolean = true,
@@ -70,6 +117,7 @@ fun FlowContent.botao(
         classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
         type = type
     ) {
+        if(id != null) attributes["id"] = id
         if(isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
         attributes["hx-${hxMethod.name}"] = hxPath
         if(hxTarget.isNotEmpty()) {
@@ -113,7 +161,7 @@ fun FlowContent.botaoHX(
     tipo: TiposBotaoEnum = TiposBotaoEnum.PRIMARY,
     classes: String = "",
     interativo: Boolean = true,
-    link: IPaginaEnum,
+    link: ICaminho,
     target: String = "conteudo-interno",
     alinhamento: AlinhamentosEnum = AlinhamentosEnum.CENTER,
     small: Boolean = false,

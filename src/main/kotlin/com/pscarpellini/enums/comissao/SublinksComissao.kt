@@ -2,13 +2,15 @@ package com.pscarpellini.enums.comissao
 
 import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
+import com.pscarpellini.interfaces.ICaminho
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
+import com.pscarpellini.rotas.FragmentsRestritosEnum
 
 enum class SublinksComissaoEnum(
     override val icone: IconesEnum,
     override val nome: String,
-    override val caminho: IPaginaEnum,
+    override val caminho: ICaminho,
     override val papelNecessario: PapeisDeAcessoEnum? = null,
 ) : ISublinksRestritosEnum {
     CRIAR_NOVA_PROMOCAO(
@@ -19,7 +21,7 @@ enum class SublinksComissaoEnum(
     ),
     MODIFICAR_SALDO(
         nome = "Modificar saldo",
-        caminho = CaminhosComissaoEnum.SALDOS_DOS_PROMOTORES,
+        caminho = FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO,
         papelNecessario = PapeisDeAcessoEnum.VISUALIZAR_SALDOS,
         icone = IconesEnum.PRECO
     )

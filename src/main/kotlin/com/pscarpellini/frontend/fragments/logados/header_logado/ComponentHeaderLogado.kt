@@ -17,6 +17,7 @@ import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.navigation.navigationLink
 import com.pscarpellini.frontend.fragments.geral.spacer.spacer
 import com.pscarpellini.frontend.fragments.logados.breadcrumbs.breadcrumbs
+import com.pscarpellini.interfaces.ICaminho
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.FlowContent
 import kotlinx.html.a

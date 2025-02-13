@@ -2,6 +2,7 @@ package com.pscarpellini.frontend.pages.restritos.base
 
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
+import com.pscarpellini.frontend.fragments.geral.popup.popupContainer
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.models.vos.SessaoUsuarioVO
@@ -17,6 +18,7 @@ fun HTML.interno(
     body(
         classes = "bg-high-light flex flex-row"
     ) {
+        popupContainer()
         includeMenuPrincipal(sessao)
         div(classes = "grow flex flex-col ml-80 p-6 gap-6") {
             includeHeaderLogado(sessao = sessao)

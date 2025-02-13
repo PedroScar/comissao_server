@@ -17,7 +17,6 @@ import kotlinx.html.*
 fun HTML.loginPage() {
     includeHtmlHeader(
         scriptsDaPagina = arrayListOf(),
-        incluirScriptsFuncionais = false
     )
     body(
         classes = "bg-${CoresEnum.HIGH_LIGHT}"

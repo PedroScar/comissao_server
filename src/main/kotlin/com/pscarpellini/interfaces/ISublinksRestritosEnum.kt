@@ -6,6 +6,6 @@ import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 interface ISublinksRestritosEnum {
     val icone: IconesEnum
     val nome: String
-    val caminho: IPaginaEnum
+    val caminho: ICaminho
     val papelNecessario: PapeisDeAcessoEnum?
 }

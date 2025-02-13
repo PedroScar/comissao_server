@@ -13,12 +13,14 @@ fun FlowContent.botaoIcone(
     interativo: Boolean = true,
     small: Boolean = false,
     enabled: Boolean = true,
+    id: String? = null,
     type: ButtonType = ButtonType.submit,
 ) {
     button(
         classes = "${tipo.cssProprio} disabled:pointer-events-none font-semibold ${if(small) "p-1" else "p-2"} ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) CoresEnum.LOW_LIGHT.text else ""} $classes",
         type = type
     ) {
+        if (id != null) attributes["id"] = id
         if (!enabled) attributes["disabled"] = "disabled"
         icone(icone = icone, usarPadding = false, classes = if(enabled) "" else "opacity-30")
     }
