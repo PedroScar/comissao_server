@@ -15,8 +15,10 @@ fun FlowContent.selectField(
     label: String? = null,
     isObrigatorio: Boolean = false,
     nomeDoCampo: String,
-    onIconClick: (() -> Unit)? = null,
 ) {
+    val opcoesVisiveis = arrayListOf<Pair<String, String>>()
+    if(!isObrigatorio) opcoesVisiveis.add("" to hint)
+    opcoesVisiveis.addAll(opcoes)
     div(classes = "flex flex-col $classes") {
         if(!label.isNullOrBlank()) {
             label(classes = "${if(enabled) CoresEnum.LOW_PURE.text else "${CoresEnum.LOW_LIGHT.text} pointer-events-none"} block text-base font-semibold") {
@@ -35,7 +37,7 @@ fun FlowContent.selectField(
                 if (!enabled) attributes["disabled"] = "disabled"
                 if (!isObrigatorio) attributes["required"] = "required"
 
-                opcoes.forEach { (value, text) ->
+                opcoesVisiveis.forEach { (value, text) ->
                     option {
                         this.value = value
                         if (opcaoDefault == value) attributes["selected"] = "selected"

@@ -1,10 +1,4 @@
-function exibirPopup(htmlContent) {
-    // Injeta o conteúdo HTML no popup
-    const popupContent = document.getElementById('popup-content');
-    if (popupContent) {
-        popupContent.innerHTML = htmlContent;
-    }
-
+function exibirPopup() {
     // Exibe o popup e o overlay
     const popupOverlay = document.getElementById('popup-overlay');
     if (popupOverlay) {

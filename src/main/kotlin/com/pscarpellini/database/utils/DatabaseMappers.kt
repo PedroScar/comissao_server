@@ -34,6 +34,7 @@ fun contratoDaoToModel(dao: ContratoDAO) = ContratoVO(
 )
 
 fun contaDaoToModel(dao: ContaDAO) = ContaVO(
+    id = dao.id.value,
     cliente = clienteDaoToModel(dao.clienteId),
     tipoConta = dao.tipoConta,
     nome = dao.nome,
@@ -46,7 +47,8 @@ fun contaDaoToModel(dao: ContaDAO) = ContaVO(
 )
 
 fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
-    clientId = dao.id.value,
+    id = dao.id.value,
+    clientId = dao.clienteId.id.value,
     titulo = dao.titulo,
     subtitulo = dao.subtitulo,
     conteudo = dao.conteudo,
@@ -82,6 +84,7 @@ fun saldoRowToModel(row: ResultRow): SaldoVO {
 
     return SaldoVO(
         conta = ContaVO(
+            id = row[ContasTable.id].value,
             cliente = cliente,
             tipoConta = row[ContasTable.tipoConta],
             nome = row[ContasTable.nome],
@@ -109,6 +112,7 @@ fun extratoDaoToModel(row: ResultRow): ExtratoVO {
 
 fun contaRowToModel(row: ResultRow, alias: Alias<Table>): ContaVO {
     return ContaVO(
+        id = row[alias[ContasTable.id]].value,
         cliente = null,
         nome = row[alias[ContasTable.nome]],
         foto = "",
@@ -138,7 +142,8 @@ fun promocaoRowToModel(row: ResultRow, alias: Alias<Table>): PromocaoVO? {
     if(row[alias[PromocoesTable.id]] == null) return null
 
     return PromocaoVO(
-        clientId = row[alias[PromocoesTable.id]].value,
+        id = row[alias[PromocoesTable.id]].value,
+        clientId = row[alias[PromocoesTable.clienteId]].value,
         titulo = row[alias[PromocoesTable.titulo]],
         subtitulo = row[alias[PromocoesTable.subtitulo]],
         conteudo = row[alias[PromocoesTable.conteudo]],

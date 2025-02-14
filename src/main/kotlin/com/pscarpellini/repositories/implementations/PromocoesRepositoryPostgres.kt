@@ -9,6 +9,7 @@ import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.suspendTransaction
+import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.greater
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.lessEq
@@ -18,6 +19,21 @@ import org.jetbrains.exposed.sql.or
 import java.time.LocalDateTime
 
 class PromocoesRepositoryPostgres : PromocoesRepository {
+    override suspend fun listarPromocoesAtivas(clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
+        val now = LocalDateTime.now()
+
+        val listaPromocoes = runCatching {
+            PromocaoDAO
+                .find {
+                    (PromocoesTable.clienteId eq clienteId)
+                        .and(PromocoesTable.dataDisponivel.lessEq(now))
+                        .and((PromocoesTable.duracaoIndeterminada eq true) or (PromocoesTable.dataValidade greater now))
+                }
+                .map(::promocaoDaoToModel)
+        }.onFailure { it.printStackTrace() }.getOrThrow()
+        DbResponse.Successo(listaPromocoes)
+    }
+
     override suspend fun carregarPromocoes(termo: String, clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
         val now = LocalDateTime.now()
 

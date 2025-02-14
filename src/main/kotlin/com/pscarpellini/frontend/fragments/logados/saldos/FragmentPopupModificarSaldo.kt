@@ -2,8 +2,10 @@ package com.pscarpellini.frontend.fragments.logados.saldos
 
 import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.enums.base.PerfisDeAcessoEnum
+import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.extensions.formatarValorMonetario
 import com.pscarpellini.frontend.enums.designsystem.*
+import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
@@ -25,6 +27,7 @@ import com.pscarpellini.frontend.style.Colors
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SaldoVO
 import com.pscarpellini.rotas.FragmentsComponentesEnum
+import com.pscarpellini.rotas.WidgetsInicioEnum
 import io.ktor.server.util.*
 import kotlinx.html.*
 
@@ -35,28 +38,42 @@ fun FlowContent.includePopupModificarSaldo(
         nome = "popup_modificar_saldo",
     ) {
         formulario(id = "form-popup-modificar-saldo", autoValidar = true) {
-            attributes["lm-popup-nome"] = "popup-modificar-saldo"
             includeContentGrid(linhas = 2, colunas = 2, classes = "w-full") {
-                selectField(
-                    label = "Promotor",
-                    hint = "Ralph Edwards",
-                    nomeDoCampo = "nomeDoPromotor",
-                    isObrigatorio = true,
-                    opcoes = PerfisDeAcessoEnum.obterPerfisDisponiveis().map { it.slug to it.nome },
-                    classes = "col-span-2"
+                autoLoaderFragment(
+                    id = "select_promotor",
+                    path = CaminhosComissaoEnum.SELECT_PROMOTORES.path,
+                    textoLoading = "Buscando promotores",
+                    classes = "col-span-2",
+                    hxParams = mapOf(
+                        "label" to "Promotor",
+                        "isObrigatorio" to true.toString(),
+                    )
                 )
                 linhaValor(titulo = "Endereço", valor = "Rua blablabla", classes = "col-span-2")
                 linhaValor(titulo = "CPF", valor = "321.654.987-01")
                 linhaValor(titulo = "Saldo atual", valor = "R$ 184,00")
                 divider(classes = "col-span-2", useMargin = false)
                 div(classes = "flex justify-center col-span-2 select-none") {
-                    toggleComTexto(nomeDoCampo = "isAdicionarSaldo", conteudoChecked = {
-                        icone(IconesEnum.ADICIONAR_CIRCULO, size = 2.2f)
-                        +"Adicionar saldo"
-                    }, conteudoUnchecked = {
-                        icone(IconesEnum.REMOVER_CIRCULO, size = 2.2f)
-                        +"Remover saldo"
-                    })
+                    toggleComTexto(
+                        nomeDoCampo = "isAdicionarSaldo",
+                        checked = true,
+                        conteudoEsquerdaChecked = {
+                            icone(IconesEnum.ADICIONAR_CIRCULO, size = 2.2f, classes = "invert")
+                            +"Adicionando saldo"
+                        },
+                        conteudoEsquerdaUnchecked = {
+                            icone(IconesEnum.ADICIONAR_CIRCULO, size = 2.2f)
+                            +"Adicionar saldo"
+                        },
+                        conteudoDireitaUnchecked = {
+                            icone(IconesEnum.REMOVER_CIRCULO, size = 2.2f, classes = "invert")
+                            +"Removendo saldo"
+                        },
+                        conteudoDireitaChecked = {
+                            icone(IconesEnum.REMOVER_CIRCULO, size = 2.2f)
+                            +"Remover saldo"
+                        }
+                    )
                 }
                 inputField(
                     label = "Valor",
@@ -66,13 +83,16 @@ fun FlowContent.includePopupModificarSaldo(
                     nomeDoCampo = "valor",
                     classes = "col-span-2"
                 )
-                selectField(
-                    label = "Promoção",
-                    hint = "Selecione uma promoção ativa",
-                    nomeDoCampo = "promocao",
-                    isObrigatorio = false,
-                    opcoes = PerfisDeAcessoEnum.obterPerfisDisponiveis().map { it.slug to it.nome },
-                    classes = "col-span-2"
+                autoLoaderFragment(
+                    id = "select_promocoes_ativas",
+                    path = CaminhosComissaoEnum.SELECT_PROMOCOES_ATIVAS.path,
+                    textoLoading = "Buscando promoções ativas",
+                    classes = "col-span-2",
+                    hxParams = mapOf(
+                        "label" to "Promoção",
+                        "hint" to "Nenhuma promoção selecionada",
+                        "isObrigatorio" to false.toString(),
+                    )
                 )
             }
         }

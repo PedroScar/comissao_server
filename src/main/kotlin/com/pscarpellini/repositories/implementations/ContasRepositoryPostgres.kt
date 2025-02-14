@@ -53,6 +53,17 @@ class ContasRepositoryPostgres : ContasRepository {
         DbResponse.Successo(listaUsuarios)
     }
 
+    override suspend fun listarPromotores(clienteId: Int): DbResponse<List<ContaVO>> = suspendTransaction {
+        val cliente = ClienteDAO.findById(clienteId)
+            ?: throw IllegalArgumentException("Cliente com ID $clienteId não encontrado")
+
+        val listaUsuarios = ContaDAO
+            .find { (ContasTable.clienteId eq cliente.id) }
+            .map(::contaDaoToModel)
+
+        DbResponse.Successo(listaUsuarios)
+    }
+
     override suspend fun criarUsuario(conta: ContaVO): DbResponse<ContaVO> = suspendTransaction {
         val cliente = ClienteDAO.findById(conta.cliente?.id ?: -1)
             ?: throw IllegalArgumentException("Cliente com ID ${conta.cliente?.id} não encontrado")

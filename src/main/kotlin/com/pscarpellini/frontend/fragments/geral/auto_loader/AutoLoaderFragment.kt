@@ -4,6 +4,8 @@ import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.fragments.geral.loading.loading
 import kotlinx.html.FlowContent
 import kotlinx.html.div
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 fun FlowContent.autoLoaderFragment(
     id: String,
@@ -11,6 +13,7 @@ fun FlowContent.autoLoaderFragment(
     usarDiferenciadorId: Boolean = true,
     isVerticalLoading: Boolean = false,
     textoLoading: String = "Carregando",
+    hxParams: Map<String, String> = mapOf(),
     hxReplaceUrl: String? = null,
     classes: String = "",
 ): String {
@@ -21,6 +24,7 @@ fun FlowContent.autoLoaderFragment(
         attributes["hx-trigger"] = "load"
         attributes["hx-target"] = "#$idDoConteudo"
         attributes["hx-indicator"] = "#$idDoLoading"
+        attributes["hx-vals"] = Json.encodeToString(hxParams)
         hxReplaceUrl?.let { attributes["hx-replace-url"] = it }
         div(classes = "w-full h-full") {
             attributes["id"] = idDoConteudo

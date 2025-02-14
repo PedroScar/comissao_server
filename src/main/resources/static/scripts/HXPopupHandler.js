@@ -7,8 +7,7 @@ document.addEventListener("htmx:beforeSwap", (event) => {
 
     const trigger = xhr.getResponseHeader("HX-Trigger");
     if (trigger === "lm-popup-open") {
-        exibirPopup(xhr.responseText);
-        event.preventDefault();
+        exibirPopup();
         return
     } else if(trigger === "lm-popup-close") {
         fecharPopup();

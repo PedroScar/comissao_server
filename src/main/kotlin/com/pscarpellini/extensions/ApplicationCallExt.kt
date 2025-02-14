@@ -11,7 +11,7 @@ import kotlinx.html.body
 
 suspend fun ApplicationCall.respondFragment(
     status: HttpStatusCode = HttpStatusCode.OK,
-    fecharPopupAberto: Boolean = true,
+    fecharPopupAberto: Boolean = false,
     fragment: BODY.() -> Unit
 ) {
     if(fecharPopupAberto) fecharPopup()
@@ -32,6 +32,7 @@ suspend fun ApplicationCall.respondPopup(
     fragment: BODY.() -> Unit
 ) {
     this.response.headers.append("HX-Trigger", "lm-popup-open")
+    this.response.headers.append("HX-Retarget", "#popup-content")
     this.respondFragment(fecharPopupAberto = false) { fragment() }
 }
 

@@ -10,6 +10,7 @@ import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.fragments.logados.promocoes.includeTabelaDePromocoes
+import com.pscarpellini.frontend.fragments.logados.saldos.includeSelectDePromocoes
 import com.pscarpellini.frontend.pages.restritos.comissao.includeFormNovaPromocao
 import com.pscarpellini.frontend.pages.restritos.comissao.novaPromocao
 import com.pscarpellini.frontend.pages.restritos.comissao.promocoes
@@ -22,6 +23,7 @@ import io.ktor.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
+import kotlinx.html.label
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
@@ -161,12 +163,29 @@ suspend fun RoutingContext.handleFormularioNovaPromocao(
 suspend fun RoutingContext.handleEncerrarPromocao(promocoesRepository: PromocoesRepository) {
     val sessao = obterSessao()
     val parameters = call.receiveParameters()
-
     runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
         promocoesRepository.encerrarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao encerrar a promoção")
                 is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) { visualizarPromocao(sessao, resposta.data, idPromocao) }
+            }
+        }
+    }
+}
+
+suspend fun RoutingContext.handleSelectPromocoesAtivas(promocoesRepository: PromocoesRepository) {
+    val sessao = obterSessao()
+    val parameters = call.receiveParameters()
+    promocoesRepository.listarPromocoesAtivas(clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar as promoções ativas")
+            is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                includeSelectDePromocoes(
+                    label = parameters["label"],
+                    hint = parameters["hint"],
+                    isObrigatorio = parameters["isObrigatorio"].toBoolean(),
+                    promocoes = resposta.data ?: listOf(),
+                )
             }
         }
     }

@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 
 @Serializable
 data class PromocaoVO(
+    val id: Int? = null,
     val clientId: Int,
     val titulo: String,
     val subtitulo: String,

@@ -7,5 +7,6 @@ import com.pscarpellini.models.vos.PromocaoVO
 interface ContasRepository {
     suspend fun validarLogin(usuario: String, senha: String): DbResponse<ContaVO>
     suspend fun carregarUsuarios(nome: String = "", clienteId: Int): DbResponse<List<ContaVO>>
+    suspend fun listarPromotores(clienteId: Int): DbResponse<List<ContaVO>>
     suspend fun criarUsuario(conta: ContaVO): DbResponse<ContaVO>
 }

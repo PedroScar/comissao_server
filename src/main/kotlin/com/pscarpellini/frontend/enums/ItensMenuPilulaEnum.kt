@@ -11,6 +11,7 @@ enum class ItensMenuPilulaEnum(
     val textoCTA: String,
     val icone: IconesEnum,
     val pagina: ICaminho,
+    val usarReplace: Boolean = true
 ) {
     CRIAR_NOVA_PROMOCAO(
         textoCTA = "Criar nova promoção",
@@ -20,7 +21,8 @@ enum class ItensMenuPilulaEnum(
     MODIFICAR_SALDO(
         textoCTA = "Modificar saldo",
         icone = IconesEnum.PRECO,
-        pagina = FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO
+        pagina = FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO,
+        usarReplace = false
     ),
     CADASTRAR_NOVO_USUARIO(
         textoCTA = "Cadastrar novo usuário",
