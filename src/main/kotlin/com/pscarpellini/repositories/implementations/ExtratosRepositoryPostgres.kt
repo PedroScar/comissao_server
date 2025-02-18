@@ -1,14 +1,21 @@
 package com.pscarpellini.repositories.implementations
 
+import com.pscarpellini.database.daos.ClienteDAO
+import com.pscarpellini.database.daos.ContaDAO
+import com.pscarpellini.database.daos.ExtratoDAO
+import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.tables.ContasTable
 import com.pscarpellini.database.tables.ExtratosTable
 import com.pscarpellini.database.tables.PromocoesTable
 import com.pscarpellini.database.utils.extratoDaoToModel
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.ExtratoVO
+import com.pscarpellini.models.vos.NovoExtratoVO
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.suspendTransaction
 import org.jetbrains.exposed.sql.*
+import java.time.LocalDateTime
 import kotlin.Int
 
 class ExtratosRepositoryPostgres : ExtratosRepository {
@@ -58,6 +65,35 @@ class ExtratosRepositoryPostgres : ExtratosRepository {
             .sortedByDescending { it.dataCriacao }
 
         DbResponse.Successo(extratos)
+    }
+
+    override suspend fun criarRegistroDeExtrato(extrato: NovoExtratoVO): DbResponse<NovoExtratoVO> = suspendTransaction {
+        val contaResponsavel = ContaDAO.findById(extrato.idContaResponsavel)
+            ?: throw IllegalArgumentException("Conta do responsável não encontrado")
+        val contaSaldo = ContaDAO.findById(extrato.idContaSaldo)
+            ?: throw IllegalArgumentException("Conta do saldo não encontrado")
+        val promocaoRelacionada = if(extrato.promocao != null) {
+            PromocaoDAO.findById(extrato.promocao)
+                ?: throw IllegalArgumentException("Promoção não encontrada")
+        } else null
+
+        runCatching {
+            ExtratoDAO.new {
+                contaResponsavelId = contaResponsavel.id
+                contaSaldoId = contaSaldo.id
+                promocaoId = promocaoRelacionada?.id
+                dataCriacao = LocalDateTime.now()
+                valor = extrato.valor
+                isCredito = extrato.isCredito
+            }
+        }.onFailure {
+            println("=============================================================================")
+            println("ERRO AQUI: ${it.stackTrace}")
+            println("=============================================================================")
+        }.onSuccess {
+            DbResponse.Successo(extrato)
+        }
+        DbResponse.Successo(extrato)
     }
 
 }

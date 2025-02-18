@@ -18,7 +18,6 @@ import io.ktor.server.sessions.*
 
 suspend fun RoutingContext.handleInicio() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.INICIO
     sessao.paginaAtual = PaginasRestritasEnum.INICIO
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)
@@ -42,7 +41,6 @@ suspend fun RoutingContext.handleInterno() {
 
 suspend fun RoutingContext.handleConfiguracoesDoApp() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP
     sessao.paginaAtual = PaginasRestritasEnum.CONFIGURACOES_DO_APP
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)

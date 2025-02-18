@@ -40,7 +40,7 @@ fun Application.configurePages() {
         fragmentsComponentes()
 
         paginasAbertas(contasRepository)
-        paginasRestritas(contasRepository, promocoesRepository)
+        paginasRestritas(contasRepository, promocoesRepository, extratosRepository)
 
         widgetsInicio(promocoesRepository, extratosRepository, contadoresDashboardViewRepository)
 

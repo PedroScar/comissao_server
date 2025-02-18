@@ -2,27 +2,16 @@ package com.pscarpellini.rotas
 
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
-import com.pscarpellini.extensions.respondToast
-import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
-import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
-import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeTabelaDeUsuarios
-import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeSelectDePerfis
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.interfaces.IFragmentEnum
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.frontend.fragments.logados.promocoes.includeTabelaDePromocoes
-import com.pscarpellini.models.DbResponse
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.repositories.interfaces.SaldosRepository
 import com.pscarpellini.rotas.base.handleFragmentTabelaUsuarios
-import com.pscarpellini.rotas.comissao.handleFragmentTabelaHistoricoDeTransacoes
-import com.pscarpellini.rotas.comissao.handleFragmentTabelaPromocoes
-import com.pscarpellini.rotas.comissao.handleFragmentTabelaSaldosDosPromotores
-import com.pscarpellini.rotas.comissao.handlePopupModificarSaldo
+import com.pscarpellini.rotas.comissao.*
 import io.ktor.http.*
-import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
 fun Route.fragmentsRestritos(
@@ -53,6 +42,8 @@ fun Route.fragmentsRestritos(
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) { handleFragmentTabelaSaldosDosPromotores(saldosRepository) }
 
     post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO.path) { handlePopupModificarSaldo(saldosRepository) }
+
+    post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO_INFOS_PROMOTOR.path) { handlePopupModificarSaldoInfosPromotor(contasRepository) }
 }
 
 enum class FragmentsRestritosEnum(
@@ -68,4 +59,5 @@ enum class FragmentsRestritosEnum(
     FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES("/int/fragment/saldos_dos_promotores"),
 
     FRAGMENT_POPUP_MODIFICAR_SALDO("/int/fragment/popup/modificar_saldo"),
+    FRAGMENT_POPUP_MODIFICAR_SALDO_INFOS_PROMOTOR("/int/fragment/popup/modificar_saldo/infos/promotor"),
 }

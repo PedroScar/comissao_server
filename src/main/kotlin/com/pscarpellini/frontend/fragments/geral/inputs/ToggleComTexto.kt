@@ -16,9 +16,11 @@ fun FlowContent.toggleComTexto(
     nomeDoCampo: String,
 ) {
     label(classes = "flex flex-row relative gap-2 cursor-pointer p-2 ${CoresEnum.ALERT_LIGHT.bg} has-[:checked]:${CoresEnum.SUCCESS_LIGHT.bg} ${ArredondamentosEnum.PILL} transition-all duration-300 $classes") {
-        attributes["id"] = nomeDoCampo
-        attributes["name"] = nomeDoCampo
+        htmlFor = nomeDoCampo
         input(type = InputType.checkBox, classes = "hidden peer") {
+            attributes["id"] = nomeDoCampo
+            attributes["name"] = nomeDoCampo
+            attributes["value"] = "true"
             if(checked) attributes["checked"] = ""
         }
         span(classes = "z-10 transition-all duration-300 px-4 py-2 hidden peer-checked:flex flex-row font-semibold items-center ${CoresEnum.TRANSPARENT.bg} peer-checked:${CoresEnum.SUCCESS_DARK.bg} ${CoresEnum.LOW_PURE.text} peer-checked:${CoresEnum.SUCCESS_LIGHT.text} ${ArredondamentosEnum.PILL}") {

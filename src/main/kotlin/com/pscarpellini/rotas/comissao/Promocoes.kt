@@ -44,7 +44,6 @@ suspend fun RoutingContext.handleFragmentTabelaPromocoes(promocoesRepository: Pr
 
 suspend fun RoutingContext.handlePromocoes() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
     sessao.paginaAtual = PaginasComissaoEnum.PROMOCOES
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)
@@ -55,7 +54,6 @@ suspend fun RoutingContext.handlePromocoes() {
 
 suspend fun RoutingContext.handleNovaPromocao() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
     sessao.paginaAtual = PaginasComissaoEnum.NOVA_PROMOCAO
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)
@@ -71,7 +69,6 @@ suspend fun RoutingContext.handleExibirPromocao(
     val parameters = call.receiveParameters()
 
     runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
-        sessao.menuSelecionado = ItensMenuEnum.PROMOCOES
         sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_PROMOCAO
 
         promocoesRepository.carregarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
@@ -181,6 +178,7 @@ suspend fun RoutingContext.handleSelectPromocoesAtivas(promocoesRepository: Prom
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar as promoções ativas")
             is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
                 includeSelectDePromocoes(
+                    nomeDoCampo = parameters["nomeDoCampo"],
                     label = parameters["label"],
                     hint = parameters["hint"],
                     isObrigatorio = parameters["isObrigatorio"].toBoolean(),

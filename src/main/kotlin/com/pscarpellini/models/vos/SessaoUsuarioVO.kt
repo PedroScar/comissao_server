@@ -11,9 +11,11 @@ import java.time.LocalDateTime
 
 @Serializable
 data class SessaoUsuarioVO(
-    var paginaAtual: IPaginaRestritaEnum = PaginasRestritasEnum.INICIO,
-    var menuSelecionado: ItensMenuEnum? = ItensMenuEnum.INICIO,
+    var paginaAtual: IPaginaRestritaEnum = PaginasRestritasEnum.INICIO
 ) {
+    val menuSelecionado: ItensMenuEnum
+        get() = paginaAtual.itemMenuSelecionado ?: ItensMenuEnum.INICIO
+
     var papeisDeAcesso: ArrayList<PapeisDeAcessoEnum> = arrayListOf()
     var servico = ServicoVO(
         id = 0,

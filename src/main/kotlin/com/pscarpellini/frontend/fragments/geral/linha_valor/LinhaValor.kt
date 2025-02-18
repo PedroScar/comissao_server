@@ -1,19 +1,19 @@
 package com.pscarpellini.frontend.fragments.geral.linha_valor
 
-import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
-import com.pscarpellini.frontend.enums.designsystem.IconesEnum
-import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.icone.icone
 import kotlinx.html.*
 
 fun FlowContent.linhaValor(
+    id: String? = null,
+    hxSwapOob: String? = null,
     classes: String = "",
     titulo: String,
-    valor: String,
+    valor: String?,
 ) {
     div(classes = classes) {
+        if(id != null) attributes["id"] = id
+        if(hxSwapOob != null) attributes["hx-swap-oob"] = hxSwapOob
         h5 { +titulo }
-        span (classes = CoresEnum.LOW_LIGHT.text) { +valor }
+        span (classes = CoresEnum.LOW_LIGHT.text) { if(valor != null) +valor else +"-" }
     }
 }

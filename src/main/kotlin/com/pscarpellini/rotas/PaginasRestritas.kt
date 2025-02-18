@@ -1,25 +1,12 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.enums.comissao.PaginasComissaoEnum
-import com.pscarpellini.extensions.criarNomeDeUsuario
-import com.pscarpellini.extensions.obterSessao
-import com.pscarpellini.extensions.respondFragment
-import com.pscarpellini.extensions.respondToast
-import com.pscarpellini.frontend.enums.ItensMenuEnum
-import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
-import com.pscarpellini.frontend.fragments.geral.toast.toast
-import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
-import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
+import com.pscarpellini.extensions.*
 import com.pscarpellini.frontend.pages.restritos.base.*
-import com.pscarpellini.frontend.pages.restritos.comissao.historicoDeTransacoes
-import com.pscarpellini.frontend.pages.restritos.comissao.promocoes
-import com.pscarpellini.frontend.pages.restritos.comissao.visualizarPromocao
-import com.pscarpellini.models.vos.ContaVO
-import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
+import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.rotas.base.*
 import com.pscarpellini.rotas.comissao.*
@@ -33,6 +20,7 @@ import io.ktor.server.sessions.*
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
     promocoesRepository: PromocoesRepository,
+    extratosRepository: ExtratosRepository
 ) {
     get(PaginasRestritasEnum.INTERNO.caminho.path) { handleInterno() }
     post(PaginasRestritasEnum.INICIO.caminho.path) { handleInicio() }
@@ -48,6 +36,7 @@ fun Route.paginasRestritas(
 
     post(PaginasComissaoEnum.SALDOS_DOS_PROMOTORES.caminho.path) { handleSaldosDosPromotores() }
     post(CaminhosComissaoEnum.SELECT_PROMOTORES.path) { handleSelectPromotores(contasRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_ALTERAR_SALDO.path) { handleAlterarSaldo(extratosRepository) }
 
     post(PaginasComissaoEnum.RELATORIOS.caminho.path) { handleRelatorios() }
 

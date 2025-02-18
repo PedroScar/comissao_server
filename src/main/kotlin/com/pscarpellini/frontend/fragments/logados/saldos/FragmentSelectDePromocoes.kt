@@ -6,6 +6,7 @@ import com.pscarpellini.models.vos.PromocaoVO
 import kotlinx.html.FlowContent
 
 fun FlowContent.includeSelectDePromocoes(
+    nomeDoCampo: String?,
     label: String?,
     hint: String?,
     isObrigatorio: Boolean = false,
@@ -15,7 +16,7 @@ fun FlowContent.includeSelectDePromocoes(
     selectField(
         label = label ?: "Promoção",
         hint = hint ?: "Nenhuma promoção selecionada",
-        nomeDoCampo = "promocoes",
+        nomeDoCampo = nomeDoCampo ?: "promocao",
         isObrigatorio = isObrigatorio,
         opcoes = promocoes.map { it.id.toString() to it.titulo },
         classes = classes
