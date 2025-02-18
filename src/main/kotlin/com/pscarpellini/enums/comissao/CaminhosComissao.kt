@@ -15,6 +15,7 @@ enum class CaminhosComissaoEnum(
 
     SALDOS_DOS_PROMOTORES(path = "/int/saldos"),
     SELECT_PROMOTORES(path = "/select/promotores"),
+    FORMULARIO_ALTERAR_SALDO(path = "/forms/saldos/alterar"),
 
     RELATORIOS(path = "/int/relatorios"),
 

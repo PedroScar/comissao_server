@@ -115,6 +115,21 @@ fun extratoDaoToModel(row: ResultRow): ExtratoVO {
     )
 }
 
+fun contaESaldoToModel(row: ResultRow, alias: Alias<Table>): ContaESaldoVO {
+    return ContaESaldoVO(
+        id = row[ContasTable.id].value,
+        nome = row[ContasTable.nome],
+        foto = "",
+        saldo = row[alias[SaldosTable.saldo]],
+        cpf = row[ContasTable.cpf],
+        email = row[ContasTable.email],
+        telefone = row[ContasTable.telefone],
+        usuario = row[ContasTable.usuario],
+        status = row[ContasTable.status],
+        tipoConta = row[ContasTable.tipoConta]
+    )
+}
+
 fun contaRowToModel(row: ResultRow, alias: Alias<Table>): ContaVO {
     return ContaVO(
         id = row[alias[ContasTable.id]].value,

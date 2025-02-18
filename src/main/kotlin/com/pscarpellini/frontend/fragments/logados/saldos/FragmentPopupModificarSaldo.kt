@@ -27,12 +27,14 @@ import com.pscarpellini.frontend.style.Colors
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SaldoVO
 import com.pscarpellini.rotas.FragmentsComponentesEnum
+import com.pscarpellini.rotas.FragmentsRestritosEnum
 import com.pscarpellini.rotas.WidgetsInicioEnum
 import io.ktor.server.util.*
 import kotlinx.html.*
 
 fun FlowContent.includePopupModificarSaldo(
 ) {
+//    val targetInfosPromotor = "target_infos_promotor"
     popup(
         titulo = "Modificar saldo",
         nome = "popup_modificar_saldo",
@@ -44,18 +46,21 @@ fun FlowContent.includePopupModificarSaldo(
                     path = CaminhosComissaoEnum.SELECT_PROMOTORES.path,
                     textoLoading = "Buscando promotores",
                     classes = "col-span-2",
+//                    hxSwap = "outerHTML",
                     hxParams = mapOf(
+                        "nomeDoCampo" to "contaSaldo",
                         "label" to "Promotor",
                         "isObrigatorio" to true.toString(),
+                        "hxOnChangePath" to FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO_INFOS_PROMOTOR.path,
+                        "hxTarget" to "popup_valor_cpf"
                     )
                 )
-                linhaValor(titulo = "Endereço", valor = "Rua blablabla", classes = "col-span-2")
-                linhaValor(titulo = "CPF", valor = "321.654.987-01")
-                linhaValor(titulo = "Saldo atual", valor = "R$ 184,00")
+                linhaValor(id = "popup_valor_cpf", titulo = "CPF", valor = "-")
+                linhaValor(id = "popup_valor_saldo_atual", titulo = "Saldo atual", valor = "-")
                 divider(classes = "col-span-2", useMargin = false)
                 div(classes = "flex justify-center col-span-2 select-none") {
                     toggleComTexto(
-                        nomeDoCampo = "isAdicionarSaldo",
+                        nomeDoCampo = "isCredito",
                         checked = true,
                         conteudoEsquerdaChecked = {
                             icone(IconesEnum.ADICIONAR_CIRCULO, size = 2.2f, classes = "invert")
@@ -80,6 +85,7 @@ fun FlowContent.includePopupModificarSaldo(
                     inputType = InputType.number,
                     hint = "R$ 0,00",
                     isObrigatorio = true,
+                    minValue = "0",
                     nomeDoCampo = "valor",
                     classes = "col-span-2"
                 )
@@ -89,26 +95,26 @@ fun FlowContent.includePopupModificarSaldo(
                     textoLoading = "Buscando promoções ativas",
                     classes = "col-span-2",
                     hxParams = mapOf(
+                        "nomeDoCampo" to "promocao",
                         "label" to "Promoção",
                         "hint" to "Nenhuma promoção selecionada",
                         "isObrigatorio" to false.toString(),
                     )
                 )
             }
-        }
-        div(classes = "self-end flex flex-row gap-2") {
-            botao(
-                id = DefaultsIdsEnum.CLOSE_POPUP_BUTTON,
-                tipo = TiposBotaoEnum.SUBTLE,
-                isAutovalidateButton = false,
-                enabled = true,
-            ) { +"Cancelar" }
-            botao(
-                hxPath = PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho,
-                hxTarget = "form-popup-modificar-saldo",
-                hxSwap = "outerHTML",
-                enabled = false,
-            ) { +"Salvar" }
+            div(classes = "flex flex-row justify-end gap-2 mt-4") {
+                botao(
+                    id = DefaultsIdsEnum.CLOSE_POPUP_BUTTON,
+                    tipo = TiposBotaoEnum.SUBTLE,
+                    isAutovalidateButton = false,
+                    enabled = true,
+                ) { +"Cancelar" }
+                botao(
+                    hxPath = CaminhosComissaoEnum.FORMULARIO_ALTERAR_SALDO,
+                    hxTarget = "form-popup-modificar-saldo",
+                    hxSwap = "outerHTML",
+                ) { +"Salvar" }
+            }
         }
     }
 }

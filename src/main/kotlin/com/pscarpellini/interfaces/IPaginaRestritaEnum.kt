@@ -1,6 +1,7 @@
 package com.pscarpellini.interfaces
 
 import com.pscarpellini.enums.base.PapeisDeAcessoEnum
+import com.pscarpellini.frontend.enums.ItensMenuEnum
 
 interface IPaginaRestritaEnum {
     val titulo: String
@@ -9,5 +10,6 @@ interface IPaginaRestritaEnum {
     val papelNecessario: PapeisDeAcessoEnum?
     val showBreadcrumbs: Boolean
     val breadcrumbs: ArrayList<IPaginaRestritaEnum>
+    val itemMenuSelecionado: ItensMenuEnum?
     val caminho: IPaginaEnum
 }

@@ -12,7 +12,6 @@ import io.ktor.server.routing.*
 
 suspend fun RoutingContext.handleRelatorios() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.RELATORIOS
     sessao.paginaAtual = PaginasComissaoEnum.RELATORIOS
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)

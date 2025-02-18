@@ -48,7 +48,6 @@ suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: Contas
 
 suspend fun RoutingContext.handleGerenciamentoDeUsuarios() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
     sessao.paginaAtual = PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)
@@ -59,7 +58,6 @@ suspend fun RoutingContext.handleGerenciamentoDeUsuarios() {
 
 suspend fun RoutingContext.handleMeuPerfil() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = null
     sessao.paginaAtual = PaginasRestritasEnum.MEU_PERFIL
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)
@@ -70,7 +68,6 @@ suspend fun RoutingContext.handleMeuPerfil() {
 
 suspend fun RoutingContext.handleNovoUsuario() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
     sessao.paginaAtual = PaginasRestritasEnum.NOVO_USUARIO
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)

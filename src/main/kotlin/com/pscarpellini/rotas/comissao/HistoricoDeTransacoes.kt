@@ -35,7 +35,6 @@ suspend fun RoutingContext.handleFragmentTabelaHistoricoDeTransacoes(extratosRep
 
 suspend fun RoutingContext.handleHistoricoDeTransacoes() {
     val sessao = obterSessao()
-    sessao.menuSelecionado = ItensMenuEnum.HISTORICO_DE_TRANSACOES
     sessao.paginaAtual = PaginasComissaoEnum.HISTORICO_DE_TRANSACOES
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)

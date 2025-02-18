@@ -3,20 +3,16 @@ package com.pscarpellini.repositories.implementations
 import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.database.utils.contaDaoToModel
 import com.pscarpellini.database.daos.ContaDAO
-import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.tables.ContasTable
-import com.pscarpellini.database.tables.PromocoesTable
-import com.pscarpellini.database.utils.promocaoDaoToModel
+import com.pscarpellini.database.tables.SaldosTable
+import com.pscarpellini.database.utils.contaESaldoToModel
+import com.pscarpellini.enums.base.PerfisDeAcessoEnum
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.models.vos.ContaESaldoVO
 import com.pscarpellini.models.vos.ContaVO
-import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.suspendTransaction
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.lowerCase
-import org.jetbrains.exposed.sql.or
+import org.jetbrains.exposed.sql.*
 import java.time.LocalDateTime
 
 class ContasRepositoryPostgres : ContasRepository {
@@ -32,6 +28,29 @@ class ContasRepositoryPostgres : ContasRepository {
             DbResponse.Successo(contaDaoToModel(conta))
         } else {
             DbResponse.Erro(null, "Senha incorreta: $senha - $usuario")
+        }
+    }
+
+    override suspend fun carregarPromotor(promotorId: Int, clienteId: Int): DbResponse<ContaESaldoVO> = suspendTransaction {
+        val cliente = ClienteDAO.findById(clienteId)
+            ?: throw IllegalArgumentException("Cliente com ID $clienteId não encontrado")
+
+        val aliasSaldo = SaldosTable.alias("saldo")
+
+        val conta = ContasTable
+            .join(aliasSaldo, JoinType.INNER, additionalConstraint = { aliasSaldo[SaldosTable.contaId] eq ContasTable.id })
+            .selectAll()
+            .where {
+                (ContasTable.clienteId eq cliente.id)
+                    .and(ContasTable.id eq promotorId)
+            }
+            .limit(1)
+            .firstOrNull()
+
+        return@suspendTransaction if (conta == null) {
+            DbResponse.Erro(null, "Usuário não encontrado: $promotorId")
+        } else {
+            DbResponse.Successo(contaESaldoToModel(conta, aliasSaldo))
         }
     }
 
@@ -58,7 +77,10 @@ class ContasRepositoryPostgres : ContasRepository {
             ?: throw IllegalArgumentException("Cliente com ID $clienteId não encontrado")
 
         val listaUsuarios = ContaDAO
-            .find { (ContasTable.clienteId eq cliente.id) }
+            .find {
+                (ContasTable.clienteId eq cliente.id)
+                    .and { ContasTable.tipoConta.lowerCase() eq PerfisDeAcessoEnum.PROMOTOR.slug }
+            }
             .map(::contaDaoToModel)
 
         DbResponse.Successo(listaUsuarios)
