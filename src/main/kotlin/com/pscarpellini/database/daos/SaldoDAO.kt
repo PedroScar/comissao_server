@@ -1,6 +1,5 @@
 package com.pscarpellini.database.daos
 
-import com.pscarpellini.database.tables.ContasTable
 import com.pscarpellini.database.tables.SaldosTable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass

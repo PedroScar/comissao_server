@@ -3,6 +3,7 @@ package com.pscarpellini.database.utils
 import com.pscarpellini.database.daos.*
 import com.pscarpellini.database.tables.*
 import com.pscarpellini.database.views.ContadoresDashboardView
+import com.pscarpellini.models.tableModels.SaldoDB
 import com.pscarpellini.models.vos.*
 import org.jetbrains.exposed.sql.Alias
 import org.jetbrains.exposed.sql.ResultRow
@@ -76,10 +77,14 @@ fun saldoRowToModel(dao: SaldoDAO) = SaldoVO(
     saldo = dao.saldo,
 )
 
+fun saldoRowToDB(dao: SaldoDAO) = SaldoDB(
+    saldo = dao.saldo
+)
+
 fun saldoRowToModel(row: ResultRow): SaldoVO {
     val cliente = runCatching {
         val aliasCliente = ClientesTable.alias("cliente")
-        if(row[aliasCliente[ClientesTable.id]] == null) null else clienteRowToModel(row, aliasCliente)
+        if (row[aliasCliente[ClientesTable.id]] == null) null else clienteRowToModel(row, aliasCliente)
     }.getOrNull()
 
     return SaldoVO(
@@ -139,7 +144,7 @@ fun clienteRowToModel(row: ResultRow, alias: Alias<Table>): ClienteVO {
 }
 
 fun promocaoRowToModel(row: ResultRow, alias: Alias<Table>): PromocaoVO? {
-    if(row[alias[PromocoesTable.id]] == null) return null
+    if (row[alias[PromocoesTable.id]] == null) return null
 
     return PromocaoVO(
         id = row[alias[PromocoesTable.id]].value,

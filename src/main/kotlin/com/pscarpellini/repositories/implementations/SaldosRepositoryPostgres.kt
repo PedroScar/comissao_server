@@ -4,18 +4,17 @@ import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.daos.ExtratoDAO
 import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.daos.SaldoDAO
-import com.pscarpellini.database.tables.ClientesTable
 import com.pscarpellini.database.tables.ContasTable
-import com.pscarpellini.database.tables.ExtratosTable
 import com.pscarpellini.database.tables.SaldosTable
 import com.pscarpellini.database.utils.contaDaoToModel
+import com.pscarpellini.database.utils.saldoRowToDB
 import com.pscarpellini.database.utils.saldoRowToModel
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.models.tableModels.SaldoDB
 import com.pscarpellini.models.vos.SaldoVO
 import com.pscarpellini.repositories.interfaces.SaldosRepository
 import com.pscarpellini.suspendTransaction
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.time.LocalDateTime
 import kotlin.Double
 import kotlin.Int
@@ -27,6 +26,18 @@ class SaldosRepositoryPostgres : SaldosRepository {
             .find { SaldosTable.contaId eq contaId }
             .limit(1)
             .map(::saldoRowToModel)
+            .firstOrNull()
+        if (saldo != null) DbResponse.Successo(saldo) else DbResponse.Erro(
+            data = null,
+            message = "Ocorreu um erro ao recuperar o saldo"
+        )
+    }
+
+    override suspend fun carregarSaldoContaAPI(contaId: Int): DbResponse<SaldoDB> = suspendTransaction {
+        val saldo = SaldoDAO
+            .find { SaldosTable.contaId eq contaId }
+            .limit(1)
+            .map(::saldoRowToDB)
             .firstOrNull()
         if (saldo != null) DbResponse.Successo(saldo) else DbResponse.Erro(
             data = null,
