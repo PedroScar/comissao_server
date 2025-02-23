@@ -11,6 +11,7 @@ enum class PapeisDeAcessoEnum(
     EDITAR_PROMOCAO(nome = "Editar promoção", slug = "editar_promocao"),
 
     VISUALIZAR_SALDOS(nome = "Visualizar saldos", slug = "visualizar_saldos"),
+    EDITAR_SALDOS(nome = "Editar saldos", slug = "editar_saldos"),
 
     VISUALIZAR_RELATORIOS(nome = "Visualizar relatórios", slug = "visualizar_relatorios"),
 
@@ -21,6 +22,7 @@ enum class PapeisDeAcessoEnum(
     DESATIVAR_USUARIO(nome = "Desativar usuário", slug = "desativar_usuario"),
 
     VISUALIZAR_CONFIGURACOES_DO_APP(nome = "Visualizar configurações do app", slug = "visualizar_configuracoes_do_app"),
+    EDITAR_CONFIGURACOES_DO_APP(nome = "Editar configurações do app", slug = "editar_configuracoes_do_app"),
 
     VISUALIZAR_HISTORICO_DE_TRANSACOES(nome = "Visualizar histórico de transações", slug = "visualizar_historico_de_transacoes"),
 }

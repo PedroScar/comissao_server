@@ -1,5 +1,6 @@
 package com.pscarpellini.plugins
 
+import com.pscarpellini.email.EmailSender
 import com.pscarpellini.exceptions.NaoLogadoException
 import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
@@ -20,6 +21,7 @@ fun Application.configurePages() {
     val saldosRepository: SaldosRepository by inject()
     val extratosRepository: ExtratosRepository by inject()
     val promocoesRepository: PromocoesRepository by inject()
+    val emailSender: EmailSender by inject()
 
     install(StatusPages) {
         exception<NaoLogadoException> { call, cause ->
@@ -38,6 +40,7 @@ fun Application.configurePages() {
         staticResources("/static", "static")
 
         fragmentsComponentes()
+        fragmentsAbertos(emailSender, contasRepository)
 
         paginasAbertas(contasRepository)
         paginasRestritas(contasRepository, promocoesRepository, extratosRepository)

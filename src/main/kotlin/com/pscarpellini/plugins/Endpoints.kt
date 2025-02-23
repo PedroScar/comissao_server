@@ -1,5 +1,6 @@
 package com.pscarpellini.plugins
 
+import com.pscarpellini.email.EmailSender
 import com.pscarpellini.repositories.interfaces.*
 import com.pscarpellini.rotas.apiMobile
 import com.pscarpellini.rotas.endpointsAbertos
@@ -16,11 +17,12 @@ fun Application.configureEndpoints() {
     val promocoesRepository: PromocoesRepository by inject()
     val saldosRepository: SaldosRepository by inject()
     val videosRepository: VideosRepository by inject()
+    val emailSender: EmailSender by inject()
 
     routing {
         apiMobile(contasRepository, promocoesRepository, saldosRepository, videosRepository)
         endpointsRestritos(clientesRepository)
-        endpointsControle()
+        endpointsControle(emailSender)
         endpointsAbertos(contasRepository)
     }
 }

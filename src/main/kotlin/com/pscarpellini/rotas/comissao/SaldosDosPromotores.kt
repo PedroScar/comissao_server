@@ -89,6 +89,8 @@ suspend fun RoutingContext.handleAlterarSaldo(extratosRepository: ExtratosReposi
             )
         )
     }
-        .onSuccess { call.respondFragment(fecharPopupAberto = true) { toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Extrato adicionado com sucesso!") } }
-        .onFailure { call.respondToast(tipo = TiposToastEnum.ERROR, "Erro ao adicionar registro de extrato") }
+        .onSuccess { call.respondFragment(fecharPopupAberto = true) { toast(tipo = TiposToastEnum.SUCCESS, mensagem = if(isCredito.toBoolean()) "Saldo adicionado com sucesso!" else "Saldo removido com sucesso!") } }
+        .onFailure {
+            call.respondToast(tipo = TiposToastEnum.ERROR, if(it.message?.contains("Saldo insuficiente") == true) "Saldo insuficiente para a operação" else "Erro ao adicionar registro de extrato")
+        }
 }

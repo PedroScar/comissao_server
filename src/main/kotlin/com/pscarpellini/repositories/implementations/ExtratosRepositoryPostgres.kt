@@ -14,7 +14,9 @@ import com.pscarpellini.models.vos.ExtratoVO
 import com.pscarpellini.models.vos.NovoExtratoVO
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.suspendTransaction
+import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.*
+import org.postgresql.util.PSQLException
 import java.time.LocalDateTime
 import kotlin.Int
 
@@ -67,17 +69,17 @@ class ExtratosRepositoryPostgres : ExtratosRepository {
         DbResponse.Successo(extratos)
     }
 
-    override suspend fun criarRegistroDeExtrato(extrato: NovoExtratoVO): DbResponse<NovoExtratoVO> = suspendTransaction {
-        val contaResponsavel = ContaDAO.findById(extrato.idContaResponsavel)
-            ?: throw IllegalArgumentException("Conta do responsável não encontrado")
-        val contaSaldo = ContaDAO.findById(extrato.idContaSaldo)
-            ?: throw IllegalArgumentException("Conta do saldo não encontrado")
-        val promocaoRelacionada = if(extrato.promocao != null) {
-            PromocaoDAO.findById(extrato.promocao)
-                ?: throw IllegalArgumentException("Promoção não encontrada")
-        } else null
+    override suspend fun criarRegistroDeExtrato(extrato: NovoExtratoVO) {
+        suspendTransaction {
+            val contaResponsavel = ContaDAO.findById(extrato.idContaResponsavel)
+                ?: throw IllegalArgumentException("Conta do responsável não encontrado")
+            val contaSaldo = ContaDAO.findById(extrato.idContaSaldo)
+                ?: throw IllegalArgumentException("Conta do saldo não encontrado")
+            val promocaoRelacionada = if(extrato.promocao != null) {
+                PromocaoDAO.findById(extrato.promocao)
+                    ?: throw IllegalArgumentException("Promoção não encontrada")
+            } else null
 
-        runCatching {
             ExtratoDAO.new {
                 contaResponsavelId = contaResponsavel.id
                 contaSaldoId = contaSaldo.id
@@ -86,14 +88,7 @@ class ExtratosRepositoryPostgres : ExtratosRepository {
                 valor = extrato.valor
                 isCredito = extrato.isCredito
             }
-        }.onFailure {
-            println("=============================================================================")
-            println("ERRO AQUI: ${it.stackTrace}")
-            println("=============================================================================")
-        }.onSuccess {
-            DbResponse.Successo(extrato)
         }
-        DbResponse.Successo(extrato)
     }
 
 }

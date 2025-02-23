@@ -1,5 +1,6 @@
 package com.pscarpellini.frontend.pages.restritos.base
 
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.frontend.enums.*
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
@@ -22,10 +23,10 @@ fun FlowContent.inicio(
             colunas = 4,
             classes = "w-full"
         ) {
-            itemMenuPilula(ItensMenuPilulaEnum.CRIAR_NOVA_PROMOCAO)
-            itemMenuPilula(ItensMenuPilulaEnum.MODIFICAR_SALDO)
-            itemMenuPilula(ItensMenuPilulaEnum.CADASTRAR_NOVO_USUARIO)
-            itemMenuPilula(ItensMenuPilulaEnum.CONFIGURACOES_DO_APP)
+            if(sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.NOVA_PROMOCAO)) itemMenuPilula(ItensMenuPilulaEnum.CRIAR_NOVA_PROMOCAO)
+            if(sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_SALDOS)) itemMenuPilula(ItensMenuPilulaEnum.MODIFICAR_SALDO)
+            if(sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.CRIAR_USUARIO)) itemMenuPilula(ItensMenuPilulaEnum.CADASTRAR_NOVO_USUARIO)
+            if(sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_CONFIGURACOES_DO_APP)) itemMenuPilula(ItensMenuPilulaEnum.CONFIGURACOES_DO_APP)
         }
         includeContentGrid(
             linhas = 2,

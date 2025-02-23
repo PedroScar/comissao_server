@@ -18,7 +18,10 @@ import java.time.LocalDateTime
 class ContasRepositoryPostgres : ContasRepository {
     override suspend fun validarLogin(usuario: String, senha: String): DbResponse<ContaVO> = suspendTransaction {
         val conta = ContaDAO
-            .find { (ContasTable.usuario eq usuario) }
+            .find {
+                (ContasTable.usuario.lowerCase().eq(usuario.lowercase()))
+                    .or(ContasTable.email.lowerCase().eq(usuario.lowercase()))
+            }
             .limit(1)
             .firstOrNull()
 
@@ -113,5 +116,44 @@ class ContasRepositoryPostgres : ContasRepository {
         }
         DbResponse.Successo(conta)
 //        DbResponse.Erro(message = "Falha ao adicionar conta: ${it.cause} | ${it.stackTrace}")
+    }
+
+    override suspend fun validarEmailEsqueciMinhaSenha(email: String): Boolean = suspendTransaction {
+        runCatching {
+            ContaDAO
+                .find { ContasTable.email.lowerCase().eq(email.lowercase()) }
+                .limit(1)
+                .firstOrNull()
+        }.onFailure {
+            println("=============================================================================")
+            println("ERRO AQUI: ${it.message}")
+            println("=============================================================================")
+        }.getOrNull() != null
+    }
+
+    override suspend fun definirSenhaProvisoria(email: String, novaSenha: String): Boolean = suspendTransaction {
+        runCatching {
+            ContaDAO
+                .find { ContasTable.email.lowerCase().eq(email.lowercase()) }
+                .limit(1)
+                .firstOrNull()
+                ?.apply { senha = novaSenha }
+        }.onFailure {
+            println("=============================================================================")
+            println("ERRO AQUI: ${it.stackTrace}")
+            println("=============================================================================")
+        }.getOrNull() != null
+    }
+
+    override suspend fun definirSenha(usuarioId: Int, novaSenha: String): Boolean = suspendTransaction {
+        runCatching {
+            ContaDAO
+                .findById(usuarioId)
+                ?.apply { senha = novaSenha }
+        }.onFailure {
+            println("=============================================================================")
+            println("ERRO AQUI: ${it.stackTrace}")
+            println("=============================================================================")
+        }.getOrNull() != null
     }
 }

@@ -48,9 +48,9 @@ dependencies {
     implementation(libs.ktor.server.config.yaml)
     implementation(libs.ktor.server.sessions)
 
-
-    // Adicione as dependências do Koin
     implementation("io.insert-koin:koin-core:3.5.0")
     implementation("io.insert-koin:koin-ktor:3.5.0")
     implementation("io.insert-koin:koin-logger-slf4j:3.5.0")
+
+    implementation("com.sun.mail:javax.mail:1.6.2")
 }

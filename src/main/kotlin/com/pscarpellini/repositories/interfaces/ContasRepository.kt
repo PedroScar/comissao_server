@@ -3,7 +3,6 @@ package com.pscarpellini.repositories.interfaces
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaESaldoVO
 import com.pscarpellini.models.vos.ContaVO
-import com.pscarpellini.models.vos.PromocaoVO
 
 interface ContasRepository {
     suspend fun validarLogin(usuario: String, senha: String): DbResponse<ContaVO>
@@ -11,4 +10,7 @@ interface ContasRepository {
     suspend fun carregarPromotor(promotorId: Int, clienteId: Int): DbResponse<ContaESaldoVO>
     suspend fun listarPromotores(clienteId: Int): DbResponse<List<ContaVO>>
     suspend fun criarUsuario(conta: ContaVO): DbResponse<ContaVO>
+    suspend fun validarEmailEsqueciMinhaSenha(email: String): Boolean
+    suspend fun definirSenhaProvisoria(email: String, novaSenha: String): Boolean
+    suspend fun definirSenha(usuarioId: Int, novaSenha: String): Boolean
 }

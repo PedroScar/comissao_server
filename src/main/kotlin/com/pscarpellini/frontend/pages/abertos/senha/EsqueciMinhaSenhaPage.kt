@@ -1,22 +1,26 @@
 package com.pscarpellini.frontend.pages.abertos.senha
 
 import com.pscarpellini.AmbientController
+import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposLogosEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.html_header.includeHtmlHeader
+import com.pscarpellini.frontend.fragments.geral.inputs.inputField
+import com.pscarpellini.frontend.fragments.geral.loading.loading
 import com.pscarpellini.frontend.fragments.geral.logo.includeLogoLumen
 import com.pscarpellini.frontend.fragments.nao_logados.header_menu.includeHeaderMenu
+import com.pscarpellini.rotas.FragmentsAbertosEnum
 import com.pscarpellini.rotas.PaginasAbertasEnum
 import kotlinx.html.*
 
 fun HTML.esqueciMinhaSenhaPage() {
     includeHtmlHeader(
-        scriptsDaPagina = arrayListOf()
+        scriptsDaPagina = arrayListOf(),
     )
     body(
-        classes = "bg-high-light"
+        classes = "bg-${CoresEnum.HIGH_LIGHT}"
     ) {
         div(classes = "flex flex-col h-screen") {
             includeHeaderMenu(
@@ -41,55 +45,38 @@ fun HTML.esqueciMinhaSenhaPage() {
                             +"Esqueceu sua senha?"
                         }
                         p(classes = "text-low-medium text-sm mt-2") {
-                            +"Digite o seu número de telefone"
+                            +"Digite o seu endereço de e-mail cadastrado."
                         }
 
                         form(
-                            classes = "w-full max-w-sm mt-6 space-y-4 flex-row",
+                            classes = "w-full max-w-sm mt-6 space-y-4 flex-row relative",
                         ) {
-                            div {
-                                label(classes = "block text-sm font-medium text-low-pure") {
-                                    htmlFor = "usuario"
-                                    +"Usuário"
-                                }
-                                input(classes = "mt-1 w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
-                                    type = InputType.text
-                                    id = "usuario"
-                                    name = "usuario"
-                                    placeholder = "Digite seu usuário"
-                                }
+                            div(classes = "absolute inset-0 ${CoresEnum.HIGH_PURE.bg} bg-opacity-75 flex items-center justify-center z-10 collapse") {
+                                attributes["id"] = "loading-login"
+                                loading(id = "loading-login", isVertical = true)
                             }
 
-                            div {
-                                label(classes = "block text-sm font-medium text-low-pure") {
-                                    htmlFor = "password"
-                                    +"Senha"
-                                }
-                                div {
-                                    input(classes = "mt-1 w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-brand-pure focus:border-brand-pure bg-high-light") {
-                                        type = InputType.password
-                                        id = "password"
-                                        name = "password"
-                                        placeholder = "Digite sua senha"
-                                    }
-                                }
-                            }
+                            inputField(
+                                label = "E-mail",
+                                inputType = InputType.text,
+                                nomeDoCampo = "email",
+                                hint = "Digite seu e-mail"
+                            )
 
                             botao(
                                 tipo = TiposBotaoEnum.PRIMARY,
                                 classes = "w-full",
-                                hxPath = PaginasAbertasEnum.Login, // TODO: Criar um CaminhosAbertosEnum
-                                hxSwap = "beforeend"
-                            ) { +"Entrar" }
+                                hxPath = FragmentsAbertosEnum.FORMULARIO_REDEFINIR_SENHA,
+                                hxSwap = "beforeend",
+                                hxIndicator = "loading-login",
+                            ) { +"Redefinir senha" }
 
                             botaoLink(
                                 tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
                                 classes = "block",
-                                link = PaginasAbertasEnum.Login.path // TODO: Criar um CaminhosAbertosEnum
-                            ) {
-                                +"Já lembrei, posso voltar"
-                            }
+                                link = PaginasAbertasEnum.Login.path
+                            ) { +"Já lembrei! Fazer login agora" }
                         }
                     }
                 }

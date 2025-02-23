@@ -56,10 +56,10 @@ fun HTML.loginPage() {
                             }
 
                             inputField(
-                                label = "Usuário",
+                                label = "Usuário / E-mail",
                                 inputType = InputType.text,
                                 nomeDoCampo = "usuario",
-                                hint = "Digite seu usuário"
+                                hint = "Digite seu usuário ou e-mail"
                             )
                             inputField(
                                 label = "Senha",

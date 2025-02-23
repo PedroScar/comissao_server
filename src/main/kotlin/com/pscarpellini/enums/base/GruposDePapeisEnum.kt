@@ -16,6 +16,14 @@ enum class GruposDePapeisEnum(
             PapeisDeAcessoEnum.DESATIVAR_USUARIO,
         )
     ),
+    GERENCIAMENTO_DE_SALDOS(
+        nome = "Gerenciamento de saldos",
+        descricao = "Papéis para gerenciar os saldos dos promotores",
+        papeis = arrayListOf(
+            PapeisDeAcessoEnum.VISUALIZAR_SALDOS,
+            PapeisDeAcessoEnum.EDITAR_SALDOS,
+        )
+    ),
     GERENCIAMENTO_DE_PROMOCOES(
         nome = "Gerenciamento de promoções",
         descricao = "Papéis para gerenciar promoções",

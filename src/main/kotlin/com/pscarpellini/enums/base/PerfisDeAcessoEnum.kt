@@ -31,9 +31,11 @@ enum class PerfisDeAcessoEnum(
         descricao = "Administrador: acesso total ao sistema, gerenciamento de promoções, usuários e relatórios",
         papeis = arrayListOf(
             PapeisDeAcessoEnum.INICIO,
+
             PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
             PapeisDeAcessoEnum.NOVA_PROMOCAO,
             PapeisDeAcessoEnum.EDITAR_PROMOCAO,
+
             PapeisDeAcessoEnum.VISUALIZAR_USUARIOS,
             PapeisDeAcessoEnum.EDITAR_USUARIO,
             PapeisDeAcessoEnum.CRIAR_USUARIO,
@@ -41,8 +43,13 @@ enum class PerfisDeAcessoEnum(
             PapeisDeAcessoEnum.DESATIVAR_USUARIO,
 
             PapeisDeAcessoEnum.VISUALIZAR_SALDOS,
+            PapeisDeAcessoEnum.EDITAR_SALDOS,
+
             PapeisDeAcessoEnum.VISUALIZAR_RELATORIOS,
+
             PapeisDeAcessoEnum.VISUALIZAR_CONFIGURACOES_DO_APP,
+            PapeisDeAcessoEnum.EDITAR_CONFIGURACOES_DO_APP,
+
             PapeisDeAcessoEnum.VISUALIZAR_HISTORICO_DE_TRANSACOES,
         )
     ),
