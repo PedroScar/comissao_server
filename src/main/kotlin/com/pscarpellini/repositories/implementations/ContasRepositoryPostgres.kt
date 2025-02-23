@@ -156,4 +156,19 @@ class ContasRepositoryPostgres : ContasRepository {
             println("=============================================================================")
         }.getOrNull() != null
     }
+
+    override suspend fun atualizarMeuPerfil(usuarioId: Int, telefone: String, imagemDePerfil: String): Boolean = suspendTransaction {
+        runCatching {
+            ContaDAO
+                .findById(usuarioId)
+                ?.apply {
+                    this.telefone = telefone
+                    this.imagem = imagemDePerfil
+                }
+        }.onFailure {
+            println("=============================================================================")
+            println("ERRO AQUI: ${it.stackTrace}")
+            println("=============================================================================")
+        }.getOrNull() != null
+    }
 }

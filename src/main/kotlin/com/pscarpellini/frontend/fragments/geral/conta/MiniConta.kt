@@ -18,7 +18,7 @@ fun FlowContent.miniConta(
     classes: String = ""
 ) {
     div(classes = "items-center flex flex-row gap-2 $classes") {
-        avatar(nome = conta.nome, imagemUrl = conta.foto, tipo = TiposAvatarEnum.SMALL_CIRCLE)
+        avatar(nome = conta.nome, imagemUrl = conta.imagemDePerfil, tipo = TiposAvatarEnum.SMALL_CIRCLE)
         div(classes = "flex flex-col") {
             span(classes = "${CoresEnum.LOW_MEDIUM.text}") { +conta.nome }
             if(exibirPerfil) span(classes = "${CoresEnum.LOW_LIGHT.text} text-sm") { +obterEnumPeloSlug(conta.tipoConta).nome }

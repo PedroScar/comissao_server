@@ -15,4 +15,5 @@ data class ContaVO(
     val usuario: String,
     val status: String,
     val tipoConta: String,
+    val imagemDePerfil: String?
 )

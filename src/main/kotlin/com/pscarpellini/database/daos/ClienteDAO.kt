@@ -15,4 +15,5 @@ class ClienteDAO(id: EntityID<Int>) : IntEntity(id) {
     var telefone by ClientesTable.telefone
     var status by ClientesTable.status
     var dataCriacao by ClientesTable.dataCriacao
+    var logo by ClientesTable.logo
 }

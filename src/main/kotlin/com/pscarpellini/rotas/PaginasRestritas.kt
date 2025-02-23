@@ -1,5 +1,6 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.enums.comissao.PaginasComissaoEnum
@@ -43,7 +44,11 @@ fun Route.paginasRestritas(
     post(PaginasComissaoEnum.HISTORICO_DE_TRANSACOES.caminho.path) { handleHistoricoDeTransacoes() }
 
     post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.caminho.path) { handleGerenciamentoDeUsuarios() }
-    post(PaginasRestritasEnum.MEU_PERFIL.caminho.path) { handleMeuPerfil() }
     post(PaginasRestritasEnum.NOVO_USUARIO.caminho.path) { handleNovoUsuario() }
     post(PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho.path) { handleFormularioNovoUsuario(contasRepository) }
+
+    post(PaginasRestritasEnum.MEU_PERFIL.caminho.path) { handleMeuPerfil() }
+    post(PaginasRestritasEnum.EDITAR_MEU_PERFIL.caminho.path) { handleEditarMeuPerfil() }
+    post(CaminhosBaseEnum.FORMULARIO_EDITAR_MEU_PERFIL.path) { handleFormularioEditarMeuPerfil(contasRepository) }
+
 }

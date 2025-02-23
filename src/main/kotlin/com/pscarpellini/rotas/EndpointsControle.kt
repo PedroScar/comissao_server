@@ -1,14 +1,12 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.email.EmailSender
+import com.pscarpellini.tools.email.EmailSender
 import com.pscarpellini.interfaces.IEndpointInternoEnum
 import com.pscarpellini.models.response.ServerStatus
-import com.pscarpellini.repositories.interfaces.SaldosRepository
 import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.html.FormMethod
-import org.koin.ktor.ext.inject
 import java.lang.management.ManagementFactory
 
 fun Route.endpointsControle(

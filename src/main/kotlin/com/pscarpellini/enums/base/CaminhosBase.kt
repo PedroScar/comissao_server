@@ -16,6 +16,8 @@ enum class CaminhosBaseEnum(
     CONFIGURACOES_DO_APP(path = "/int/configuracoes"),
 
     MEU_PERFIL(path = "/int/meu_perfil"),
+    EDITAR_MEU_PERFIL(path = "/int/meu_perfil/editar"),
+    FORMULARIO_EDITAR_MEU_PERFIL(path = "/forms/meu_perfil/editar"),
 
     LOGOUT(path = "/logout"),
 }

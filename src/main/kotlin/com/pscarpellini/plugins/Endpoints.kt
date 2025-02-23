@@ -1,6 +1,6 @@
 package com.pscarpellini.plugins
 
-import com.pscarpellini.email.EmailSender
+import com.pscarpellini.tools.email.EmailSender
 import com.pscarpellini.repositories.interfaces.*
 import com.pscarpellini.rotas.apiMobile
 import com.pscarpellini.rotas.endpointsAbertos

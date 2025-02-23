@@ -51,6 +51,11 @@ enum class PaginasRestritasEnum(
         caminho = CaminhosBaseEnum.MEU_PERFIL,
         itemMenuSelecionado = ItensMenuEnum.INICIO
     ),
+    EDITAR_MEU_PERFIL(
+        titulo = "Editar meu perfil",
+        showBack = true,
+        caminho = CaminhosBaseEnum.EDITAR_MEU_PERFIL
+    ),
 
     LOGOUT(titulo = "", caminho = CaminhosBaseEnum.LOGOUT),
 }

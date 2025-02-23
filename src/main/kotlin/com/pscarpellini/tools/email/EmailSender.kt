@@ -1,4 +1,4 @@
-package com.pscarpellini.email
+package com.pscarpellini.tools.email
 
 import javax.mail.*
 import javax.mail.internet.InternetAddress

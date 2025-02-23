@@ -14,6 +14,7 @@ fun FlowContent.inputField(
     label: String? = null,
     isObrigatorio: Boolean = false,
     nomeDoCampo: String,
+    valueInicial: String? = null,
     icone: IconesEnum? = null,
     maxLength: Int? = null,
     useHx: Boolean = false,
@@ -45,6 +46,7 @@ fun FlowContent.inputField(
                 placeholder = hint
                 if(hxSwapOob != null) attributes["hx-swap-oob"] = hxSwapOob
                 if(maxLength != null) this.maxLength = maxLength.toString()
+                if(valueInicial != null) value = valueInicial
 
                 if(minValue != null) min = minValue
                 if(maxValue != null) max = maxValue

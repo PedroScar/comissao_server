@@ -1,6 +1,6 @@
 package com.pscarpellini.rotas
 
-import com.pscarpellini.email.EmailSender
+import com.pscarpellini.tools.email.EmailSender
 import com.pscarpellini.extensions.gerarSenhaBasica
 import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum

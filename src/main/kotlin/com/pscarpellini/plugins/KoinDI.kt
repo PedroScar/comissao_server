@@ -1,6 +1,6 @@
 package com.pscarpellini.plugins
 
-import com.pscarpellini.email.EmailSender
+import com.pscarpellini.tools.email.EmailSender
 import com.pscarpellini.repositories.implementations.*
 import com.pscarpellini.repositories.interfaces.*
 import io.ktor.server.application.Application

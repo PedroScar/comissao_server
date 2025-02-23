@@ -10,5 +10,6 @@ data class ClienteVO(
     val cnpj: String,
     val email: String,
     val telefone: String,
-    val status: String
+    val status: String,
+    val logo: String?
 )

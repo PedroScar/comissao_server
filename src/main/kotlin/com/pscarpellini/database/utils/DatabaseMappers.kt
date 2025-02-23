@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.Alias
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.alias
+import kotlin.math.log
 
 fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.id.value,
@@ -17,7 +18,8 @@ fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.cnpj,
     dao.email,
     dao.telefone,
-    dao.status
+    dao.status,
+    dao.logo
 )
 
 fun servicoDaoToModel(dao: ServicoDAO) = ServicoVO(
@@ -44,7 +46,8 @@ fun contaDaoToModel(dao: ContaDAO) = ContaVO(
     email = dao.email,
     telefone = dao.telefone,
     status = dao.status,
-    usuario = dao.usuario
+    usuario = dao.usuario,
+    imagemDePerfil = dao.imagem
 )
 
 fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
@@ -99,6 +102,7 @@ fun saldoRowToModel(row: ResultRow): SaldoVO {
             telefone = row[ContasTable.telefone],
             status = row[ContasTable.status],
             usuario = row[ContasTable.usuario],
+            imagemDePerfil = row[ContasTable.imagem]
         ),
         saldo = row[SaldosTable.saldo],
     )
@@ -143,6 +147,7 @@ fun contaRowToModel(row: ResultRow, alias: Alias<Table>): ContaVO {
         usuario = row[alias[ContasTable.usuario]],
         status = row[alias[ContasTable.status]],
         tipoConta = row[alias[ContasTable.tipoConta]],
+        imagemDePerfil = row[alias[ContasTable.imagem]]
     )
 }
 
@@ -155,6 +160,7 @@ fun clienteRowToModel(row: ResultRow, alias: Alias<Table>): ClienteVO {
         email = row[alias[ClientesTable.email]],
         telefone = row[alias[ClientesTable.telefone]],
         status = row[alias[ClientesTable.status]],
+        logo = row[alias[ClientesTable.logo]]
     )
 }
 

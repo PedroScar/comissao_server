@@ -19,4 +19,5 @@ class ContaDAO(id: EntityID<Int>) : IntEntity(id) {
     var usuario by ContasTable.usuario
     var senha by ContasTable.senha
     var dataCriacao by ContasTable.dataCriacao
+    var imagem by ContasTable.imagem
 }

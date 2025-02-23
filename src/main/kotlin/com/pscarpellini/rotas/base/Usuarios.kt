@@ -1,36 +1,25 @@
 package com.pscarpellini.rotas.base
 
 import com.pscarpellini.enums.base.PaginasRestritasEnum
-import com.pscarpellini.enums.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.criarNomeDeUsuario
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.extensions.respondToast
-import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeTabelaDeUsuarios
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.frontend.pages.restritos.base.gerenciamentoDeUsuarios
-import com.pscarpellini.frontend.pages.restritos.base.includeFormNovoUsuario
-import com.pscarpellini.frontend.pages.restritos.base.meuPerfil
-import com.pscarpellini.frontend.pages.restritos.base.novoUsuario
-import com.pscarpellini.frontend.pages.restritos.comissao.includeFormNovaPromocao
-import com.pscarpellini.frontend.pages.restritos.comissao.novaPromocao
+import com.pscarpellini.frontend.pages.restritos.base.*
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
-import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
-import com.pscarpellini.repositories.interfaces.PromocoesRepository
+import com.pscarpellini.tools.image.saveImageToPublicFolder
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
-import io.ktor.utils.io.*
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.*
+import io.ktor.utils.io.jvm.javaio.*
 
 suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: ContasRepository) {
     val parameters = call.receiveParameters()
@@ -41,7 +30,9 @@ suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: Contas
     contasRepository.carregarUsuarios(nome = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-            is DbResponse.Successo -> { call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) } }
+            is DbResponse.Successo -> {
+                call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) }
+            }
         }
     }
 }
@@ -63,6 +54,49 @@ suspend fun RoutingContext.handleMeuPerfil() {
         includeMenuPrincipal(sessao)
         includeHeaderLogado(sessao)
         meuPerfil(sessao)
+    }
+}
+
+suspend fun RoutingContext.handleEditarMeuPerfil() {
+    val sessao = obterSessao()
+    sessao.paginaAtual = PaginasRestritasEnum.EDITAR_MEU_PERFIL
+    call.respondFragment(HttpStatusCode.OK) { editarMeuPerfil(sessao) }
+}
+
+suspend fun RoutingContext.handleFormularioEditarMeuPerfil(
+    contasRepository: ContasRepository
+) {
+    val sessao = obterSessao()
+
+    val multipart = call.receiveMultipart(formFieldLimit = 10_000_000)
+
+    var telefone = ""
+    var imagemDePerfil = ""
+
+    multipart.forEachPart { part ->
+        when (part) {
+            is PartData.FormItem -> {
+                when (part.name) {
+                    "telefone" -> telefone = part.value
+                }
+            }
+
+            is PartData.FileItem -> {
+//                val fileBytes = part.provider().toByteArray()
+//                imagemDePerfil = Base64.getEncoder().encodeToString(fileBytes)
+                imagemDePerfil = saveImageToPublicFolder(part.provider().toInputStream(), 200)
+            }
+
+            else -> Unit
+        }
+        part.dispose()
+    }
+
+    contasRepository.atualizarMeuPerfil(usuarioId = sessao.conta?.id ?: -1, telefone = telefone, imagemDePerfil = imagemDePerfil)
+
+    call.respondFragment(HttpStatusCode.OK) {
+        meuPerfil(sessao)
+        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Informações salvas com sucesso!")
     }
 }
 
@@ -103,6 +137,7 @@ suspend fun RoutingContext.handleFormularioNovoUsuario(
         usuario = criarNomeDeUsuario(nome),
         status = "ATIVO",
         tipoConta = perfilDeAcesso,
+        imagemDePerfil = ""
     )
     contasRepository.criarUsuario(novaConta)
 

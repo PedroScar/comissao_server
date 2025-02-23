@@ -1,8 +1,11 @@
 package com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios
 
+import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
+import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.models.vos.ContaVO
 import kotlinx.html.FlowContent
+import kotlinx.html.div
 
 private val HEADERS = arrayListOf("Nome do promotor", "Tipo de conta", "Último acesso", "Ações")
 
@@ -24,7 +27,12 @@ fun FlowContent.includeTabelaDeUsuarios(
 
 private fun exibirLinhaUsuario(conta: ContaVO): List<FlowContent.() -> Unit> {
     return listOf(
-        { +conta.nome },
+        {
+            div(classes = "flex justify-center") {
+                avatar(nome = conta.nome, imagemUrl = conta.imagemDePerfil, tipo = TiposAvatarEnum.SMALL_CIRCLE)
+                +conta.nome
+            }
+        },
         { +conta.usuario },
         { +conta.email },
         {

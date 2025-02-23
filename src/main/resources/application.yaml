@@ -4,3 +4,4 @@ ktor:
             - com.pscarpellini.ApplicationKt.module
     deployment:
         port: 8080
+        maxPartSize: 10M
