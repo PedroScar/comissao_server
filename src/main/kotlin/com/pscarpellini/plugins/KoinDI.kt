@@ -1,5 +1,6 @@
 package com.pscarpellini.plugins
 
+import com.pscarpellini.email.EmailSender
 import com.pscarpellini.repositories.implementations.*
 import com.pscarpellini.repositories.interfaces.*
 import io.ktor.server.application.Application
@@ -20,6 +21,15 @@ fun Application.configureDI() {
             single<SaldosRepository> { SaldosRepositoryPostgres() }
             single<ExtratosRepository> { ExtratosRepositoryPostgres() }
             single<VideosRepository> { VideosRepositoryPostgres() }
+            single<EmailSender> {
+                EmailSender(
+                    host = "smtp.gmail.com",
+                    port = 587,
+                    username = "E-MAIL",
+                    password = "SENHA",
+                    fromEmail = "E-MAIL",
+                )
+            }
         })
     }
 }
