@@ -1,6 +1,5 @@
 package com.pscarpellini.repositories.implementations
 
-import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.daos.ExtratoDAO
 import com.pscarpellini.database.daos.PromocaoDAO
@@ -9,16 +8,12 @@ import com.pscarpellini.database.tables.ExtratosTable
 import com.pscarpellini.database.tables.PromocoesTable
 import com.pscarpellini.database.utils.extratoDaoToModel
 import com.pscarpellini.models.DbResponse
-import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.ExtratoVO
 import com.pscarpellini.models.vos.NovoExtratoVO
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.suspendTransaction
-import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.*
-import org.postgresql.util.PSQLException
 import java.time.LocalDateTime
-import kotlin.Int
 
 class ExtratosRepositoryPostgres : ExtratosRepository {
 

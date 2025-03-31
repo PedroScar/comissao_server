@@ -12,6 +12,7 @@ import org.koin.ktor.ext.inject
 
 fun Application.configureEndpoints() {
 
+    val extratosRepository: ExtratosRepository by inject ()
     val clientesRepository: ClienteRepository by inject()
     val contasRepository: ContasRepository by inject()
     val promocoesRepository: PromocoesRepository by inject()
@@ -20,7 +21,7 @@ fun Application.configureEndpoints() {
     val emailSender: EmailSender by inject()
 
     routing {
-        apiMobile(contasRepository, promocoesRepository, saldosRepository, videosRepository)
+        apiMobile(contasRepository, promocoesRepository, saldosRepository, videosRepository, extratosRepository)
         endpointsRestritos(clientesRepository)
         endpointsControle(emailSender)
         endpointsAbertos(contasRepository)
