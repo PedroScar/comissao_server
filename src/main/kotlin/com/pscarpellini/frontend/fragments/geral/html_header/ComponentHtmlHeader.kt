@@ -17,6 +17,9 @@ fun HTML.includeHtmlHeader(
         )
         meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
 
+//        Validação da Google Pay Console
+        meta(name = "google-site-verification", content = "P-OEr1Y2lxlQFC89WARfWDLoL-wgbZmQultRF0HCcGs")
+
 //        TailwindCSS
         script(src = "https://cdn.tailwindcss.com") {}
         script(src = "/static/scripts/TailwindScript_tmp.js") {}
