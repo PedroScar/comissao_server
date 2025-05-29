@@ -104,7 +104,7 @@ class ContasRepositoryPostgres : ContasRepository {
                 telefone = conta.telefone
                 status = conta.status
                 usuario = conta.usuario.lowercase()
-                senha = "12345678"
+                senha = conta.senha ?: "12345678"
                 dataCriacao = LocalDateTime.now()
             }
         }.onFailure {
@@ -115,7 +115,6 @@ class ContasRepositoryPostgres : ContasRepository {
             DbResponse.Successo(conta)
         }
         DbResponse.Successo(conta)
-//        DbResponse.Erro(message = "Falha ao adicionar conta: ${it.cause} | ${it.stackTrace}")
     }
 
     override suspend fun validarEmailEsqueciMinhaSenha(email: String): Boolean = suspendTransaction {

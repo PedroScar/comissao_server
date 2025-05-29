@@ -26,7 +26,6 @@ enum class PaginasRestritasEnum(
     ),
     NOVO_USUARIO(
         titulo = "Novo usuário",
-        showBack = true,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(GERENCIAMENTO_DE_USUARIOS),
         caminho = CaminhosBaseEnum.NOVO_USUARIO,
@@ -47,13 +46,11 @@ enum class PaginasRestritasEnum(
 
     MEU_PERFIL(
         titulo = "Meu perfil",
-        showBack = true,
         caminho = CaminhosBaseEnum.MEU_PERFIL,
         itemMenuSelecionado = ItensMenuEnum.INICIO
     ),
     EDITAR_MEU_PERFIL(
         titulo = "Editar meu perfil",
-        showBack = true,
         caminho = CaminhosBaseEnum.EDITAR_MEU_PERFIL
     ),
 

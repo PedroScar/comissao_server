@@ -4,9 +4,12 @@ import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.extensions.formatarIntervaloDeDatas
 import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
+import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.navigation.navigationHX
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.frontend.fragments.geral.tag.tag
@@ -40,19 +43,23 @@ private fun exibirLinhaPromocao(promocao: PromocaoVO): List<FlowContent.() -> Un
         },
         { +formatarIntervaloDeDatas(promocao.dataDisponivel, promocao.dataValidade) },
         { tag(texto = promocao.status.nome, tipo = promocao.status.tipoTag, isSecundaria = true) },
-        { +"483" },
+        { +"0" },
         {
-            val parametros = mapOf("id_promocao" to promocao.clientId.toString())
-            botao(
+            val parametros = mapOf("id_promocao" to promocao.id.toString())
+            botaoIcone(
                 tipo = TiposBotaoEnum.TRANSPARENT,
                 hxTarget = "conteudo-interno",
                 hxPath = CaminhosComissaoEnum.EXIBIR_PROMOCAO.path,
                 hxParams = parametros,
-            ) { +"Abrir" }
-//            div(classes = "flex flex-row gap-2") {
-//                botaoIcone(icone = IconesEnum.EDITAR, tipo = TiposBotaoEnum.NEUTRAL, enabled = conta.acoes.contains("Editar"))
-//                botaoIcone(icone = IconesEnum.OLHO_ABERTO, tipo = TiposBotaoEnum.NEUTRAL, enabled = conta.acoes.contains("Visualizar"))
-//            }
+                icone = IconesEnum.OLHO_ABERTO,
+            )
+//            botaoIcone(
+//                tipo = TiposBotaoEnum.TRANSPARENT,
+//                hxTarget = "conteudo-interno",
+//                hxPath = CaminhosComissaoEnum.EDITAR_PROMOCAO.path,
+//                hxParams = parametros,
+//                icone = IconesEnum.EDITAR,
+//            )
         }
     )
 }

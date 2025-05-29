@@ -31,13 +31,25 @@ fun FlowContent.includeFormNovoUsuario(
             colunas = 1,
         ) {
             card(classes = "flex flex-col gap-8") {
-                includeContentGrid(linhas = 2, colunas = 2, classes = "w-full") {
+                includeContentGrid(linhas = 2, colunas = 3, classes = "w-full") {
                     inputField(
                         label = "Nome completo",
                         inputType = InputType.text,
                         hint = "Digite o nome completo",
                         isObrigatorio = true,
                         nomeDoCampo = "nome"
+                    )
+                    inputField(
+                        label = "Nome de usuário",
+                        inputType = InputType.text,
+                        nomeDoCampo = "usuario",
+                        hint = "Digite um nome de usuário"
+                    )
+                    inputField(
+                        label = "Senha",
+                        inputType = InputType.password,
+                        nomeDoCampo = "password",
+                        hint = "********"
                     )
                     inputField(
                         label = "E-mail",
@@ -47,13 +59,13 @@ fun FlowContent.includeFormNovoUsuario(
                         nomeDoCampo = "email",
                         classes = "lowercase"
                     )
-                    includeSelectDePerfis()
                     inputField(
                         label = "Telefone (opcional)",
                         inputType = InputType.tel,
                         hint = "(00) 00000-0000",
                         nomeDoCampo = "telefone"
                     )
+                    includeSelectDePerfis()
                 }
                 includeCardDePerfis()
             }

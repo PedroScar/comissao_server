@@ -13,6 +13,7 @@ data class ContaVO(
     val email: String,
     val telefone: String,
     val usuario: String,
+    val senha: String? = null,
     val status: String,
     val tipoConta: String,
     val imagemDePerfil: String?

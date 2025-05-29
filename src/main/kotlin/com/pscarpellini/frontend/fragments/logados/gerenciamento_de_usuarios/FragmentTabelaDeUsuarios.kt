@@ -1,23 +1,31 @@
 package com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios
 
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
+import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
+import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.avatar.avatar
+import com.pscarpellini.frontend.fragments.geral.botoes.botao
+import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.models.vos.ContaVO
+import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 
-private val HEADERS = arrayListOf("Nome do promotor", "Tipo de conta", "Último acesso", "Ações")
+private val HEADERS = arrayListOf("Nome completo", "Nome de usuário", "Último acesso", "Ações")
 
 
 fun FlowContent.includeTabelaDeUsuarios(
-    contas: List<ContaVO>?
+    contas: List<ContaVO>?,
+    sessao: SessaoUsuarioVO
 ) {
     val usuarios: List<ContaVO> = contas ?: arrayListOf()
     tabelaComHeadersFixos(
         headers = HEADERS,
         linhas = usuarios.map { conta ->
-            exibirLinhaUsuario(conta)
+            exibirLinhaUsuario(conta, sessao)
         },
         classes = "h-full w-full"
     )
@@ -25,10 +33,10 @@ fun FlowContent.includeTabelaDeUsuarios(
 
 
 
-private fun exibirLinhaUsuario(conta: ContaVO): List<FlowContent.() -> Unit> {
+private fun exibirLinhaUsuario(conta: ContaVO, sessao: SessaoUsuarioVO): List<FlowContent.() -> Unit> {
     return listOf(
         {
-            div(classes = "flex justify-center") {
+            div(classes = "flex items-center gap-2") {
                 avatar(nome = conta.nome, imagemUrl = conta.imagemDePerfil, tipo = TiposAvatarEnum.SMALL_CIRCLE)
                 +conta.nome
             }
@@ -36,10 +44,15 @@ private fun exibirLinhaUsuario(conta: ContaVO): List<FlowContent.() -> Unit> {
         { +conta.usuario },
         { +conta.email },
         {
-//            div(classes = "flex flex-row gap-2") {
-//                botaoIcone(icone = IconesEnum.EDITAR, tipo = TiposBotaoEnum.NEUTRAL, enabled = conta.acoes.contains("Editar"))
-//                botaoIcone(icone = IconesEnum.OLHO_ABERTO, tipo = TiposBotaoEnum.NEUTRAL, enabled = conta.acoes.contains("Visualizar"))
-//            }
+            if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_USUARIO)) {
+                val parametros = mapOf("id_promocao" to "TESTE")
+                botao(
+                    tipo = TiposBotaoEnum.TRANSPARENT,
+                    hxTarget = "conteudo-interno",
+                    hxPath = CaminhosComissaoEnum.EXIBIR_PROMOCAO.path,
+                    hxParams = parametros,
+                ) { +"Abrir" }
+            }
         }
     )
 }

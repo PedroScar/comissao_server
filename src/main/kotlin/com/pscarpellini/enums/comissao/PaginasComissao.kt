@@ -25,7 +25,6 @@ enum class PaginasComissaoEnum(
     ),
     NOVA_PROMOCAO(
         titulo = "Nova promoção",
-        showBack = true,
         sublinks = arrayListOf(),
         papelNecessario = PapeisDeAcessoEnum.NOVA_PROMOCAO,
         showBreadcrumbs = true,
@@ -35,7 +34,6 @@ enum class PaginasComissaoEnum(
     ),
     EXIBIR_PROMOCAO(
         titulo = "Exibir promoção",
-        showBack = true,
         papelNecessario = PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(PROMOCOES),
@@ -44,7 +42,6 @@ enum class PaginasComissaoEnum(
     ),
     EDITAR_PROMOCAO(
         titulo = "Exibir promoção",
-        showBack = true,
         sublinks = arrayListOf(),
         papelNecessario = PapeisDeAcessoEnum.EDITAR_PROMOCAO,
         showBreadcrumbs = true,

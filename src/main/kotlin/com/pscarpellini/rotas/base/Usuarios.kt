@@ -30,9 +30,7 @@ suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: Contas
     contasRepository.carregarUsuarios(nome = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-            is DbResponse.Successo -> {
-                call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data) }
-            }
+            is DbResponse.Successo -> call.respondFragment { includeTabelaDeUsuarios(contas = resposta.data, sessao = sessao) }
         }
     }
 }
@@ -119,6 +117,8 @@ suspend fun RoutingContext.handleFormularioNovoUsuario(
 
     val nome = (parameters["nome"] ?: "").toString()
     val email = (parameters["email"] ?: "").toString()
+    val usuario = parameters["usuario"]
+    val password = parameters["password"]
     val telefone = (parameters["telefone"] ?: "").toString()
     val perfilDeAcesso = (parameters["perfilDeAcesso"] ?: "").toString()
 
@@ -134,7 +134,8 @@ suspend fun RoutingContext.handleFormularioNovoUsuario(
         cpf = "",
         email = email,
         telefone = telefone,
-        usuario = criarNomeDeUsuario(nome),
+        usuario = usuario ?: criarNomeDeUsuario(nome),
+        senha = password,
         status = "ATIVO",
         tipoConta = perfilDeAcesso,
         imagemDePerfil = ""
