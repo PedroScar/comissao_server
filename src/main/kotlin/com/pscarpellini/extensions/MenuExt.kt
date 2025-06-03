@@ -9,14 +9,15 @@ fun ArrayList<IItensMenuEnum>.obterListaGeral(papeisDeAcesso: ArrayList<PapeisDe
     val listaGeral = arrayListOf<IItensMenuEnum>()
 
     this.forEach { elemento ->
-        when(elemento) {
+        when (elemento) {
             is ItensMenuEnum -> {
-                if(papeisDeAcesso.contains(elemento.papelDeAcesso)) listaGeral.add(elemento)
+                if (papeisDeAcesso.contains(elemento.papelDeAcesso)) listaGeral.add(elemento)
                 return@forEach
             }
+
             is CategoriasMenuEnum -> {
                 val itensFiltrados = elemento.itens.filter { papeisDeAcesso.contains(it.papelDeAcesso) }
-                if(itensFiltrados.isEmpty()) return@forEach
+                if (itensFiltrados.isEmpty()) return@forEach
                 listaGeral.add(elemento)
                 listaGeral.addAll(itensFiltrados)
             }

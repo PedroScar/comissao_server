@@ -25,6 +25,12 @@ enum class ItensMenuEnum(
         pagina = CaminhosComissaoEnum.PROMOCOES,
         papelDeAcesso = PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES
     ),
+    VIDEOS(
+        nome = "Videos",
+        icone = IconesEnum.CARRINHO,
+        pagina = CaminhosComissaoEnum.VIDEOS,
+        papelDeAcesso = PapeisDeAcessoEnum.VISUALIZAR_VIDEOS
+    ),
     SALDOS_DOS_PROMOTORES(
         nome = "Saldos dos promotores",
         icone = IconesEnum.PRECO,

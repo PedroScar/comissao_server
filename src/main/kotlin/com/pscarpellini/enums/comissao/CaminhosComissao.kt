@@ -6,6 +6,7 @@ enum class CaminhosComissaoEnum(
     override val path: String,
 ) : IPaginaEnum {
     PROMOCOES(path = "/int/promocoes"),
+    VIDEOS(path = "/int/videos"),
     NOVA_PROMOCAO(path = "/int/nova_promocao"),
     EXIBIR_PROMOCAO(path = "/int/promocao/exibir"),
     EDITAR_PROMOCAO(path = "/int/promocao/editar"),

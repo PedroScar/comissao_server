@@ -35,14 +35,11 @@ fun Route.fragmentsRestritos(
     }
 
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path) { handleFragmentTabelaPromocoes(promocoesRepository) }
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_VIDEOS.path) { handleFragmentTabelaVideos(promocoesRepository) }
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path) { handleFragmentTabelaUsuarios(contasRepository) }
-
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) { handleFragmentTabelaHistoricoDeTransacoes(extratosRepository) }
-
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) { handleFragmentTabelaSaldosDosPromotores(saldosRepository) }
-
     post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO.path) { handlePopupModificarSaldo(saldosRepository) }
-
     post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO_INFOS_PROMOTOR.path) { handlePopupModificarSaldoInfosPromotor(contasRepository) }
 }
 
@@ -54,6 +51,7 @@ enum class FragmentsRestritosEnum(
     FRAGMENT_HEADER_INTERNO("/int/fragment/header_interno"),
 
     FRAGMENT_TABELA_PROMOCOES("/int/fragment/promocoes"),
+    FRAGMENT_TABELA_VIDEOS("/int/fragment/videos"),
     FRAGMENT_TABELA_USUARIOS("/int/fragment/tabela_usuarios"),
     FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES("/int/fragment/historico_de_transacoes"),
     FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES("/int/fragment/saldos_dos_promotores"),

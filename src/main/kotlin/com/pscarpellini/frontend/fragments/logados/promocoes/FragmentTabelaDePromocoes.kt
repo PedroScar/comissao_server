@@ -3,18 +3,15 @@ package com.pscarpellini.frontend.fragments.logados.promocoes
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.extensions.formatarIntervaloDeDatas
 import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.botoes.botao
-import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
-import com.pscarpellini.frontend.fragments.geral.icone.icone
-import com.pscarpellini.frontend.fragments.geral.navigation.navigationHX
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.frontend.fragments.geral.tag.tag
 import com.pscarpellini.models.vos.PromocaoVO
-import kotlinx.html.*
+import kotlinx.html.FlowContent
+import kotlinx.html.div
+import kotlinx.html.img
 
 private val HEADERS = arrayListOf("Nome da promoção", "Data de início e fim", "Status", "Vendas", "")
 
@@ -30,8 +27,6 @@ fun FlowContent.includeTabelaDePromocoes(
         classes = "h-full w-full"
     )
 }
-
-
 
 private fun exibirLinhaPromocao(promocao: PromocaoVO): List<FlowContent.() -> Unit> {
     return listOf(

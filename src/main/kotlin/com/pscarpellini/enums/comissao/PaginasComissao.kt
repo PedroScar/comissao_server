@@ -23,6 +23,13 @@ enum class PaginasComissaoEnum(
         caminho = CaminhosComissaoEnum.PROMOCOES,
         itemMenuSelecionado = ItensMenuEnum.PROMOCOES
     ),
+    VIDEOS(
+        titulo = "Videos",
+        sublinks = arrayListOf(SublinksComissaoEnum.CRIAR_NOVA_PROMOCAO),
+        papelNecessario = PapeisDeAcessoEnum.VISUALIZAR_VIDEOS,
+        caminho = CaminhosComissaoEnum.VIDEOS,
+        itemMenuSelecionado = ItensMenuEnum.VIDEOS
+    ),
     NOVA_PROMOCAO(
         titulo = "Nova promoção",
         sublinks = arrayListOf(),

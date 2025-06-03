@@ -20,7 +20,7 @@ fun FlowContent.includeMenuPrincipal(
 
         div("flex-grow overflow-y-auto space-y-1 mt-4") {
             sessao.menusDisponiveis.obterListaGeral(sessao.papeisDeAcesso).forEach {
-                when(it) {
+                when (it) {
                     is ItensMenuEnum -> includeMenuItem(item = it, isSelecionado = it == sessao.menuSelecionado)
                     is CategoriasMenuEnum -> includeMenuCategoria(it.nome)
                 }

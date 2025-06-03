@@ -23,9 +23,11 @@ data class SessaoUsuarioVO(
         dataCriacao = LocalDateTime.now()
     )
     var conta: ContaVO? = null
+
     var menusDisponiveis: ArrayList<IItensMenuEnum> = arrayListOf(
         ItensMenuEnum.INICIO,
         ItensMenuEnum.PROMOCOES,
+        ItensMenuEnum.VIDEOS,
         ItensMenuEnum.SALDOS_DOS_PROMOTORES,
         ItensMenuEnum.RELATORIOS,
         CategoriasMenuEnum.ADMINISTRACAO

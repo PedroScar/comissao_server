@@ -58,6 +58,22 @@ fun Route.apiMobile(
             }
         }
 
+//        get("/promocoes") {
+//            val clientId = call.request.queryParameters["clienteId"]?.toIntOrNull() ?: 0
+//
+//            promocoesRepository.carregarPromocoes(clienteId = clientId).let { resposta ->
+//                when (resposta) {
+//                    is DbResponse.Erro -> {
+//                        call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")
+//                    }
+//
+//                    is DbResponse.Successo -> {
+//                        call.respond(HttpStatusCode.OK, resposta.data as List<PromocaoVO>)
+//                    }
+//                }
+//            }
+//        }
+
         get("/videosDestaque") {
             val clientId = call.request.queryParameters["clienteId"]?.toIntOrNull() ?: 0
 

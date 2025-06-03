@@ -33,6 +33,7 @@ enum class PerfisDeAcessoEnum(
             PapeisDeAcessoEnum.INICIO,
 
             PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
+            PapeisDeAcessoEnum.VISUALIZAR_VIDEOS,
             PapeisDeAcessoEnum.NOVA_PROMOCAO,
             PapeisDeAcessoEnum.EDITAR_PROMOCAO,
 
