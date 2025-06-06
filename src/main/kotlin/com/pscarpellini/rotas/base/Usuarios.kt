@@ -20,6 +20,8 @@ import io.ktor.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.jvm.javaio.*
+import io.ktor.utils.io.toByteArray
+import java.util.Base64
 
 suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: ContasRepository) {
     val parameters = call.receiveParameters()
@@ -80,9 +82,9 @@ suspend fun RoutingContext.handleFormularioEditarMeuPerfil(
             }
 
             is PartData.FileItem -> {
-//                val fileBytes = part.provider().toByteArray()
-//                imagemDePerfil = Base64.getEncoder().encodeToString(fileBytes)
-                imagemDePerfil = saveImageToPublicFolder(part.provider().toInputStream(), 200)
+                val fileBytes = part.provider().toByteArray()
+                imagemDePerfil = Base64.getEncoder().encodeToString(fileBytes)
+//                imagemDePerfil = saveImageToPublicFolder(part.provider().toInputStream(), 200)
             }
 
             else -> Unit
