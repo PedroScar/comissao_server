@@ -19,7 +19,7 @@ fun FlowContent.avatar(
     ) {
         if (!imagemUrl.isNullOrBlank()) {
             img(
-                src = imagemUrl,
+                src = "data:image/png;base64, $imagemUrl",
 //                src = "/public/$imagemUrl",
                 alt = nome,
                 classes = "object-cover $tipo"
