@@ -9,7 +9,6 @@ import org.jetbrains.exposed.sql.Alias
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.alias
-import kotlin.math.log
 
 fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.id.value,
@@ -67,7 +66,8 @@ fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
 )
 
 fun videoDaoToModel(dao: VideoDAO) = VideoVO(
-    clientId = dao.id.value,
+    id = dao.id.value,
+    clientId = dao.clienteId.id.value,
     titulo = dao.titulo,
     video_id = dao.video_id,
     habilitado = dao.habilitado,

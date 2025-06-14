@@ -2,12 +2,10 @@ package com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios
 
 import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
-import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
-import com.pscarpellini.frontend.fragments.geral.botoes.botaoIcone
 import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO

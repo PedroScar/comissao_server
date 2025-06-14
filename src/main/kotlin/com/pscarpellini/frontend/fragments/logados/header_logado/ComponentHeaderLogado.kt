@@ -2,7 +2,6 @@ package com.pscarpellini.frontend.fragments.logados.header_logado
 
 import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
-import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.PosicoesDropdownEnum
@@ -17,7 +16,6 @@ import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.navigation.navigationLink
 import com.pscarpellini.frontend.fragments.geral.spacer.spacer
 import com.pscarpellini.frontend.fragments.logados.breadcrumbs.breadcrumbs
-import com.pscarpellini.interfaces.ICaminho
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.FlowContent
 import kotlinx.html.a

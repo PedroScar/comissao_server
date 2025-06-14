@@ -6,13 +6,21 @@ enum class CaminhosComissaoEnum(
     override val path: String,
 ) : IPaginaEnum {
     PROMOCOES(path = "/int/promocoes"),
-    VIDEOS(path = "/int/videos"),
-    NOVA_PROMOCAO(path = "/int/nova_promocao"),
+    CRIAR_PROMOCAO(path = "/int/nova_promocao"),
     EXIBIR_PROMOCAO(path = "/int/promocao/exibir"),
     EDITAR_PROMOCAO(path = "/int/promocao/editar"),
     FORMULARIO_NOVA_PROMOCAO(path = "/forms/promocoes/nova_promocao"),
     FORMULARIO_ENCERRAR_PROMOCAO(path = "/forms/promocoes/encerrar_promocao"),
     SELECT_PROMOCOES_ATIVAS(path = "/select/promocoes/ativas"),
+
+    VIDEOS(path = "/int/videos"),
+    CRIAR_VIDEO(path = "/int/criar_video"),
+    EXIBIR_VIDEO(path = "/int/video/exibir"),
+    EDITAR_VIDEO(path = "/int/promocao/editar"),
+    FORMULARIO_CRIAR_VIDEO(path = "/forms/videos/criar_video"),
+    FORMULARIO_EDITAR_VIDEO(path = "/forms/videos/editar_video"),
+    FORMULARIO_REMOVER_VIDEO(path = "/forms/videos/encerrar_video"),
+    SELECT_VIDEOS_ATIVOS(path = "/select/videos/ativas"),
 
     SALDOS_DOS_PROMOTORES(path = "/int/saldos"),
     SELECT_PROMOTORES(path = "/select/promotores"),

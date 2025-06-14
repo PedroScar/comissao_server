@@ -4,7 +4,6 @@ import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.interfaces.ICaminho
-import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.rotas.FragmentsRestritosEnum
 
 enum class ItensMenuPilulaEnum(
@@ -16,7 +15,12 @@ enum class ItensMenuPilulaEnum(
     CRIAR_NOVA_PROMOCAO(
         textoCTA = "Criar nova promoção",
         icone = IconesEnum.CARRINHO,
-        pagina = CaminhosComissaoEnum.NOVA_PROMOCAO
+        pagina = CaminhosComissaoEnum.CRIAR_PROMOCAO
+    ),
+    CRIAR_NOVO_VIDEO(
+        textoCTA = "Criar novo video",
+        icone = IconesEnum.CARRINHO,
+        pagina = CaminhosComissaoEnum.CRIAR_VIDEO
     ),
     MODIFICAR_SALDO(
         textoCTA = "Modificar saldo",

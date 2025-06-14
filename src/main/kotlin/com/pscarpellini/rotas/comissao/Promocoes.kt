@@ -4,7 +4,6 @@ import com.pscarpellini.enums.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.extensions.respondToast
-import com.pscarpellini.frontend.enums.ItensMenuEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
@@ -23,7 +22,6 @@ import io.ktor.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
-import kotlinx.html.label
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*

@@ -1,11 +1,11 @@
 package com.pscarpellini.plugins
 
-import com.pscarpellini.tools.email.EmailSender
 import com.pscarpellini.exceptions.NaoLogadoException
 import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
 import com.pscarpellini.repositories.interfaces.*
 import com.pscarpellini.rotas.*
+import com.pscarpellini.tools.email.EmailSender
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
@@ -21,6 +21,7 @@ fun Application.configurePages() {
     val saldosRepository: SaldosRepository by inject()
     val extratosRepository: ExtratosRepository by inject()
     val promocoesRepository: PromocoesRepository by inject()
+    val videosRepository: VideosRepository by inject()
     val emailSender: EmailSender by inject()
 
     install(StatusPages) {
@@ -44,10 +45,10 @@ fun Application.configurePages() {
         fragmentsAbertos(emailSender, contasRepository)
 
         paginasAbertas(contasRepository)
-        paginasRestritas(contasRepository, promocoesRepository, extratosRepository)
+        paginasRestritas(contasRepository, promocoesRepository, extratosRepository, videosRepository)
 
         widgetsInicio(promocoesRepository, extratosRepository, contadoresDashboardViewRepository)
 
-        fragmentsRestritos(contasRepository, saldosRepository, extratosRepository, promocoesRepository)
+        fragmentsRestritos(contasRepository, saldosRepository, extratosRepository, promocoesRepository, videosRepository )
     }
 }

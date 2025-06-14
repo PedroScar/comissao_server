@@ -48,13 +48,6 @@ private fun exibirLinhaPromocao(promocao: PromocaoVO): List<FlowContent.() -> Un
                 hxParams = parametros,
                 icone = IconesEnum.OLHO_ABERTO,
             )
-//            botaoIcone(
-//                tipo = TiposBotaoEnum.TRANSPARENT,
-//                hxTarget = "conteudo-interno",
-//                hxPath = CaminhosComissaoEnum.EDITAR_PROMOCAO.path,
-//                hxParams = parametros,
-//                icone = IconesEnum.EDITAR,
-//            )
         }
     )
 }

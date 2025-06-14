@@ -3,7 +3,6 @@ package com.pscarpellini.enums.comissao
 import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.interfaces.ICaminho
-import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
 import com.pscarpellini.rotas.FragmentsRestritosEnum
 
@@ -15,8 +14,14 @@ enum class SublinksComissaoEnum(
 ) : ISublinksRestritosEnum {
     CRIAR_NOVA_PROMOCAO(
         nome = "Criar nova promoção",
-        caminho = CaminhosComissaoEnum.NOVA_PROMOCAO,
-        papelNecessario = PapeisDeAcessoEnum.NOVA_PROMOCAO,
+        caminho = CaminhosComissaoEnum.CRIAR_PROMOCAO,
+        papelNecessario = PapeisDeAcessoEnum.CRIAR_PROMOCAO,
+        icone = IconesEnum.ADICIONAR
+    ),
+    CRIAR_NOVO_VIDEO(
+        nome = "Criar novo video",
+        caminho = CaminhosComissaoEnum.CRIAR_VIDEO,
+        papelNecessario = PapeisDeAcessoEnum.CRIAR_VIDEO,
         icone = IconesEnum.ADICIONAR
     ),
     MODIFICAR_SALDO(

@@ -13,8 +13,11 @@ enum class PerfisDeAcessoEnum(
         papeis = arrayListOf(
             PapeisDeAcessoEnum.INICIO,
             PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
-            PapeisDeAcessoEnum.NOVA_PROMOCAO,
+            PapeisDeAcessoEnum.CRIAR_PROMOCAO,
             PapeisDeAcessoEnum.EDITAR_PROMOCAO,
+            PapeisDeAcessoEnum.VISUALIZAR_VIDEOS,
+            PapeisDeAcessoEnum.CRIAR_VIDEO,
+            PapeisDeAcessoEnum.EDITAR_VIDEO,
         )
     ),
     PROMOTOR(
@@ -34,24 +37,24 @@ enum class PerfisDeAcessoEnum(
 
             PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
             PapeisDeAcessoEnum.VISUALIZAR_VIDEOS,
-            PapeisDeAcessoEnum.NOVA_PROMOCAO,
-            PapeisDeAcessoEnum.EDITAR_PROMOCAO,
-
             PapeisDeAcessoEnum.VISUALIZAR_USUARIOS,
-            PapeisDeAcessoEnum.EDITAR_USUARIO,
-            PapeisDeAcessoEnum.CRIAR_USUARIO,
-            PapeisDeAcessoEnum.REENVIAR_SENHA,
-            PapeisDeAcessoEnum.DESATIVAR_USUARIO,
-
             PapeisDeAcessoEnum.VISUALIZAR_SALDOS,
-            PapeisDeAcessoEnum.EDITAR_SALDOS,
-
             PapeisDeAcessoEnum.VISUALIZAR_RELATORIOS,
-
             PapeisDeAcessoEnum.VISUALIZAR_CONFIGURACOES_DO_APP,
+            PapeisDeAcessoEnum.VISUALIZAR_HISTORICO_DE_TRANSACOES,
+
+            PapeisDeAcessoEnum.CRIAR_PROMOCAO,
+            PapeisDeAcessoEnum.CRIAR_VIDEO,
+            PapeisDeAcessoEnum.CRIAR_USUARIO,
+
+            PapeisDeAcessoEnum.EDITAR_VIDEO,
+            PapeisDeAcessoEnum.EDITAR_PROMOCAO,
+            PapeisDeAcessoEnum.EDITAR_USUARIO,
+            PapeisDeAcessoEnum.EDITAR_SALDOS,
             PapeisDeAcessoEnum.EDITAR_CONFIGURACOES_DO_APP,
 
-            PapeisDeAcessoEnum.VISUALIZAR_HISTORICO_DE_TRANSACOES,
+            PapeisDeAcessoEnum.REENVIAR_SENHA,
+            PapeisDeAcessoEnum.DESATIVAR_USUARIO,
         )
     ),
     PERSONALIZADO(

@@ -29,8 +29,17 @@ enum class GruposDePapeisEnum(
         descricao = "Papéis para gerenciar promoções",
         papeis = arrayListOf(
             PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
-            PapeisDeAcessoEnum.NOVA_PROMOCAO,
+            PapeisDeAcessoEnum.CRIAR_PROMOCAO,
             PapeisDeAcessoEnum.EDITAR_PROMOCAO,
+        )
+    ),
+    GERENCIAMENTO_DE_VIDEOS(
+        nome = "Gerenciamento de videos",
+        descricao = "Papéis para gerenciar videos",
+        papeis = arrayListOf(
+            PapeisDeAcessoEnum.VISUALIZAR_VIDEOS,
+            PapeisDeAcessoEnum.CRIAR_VIDEO,
+            PapeisDeAcessoEnum.EDITAR_VIDEO,
         )
     )
 }

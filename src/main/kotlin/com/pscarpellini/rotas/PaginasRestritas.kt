@@ -7,6 +7,7 @@ import com.pscarpellini.enums.comissao.PaginasComissaoEnum
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
+import com.pscarpellini.repositories.interfaces.VideosRepository
 import com.pscarpellini.rotas.base.*
 import com.pscarpellini.rotas.comissao.*
 import io.ktor.server.routing.*
@@ -14,7 +15,8 @@ import io.ktor.server.routing.*
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
     promocoesRepository: PromocoesRepository,
-    extratosRepository: ExtratosRepository
+    extratosRepository: ExtratosRepository,
+    videosRepository: VideosRepository
 ) {
     get(PaginasRestritasEnum.INTERNO.caminho.path) { handleInterno() }
     post(PaginasRestritasEnum.INICIO.caminho.path) { handleInicio() }
@@ -22,12 +24,22 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.CONFIGURACOES_DO_APP.caminho.path) { handleConfiguracoesDoApp() }
 
     post(PaginasComissaoEnum.PROMOCOES.caminho.path) { handlePromocoes() }
-    post(PaginasComissaoEnum.VIDEOS.caminho.path) { handleVideos() }
     post(PaginasComissaoEnum.NOVA_PROMOCAO.caminho.path) { handleNovaPromocao() }
     post(PaginasComissaoEnum.EXIBIR_PROMOCAO.caminho.path) { handleExibirPromocao(promocoesRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_NOVA_PROMOCAO.path) { handleFormularioNovaPromocao(promocoesRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_ENCERRAR_PROMOCAO.path) { handleEncerrarPromocao(promocoesRepository) }
     post(CaminhosComissaoEnum.SELECT_PROMOCOES_ATIVAS.path) { handleSelectPromocoesAtivas(promocoesRepository) }
+
+    post(PaginasComissaoEnum.VIDEOS.caminho.path) { handleVideos() }
+    post(PaginasComissaoEnum.CRIAR_VIDEO.caminho.path) { handleCriarVideo() }
+    post(PaginasComissaoEnum.EXIBIR_VIDEO.caminho.path) { handleExibirVideo(videosRepository) }
+    post(PaginasComissaoEnum.EDITAR_VIDEO.caminho.path) { handleEditarVideo(videosRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_CRIAR_VIDEO.path) { handleFormularioNovoVideo(videosRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_REMOVER_VIDEO.path) { handleRemoverVideo(videosRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_EDITAR_VIDEO.path) { handleFormularioEditarVideo(videosRepository) }
+
+    post(CaminhosComissaoEnum.SELECT_VIDEOS_ATIVOS.path) { handleSelectVideoAtivos(videosRepository) }
+
 
     post(PaginasComissaoEnum.SALDOS_DOS_PROMOTORES.caminho.path) { handleSaldosDosPromotores() }
     post(CaminhosComissaoEnum.SELECT_PROMOTORES.path) { handleSelectPromotores(contasRepository) }

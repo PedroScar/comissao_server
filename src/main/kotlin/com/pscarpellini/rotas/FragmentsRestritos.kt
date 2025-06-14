@@ -5,10 +5,7 @@ import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.interfaces.IFragmentEnum
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.repositories.interfaces.ContasRepository
-import com.pscarpellini.repositories.interfaces.ExtratosRepository
-import com.pscarpellini.repositories.interfaces.PromocoesRepository
-import com.pscarpellini.repositories.interfaces.SaldosRepository
+import com.pscarpellini.repositories.interfaces.*
 import com.pscarpellini.rotas.base.handleFragmentTabelaUsuarios
 import com.pscarpellini.rotas.comissao.*
 import io.ktor.http.*
@@ -19,33 +16,50 @@ fun Route.fragmentsRestritos(
     saldosRepository: SaldosRepository,
     extratosRepository: ExtratosRepository,
     promocoesRepository: PromocoesRepository,
+    videosRepository: VideosRepository
 ) {
     post(FragmentsRestritosEnum.FRAGMENT_MENU.path) {
         val sessao = obterSessao()
-        call.respondFragment (HttpStatusCode.OK) {
-            includeMenuPrincipal(sessao)
-        }
+        call.respondFragment(HttpStatusCode.OK) { includeMenuPrincipal(sessao) }
     }
 
     post(FragmentsRestritosEnum.FRAGMENT_HEADER_INTERNO.path) {
         val sessao = obterSessao()
-        call.respondFragment (HttpStatusCode.OK) {
-            includeHeaderLogado(sessao = sessao)
-        }
+        call.respondFragment(HttpStatusCode.OK) { includeHeaderLogado(sessao = sessao) }
     }
 
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path) { handleFragmentTabelaPromocoes(promocoesRepository) }
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_VIDEOS.path) { handleFragmentTabelaVideos(promocoesRepository) }
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path) { handleFragmentTabelaUsuarios(contasRepository) }
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) { handleFragmentTabelaHistoricoDeTransacoes(extratosRepository) }
-    post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) { handleFragmentTabelaSaldosDosPromotores(saldosRepository) }
-    post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO.path) { handlePopupModificarSaldo(saldosRepository) }
-    post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO_INFOS_PROMOTOR.path) { handlePopupModificarSaldoInfosPromotor(contasRepository) }
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path) {
+        handleFragmentTabelaPromocoes(promocoesRepository)
+    }
+
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_VIDEOS.path) {
+        handleFragmentTabelaVideos(videosRepository)
+    }
+
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path) {
+        handleFragmentTabelaUsuarios(contasRepository)
+    }
+
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path) {
+        handleFragmentTabelaHistoricoDeTransacoes(extratosRepository)
+    }
+
+    post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) {
+        handleFragmentTabelaSaldosDosPromotores(saldosRepository)
+    }
+
+    post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO.path) {
+        handlePopupModificarSaldo(saldosRepository)
+    }
+
+    post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO_INFOS_PROMOTOR.path) {
+        handlePopupModificarSaldoInfosPromotor(contasRepository)
+    }
 }
 
 enum class FragmentsRestritosEnum(
     override val path: String,
-): IFragmentEnum {
+) : IFragmentEnum {
     //    FRAGMENTS ISOLADOS
     FRAGMENT_MENU("/int/fragment/menu_principal"),
     FRAGMENT_HEADER_INTERNO("/int/fragment/header_interno"),

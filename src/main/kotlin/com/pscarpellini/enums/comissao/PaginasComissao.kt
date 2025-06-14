@@ -25,18 +25,27 @@ enum class PaginasComissaoEnum(
     ),
     VIDEOS(
         titulo = "Videos",
-        sublinks = arrayListOf(SublinksComissaoEnum.CRIAR_NOVA_PROMOCAO),
+        sublinks = arrayListOf(SublinksComissaoEnum.CRIAR_NOVO_VIDEO),
         papelNecessario = PapeisDeAcessoEnum.VISUALIZAR_VIDEOS,
         caminho = CaminhosComissaoEnum.VIDEOS,
+        itemMenuSelecionado = ItensMenuEnum.VIDEOS
+    ),
+    CRIAR_VIDEO(
+        titulo = "Novo video",
+        sublinks = arrayListOf(),
+        papelNecessario = PapeisDeAcessoEnum.CRIAR_VIDEO,
+        showBreadcrumbs = true,
+        breadcrumbs = arrayListOf(VIDEOS),
+        caminho = CaminhosComissaoEnum.CRIAR_VIDEO,
         itemMenuSelecionado = ItensMenuEnum.VIDEOS
     ),
     NOVA_PROMOCAO(
         titulo = "Nova promoção",
         sublinks = arrayListOf(),
-        papelNecessario = PapeisDeAcessoEnum.NOVA_PROMOCAO,
+        papelNecessario = PapeisDeAcessoEnum.CRIAR_PROMOCAO,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(PROMOCOES),
-        caminho = CaminhosComissaoEnum.NOVA_PROMOCAO,
+        caminho = CaminhosComissaoEnum.CRIAR_PROMOCAO,
         itemMenuSelecionado = ItensMenuEnum.PROMOCOES
     ),
     EXIBIR_PROMOCAO(
@@ -46,6 +55,22 @@ enum class PaginasComissaoEnum(
         breadcrumbs = arrayListOf(PROMOCOES),
         caminho = CaminhosComissaoEnum.EXIBIR_PROMOCAO,
         itemMenuSelecionado = ItensMenuEnum.PROMOCOES
+    ),
+    EXIBIR_VIDEO(
+        titulo = "Exibir video",
+        papelNecessario = PapeisDeAcessoEnum.VISUALIZAR_VIDEOS,
+        showBreadcrumbs = true,
+        breadcrumbs = arrayListOf(VIDEOS),
+        caminho = CaminhosComissaoEnum.EXIBIR_VIDEO,
+        itemMenuSelecionado = ItensMenuEnum.VIDEOS
+    ),
+    EDITAR_VIDEO(
+        titulo = "Exibir video",
+        papelNecessario = PapeisDeAcessoEnum.EDITAR_VIDEO,
+        showBreadcrumbs = true,
+        breadcrumbs = arrayListOf(VIDEOS),
+        caminho = CaminhosComissaoEnum.EDITAR_VIDEO,
+        itemMenuSelecionado = ItensMenuEnum.VIDEOS
     ),
     EDITAR_PROMOCAO(
         titulo = "Exibir promoção",

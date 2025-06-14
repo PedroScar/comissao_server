@@ -9,35 +9,39 @@ import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.frontend.fragments.logados.saldos.includeSelectDePromocoes
-import com.pscarpellini.frontend.pages.restritos.comissao.includeFormNovaPromocao
-import com.pscarpellini.frontend.pages.restritos.comissao.novaPromocao
+import com.pscarpellini.frontend.fragments.logados.videos.includeTabelaDeVideos
+import com.pscarpellini.frontend.pages.restritos.comissao.editarVideo
+import com.pscarpellini.frontend.pages.restritos.comissao.includeFormNovoVideo
 import com.pscarpellini.frontend.pages.restritos.comissao.videos
-import com.pscarpellini.frontend.pages.restritos.comissao.visualizarPromocao
+import com.pscarpellini.frontend.pages.restritos.comissao.visualizarVideo
 import com.pscarpellini.models.DbResponse
-import com.pscarpellini.models.vos.PromocaoVO
-import com.pscarpellini.repositories.interfaces.PromocoesRepository
+import com.pscarpellini.models.vos.VideoVO
+import com.pscarpellini.repositories.interfaces.VideosRepository
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
-suspend fun RoutingContext.handleFragmentTabelaVideos(promocoesRepository: PromocoesRepository) {
+suspend fun RoutingContext.handleFragmentTabelaVideos(videosRepository: VideosRepository) {
     val parameters = call.receiveParameters()
 
     val busca = parameters["busca"] ?: ""
     val sessao = obterSessao()
 
-//    promocoesRepository.carregarPromocoes(termo = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
-//        when (resposta) {
-//            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-//            is DbResponse.Successo -> { call.respondFragment { includeTabelaDePromocoes(promocoes = resposta.data) } }
-//        }
-//    }
+    videosRepository.carregarListaVideos(clienteId = sessao.conta?.cliente?.id!!, termo = busca).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = "Credenciais inválidas, tente novamente."
+            )
+
+            is DbResponse.Successo -> {
+                call.respondFragment { includeTabelaDeVideos(videos = resposta.data) }
+            }
+        }
+    }
     handleVideos()
 }
 
@@ -51,139 +55,309 @@ suspend fun RoutingContext.handleVideos() {
     }
 }
 
-suspend fun RoutingContext.handleNovaVideo() {
+suspend fun RoutingContext.handleCriarVideo() {
     val sessao = obterSessao()
-    sessao.paginaAtual = PaginasComissaoEnum.NOVA_PROMOCAO
+    sessao.paginaAtual = PaginasComissaoEnum.CRIAR_VIDEO
+
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)
         includeHeaderLogado(sessao)
-        novaPromocao(sessao)
+        includeFormNovoVideo()
     }
 }
 
-suspend fun RoutingContext.handleExibirVideo(
-    promocoesRepository: PromocoesRepository
+suspend fun RoutingContext.handleEditarVideo(
+    videosRepository: VideosRepository
 ) {
     val sessao = obterSessao()
-    val parameters = call.receiveParameters()
 
-    runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
-        sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_PROMOCAO
+    val idVideo = call.request.queryParameters["id_video"]?.toIntOrNull()
+        ?: call.parameters["id_video"]?.toIntOrNull()
+        ?: call.receiveParameters()["id_video"]?.toIntOrNull()
+        ?: -1
 
-        promocoesRepository.carregarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção selecionada")
-                is DbResponse.Successo -> {
+    if (idVideo == -1) {
+        call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Ocorreu um erro ao buscar o vídeo selecionado."
+        )
+        return
+    }
+
+    sessao.paginaAtual = PaginasComissaoEnum.EDITAR_VIDEO
+
+    videosRepository.carregarVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar o vídeo selecionado"
+            )
+            is DbResponse.Successo -> {
+                if (resposta.data == null) {
+                    call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar o vídeo selecionado"
+                    )
+                } else {
                     call.respondFragment(HttpStatusCode.OK) {
                         includeMenuPrincipal(sessao)
                         includeHeaderLogado(sessao)
-                        visualizarPromocao(sessao, resposta.data, idPromocao)
+                        editarVideo(resposta.data)
                     }
                 }
             }
         }
-    }.onFailure { call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Ocorreu um erro ao buscar a promoção selecionada") }
+    }
 }
 
-suspend fun RoutingContext.handleFormularioNovoVideo(
-    promocoesRepository: PromocoesRepository
+
+suspend fun RoutingContext.handleFormularioEditarVideo(
+    videosRepository: VideosRepository
 ) {
     val sessao = obterSessao()
 
     val multipart = call.receiveMultipart()
 
-    var nome = ""
-    var descricao = ""
-    var dataDeInicio = ""
-    var dataDeEncerramento = ""
-    var imagemDeExibicao = ""
-    var precoDeExibicao = ""
-    var valorAnterior = ""
-    var valorAtual = ""
+    var videoId: Int? = null
+    var titulo = ""
+    var link = ""
+    var isDestaque = false
+    var thumb = ""
 
     multipart.forEachPart { part ->
         when (part) {
             is PartData.FormItem -> {
                 when (part.name) {
-                    "nome" -> nome = part.value
-                    "descricao" -> descricao = part.value
-                    "data_de_inicio" -> dataDeInicio = part.value
-                    "data_de_encerramento" -> dataDeEncerramento = part.value
-                    "preco_de_exibicao" -> precoDeExibicao = part.value
-                    "valor_anterior" -> valorAnterior = part.value
-                    "valor_atual" -> valorAtual = part.value
+                    "videoId" -> videoId = part.value.toIntOrNull()
+                    "titulo" -> titulo = part.value
+                    "link" -> link = part.value
+                    "isDestaque" -> isDestaque = part.value == "on"
                 }
             }
+
             is PartData.FileItem -> {
-                val fileBytes = part.provider().toByteArray()
-                imagemDeExibicao = Base64.getEncoder().encodeToString(fileBytes)
+                if (part.name == "thumb" && part.originalFileName != null && part.originalFileName!!.isNotBlank()) {
+                    val fileBytes = part.provider().toByteArray()
+                    thumb = Base64.getEncoder().encodeToString(fileBytes)
+                }
             }
+
             else -> Unit
         }
         part.dispose()
     }
 
-    if (nome.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "O nome da promoção deve estar preenchido")
-    if (dataDeInicio.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Preencha a data de início da promoção")
-    if (imagemDeExibicao.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Envie uma imagem para a promoção")
-
-    var possuiDuracaoIndeterminada = false
-    val dataDeValidade = runCatching { LocalDate.parse(dataDeEncerramento).atTime(23, 59) }
-        .onSuccess { possuiDuracaoIndeterminada = true }
-        .getOrNull()
-        ?: LocalDateTime.now().plusYears(100)
-
-    val novaPromocao = PromocaoVO(
-        clientId = sessao.conta?.cliente?.id ?: -1,
-        titulo = nome,
-        subtitulo = descricao,
-        conteudo = "",
-        imagem = imagemDeExibicao,
-        dataValidade = dataDeValidade,
-        dataCriacao = LocalDateTime.now(),
-        dataDisponivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
-        duracaoIndeterminada = possuiDuracaoIndeterminada,
-        exibirPreco = precoDeExibicao.isEmpty(), // TODO: Corrigir este campo
-        valorAnterior = valorAnterior.toDouble(),
-        valorAtual = valorAtual.toDouble(),
-    )
-    promocoesRepository.criarPromocao(novaPromocao)
-
-    call.respondFragment(HttpStatusCode.OK) {
-        includeFormNovaPromocao()
-        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção cadastrada com sucesso")
-    }
-}
-
-
-suspend fun RoutingContext.handleEncerrarVideo(promocoesRepository: PromocoesRepository) {
-    val sessao = obterSessao()
-    val parameters = call.receiveParameters()
-//    runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
-//        promocoesRepository.encerrarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
-//            when (resposta) {
-//                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao encerrar a promoção")
-//                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) { visualizarPromocao(sessao, resposta.data, idPromocao) }
-//            }
-//        }
-//    }
-}
-
-suspend fun RoutingContext.handleSelectVideoAtivas(promocoesRepository: PromocoesRepository) {
-    val sessao = obterSessao()
-    val parameters = call.receiveParameters()
-    promocoesRepository.listarPromocoesAtivas(clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
-        when (resposta) {
-            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar as promoções ativas")
-            is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                includeSelectDePromocoes(
-                    nomeDoCampo = parameters["nomeDoCampo"],
-                    label = parameters["label"],
-                    hint = parameters["hint"],
-                    isObrigatorio = parameters["isObrigatorio"].toBoolean(),
-                    promocoes = resposta.data ?: listOf(),
-                )
+    videosRepository.carregarVideo(videoId = videoId!!, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+        when(resposta){
+            is DbResponse.Erro -> Unit
+            is DbResponse.Successo -> {
+                resposta.data?.thumb?.let {
+                    if (thumb.isBlank()) {
+                        thumb = it
+                    }
+                }
             }
         }
     }
+
+    if (titulo.isEmpty()) call.respondToast(
+        tipo = TiposToastEnum.ERROR,
+        mensagem = "O título do vídeo precisa estar preenchido"
+    )
+
+    if (link.isEmpty()) call.respondToast(
+        tipo = TiposToastEnum.ERROR,
+        mensagem = "Adicione o link do youtube"
+    )
+
+    if (thumb.isEmpty()) call.respondToast(
+        tipo = TiposToastEnum.ERROR,
+        mensagem = "Envie uma imagem para a thumb"
+    )
+
+    val videoEditado = VideoVO(
+        id = videoId,
+        clientId = sessao.conta?.cliente?.id ?: -2,
+        titulo = titulo,
+        habilitado = true,
+        destaque = isDestaque,
+        thumb = thumb,
+        video_id = link.pegarVideoId()
+    )
+
+    videosRepository.editarVideo(videoEditado).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> {
+                call.respondFragment(HttpStatusCode.OK) {
+                    videos()
+                    toast(tipo = TiposToastEnum.ERROR, mensagem = "Ops... algo errado aconteceu!")
+                }
+            }
+
+            is DbResponse.Successo -> {
+                call.respondFragment(HttpStatusCode.OK) {
+                    visualizarVideo(sessao, resposta.data)
+                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video editado com sucesso")
+                }
+            }
+        }
+    }
+}
+
+
+suspend fun RoutingContext.handleExibirVideo(
+    videosRepository: VideosRepository
+) {
+    val sessao = obterSessao()
+    val parameters = call.receiveParameters()
+
+    runCatching { parameters["id_video"]?.toInt() ?: -1 }
+        .onFailure {
+            call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = "Ocorreu um erro ao buscar o video selecionado: \n" + it.message
+            )
+        }
+        .onSuccess { idVideo ->
+            sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_VIDEO
+
+            videosRepository.carregarVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar o video selecionado"
+                    )
+
+                    is DbResponse.Successo -> {
+                        call.respondFragment(HttpStatusCode.OK) {
+                            includeMenuPrincipal(sessao)
+                            includeHeaderLogado(sessao)
+                            visualizarVideo(sessao, resposta.data)
+                        }
+                    }
+                }
+            }
+        }
+}
+
+suspend fun RoutingContext.handleFormularioNovoVideo(
+    videosRepository: VideosRepository
+) {
+    val sessao = obterSessao()
+
+    val multipart = call.receiveMultipart()
+
+    var titulo = ""
+    var link = ""
+    var isDestaque = false
+    var thumb = ""
+
+    multipart.forEachPart { part ->
+        when (part) {
+            is PartData.FormItem -> {
+                when (part.name) {
+                    "titulo" -> titulo = part.value
+                    "link" -> link = part.value
+                    "isDestaque" -> isDestaque = part.value == "on"
+                }
+            }
+
+            is PartData.FileItem -> {
+                val fileBytes = part.provider().toByteArray()
+                thumb = Base64.getEncoder().encodeToString(fileBytes)
+            }
+
+            else -> Unit
+        }
+        part.dispose()
+    }
+
+    if (titulo.isEmpty()) call.respondToast(
+        tipo = TiposToastEnum.ERROR,
+        mensagem = "O título do vídeo precisa estar preenchido"
+    )
+
+    if (link.isEmpty()) call.respondToast(
+        tipo = TiposToastEnum.ERROR,
+        mensagem = "Adicione o link do youtube"
+    )
+
+    if (thumb.isEmpty()) call.respondToast(
+        tipo = TiposToastEnum.ERROR,
+        mensagem = "Envie uma imagem para a thumb"
+    )
+
+    val novoVideo = VideoVO(
+        clientId = sessao.conta?.cliente?.id ?: -1,
+        titulo = titulo,
+        habilitado = true,
+        destaque = isDestaque,
+        thumb = thumb,
+        video_id = link.pegarVideoId()
+    )
+
+    videosRepository.criarVideo(novoVideo).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> {
+                call.respondFragment(HttpStatusCode.OK) {
+                    includeFormNovoVideo()
+                    toast(tipo = TiposToastEnum.ERROR, mensagem = "Ops... algo errado aconteceu!")
+                }
+            }
+
+            is DbResponse.Successo -> {
+                call.respondFragment(HttpStatusCode.OK) {
+                    includeFormNovoVideo()
+                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video cadastrado com sucesso")
+                }
+            }
+        }
+    }
+
+    call.respondFragment(HttpStatusCode.OK) {
+        includeFormNovoVideo()
+        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video cadastrado com sucesso!")
+    }
+}
+
+private fun String.pegarVideoId(): String = this.split('=').last()
+
+suspend fun RoutingContext.handleRemoverVideo(videosRepository: VideosRepository) {
+    val sessao = obterSessao()
+    val parameters = call.receiveParameters()
+    runCatching { parameters["id_video"]?.toInt() ?: -1 }.onSuccess { idVideo ->
+        videosRepository.removerVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id ?: -1)
+            .let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ops... algo de errado aconteceu!"
+                    )
+
+                    is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                        visualizarVideo(sessao, resposta.data)
+                        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video desabilitado com sucesso!")
+                    }
+                }
+            }
+    }
+}
+
+suspend fun RoutingContext.handleSelectVideoAtivos(videosRepository: VideosRepository) {
+    val sessao = obterSessao()
+    val parameters = call.receiveParameters()
+//    promocoesRepository.listarPromocoesAtivas(clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
+//        when (resposta) {
+//            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar as promoções ativas")
+//            is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+//                includeSelectDePromocoes(
+//                    nomeDoCampo = parameters["nomeDoCampo"],
+//                    label = parameters["label"],
+//                    hint = parameters["hint"],
+//                    isObrigatorio = parameters["isObrigatorio"].toBoolean(),
+//                    promocoes = resposta.data ?: listOf(),
+//                )
+//            }
+//        }
+//    }
 }

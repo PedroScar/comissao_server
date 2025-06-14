@@ -7,9 +7,12 @@ enum class PapeisDeAcessoEnum(
     INICIO(nome = "Início", slug = "inicio"),
 
     VISUALIZAR_PROMOCOES(nome = "Visualizar promoções", slug = "visualizar_promocoes"),
-    VISUALIZAR_VIDEOS(nome = "Visualizar videos", slug = "visualizar_videos"),
-    NOVA_PROMOCAO(nome = "Nova promoção", slug = "nova_promocao"),
+    CRIAR_PROMOCAO(nome = "Nova promoção", slug = "nova_promocao"),
     EDITAR_PROMOCAO(nome = "Editar promoção", slug = "editar_promocao"),
+
+    VISUALIZAR_VIDEOS(nome = "Visualizar videos", slug = "visualizar_videos"),
+    CRIAR_VIDEO(nome = "Novo video", slug = "novo_video"),
+    EDITAR_VIDEO(nome = "Editar video", slug = "editar_video"),
 
     VISUALIZAR_SALDOS(nome = "Visualizar saldos", slug = "visualizar_saldos"),
     EDITAR_SALDOS(nome = "Editar saldos", slug = "editar_saldos"),

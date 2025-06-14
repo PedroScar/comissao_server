@@ -5,7 +5,6 @@ import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.auto_loader.autoLoaderFragment
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.card.card
-import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.inputs.inputField
 import com.pscarpellini.rotas.FragmentsRestritosEnum
 import kotlinx.html.FlowContent
@@ -24,22 +23,19 @@ fun FlowContent.videos() {
                 nomeDoCampo = "busca",
                 classes = "grow",
                 useHx = true,
-                hxPost = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
+                hxPost = FragmentsRestritosEnum.FRAGMENT_TABELA_VIDEOS.path,
                 hxTrigger = "keyup changed",
                 hxTarget = idDaTabela,
                 hxIndicator = "loading_$idDaTabela",
                 icone = IconesEnum.BUSCAR
             )
-            botao(tipo = TiposBotaoEnum.NEUTRAL) {
-                icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
-                +"Filtro"
-            }
+            botao(tipo = TiposBotaoEnum.NEUTRAL) { +"Filtrar" }
         }
         autoLoaderFragment(
             id = idDaTabela,
             usarDiferenciadorId = false,
-            textoLoading = "Buscando promoções",
-            path = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
+            textoLoading = "Buscando videos",
+            path = FragmentsRestritosEnum.FRAGMENT_TABELA_VIDEOS.path,
             classes = "w-full grow"
         )
     }

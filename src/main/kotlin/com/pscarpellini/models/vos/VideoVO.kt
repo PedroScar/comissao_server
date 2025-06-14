@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class VideoVO(
+    val id: Int? = null,
     val clientId: Int,
     val titulo: String,
     val video_id: String,
