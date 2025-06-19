@@ -1,6 +1,5 @@
 package com.pscarpellini.frontend.fragments.geral.avatar
 
-import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
 import kotlinx.html.FlowContent
@@ -20,15 +19,14 @@ fun FlowContent.avatar(
         if (!imagemUrl.isNullOrBlank()) {
             img(
                 src = "data:image/png;base64, $imagemUrl",
-//                src = "/public/$imagemUrl",
-                alt = nome,
-                classes = "object-cover $tipo"
+                alt = nome.firstOrNull()?.toString()?.uppercase().orEmpty(),
+                classes = "object-cover $tipo text-center items-center"
             )
         } else if(!base64.isNullOrBlank()) {
             img(
                 src = "data:image/png;base64, $base64",
-                alt = nome,
-                classes = "object-cover $tipo"
+                alt = nome.firstOrNull()?.toString()?.uppercase().orEmpty(),
+                classes = "object-cover $tipo text-center items-center"
             )
         } else +nome.firstOrNull()?.toString()?.uppercase().orEmpty()
     }

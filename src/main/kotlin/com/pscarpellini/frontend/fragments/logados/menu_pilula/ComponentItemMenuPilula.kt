@@ -15,8 +15,8 @@ fun FlowContent.itemMenuPilula(
         attributes["hx-trigger"] = "click"
         if(item.usarReplace) attributes["hx-replace-url"] = item.pagina.path
         attributes["hx-swap"] = "innerHTML"
-        card(arredondamento = ArredondamentosEnum.PILL, classes = "gap-2 cursor-pointer hover:scale-105 hover:shadow-sm transition-all") {
-            icone(item.icone, showBackground = true)
+        card(arredondamento = ArredondamentosEnum.PILL, classes = "h-16 gap-2 cursor-pointer hover:scale-105 hover:shadow-sm transition-all") {
+            icone(item.icone, size = 2.5f, showBackground = true)
             +item.textoCTA
         }
     }

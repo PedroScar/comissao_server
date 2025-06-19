@@ -35,7 +35,7 @@ private fun exibirLinhaUsuario(conta: ContaVO, sessao: SessaoUsuarioVO): List<Fl
     return listOf(
         {
             div(classes = "flex items-center gap-2") {
-                avatar(nome = conta.nome, imagemUrl = conta.imagemDePerfil, tipo = TiposAvatarEnum.SMALL_CIRCLE)
+                avatar(nome = conta.nome, imagemUrl = conta.imagemDePerfil, tipo = TiposAvatarEnum.MEDIUM_CIRCLE)
                 +conta.nome
             }
         },
