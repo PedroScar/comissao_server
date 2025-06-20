@@ -49,7 +49,7 @@ fun Route.fragmentsRestritos(
     }
 
     post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO.path) {
-        handlePopupModificarSaldo(saldosRepository)
+        handlePopupModificarSaldo()
     }
 
     post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO_INFOS_PROMOTOR.path) {
