@@ -4,12 +4,10 @@ import com.pscarpellini.database.daos.ClienteDAO
 import com.pscarpellini.database.daos.PromocaoDAO
 import com.pscarpellini.database.tables.PromocoesTable
 import com.pscarpellini.database.utils.promocaoDaoToModel
-import com.pscarpellini.enums.comissao.StatusPromocoesEnum
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.suspendTransaction
-import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.greater
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.lessEq
@@ -19,6 +17,37 @@ import org.jetbrains.exposed.sql.or
 import java.time.LocalDateTime
 
 class PromocoesRepositoryPostgres : PromocoesRepository {
+    override suspend fun editarPromocao(promocao: PromocaoVO): DbResponse<PromocaoVO>  = suspendTransaction {
+        val cliente = ClienteDAO.findById(promocao.clientId)
+            ?: throw IllegalArgumentException("Cliente com ID ${promocao.clientId} não encontrado")
+
+        val promocaoExistente = PromocaoDAO.findById(promocao.id ?: -4)
+            ?: return@suspendTransaction DbResponse.Erro(null, "Promocao com ID ${promocao.id} não encontrado")
+
+        runCatching {
+            promocaoExistente.apply {
+                clienteId = cliente
+                titulo = promocao.titulo
+                subtitulo = promocao.subtitulo
+                conteudo = promocao.conteudo
+                imagem = promocao.imagem
+                dataValidade = promocao.dataValidade
+                dataCriacao = promocao.dataCriacao
+                dataDisponivel = promocao.dataDisponivel
+                duracaoIndeterminada = promocao.duracaoIndeterminada
+                exibirPreco = promocao.exibirPreco
+                valorAnterior = promocao.valorAnterior
+                valorAtual = promocao.valorAtual
+            }
+            DbResponse.Successo(promocaoDaoToModel(promocaoExistente))
+        }.onFailure {
+            println("==================")
+            println("ERRO DB: ${it.message}")
+            println("==================")
+            DbResponse.Erro(null, message = it.message.toString())
+        }.getOrDefault(DbResponse.Erro(null, message = "Ops... algo de errado aconteceu!"))
+    }
+
     override suspend fun listarPromocoesAtivas(clienteId: Int): DbResponse<List<PromocaoVO>> = suspendTransaction {
         val now = LocalDateTime.now()
 
@@ -47,6 +76,7 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                                 .or(PromocoesTable.conteudo.lowerCase().like("%${termo.lowercase()}%"))
                         )
                 }
+                .reversed()
                 .sortedBy {
                     when {
                         // Promoção cancelada (já passou da data de validade e está indisponível)

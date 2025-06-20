@@ -36,7 +36,7 @@ fun FlowContent.videos() {
             usarDiferenciadorId = false,
             textoLoading = "Buscando videos",
             path = FragmentsRestritosEnum.FRAGMENT_TABELA_VIDEOS.path,
-            classes = "w-full grow"
+            classes = "w-full grow py-7"
         )
     }
 }

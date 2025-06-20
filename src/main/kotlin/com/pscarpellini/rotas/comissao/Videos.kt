@@ -1,6 +1,5 @@
 package com.pscarpellini.rotas.comissao
 
-
 import com.pscarpellini.enums.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.respondFragment
@@ -10,10 +9,10 @@ import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.fragments.logados.videos.includeTabelaDeVideos
+import com.pscarpellini.frontend.pages.restritos.comissao.criarVideo
 import com.pscarpellini.frontend.pages.restritos.comissao.editarVideo
-import com.pscarpellini.frontend.pages.restritos.comissao.includeFormNovoVideo
+import com.pscarpellini.frontend.pages.restritos.comissao.exibirVideo
 import com.pscarpellini.frontend.pages.restritos.comissao.videos
-import com.pscarpellini.frontend.pages.restritos.comissao.visualizarVideo
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.VideoVO
 import com.pscarpellini.repositories.interfaces.VideosRepository
@@ -47,8 +46,9 @@ suspend fun RoutingContext.handleFragmentTabelaVideos(videosRepository: VideosRe
 
 suspend fun RoutingContext.handleVideos() {
     val sessao = obterSessao()
-    sessao.paginaAtual = PaginasComissaoEnum.VIDEOS
+
     call.respondFragment(HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasComissaoEnum.VIDEOS
         includeMenuPrincipal(sessao)
         includeHeaderLogado(sessao)
         videos()
@@ -57,12 +57,12 @@ suspend fun RoutingContext.handleVideos() {
 
 suspend fun RoutingContext.handleCriarVideo() {
     val sessao = obterSessao()
-    sessao.paginaAtual = PaginasComissaoEnum.CRIAR_VIDEO
 
     call.respondFragment(HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasComissaoEnum.CRIAR_VIDEO
         includeMenuPrincipal(sessao)
         includeHeaderLogado(sessao)
-        includeFormNovoVideo()
+        criarVideo()
     }
 }
 
@@ -84,14 +84,13 @@ suspend fun RoutingContext.handleEditarVideo(
         return
     }
 
-    sessao.paginaAtual = PaginasComissaoEnum.EDITAR_VIDEO
-
     videosRepository.carregarVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
             is DbResponse.Erro -> call.respondToast(
                 tipo = TiposToastEnum.ERROR,
                 mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar o vídeo selecionado"
             )
+
             is DbResponse.Successo -> {
                 if (resposta.data == null) {
                     call.respondToast(
@@ -100,6 +99,7 @@ suspend fun RoutingContext.handleEditarVideo(
                     )
                 } else {
                     call.respondFragment(HttpStatusCode.OK) {
+                        sessao.paginaAtual = PaginasComissaoEnum.EDITAR_VIDEO
                         includeMenuPrincipal(sessao)
                         includeHeaderLogado(sessao)
                         editarVideo(resposta.data)
@@ -110,12 +110,10 @@ suspend fun RoutingContext.handleEditarVideo(
     }
 }
 
-
 suspend fun RoutingContext.handleFormularioEditarVideo(
     videosRepository: VideosRepository
 ) {
     val sessao = obterSessao()
-
     val multipart = call.receiveMultipart()
 
     var videoId: Int? = null
@@ -148,7 +146,7 @@ suspend fun RoutingContext.handleFormularioEditarVideo(
     }
 
     videosRepository.carregarVideo(videoId = videoId!!, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
-        when(resposta){
+        when (resposta) {
             is DbResponse.Erro -> Unit
             is DbResponse.Successo -> {
                 resposta.data?.thumb?.let {
@@ -190,20 +188,22 @@ suspend fun RoutingContext.handleFormularioEditarVideo(
             is DbResponse.Erro -> {
                 call.respondFragment(HttpStatusCode.OK) {
                     videos()
-                    toast(tipo = TiposToastEnum.ERROR, mensagem = "Ops... algo errado aconteceu!")
+                    toast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ops... algo errado aconteceu!")
                 }
             }
 
             is DbResponse.Successo -> {
                 call.respondFragment(HttpStatusCode.OK) {
-                    visualizarVideo(sessao, resposta.data)
+                    sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_VIDEO
+                    includeMenuPrincipal(sessao)
+                    includeHeaderLogado(sessao)
+                    exibirVideo(sessao, resposta.data!!)
                     toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video editado com sucesso")
                 }
             }
         }
     }
 }
-
 
 suspend fun RoutingContext.handleExibirVideo(
     videosRepository: VideosRepository
@@ -230,9 +230,10 @@ suspend fun RoutingContext.handleExibirVideo(
 
                     is DbResponse.Successo -> {
                         call.respondFragment(HttpStatusCode.OK) {
+                            sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_VIDEO
                             includeMenuPrincipal(sessao)
                             includeHeaderLogado(sessao)
-                            visualizarVideo(sessao, resposta.data)
+                            exibirVideo(sessao, resposta.data!!)
                         }
                     }
                 }
@@ -245,7 +246,7 @@ suspend fun RoutingContext.handleFormularioNovoVideo(
 ) {
     val sessao = obterSessao()
 
-    val multipart = call.receiveMultipart()
+    val multipart = call.receiveMultipart(formFieldLimit = 512_000L)
 
     var titulo = ""
     var link = ""
@@ -298,25 +299,21 @@ suspend fun RoutingContext.handleFormularioNovoVideo(
 
     videosRepository.criarVideo(novoVideo).let { resposta ->
         when (resposta) {
-            is DbResponse.Erro -> {
-                call.respondFragment(HttpStatusCode.OK) {
-                    includeFormNovoVideo()
-                    toast(tipo = TiposToastEnum.ERROR, mensagem = "Ops... algo errado aconteceu!")
-                }
-            }
+            is DbResponse.Erro -> call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = resposta.mensagem ?: "Ops... algo de errado aconteceu!"
+            )
 
             is DbResponse.Successo -> {
                 call.respondFragment(HttpStatusCode.OK) {
-                    includeFormNovoVideo()
+                    sessao.paginaAtual = PaginasComissaoEnum.CRIAR_VIDEO
+                    includeMenuPrincipal(sessao)
+                    includeHeaderLogado(sessao)
+                    criarVideo()
                     toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video cadastrado com sucesso")
                 }
             }
         }
-    }
-
-    call.respondFragment(HttpStatusCode.OK) {
-        includeFormNovoVideo()
-        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video cadastrado com sucesso!")
     }
 }
 
@@ -335,29 +332,13 @@ suspend fun RoutingContext.handleRemoverVideo(videosRepository: VideosRepository
                     )
 
                     is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                        visualizarVideo(sessao, resposta.data)
+                        sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_VIDEO
+                        includeMenuPrincipal(sessao)
+                        includeHeaderLogado(sessao)
+                        exibirVideo(sessao, resposta.data!!)
                         toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video desabilitado com sucesso!")
                     }
                 }
             }
     }
-}
-
-suspend fun RoutingContext.handleSelectVideoAtivos(videosRepository: VideosRepository) {
-    val sessao = obterSessao()
-    val parameters = call.receiveParameters()
-//    promocoesRepository.listarPromocoesAtivas(clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
-//        when (resposta) {
-//            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar as promoções ativas")
-//            is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-//                includeSelectDePromocoes(
-//                    nomeDoCampo = parameters["nomeDoCampo"],
-//                    label = parameters["label"],
-//                    hint = parameters["hint"],
-//                    isObrigatorio = parameters["isObrigatorio"].toBoolean(),
-//                    promocoes = resposta.data ?: listOf(),
-//                )
-//            }
-//        }
-//    }
 }

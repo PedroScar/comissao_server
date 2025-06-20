@@ -10,10 +10,7 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.fragments.logados.promocoes.includeTabelaDePromocoes
 import com.pscarpellini.frontend.fragments.logados.saldos.includeSelectDePromocoes
-import com.pscarpellini.frontend.pages.restritos.comissao.includeFormNovaPromocao
-import com.pscarpellini.frontend.pages.restritos.comissao.novaPromocao
-import com.pscarpellini.frontend.pages.restritos.comissao.promocoes
-import com.pscarpellini.frontend.pages.restritos.comissao.visualizarPromocao
+import com.pscarpellini.frontend.pages.restritos.comissao.*
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
@@ -34,8 +31,14 @@ suspend fun RoutingContext.handleFragmentTabelaPromocoes(promocoesRepository: Pr
     val sessao = obterSessao()
     promocoesRepository.carregarPromocoes(termo = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
-            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-            is DbResponse.Successo -> { call.respondFragment { includeTabelaDePromocoes(promocoes = resposta.data) } }
+            is DbResponse.Erro -> call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = "Credenciais inválidas, tente novamente."
+            )
+
+            is DbResponse.Successo -> {
+                call.respondFragment { includeTabelaDePromocoes(promocoes = resposta.data) }
+            }
         }
     }
 }
@@ -52,11 +55,55 @@ suspend fun RoutingContext.handlePromocoes() {
 
 suspend fun RoutingContext.handleNovaPromocao() {
     val sessao = obterSessao()
-    sessao.paginaAtual = PaginasComissaoEnum.NOVA_PROMOCAO
     call.respondFragment(HttpStatusCode.OK) {
+        sessao.paginaAtual = PaginasComissaoEnum.NOVA_PROMOCAO
         includeMenuPrincipal(sessao)
         includeHeaderLogado(sessao)
-        novaPromocao(sessao)
+        novaPromocao()
+    }
+}
+
+suspend fun RoutingContext.handleEditarPromocao(
+    repository: PromocoesRepository
+) {
+    val sessao = obterSessao()
+
+    val idPromocao = call.request.queryParameters["id_promocao"]?.toIntOrNull()
+        ?: call.parameters["id_promocao"]?.toIntOrNull()
+        ?: call.receiveParameters()["id_promocao"]?.toIntOrNull()
+        ?: -1
+
+    if (idPromocao == -1) {
+        call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Ocorreu um erro ao buscar a promoção selecionada."
+        )
+        return
+    }
+
+    repository.carregarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+        when (resposta) {
+            is DbResponse.Erro -> call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção."
+            )
+
+            is DbResponse.Successo -> {
+                if (resposta.data == null) {
+                    call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção."
+                    )
+                } else {
+                    call.respondFragment(HttpStatusCode.OK) {
+                        sessao.paginaAtual = PaginasComissaoEnum.EDITAR_PROMOCAO
+                        includeMenuPrincipal(sessao)
+                        includeHeaderLogado(sessao)
+                        editarPromocao(resposta.data)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -69,102 +116,265 @@ suspend fun RoutingContext.handleExibirPromocao(
     runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
         sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_PROMOCAO
 
-        promocoesRepository.carregarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
+        promocoesRepository.carregarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id!!)
+            .let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção selecionada"
+                    )
+
+                    is DbResponse.Successo -> {
+                        call.respondFragment(HttpStatusCode.OK) {
+                            includeMenuPrincipal(sessao)
+                            includeHeaderLogado(sessao)
+                            exibirPromocao(sessao, resposta.data)
+                        }
+                    }
+                }
+            }
+    }.onFailure {
+        call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Ocorreu um erro ao buscar a promoção selecionada"
+        )
+    }
+}
+
+suspend fun RoutingContext.handleFormularioCriarPromocao(
+    promocoesRepository: PromocoesRepository
+) {
+    runCatching {
+        val sessao = obterSessao()
+
+        val multipart = call.receiveMultipart(formFieldLimit = 512_000L)
+
+        var nome = ""
+        var descricao = ""
+        var dataDeInicio = ""
+        var dataDeEncerramento = ""
+        var imagemDeExibicao = ""
+        var precoDeExibicao = ""
+        var valorAnterior = ""
+        var valorAtual = ""
+
+        multipart.forEachPart { part ->
+            when (part) {
+                is PartData.FormItem -> {
+                    when (part.name) {
+                        "nome" -> nome = part.value
+                        "descricao" -> descricao = part.value
+                        "data_de_inicio" -> dataDeInicio = part.value
+                        "data_de_encerramento" -> dataDeEncerramento = part.value
+                        "preco_de_exibicao" -> precoDeExibicao = part.value
+                        "valor_anterior" -> valorAnterior = part.value
+                        "valor_atual" -> valorAtual = part.value
+                    }
+                }
+
+                is PartData.FileItem -> {
+                    val fileBytes = part.provider().toByteArray()
+                    imagemDeExibicao = Base64.getEncoder().encodeToString(fileBytes)
+                }
+
+                else -> Unit
+            }
+            part.dispose()
+        }
+
+        if (nome.isEmpty()) call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "O nome da promoção deve estar preenchido"
+        )
+
+        if (dataDeInicio.isEmpty()) call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Preencha a data de início da promoção"
+        )
+
+        if (imagemDeExibicao.isEmpty()) call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Envie uma imagem para a promoção"
+        )
+
+        var possuiDuracaoIndeterminada = false
+
+        val dataDeValidade = runCatching { LocalDate.parse(dataDeEncerramento).atTime(23, 59) }
+            .onSuccess { possuiDuracaoIndeterminada = true }
+            .getOrNull()
+            ?: LocalDateTime.now().plusYears(100)
+
+        val novaPromocao = PromocaoVO(
+            clientId = sessao.conta?.cliente?.id ?: -1,
+            titulo = nome,
+            subtitulo = descricao,
+            conteudo = "",
+            imagem = imagemDeExibicao,
+            dataValidade = dataDeValidade,
+            dataCriacao = LocalDateTime.now(),
+            dataDisponivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
+            duracaoIndeterminada = possuiDuracaoIndeterminada,
+            exibirPreco = precoDeExibicao.isEmpty(), // TODO: Corrigir este campo
+            valorAnterior = valorAnterior.toDoubleOrNull() ?: 0.0,
+            valorAtual = valorAtual.toDoubleOrNull() ?: 0.0,
+        )
+
+        promocoesRepository.criarPromocao(novaPromocao).let { resposta ->
             when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção selecionada")
+                is DbResponse.Erro -> call.respondToast(
+                    tipo = TiposToastEnum.ERROR,
+                    mensagem = resposta.mensagem ?: "Ocorreu um erro ao criar a promoção"
+                )
+
+                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                    novaPromocao()
+                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção cadastrada com sucesso")
+                }
+            }
+        }
+    }.onFailure {
+        call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = it.message ?: "Ocorreu um erro ao criar a promoção"
+        )
+    }
+}
+
+suspend fun RoutingContext.handleFormularioEditarPromocao(
+    promocoesRepository: PromocoesRepository
+) {
+    runCatching {
+        val sessao = obterSessao()
+
+        val multipart = call.receiveMultipart(formFieldLimit = 512_000L)
+
+        var promocaoId: Int? = null
+        var nome = ""
+        var descricao = ""
+        var dataDeInicio = ""
+        var dataDeEncerramento = ""
+        var imagemDeExibicao = ""
+        var precoDeExibicao = ""
+        var valorAnterior = ""
+        var valorAtual = ""
+
+        multipart.forEachPart { part ->
+            when (part) {
+                is PartData.FormItem -> {
+                    when (part.name) {
+                        "promocaoId" -> promocaoId = part.value.toIntOrNull()
+                        "nome" -> nome = part.value
+                        "descricao" -> descricao = part.value
+                        "data_de_inicio" -> dataDeInicio = part.value
+                        "data_de_encerramento" -> dataDeEncerramento = part.value
+                        "preco_de_exibicao" -> precoDeExibicao = part.value
+                        "valor_anterior" -> valorAnterior = part.value
+                        "valor_atual" -> valorAtual = part.value
+                    }
+                }
+
+                is PartData.FileItem -> {
+                    val fileBytes = part.provider().toByteArray()
+                    imagemDeExibicao = Base64.getEncoder().encodeToString(fileBytes)
+                }
+
+                else -> Unit
+            }
+            part.dispose()
+        }
+
+        promocoesRepository.carregarPromocao(
+            promocaoId = promocaoId!!,
+            clienteId = sessao.conta?.cliente?.id!!
+        ).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> Unit
                 is DbResponse.Successo -> {
-                    call.respondFragment(HttpStatusCode.OK) {
-                        includeMenuPrincipal(sessao)
-                        includeHeaderLogado(sessao)
-                        visualizarPromocao(sessao, resposta.data, idPromocao)
+                    resposta.data?.imagem?.let {
+                        if (imagemDeExibicao.isBlank()) {
+                            imagemDeExibicao = it
+                        }
                     }
                 }
             }
         }
-    }.onFailure { call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Ocorreu um erro ao buscar a promoção selecionada") }
-}
 
-suspend fun RoutingContext.handleFormularioNovaPromocao(
-    promocoesRepository: PromocoesRepository
-) {
-    val sessao = obterSessao()
+        if (nome.isEmpty()) call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "O nome da promoção deve estar preenchido"
+        )
 
-    val multipart = call.receiveMultipart()
+        if (dataDeInicio.isEmpty()) call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Preencha a data de início da promoção"
+        )
 
-    var nome = ""
-    var descricao = ""
-    var dataDeInicio = ""
-    var dataDeEncerramento = ""
-    var imagemDeExibicao = ""
-    var precoDeExibicao = ""
-    var valorAnterior = ""
-    var valorAtual = ""
+        if (imagemDeExibicao.isEmpty()) call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Envie uma imagem para a promoção"
+        )
 
-    multipart.forEachPart { part ->
-        when (part) {
-            is PartData.FormItem -> {
-                when (part.name) {
-                    "nome" -> nome = part.value
-                    "descricao" -> descricao = part.value
-                    "data_de_inicio" -> dataDeInicio = part.value
-                    "data_de_encerramento" -> dataDeEncerramento = part.value
-                    "preco_de_exibicao" -> precoDeExibicao = part.value
-                    "valor_anterior" -> valorAnterior = part.value
-                    "valor_atual" -> valorAtual = part.value
+        var possuiDuracaoIndeterminada = false
+
+        val dataDeValidade = runCatching { LocalDate.parse(dataDeEncerramento).atTime(23, 59) }
+            .onSuccess { possuiDuracaoIndeterminada = true }
+            .getOrNull()
+            ?: LocalDateTime.now().plusYears(100)
+
+        val promocao = PromocaoVO(
+            id = promocaoId,
+            clientId = sessao.conta?.cliente?.id ?: -1,
+            titulo = nome,
+            subtitulo = descricao,
+            conteudo = "",
+            imagem = imagemDeExibicao,
+            dataValidade = dataDeValidade,
+            dataCriacao = LocalDateTime.now(),
+            dataDisponivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
+            duracaoIndeterminada = possuiDuracaoIndeterminada,
+            exibirPreco = precoDeExibicao.isEmpty(), // TODO: Corrigir este campo
+            valorAnterior = valorAnterior.toDoubleOrNull() ?: 0.0,
+            valorAtual = valorAtual.toDoubleOrNull() ?: 0.0,
+        )
+
+        promocoesRepository.editarPromocao(promocao).let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondToast(
+                    tipo = TiposToastEnum.ERROR,
+                    mensagem = resposta.mensagem ?: "Ocorreu um erro ao editar a promoção"
+                )
+
+                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                    exibirPromocao(sessao, resposta.data!!)
+                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção editada com sucesso")
                 }
             }
-            is PartData.FileItem -> {
-                val fileBytes = part.provider().toByteArray()
-                imagemDeExibicao = Base64.getEncoder().encodeToString(fileBytes)
-            }
-            else -> Unit
         }
-        part.dispose()
-    }
-
-    if (nome.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "O nome da promoção deve estar preenchido")
-    if (dataDeInicio.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Preencha a data de início da promoção")
-    if (imagemDeExibicao.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Envie uma imagem para a promoção")
-
-    var possuiDuracaoIndeterminada = false
-    val dataDeValidade = runCatching { LocalDate.parse(dataDeEncerramento).atTime(23, 59) }
-        .onSuccess { possuiDuracaoIndeterminada = true }
-        .getOrNull()
-        ?: LocalDateTime.now().plusYears(100)
-
-    val novaPromocao = PromocaoVO(
-        clientId = sessao.conta?.cliente?.id ?: -1,
-        titulo = nome,
-        subtitulo = descricao,
-        conteudo = "",
-        imagem = imagemDeExibicao,
-        dataValidade = dataDeValidade,
-        dataCriacao = LocalDateTime.now(),
-        dataDisponivel = LocalDate.parse(dataDeInicio).atTime(0, 0),
-        duracaoIndeterminada = possuiDuracaoIndeterminada,
-        exibirPreco = precoDeExibicao.isEmpty(), // TODO: Corrigir este campo
-        valorAnterior = valorAnterior.toDouble(),
-        valorAtual = valorAtual.toDouble(),
-    )
-    promocoesRepository.criarPromocao(novaPromocao)
-
-    call.respondFragment(HttpStatusCode.OK) {
-        includeFormNovaPromocao()
-        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção cadastrada com sucesso")
+    }.onFailure {
+        call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = it.message ?: "Ocorreu um erro ao editar a promoção"
+        )
     }
 }
-
 
 suspend fun RoutingContext.handleEncerrarPromocao(promocoesRepository: PromocoesRepository) {
     val sessao = obterSessao()
     val parameters = call.receiveParameters()
     runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
-        promocoesRepository.encerrarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
-            when (resposta) {
-                is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao encerrar a promoção")
-                is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) { visualizarPromocao(sessao, resposta.data, idPromocao) }
+        promocoesRepository.encerrarPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id ?: -1)
+            .let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao encerrar a promoção"
+                    )
+
+                    is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                        exibirPromocao(sessao, resposta.data)
+                    }
+                }
             }
-        }
     }
 }
 
@@ -173,7 +383,11 @@ suspend fun RoutingContext.handleSelectPromocoesAtivas(promocoesRepository: Prom
     val parameters = call.receiveParameters()
     promocoesRepository.listarPromocoesAtivas(clienteId = sessao.conta?.cliente?.id ?: -1).let { resposta ->
         when (resposta) {
-            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar as promoções ativas")
+            is DbResponse.Erro -> call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar as promoções ativas"
+            )
+
             is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
                 includeSelectDePromocoes(
                     nomeDoCampo = parameters["nomeDoCampo"],

@@ -12,7 +12,7 @@ import com.pscarpellini.frontend.fragments.geral.inputs.inputFileUpload
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import kotlinx.html.*
 
-fun FlowContent.includeFormNovoVideo() {
+fun FlowContent.criarVideo() {
     formulario(id = "form-novo-video", classes = "flex flex-col gap-6", autoValidar = true) {
         includeContentGrid(
             linhas = 1,
@@ -61,7 +61,6 @@ fun FlowContent.includeFormNovoVideo() {
             botao(
                 hxPath = CaminhosComissaoEnum.FORMULARIO_CRIAR_VIDEO,
                 hxTarget = "form-novo-video",
-                hxSwap = "outerHTML",
                 hxEncoding = "multipart/form-data",
                 enabled = false,
             ) { +"Salvar" }

@@ -1,6 +1,7 @@
 package com.pscarpellini.frontend.pages.restritos.comissao
 
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
+import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
@@ -10,17 +11,9 @@ import com.pscarpellini.frontend.fragments.geral.formulario.formulario
 import com.pscarpellini.frontend.fragments.geral.inputs.inputField
 import com.pscarpellini.frontend.fragments.geral.inputs.inputFileUpload
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
-import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
-import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.*
 
-fun FlowContent.novaPromocao(
-    sessao: SessaoUsuarioVO,
-) {
-    includeFormNovaPromocao()
-}
-
-fun FlowContent.includeFormNovaPromocao() {
+fun FlowContent.novaPromocao() {
     formulario(id = "form-nova-promocao", classes = "flex flex-col gap-6", autoValidar = true) {
         includeContentGrid(
             linhas = 1,
@@ -60,10 +53,21 @@ fun FlowContent.includeFormNovaPromocao() {
                     )
                     div(classes = "flex flex-col w-full") {
                         label(classes = "${CoresEnum.LOW_PURE.text} block text-base font-semibold") { +"Imagem de exibição" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) {
+                        span(classes = CoresEnum.LOW_LIGHT.text) {
                             +"Tamanho máximo do arquivo é de 500kb. Os tipos suportados são .jpg e .png"
                         }
-                        inputFileUpload(classes = "self-start mt-4", nomeDoCampo = "imagem_de_exibicao") { +"Enviar imagem" }
+
+                        img(
+                            classes = "self-start mt-4 w-60 ${ArredondamentosEnum.MD}",
+                            src = ""
+                        ) {
+                            attributes["id"] = "imagem-preview"
+                        }
+
+                        inputFileUpload(
+                            classes = "self-start mt-4",
+                            nomeDoCampo = "imagem_de_exibicao"
+                        ) { +"Enviar imagem" }
                     }
                     card(classes = "col-span-2", showBordas = true) {
                         includeContentGrid(colunas = 2, classes = "w-full") {
@@ -94,12 +98,28 @@ fun FlowContent.includeFormNovaPromocao() {
         div(classes = "self-end flex flex-row gap-2") {
             botaoLink(tipo = TiposBotaoEnum.SUBTLE, link = "javascript:history.back()") { +"Cancelar" }
             botao(
-                hxPath = CaminhosComissaoEnum.FORMULARIO_NOVA_PROMOCAO,
+                hxPath = CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO,
                 hxTarget = "form-nova-promocao",
-                hxSwap = "outerHTML",
                 hxEncoding = "multipart/form-data",
                 enabled = false,
             ) { +"Salvar" }
+        }
+    }
+
+    script {
+        unsafe {
+            +"""
+                document.getElementById('imagem_de_exibicao').addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('imagem-preview').src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            """.trimIndent()
         }
     }
 }

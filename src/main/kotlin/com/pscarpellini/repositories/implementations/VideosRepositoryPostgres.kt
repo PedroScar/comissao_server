@@ -96,6 +96,7 @@ class VideosRepositoryPostgres : VideosRepository {
                         (VideosTable.clienteId eq clienteId)
                             .and(VideosTable.titulo.lowerCase().like("%${termo.lowercase()}%"))
                     }
+                    .reversed()
                     .map(::videoDaoToModel)
             }.onFailure { DbResponse.Erro(message = "${it.message}", data = null) }.getOrThrow()
 

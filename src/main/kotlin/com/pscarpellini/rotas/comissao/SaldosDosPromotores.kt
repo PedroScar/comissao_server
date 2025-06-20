@@ -3,7 +3,6 @@ package com.pscarpellini.rotas.comissao
 import com.pscarpellini.enums.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.*
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
-import com.pscarpellini.frontend.fragments.geral.inputs.inputField
 import com.pscarpellini.frontend.fragments.geral.linha_valor.linhaValor
 import com.pscarpellini.frontend.fragments.geral.toast.toast
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
@@ -19,7 +18,6 @@ import com.pscarpellini.repositories.interfaces.SaldosRepository
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
-import kotlinx.html.InputType
 
 suspend fun RoutingContext.handleFragmentTabelaSaldosDosPromotores(saldosRepository: SaldosRepository) {
     val parameters = call.receiveParameters()
@@ -41,11 +39,11 @@ suspend fun RoutingContext.handleSaldosDosPromotores() {
     call.respondFragment(HttpStatusCode.OK) {
         includeMenuPrincipal(sessao)
         includeHeaderLogado(sessao)
-        saldosDosPromotores(sessao = sessao)
+        saldosDosPromotores()
     }
 }
 
-suspend fun RoutingContext.handlePopupModificarSaldo(saldosRepository: SaldosRepository) {
+suspend fun RoutingContext.handlePopupModificarSaldo() {
     call.respondPopup { includePopupModificarSaldo() }
 }
 

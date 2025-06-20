@@ -18,14 +18,15 @@ import kotlinx.html.div
 import kotlinx.html.h2
 import kotlinx.html.img
 
-fun FlowContent.visualizarVideo(
+fun FlowContent.exibirVideo(
     sessao: SessaoUsuarioVO,
-    video: VideoVO?,
+    video: VideoVO,
 ) {
-    val textoHabilitado = if (video?.habilitado == true) "Habilitado" else "Não habilitado"
-    val textoDestaque = if (video?.destaque == true) "Destaque" else "Normal"
-    val tagHabilitado = if (video?.habilitado == true) TiposTagsEnum.POSITIVE else TiposTagsEnum.DANGER
-    val tagDestaque = if (video?.destaque == true) TiposTagsEnum.POSITIVE else TiposTagsEnum.DANGER
+
+    val textoHabilitado = if (video.habilitado) "Habilitado" else "Não habilitado"
+    val textoDestaque = if (video.destaque) "Destaque" else "Normal"
+    val tagHabilitado = if (video.habilitado) TiposTagsEnum.POSITIVE else TiposTagsEnum.DANGER
+    val tagDestaque = if (video.destaque) TiposTagsEnum.POSITIVE else TiposTagsEnum.DANGER
 
     div(classes = "flex flex-col gap-6") {
         attributes["id"] = "visualizacao-video"
@@ -33,10 +34,10 @@ fun FlowContent.visualizarVideo(
             includeContentGrid(colunas = 3, classes = "w-full") {
                 img(
                     classes = "row-span-4 w-full ${ArredondamentosEnum.MD}",
-                    src = "data:image/png;base64, ${video?.thumb}"
+                    src = "data:image/png;base64, ${video.thumb}"
                 )
                 div(classes = "flex flex-row col-span-2 items-center") {
-                    h2(classes = "grow") { +(video?.titulo ?: "") }
+                    h2(classes = "grow") { +(video.titulo) }
                 }
                 div(classes = "flex flex-row col-span-2 items-center") {
                     tag(texto = textoHabilitado, tipo = tagHabilitado, isSecundaria = true)
@@ -52,10 +53,9 @@ fun FlowContent.visualizarVideo(
                 hxPath = CaminhosComissaoEnum.EDITAR_VIDEO,
                 hxTarget = "conteudo-interno",
                 hxParams = mapOf(
-                    "id_video" to video!!.id.toString(),
+                    "id_video" to video.id.toString(),
                     "clientId" to  video.clientId.toString()
                 ),
-                hxSwap = "outerHTML",
                 enabled = true,
             ) {
                 icone(icone = IconesEnum.EDITAR)
@@ -70,7 +70,6 @@ fun FlowContent.visualizarVideo(
                     hxPath = CaminhosComissaoEnum.FORMULARIO_REMOVER_VIDEO,
                     hxParams = mapOf("id_video" to video.id.toString()),
                     hxTarget = "visualizacao-video",
-                    hxSwap = "outerHTML",
                     enabled = true,
                 ) {
                     icone(icone = IconesEnum.CLOSE)

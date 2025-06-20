@@ -50,7 +50,7 @@ fun FlowContent.gerenciamentoDeUsuarios(
             usarDiferenciadorId = false,
             textoLoading = "Buscando usuários",
             path = FragmentsRestritosEnum.FRAGMENT_TABELA_USUARIOS.path,
-            classes = "w-full grow"
+            classes = "w-full grow py-7"
         )
     }
 }

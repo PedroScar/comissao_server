@@ -40,7 +40,7 @@ fun FlowContent.promocoes() {
             usarDiferenciadorId = false,
             textoLoading = "Buscando promoções",
             path = FragmentsRestritosEnum.FRAGMENT_TABELA_PROMOCOES.path,
-            classes = "w-full grow"
+            classes = "w-full grow py-7"
         )
     }
 }

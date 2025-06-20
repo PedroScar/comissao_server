@@ -17,7 +17,7 @@ import kotlinx.html.*
 fun FlowContent.editarVideo(
     videoVO: VideoVO
 ) {
-    formulario(id = "form-novo-video", classes = "flex flex-col gap-6", autoValidar = true) {
+    formulario(id = "form-editar-video", classes = "flex flex-col gap-6", autoValidar = true) {
         input(InputType.hidden, name = "videoId") {
             value = videoVO.id.toString()
         }
@@ -48,16 +48,25 @@ fun FlowContent.editarVideo(
                         valueInicial = "https://www.youtube.com/watch?v=${videoVO.video_id}",
                         classes = "col-span-2"
                     )
-                    div(classes = "flex flex-col w-full") {
+                    div(classes = "flex flex-col w-full  col-span-2") {
                         label(classes = "${CoresEnum.LOW_PURE.text} block text-base font-semibold") { +"Imagem da thumb" }
-                        span (classes = CoresEnum.LOW_LIGHT.text) {
+                        span(classes = CoresEnum.LOW_LIGHT.text) {
                             +"Tamanho máximo do arquivo é de 500kb. Os tipos suportados são .jpg e .png"
                         }
+
                         img(
                             classes = "self-start mt-4 w-60 ${ArredondamentosEnum.MD}",
-                            src = "data:image/png;base64, ${videoVO.thumb}"
-                        )
-                        inputFileUpload(classes = "self-start mt-4", nomeDoCampo = "thumb") { +"Enviar nova thumb" }
+                            src = if (videoVO.thumb.isNotBlank()) "data:image/png;base64, ${videoVO.thumb}" else ""
+                        ) {
+                            attributes["id"] = "imagem-preview"
+                        }
+
+                        inputFileUpload(
+                            classes = "self-start mt-4",
+                            nomeDoCampo = "thumb"
+                        ) {
+                            +"Enviar nova thumb"
+                        }
                     }
                     div(classes = "flex items-center gap-2 col-span-2") {
                         input(InputType.checkBox, name = "isDestaque") {
@@ -77,11 +86,27 @@ fun FlowContent.editarVideo(
             botaoLink(tipo = TiposBotaoEnum.SUBTLE, link = "javascript:history.back()") { +"Cancelar" }
             botao(
                 hxPath = CaminhosComissaoEnum.FORMULARIO_EDITAR_VIDEO,
-                hxTarget = "form-novo-video",
-                hxSwap = "outerHTML",
+                hxTarget = "form-editar-video",
                 hxEncoding = "multipart/form-data",
                 enabled = false,
             ) { +"Salvar" }
+        }
+    }
+
+    script {
+        unsafe {
+            +"""
+                document.getElementById('thumb').addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('imagem-preview').src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            """.trimIndent()
         }
     }
 }

@@ -39,7 +39,7 @@ fun FlowContent.historicoDeTransacoes() {
             id = idDaTabela,
             usarDiferenciadorId = false,
             path = FragmentsRestritosEnum.FRAGMENT_TABELA_HISTORICO_DE_TRANSACOES.path,
-            classes = "w-full grow"
+            classes = "w-full grow py-7"
         )
     }
 }

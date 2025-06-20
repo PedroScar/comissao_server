@@ -26,9 +26,11 @@ fun Route.paginasRestritas(
     post(PaginasComissaoEnum.PROMOCOES.caminho.path) { handlePromocoes() }
     post(PaginasComissaoEnum.NOVA_PROMOCAO.caminho.path) { handleNovaPromocao() }
     post(PaginasComissaoEnum.EXIBIR_PROMOCAO.caminho.path) { handleExibirPromocao(promocoesRepository) }
-    post(CaminhosComissaoEnum.FORMULARIO_NOVA_PROMOCAO.path) { handleFormularioNovaPromocao(promocoesRepository) }
-    post(CaminhosComissaoEnum.FORMULARIO_ENCERRAR_PROMOCAO.path) { handleEncerrarPromocao(promocoesRepository) }
+    post(PaginasComissaoEnum.EDITAR_PROMOCAO.caminho.path) { handleEditarPromocao(promocoesRepository) }
     post(CaminhosComissaoEnum.SELECT_PROMOCOES_ATIVAS.path) { handleSelectPromocoesAtivas(promocoesRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO.path) { handleFormularioCriarPromocao(promocoesRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_ENCERRAR_PROMOCAO.path) { handleEncerrarPromocao(promocoesRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_EDITAR_PROMOCAO.path) { handleFormularioEditarPromocao(promocoesRepository) }
 
     post(PaginasComissaoEnum.VIDEOS.caminho.path) { handleVideos() }
     post(PaginasComissaoEnum.CRIAR_VIDEO.caminho.path) { handleCriarVideo() }
@@ -37,9 +39,6 @@ fun Route.paginasRestritas(
     post(CaminhosComissaoEnum.FORMULARIO_CRIAR_VIDEO.path) { handleFormularioNovoVideo(videosRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_REMOVER_VIDEO.path) { handleRemoverVideo(videosRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_EDITAR_VIDEO.path) { handleFormularioEditarVideo(videosRepository) }
-
-    post(CaminhosComissaoEnum.SELECT_VIDEOS_ATIVOS.path) { handleSelectVideoAtivos(videosRepository) }
-
 
     post(PaginasComissaoEnum.SALDOS_DOS_PROMOTORES.caminho.path) { handleSaldosDosPromotores() }
     post(CaminhosComissaoEnum.SELECT_PROMOTORES.path) { handleSelectPromotores(contasRepository) }

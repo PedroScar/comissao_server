@@ -74,7 +74,6 @@ enum class PaginasComissaoEnum(
     ),
     EDITAR_PROMOCAO(
         titulo = "Exibir promoção",
-        sublinks = arrayListOf(),
         papelNecessario = PapeisDeAcessoEnum.EDITAR_PROMOCAO,
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(PROMOCOES),

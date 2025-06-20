@@ -1,20 +1,11 @@
 package com.pscarpellini.frontend.pages.restritos.base
 
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
-import com.pscarpellini.extensions.formatarData
-import com.pscarpellini.frontend.enums.designsystem.CoresEnum
-import com.pscarpellini.frontend.enums.designsystem.IconesEnum
-import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
-import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
-import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.formulario.formulario
-import com.pscarpellini.frontend.fragments.geral.icone.icone
 import com.pscarpellini.frontend.fragments.geral.linha_valor.linhaValor
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
-import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.*
 
@@ -47,7 +38,7 @@ fun FlowContent.configuracoesDoApp(
         }
         div(classes = "self-end flex flex-row gap-2") {
             botao(
-                hxPath = CaminhosComissaoEnum.FORMULARIO_NOVA_PROMOCAO,
+                hxPath = CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO,
                 hxTarget = "form-configuracoes-app",
                 hxSwap = "outerHTML",
                 hxEncoding = "multipart/form-data",
