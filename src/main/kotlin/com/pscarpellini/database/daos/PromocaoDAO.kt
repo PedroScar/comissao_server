@@ -20,4 +20,6 @@ class PromocaoDAO(id: EntityID<Int>) : IntEntity(id) {
     var exibirPreco by PromocoesTable.exibirPreco
     var valorAnterior by PromocoesTable.valorAnterior
     var valorAtual by PromocoesTable.valorAtual
+    var vendas by PromocoesTable.vendas
+    var compras by PromocoesTable.compras
 }

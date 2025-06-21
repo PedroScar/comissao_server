@@ -15,6 +15,11 @@ enum class TiposBotaoEnum(
     WARNING_PRIMARY(
         cssProprio = "${CoresEnum.ALERT_DARK.bg} hover:${CoresEnum.ALERT_PURE.bg} ${ArredondamentosEnum.MD} ${CoresEnum.ALERT_LIGHT.text} disabled:${ArredondamentosEnum.MD} disabled:${CoresEnum.HIGH_DARK.bg} disabled:${CoresEnum.LOW_LIGHT.text}"
     ),
+    WARNING_PRIMARY_ROUNDED(
+        cssProprio = "${CoresEnum.ALERT_DARK.bg} hover:${CoresEnum.ALERT_PURE.bg} ${ArredondamentosEnum.PILL} ${CoresEnum.ALERT_LIGHT.text} disabled:${ArredondamentosEnum.PILL} disabled:${CoresEnum.HIGH_DARK.bg} disabled:${CoresEnum.LOW_LIGHT.text}"
+
+           //     cssProprio = "${CoresEnum.ALERT_DARK.bg} hover:${CoresEnum.ALERT_PURE.bg} ${ArredondamentosEnum.MD} ${CoresEnum.ALERT_LIGHT.text} disabled:${ArredondamentosEnum.MD} disabled:${CoresEnum.HIGH_DARK.bg} disabled:${CoresEnum.LOW_LIGHT.text}"
+    ),
     WARNING_SUBTLE(
         cssProprio = "${CoresEnum.TRANSPARENT.bg} hover:${CoresEnum.ALERT_LIGHT.bg} ${ArredondamentosEnum.MD} ${CoresEnum.ALERT_DARK.text} disabled:${ArredondamentosEnum.MD} disabled:${CoresEnum.HIGH_DARK.bg} disabled:${CoresEnum.LOW_LIGHT.text}"
     ),

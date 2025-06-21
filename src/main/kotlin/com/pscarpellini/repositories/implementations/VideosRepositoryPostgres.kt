@@ -38,7 +38,7 @@ class VideosRepositoryPostgres : VideosRepository {
         }.getOrDefault(DbResponse.Erro(null, message = "Ops... algo de errado aconteceu!"))
     }
 
-    override suspend fun removerVideo(videoId: Int, clienteId: Int): DbResponse<VideoVO> = suspendTransaction {
+    override suspend fun desabilitarVideo(videoId: Int, clienteId: Int): DbResponse<VideoVO> = suspendTransaction {
         val videoDAO = VideoDAO.find {
             (VideosTable.id eq videoId).and(VideosTable.clienteId eq clienteId)
         }.firstOrNull()
@@ -53,6 +53,23 @@ class VideosRepositoryPostgres : VideosRepository {
         }.onFailure {
             it.printStackTrace()
         }.getOrDefault(DbResponse.Erro(message = "Erro ao desabilitar vídeo"))
+    }
+
+    override suspend fun removerVideo(videoId: Int, clienteId: Int): DbResponse<Unit> = suspendTransaction {
+        val videoDAO = VideoDAO.find {
+            (VideosTable.id eq videoId).and(VideosTable.clienteId eq clienteId)
+        }.firstOrNull()
+
+        runCatching {
+            if (videoDAO == null) {
+                DbResponse.Erro(message = "Vídeo não encontrado")
+            } else {
+                videoDAO.delete()
+                DbResponse.Successo(Unit)
+            }
+        }.onFailure {
+            it.printStackTrace()
+        }.getOrDefault(DbResponse.Erro(message = "Erro ao deletar vídeo"))
     }
 
     override suspend fun criarVideo(video: VideoVO): DbResponse<VideoVO> = suspendTransaction {

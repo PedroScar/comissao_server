@@ -26,6 +26,7 @@ enum class IconesEnum(
     CHEVRON_RIGHT("/static/icons/chevron_right.svg"),
     CHEVRON_UP("/static/icons/chevron_up.svg"),
     CLOSE("/static/icons/close.svg"),
+    CLOSE_BRANCO("/static/icons/close_branco.svg"),
     COMPARTILHAR("/static/icons/compartilhar.svg"),
     CONFIGURACOES("/static/icons/configuracoes.svg"),
     COPIA("/static/icons/copiar.svg"),

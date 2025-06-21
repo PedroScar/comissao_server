@@ -54,7 +54,7 @@ fun FlowContent.exibirVideo(
                 hxTarget = "conteudo-interno",
                 hxParams = mapOf(
                     "id_video" to video.id.toString(),
-                    "clientId" to  video.clientId.toString()
+                    "clientId" to video.clientId.toString()
                 ),
                 enabled = true,
             ) {
@@ -62,17 +62,30 @@ fun FlowContent.exibirVideo(
                 +"Editar"
             }
 
-            if (
-                sessao.papeisDeAcesso.any { it == PapeisDeAcessoEnum.EDITAR_VIDEO } && video.habilitado
-            ) {
+            if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_VIDEO) && video.habilitado) {
                 botao(
                     tipo = TiposBotaoEnum.PRIMARY,
+                    hxPath = CaminhosComissaoEnum.FORMULARIO_DESABILITAR_VIDEO,
+                    hxParams = mapOf(
+                        "id_video" to video.id.toString()
+                    ),
+                    hxTarget = "visualizacao-video",
+                    enabled = true,
+                ) {
+                    icone(icone = IconesEnum.CLOSE)
+                    +"Desabilitar video"
+                }
+            }
+
+            if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.REMOVER_VIDEO) && !video.habilitado) {
+                botao(
+                    tipo = TiposBotaoEnum.WARNING_PRIMARY_ROUNDED,
                     hxPath = CaminhosComissaoEnum.FORMULARIO_REMOVER_VIDEO,
                     hxParams = mapOf("id_video" to video.id.toString()),
                     hxTarget = "visualizacao-video",
                     enabled = true,
                 ) {
-                    icone(icone = IconesEnum.CLOSE)
+                    icone(icone = IconesEnum.CLOSE_BRANCO)
                     +"Remover video"
                 }
             }

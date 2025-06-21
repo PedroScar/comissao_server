@@ -5,7 +5,7 @@ import com.pscarpellini.frontend.fragments.geral.tabela.tabelaComHeadersFixos
 import com.pscarpellini.models.vos.PromocaoVO
 import kotlinx.html.FlowContent
 
-private val HEADERS = arrayListOf("Nome da promoção", "Data de início e fim", "Vendas")
+private val HEADERS = arrayListOf("Nome da promoção", "Data de início e fim", "Vendas", "Compras")
 
 fun FlowContent.includePromocoesMaisUtilizadasWidget(
     promocoes: List<PromocaoVO>?
@@ -20,10 +20,9 @@ fun FlowContent.includePromocoesMaisUtilizadasWidget(
     )
 }
 
-private fun exibirPromocao(promocao: PromocaoVO): List<FlowContent.() -> Unit> {
-    return listOf(
-        { +promocao.titulo },
-        { +formatarIntervaloDeDatas(promocao.dataDisponivel, promocao.dataValidade) },
-        { +promocao.subtitulo },
-    )
-}
+private fun exibirPromocao(promocao: PromocaoVO): List<FlowContent.() -> Unit> = listOf(
+    { +promocao.titulo },
+    { +formatarIntervaloDeDatas(promocao.dataDisponivel, promocao.dataValidade) },
+    { +"${promocao.vendas}" },
+    { +"${promocao.compras}" }
+)

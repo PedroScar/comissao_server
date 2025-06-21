@@ -13,6 +13,7 @@ enum class PapeisDeAcessoEnum(
     VISUALIZAR_VIDEOS(nome = "Visualizar videos", slug = "visualizar_videos"),
     CRIAR_VIDEO(nome = "Novo video", slug = "novo_video"),
     EDITAR_VIDEO(nome = "Editar video", slug = "editar_video"),
+    REMOVER_VIDEO(nome = "Editar video", slug = "editar_video"),
 
     VISUALIZAR_SALDOS(nome = "Visualizar saldos", slug = "visualizar_saldos"),
     EDITAR_SALDOS(nome = "Editar saldos", slug = "editar_saldos"),

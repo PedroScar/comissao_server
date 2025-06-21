@@ -18,13 +18,13 @@ fun FlowContent.autoLoaderFragment(
     hxSwap: String? = null,
     classes: String = "",
 ): String {
-    val idDoConteudo = if(usarDiferenciadorId) "$id-${System.currentTimeMillis()}" else id
+    val idDoConteudo = if (usarDiferenciadorId) "$id-${System.currentTimeMillis()}" else id
     val idDoLoading = "loading_$id"
     div(classes = "relative $classes") {
         attributes["hx-post"] = path
         attributes["hx-trigger"] = "load"
         attributes["hx-target"] = "#$idDoConteudo"
-        if(hxSwap != null) attributes["hx-swap"] = hxSwap
+        if (hxSwap != null) attributes["hx-swap"] = hxSwap
         attributes["hx-indicator"] = "#$idDoLoading"
         attributes["hx-vals"] = Json.encodeToString(hxParams)
         hxReplaceUrl?.let { attributes["hx-replace-url"] = it }

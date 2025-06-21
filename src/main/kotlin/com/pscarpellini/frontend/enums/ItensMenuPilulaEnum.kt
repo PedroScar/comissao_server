@@ -13,12 +13,12 @@ enum class ItensMenuPilulaEnum(
     val usarReplace: Boolean = true
 ) {
     CRIAR_NOVA_PROMOCAO(
-        textoCTA = "Criar nova promoção",
+        textoCTA = "Criar promoção",
         icone = IconesEnum.CARRINHO,
         pagina = CaminhosComissaoEnum.CRIAR_PROMOCAO
     ),
     CRIAR_NOVO_VIDEO(
-        textoCTA = "Criar novo video",
+        textoCTA = "Criar video",
         icone = IconesEnum.CARRINHO,
         pagina = CaminhosComissaoEnum.CRIAR_VIDEO
     ),
@@ -29,12 +29,12 @@ enum class ItensMenuPilulaEnum(
         usarReplace = false
     ),
     CADASTRAR_NOVO_USUARIO(
-        textoCTA = "Cadastrar novo usuário",
+        textoCTA = "Cadastrar usuário",
         icone = IconesEnum.USUARIOS,
         pagina = CaminhosBaseEnum.NOVO_USUARIO
     ),
     CONFIGURACOES_DO_APP(
-        textoCTA = "Configurações do app",
+        textoCTA = "Configurar app",
         icone = IconesEnum.APP,
         pagina = CaminhosBaseEnum.CONFIGURACOES_DO_APP
     ),

@@ -17,4 +17,6 @@ object PromocoesTable : IntIdTable("promocoes") {
     val exibirPreco = bool("exibir_preco")
     val valorAnterior = double("valor_anterior").nullable()
     val valorAtual = double("valor_atual").nullable()
+    val vendas = integer("vendas")
+    val compras =  integer("compras")
 }

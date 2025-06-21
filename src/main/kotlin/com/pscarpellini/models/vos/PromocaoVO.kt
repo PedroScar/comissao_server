@@ -20,6 +20,8 @@ data class PromocaoVO(
     val exibirPreco: Boolean,
     val valorAnterior: Double?,
     val valorAtual: Double?,
+    val vendas: Int,
+    val compras: Int
 ) {
     val status: StatusPromocoesEnum
         get() {

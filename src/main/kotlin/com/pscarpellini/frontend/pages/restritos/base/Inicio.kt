@@ -20,7 +20,7 @@ fun FlowContent.inicio(
     div(classes = "grow flex flex-col gap-6") {
         includeContentGrid(
             linhas = 1,
-            colunas = 4,
+            colunas = 5,
             classes = "w-full"
         ) {
             if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.CRIAR_VIDEO)) itemMenuPilula(ItensMenuPilulaEnum.CRIAR_NOVO_VIDEO)

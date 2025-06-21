@@ -14,7 +14,7 @@ fun FlowContent.tabelaComHeadersFixos(
             thead(classes = "${CoresEnum.HIGH_LIGHT.bg} border-b border-b-${CoresEnum.HIGH_MEDIUM}") {
                 tr {
                     headers.forEach { header ->
-                        th(classes = "sticky top-0 z-10 px-6 py-4 text-left text-sm font-semibold") {
+                        th(classes = "sticky top-0 z-10 px-4 py-4 text-center text-sm font-semibold") {
                             +header
                         }
                     }
@@ -24,7 +24,7 @@ fun FlowContent.tabelaComHeadersFixos(
                 linhas.forEach { linha ->
                     tr(classes = "even:${CoresEnum.HIGH_LIGHT} border-b border-b-${CoresEnum.HIGH_MEDIUM} last:border-b-0") {
                         linha.forEach { celula ->
-                            td(classes = "px-4 py-4") {
+                            td(classes = "px-4 py-4 text-center") {
                                 celula(this)
                             }
                         }

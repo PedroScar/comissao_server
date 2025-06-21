@@ -37,6 +37,7 @@ fun Route.paginasRestritas(
     post(PaginasComissaoEnum.EXIBIR_VIDEO.caminho.path) { handleExibirVideo(videosRepository) }
     post(PaginasComissaoEnum.EDITAR_VIDEO.caminho.path) { handleEditarVideo(videosRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_CRIAR_VIDEO.path) { handleFormularioNovoVideo(videosRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_DESABILITAR_VIDEO.path) { handleDesabilitarVideo(videosRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_REMOVER_VIDEO.path) { handleRemoverVideo(videosRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_EDITAR_VIDEO.path) { handleFormularioEditarVideo(videosRepository) }
 

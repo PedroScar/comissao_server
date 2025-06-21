@@ -20,7 +20,8 @@ enum class CaminhosComissaoEnum(
     EDITAR_VIDEO(path = "/int/video/editar"),
     FORMULARIO_CRIAR_VIDEO(path = "/forms/videos/criar_video"),
     FORMULARIO_EDITAR_VIDEO(path = "/forms/videos/editar_video"),
-    FORMULARIO_REMOVER_VIDEO(path = "/forms/videos/encerrar_video"),
+    FORMULARIO_DESABILITAR_VIDEO(path = "/forms/videos/desabilitar_video"),
+    FORMULARIO_REMOVER_VIDEO(path = "/forms/videos/remover_video"),
     SELECT_VIDEOS_ATIVOS(path = "/select/videos/ativas"),
 
     SALDOS_DOS_PROMOTORES(path = "/int/saldos"),

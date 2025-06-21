@@ -217,6 +217,8 @@ suspend fun RoutingContext.handleFormularioCriarPromocao(
             exibirPreco = precoDeExibicao.isEmpty(), // TODO: Corrigir este campo
             valorAnterior = valorAnterior.toDoubleOrNull() ?: 0.0,
             valorAtual = valorAtual.toDoubleOrNull() ?: 0.0,
+            compras = 0,
+            vendas = 0
         )
 
         promocoesRepository.criarPromocao(novaPromocao).let { resposta ->
@@ -257,6 +259,8 @@ suspend fun RoutingContext.handleFormularioEditarPromocao(
         var precoDeExibicao = ""
         var valorAnterior = ""
         var valorAtual = ""
+        var compras = 0
+        var vendas = 0
 
         multipart.forEachPart { part ->
             when (part) {
@@ -290,10 +294,12 @@ suspend fun RoutingContext.handleFormularioEditarPromocao(
             when (resposta) {
                 is DbResponse.Erro -> Unit
                 is DbResponse.Successo -> {
-                    resposta.data?.imagem?.let {
+                    resposta.data?.let {
                         if (imagemDeExibicao.isBlank()) {
-                            imagemDeExibicao = it
+                            imagemDeExibicao = it.imagem
                         }
+                        vendas = it.vendas
+                        compras = it.compras
                     }
                 }
             }
@@ -335,6 +341,8 @@ suspend fun RoutingContext.handleFormularioEditarPromocao(
             exibirPreco = precoDeExibicao.isEmpty(), // TODO: Corrigir este campo
             valorAnterior = valorAnterior.toDoubleOrNull() ?: 0.0,
             valorAtual = valorAtual.toDoubleOrNull() ?: 0.0,
+            vendas = vendas,
+            compras = compras
         )
 
         promocoesRepository.editarPromocao(promocao).let { resposta ->

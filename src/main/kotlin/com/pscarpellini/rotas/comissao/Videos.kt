@@ -319,11 +319,11 @@ suspend fun RoutingContext.handleFormularioNovoVideo(
 
 private fun String.pegarVideoId(): String = this.split('=').last()
 
-suspend fun RoutingContext.handleRemoverVideo(videosRepository: VideosRepository) {
+suspend fun RoutingContext.handleDesabilitarVideo(videosRepository: VideosRepository) {
     val sessao = obterSessao()
     val parameters = call.receiveParameters()
     runCatching { parameters["id_video"]?.toInt() ?: -1 }.onSuccess { idVideo ->
-        videosRepository.removerVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id ?: -1)
+        videosRepository.desabilitarVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id ?: -1)
             .let { resposta ->
                 when (resposta) {
                     is DbResponse.Erro -> call.respondToast(
@@ -341,4 +341,33 @@ suspend fun RoutingContext.handleRemoverVideo(videosRepository: VideosRepository
                 }
             }
     }
+}
+
+suspend fun RoutingContext.handleRemoverVideo(videosRepository: VideosRepository) {
+    val sessao = obterSessao()
+    val parameters = call.receiveParameters()
+
+    runCatching { parameters["id_video"]?.toInt() ?: -1 }
+        .onFailure { println("ERRO handleRemoverVideo ID: ${it.message}") }
+        .onSuccess { idVideo ->
+            runCatching {
+                videosRepository.removerVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id ?: -1)
+                    .let { resposta ->
+                        when (resposta) {
+                            is DbResponse.Erro -> call.respondToast(
+                                tipo = TiposToastEnum.ERROR,
+                                mensagem = resposta.mensagem ?: "Ops... algo de errado aconteceu!"
+                            )
+
+                            is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                                sessao.paginaAtual = PaginasComissaoEnum.VIDEOS
+                                includeMenuPrincipal(sessao)
+                                includeHeaderLogado(sessao)
+                                videos()
+                                toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video desabilitado com sucesso!")
+                            }
+                        }
+                    }
+            }.onFailure { println("ERRO videosRepository.removerVideo ID: ${it.message}") }
+        }
 }

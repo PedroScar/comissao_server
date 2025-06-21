@@ -63,6 +63,8 @@ fun promocaoDaoToModel(dao: PromocaoDAO) = PromocaoVO(
     exibirPreco = dao.exibirPreco,
     valorAnterior = dao.valorAnterior,
     valorAtual = dao.valorAtual,
+    vendas = dao.vendas,
+    compras = dao.compras
 )
 
 fun videoDaoToModel(dao: VideoDAO) = VideoVO(
@@ -181,6 +183,8 @@ fun promocaoRowToModel(row: ResultRow, alias: Alias<Table>): PromocaoVO? {
         exibirPreco = row[alias[PromocoesTable.exibirPreco]],
         valorAnterior = row[alias[PromocoesTable.valorAnterior]],
         valorAtual = row[alias[PromocoesTable.valorAtual]],
+        vendas = row[alias[PromocoesTable.vendas]],
+        compras = row[alias[PromocoesTable.compras]],
     )
 }
 
