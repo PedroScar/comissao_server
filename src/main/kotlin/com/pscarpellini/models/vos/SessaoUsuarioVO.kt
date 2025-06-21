@@ -32,4 +32,11 @@ data class SessaoUsuarioVO(
      //   ItensMenuEnum.RELATORIOS,
         CategoriasMenuEnum.ADMINISTRACAO
     )
+
+    fun toCookieVO(): CookieVO = run {
+        CookieVO(
+            idUsuario = conta!!.id!!,
+            idCliente = conta!!.cliente!!.id
+        )
+    }
 }

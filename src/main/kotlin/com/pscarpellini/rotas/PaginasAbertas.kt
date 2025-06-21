@@ -1,5 +1,6 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.acesso.UsuariosLogados
 import com.pscarpellini.enums.base.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
 import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.extensions.obterSessao
@@ -24,6 +25,13 @@ import io.ktor.server.sessions.*
 fun Route.paginasAbertas(
     contasRepository: ContasRepository
 ) {
+    fun isUsuarioLogado(sessao: SessaoUsuarioVO): Boolean {
+        return UsuariosLogados.lista.any { usuarioLogado ->
+            usuarioLogado.conta?.id == sessao.conta?.id &&
+                    usuarioLogado.conta?.cliente?.id == sessao.conta?.cliente?.id
+        }
+    }
+
     get(PaginasAbertasEnum.Landing.path) {
         runCatching { obterSessao() }
             .onSuccess { call.respondHtml(HttpStatusCode.OK) { landingPage(it) } }
@@ -41,7 +49,10 @@ fun Route.paginasAbertas(
         val username = (parameters["usuario"] ?: "").toString()
         val password = (parameters["password"] ?: "").toString()
 
-        if (username.isEmpty()) call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "Digite o seu nome de usuário")
+        if (username.isEmpty()) call.respondToast(
+            tipo = TiposToastEnum.WARNING,
+            mensagem = "Digite o seu nome de usuário"
+        )
         if (password.isEmpty()) call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "Digite sua senha")
 
         contasRepository.validarLogin(username, password).let { resposta ->
@@ -50,13 +61,15 @@ fun Route.paginasAbertas(
                 is DbResponse.Successo -> {
                     val tipoDeConta = resposta.data?.tipoConta ?: ""
                     val perfilDeAcesso = obterEnumPeloSlug(tipoDeConta)
-                    println("Tipo de conta: $tipoDeConta")
-                    println("Tipo de conta no ENUM: $perfilDeAcesso")
-
                     val sessao = SessaoUsuarioVO()
                     sessao.conta = resposta.data
                     sessao.papeisDeAcesso = perfilDeAcesso.papeis
-                    call.sessions.set(sessao)
+
+                    if (!isUsuarioLogado(sessao)) {
+                        UsuariosLogados.lista.add(sessao)
+                    }
+
+                    call.sessions.set(sessao.toCookieVO())
                     call.redirecionarFormHTMX(CaminhosBaseEnum.INICIO.path)
                 }
             }
