@@ -29,7 +29,7 @@ data class SessaoUsuarioVO(
         ItensMenuEnum.PROMOCOES,
         ItensMenuEnum.VIDEOS,
         ItensMenuEnum.SALDOS_DOS_PROMOTORES,
-        ItensMenuEnum.RELATORIOS,
+     //   ItensMenuEnum.RELATORIOS,
         CategoriasMenuEnum.ADMINISTRACAO
     )
 }
