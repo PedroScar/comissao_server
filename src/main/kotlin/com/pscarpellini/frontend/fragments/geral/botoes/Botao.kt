@@ -4,7 +4,6 @@ import com.pscarpellini.frontend.enums.designsystem.AlinhamentosEnum
 import com.pscarpellini.frontend.enums.designsystem.DefaultsIdsEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.interfaces.ICaminho
-import com.pscarpellini.interfaces.IPaginaEnum
 import kotlinx.html.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -114,20 +113,20 @@ fun FlowContent.botao(
     conteudo: FlowContent.() -> Unit
 ) {
     button(
-        classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
+        classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if (small) "py-1 px-4" else "py-2 px-6"} ${if (interativo) "cursor-pointer" else ""} transition-all duration-300 ${if (!enabled) "text-low-light" else ""} $classes",
         type = type
     ) {
-        if(id != null) attributes["id"] = id
-        if(isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
+        if (id != null) attributes["id"] = id
+        if (isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
         attributes["hx-${hxMethod.name}"] = hxPath
-        if(hxTarget.isNotEmpty()) {
+        if (hxTarget.isNotEmpty()) {
             attributes["hx-target"] = "#$hxTarget"
             attributes["hx-swap"] = hxSwap
         } else attributes["hx-swap"] = "none"
-        if(hxIndicator.isNotEmpty()) attributes["hx-indicator"] = "#$hxIndicator"
-        if(hxEncoding.isNotEmpty()) attributes["hx-encoding"] = hxEncoding
+        if (hxIndicator.isNotEmpty()) attributes["hx-indicator"] = "#$hxIndicator"
+        if (hxEncoding.isNotEmpty()) attributes["hx-encoding"] = hxEncoding
         attributes["hx-vals"] = Json.encodeToString(hxParams)
-        if(hxReplaceUrl.isNotEmpty()) attributes["hx-replace-url"] = hxReplaceUrl
+        if (hxReplaceUrl.isNotEmpty()) attributes["hx-replace-url"] = hxReplaceUrl
 
         if (!enabled) attributes["disabled"] = "disabled"
         div(classes = "flex flex-row items-center $alinhamento") {
@@ -148,10 +147,10 @@ fun FlowContent.botaoLink(
     conteudo: FlowContent.() -> Unit
 ) {
     a(
-        classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
+        classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if (small) "py-1 px-4" else "py-2 px-6"} ${if (interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if (!enabled) "text-low-light" else ""} $classes",
         href = link
     ) {
-        if(isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
+        if (isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
         if (!enabled) attributes["disabled"] = "disabled"
         conteudo(this)
     }
@@ -169,10 +168,10 @@ fun FlowContent.botaoHX(
     isAutovalidateButton: Boolean = true,
     conteudo: FlowContent.() -> Unit
 ) {
-    div (
-        classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes",
+    div(
+        classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if (small) "py-1 px-4" else "py-2 px-6"} ${if (interativo) "cursor-pointer" else ""} flex flex-row items-center $alinhamento transition-all duration-300 ${if (!enabled) "text-low-light" else ""} $classes",
     ) {
-        if(isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
+        if (isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
         attributes["hx-post"] = link.path
         attributes["hx-trigger"] = "click"
         attributes["hx-target"] = "#$target"

@@ -49,6 +49,7 @@ fun HTML.loginPage() {
 
                         form(
                             classes = "w-full max-w-sm mt-6 space-y-4 flex-row relative",
+                            method = FormMethod.post
                         ) {
                             div(classes = "absolute inset-0 ${CoresEnum.HIGH_PURE.bg} bg-opacity-75 flex items-center justify-center z-10 collapse") {
                                 attributes["id"] = "loading-login"
@@ -61,6 +62,7 @@ fun HTML.loginPage() {
                                 nomeDoCampo = "usuario",
                                 hint = "Digite seu usuário ou e-mail"
                             )
+
                             inputField(
                                 label = "Senha",
                                 inputType = InputType.password,
@@ -71,8 +73,9 @@ fun HTML.loginPage() {
                             botao(
                                 tipo = TiposBotaoEnum.PRIMARY,
                                 classes = "w-full",
-                                hxPath = PaginasAbertasEnum.Login, // TODO: Criar um CaminhosAbertosEnum
-                                hxSwap = "beforeend",
+                                hxPath = PaginasAbertasEnum.Login.path,
+                                hxSwap = "none",
+                                hxMethod = FormMethod.post,
                                 hxIndicator = "loading-login"
                             ) { +"Entrar" }
 
@@ -80,7 +83,7 @@ fun HTML.loginPage() {
                                 tipo = TiposBotaoEnum.SUBTLE,
                                 small = true,
                                 classes = "block",
-                                link = PaginasAbertasEnum.EsqueciMinhaSenha.path // TODO: Criar um CaminhosAbertosEnum
+                                link = PaginasAbertasEnum.EsqueciMinhaSenha.path
                             ) { +"Esqueci minha senha" }
                         }
                     }

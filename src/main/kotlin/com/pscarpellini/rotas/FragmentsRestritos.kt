@@ -6,7 +6,7 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.interfaces.IFragmentEnum
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.repositories.interfaces.*
-import com.pscarpellini.rotas.base.handleFragmentTabelaUsuarios
+import com.pscarpellini.rotas.comissao.handleFragmentTabelaUsuarios
 import com.pscarpellini.rotas.comissao.*
 import io.ktor.http.*
 import io.ktor.server.routing.*

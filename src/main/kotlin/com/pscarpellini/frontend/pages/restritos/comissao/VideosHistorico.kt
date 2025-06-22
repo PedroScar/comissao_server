@@ -14,7 +14,7 @@ import kotlinx.html.div
 fun FlowContent.videos() {
     val idDaTabela = "tabela_de_videos-${System.currentTimeMillis()}"
 
-    card(classes = "flex flex-col gap-8 grow") {
+    card(classes = "flex flex-col gap-8 grow  mt-6") {
         div(classes = "flex flex-row w-full items-center gap-4") {
             inputField(
                 inputType = InputType.text,

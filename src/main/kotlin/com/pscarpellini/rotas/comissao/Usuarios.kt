@@ -1,4 +1,4 @@
-package com.pscarpellini.rotas.base
+package com.pscarpellini.rotas.comissao
 
 import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.extensions.criarNomeDeUsuario
@@ -14,14 +14,12 @@ import com.pscarpellini.frontend.pages.restritos.base.*
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
-import com.pscarpellini.tools.image.saveImageToPublicFolder
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
-import io.ktor.utils.io.jvm.javaio.*
-import io.ktor.utils.io.toByteArray
-import java.util.Base64
+import io.ktor.utils.io.*
+import java.util.*
 
 suspend fun RoutingContext.handleFragmentTabelaUsuarios(contasRepository: ContasRepository) {
     val parameters = call.receiveParameters()
@@ -84,7 +82,6 @@ suspend fun RoutingContext.handleFormularioEditarMeuPerfil(
             is PartData.FileItem -> {
                 val fileBytes = part.provider().toByteArray()
                 imagemDePerfil = Base64.getEncoder().encodeToString(fileBytes)
-//                imagemDePerfil = saveImageToPublicFolder(part.provider().toInputStream(), 200)
             }
 
             else -> Unit

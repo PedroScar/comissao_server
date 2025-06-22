@@ -26,7 +26,7 @@ fun FlowContent.includeHeaderLogado(
     sessao: SessaoUsuarioVO,
 ) {
     val idDoHeader = "header-interno"
-    div(classes = "w-full flex flex-col") {
+    div(classes = "w-full flex flex-col mb-0") {
         attributes["id"] = idDoHeader
         attributes["hx-swap-oob"] = "true"
         card(

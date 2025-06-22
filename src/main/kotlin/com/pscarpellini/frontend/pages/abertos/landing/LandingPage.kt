@@ -35,14 +35,23 @@ fun HTML.landingPage(
                 }
             }
             div(classes = "flex flex-row gap-2 text-sm lg:text-lg") {
-                botaoLink(tipo = TiposBotaoEnum.NEUTRAL, link = "https://wa.me/${AmbientController.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações") {
+                botaoLink(
+                    tipo = TiposBotaoEnum.NEUTRAL,
+                    link = "https://wa.me/${AmbientController.encaminhamentoWhatsapp}?text=Olá,%20gostaria%20de%20mais%20informações"
+                ) {
                     attributes["target"] = "_blank"
                     +"Falar com especialista"
                     img(classes = "ic-whatsapp", src = "/static/ic_whatsapp.svg", alt = "Ícone")
                 }
 
-                if(sessao != null) botaoLink(tipo = TiposBotaoEnum.PRIMARY, link = CaminhosBaseEnum.INICIO.path) { +"Início" }
-                else botaoLink(tipo = TiposBotaoEnum.PRIMARY, link = PaginasAbertasEnum.Login.path) { +"Entrar" } // TODO: Criar um CaminhosAbertosEnum
+                if (sessao != null) botaoLink(
+                    tipo = TiposBotaoEnum.PRIMARY,
+                    link = CaminhosBaseEnum.INICIO.path
+                ) { +"Início" }
+                else botaoLink(
+                    tipo = TiposBotaoEnum.PRIMARY,
+                    link = PaginasAbertasEnum.Login.path
+                ) { +"Entrar" }
             }
         }
 

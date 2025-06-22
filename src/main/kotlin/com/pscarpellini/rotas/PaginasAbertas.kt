@@ -1,10 +1,9 @@
 package com.pscarpellini.rotas
 
 import com.pscarpellini.acesso.UsuariosLogados
-import com.pscarpellini.enums.base.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
 import com.pscarpellini.enums.base.CaminhosBaseEnum
+import com.pscarpellini.enums.base.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
 import com.pscarpellini.extensions.obterSessao
-import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.pages.abertos.componentes.componentsPage
@@ -43,6 +42,7 @@ fun Route.paginasAbertas(
             .onFailure { call.respondHtml(HttpStatusCode.OK) { loginPage() } }
             .onSuccess { call.respondRedirect(CaminhosBaseEnum.INICIO.path) }
     }
+
     post(PaginasAbertasEnum.Login.path) {
         val parameters = call.receiveParameters()
 
@@ -53,24 +53,28 @@ fun Route.paginasAbertas(
             tipo = TiposToastEnum.WARNING,
             mensagem = "Digite o seu nome de usuário"
         )
+
         if (password.isEmpty()) call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "Digite sua senha")
 
         contasRepository.validarLogin(username, password).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Falha no login")
                 is DbResponse.Successo -> {
-                    val tipoDeConta = resposta.data?.tipoConta ?: ""
-                    val perfilDeAcesso = obterEnumPeloSlug(tipoDeConta)
-                    val sessao = SessaoUsuarioVO()
-                    sessao.conta = resposta.data
-                    sessao.papeisDeAcesso = perfilDeAcesso.papeis
+                    runCatching {
+                        val tipoDeConta = resposta.data?.tipoConta ?: ""
+                        val perfilDeAcesso = obterEnumPeloSlug(tipoDeConta)
+                        val sessao = SessaoUsuarioVO()
+                        sessao.conta = resposta.data
+                        sessao.papeisDeAcesso = perfilDeAcesso.papeis
 
-                    if (!isUsuarioLogado(sessao)) {
-                        UsuariosLogados.lista.add(sessao)
+                        if (!isUsuarioLogado(sessao)) { UsuariosLogados.lista.add(sessao) }
+
+                        call.sessions.set(sessao.toCookieVO())
+                    }.onFailure {
+                        call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "${it.message}")
+                    }.onSuccess {
+                        call.respondRedirect(CaminhosBaseEnum.INICIO.path)
                     }
-
-                    call.sessions.set(sessao.toCookieVO())
-                    call.redirecionarFormHTMX(CaminhosBaseEnum.INICIO.path)
                 }
             }
         }

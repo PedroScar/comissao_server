@@ -20,7 +20,7 @@ fun HTML.interno(
     ) {
         popupContainer()
         includeMenuPrincipal(sessao)
-        div(classes = "grow flex flex-col ml-80 p-6 gap-6") {
+        div(classes = "grow flex flex-col ml-80 p-6") {
             includeHeaderLogado(sessao = sessao)
             autoLoaderFragment(id = "conteudo-interno", usarDiferenciadorId = false, path = caminho, isVerticalLoading = true, classes = "grow flex flex-col")
         }
