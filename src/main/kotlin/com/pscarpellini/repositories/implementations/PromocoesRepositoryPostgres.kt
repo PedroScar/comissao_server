@@ -149,6 +149,8 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                 exibirPreco = promocao.exibirPreco
                 valorAnterior = promocao.valorAnterior
                 valorAtual = promocao.valorAtual
+                compras = promocao.compras
+                vendas = promocao.vendas
             }
         }.onFailure { it.printStackTrace() }.onSuccess {
             DbResponse.Successo(promocao)

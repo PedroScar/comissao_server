@@ -229,7 +229,10 @@ suspend fun RoutingContext.handleFormularioCriarPromocao(
                 )
 
                 is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                    novaPromocao()
+
+                    println("==================")
+                    println("RESPOSTA DB CRIAR PROMOCAO: SUCESSO")
+                    println("==================")
                     toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção cadastrada com sucesso")
                 }
             }

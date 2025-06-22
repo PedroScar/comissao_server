@@ -1,17 +1,17 @@
 package com.pscarpellini.frontend.pages.restritos.comissao
 
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
-import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoLink
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.formulario.formulario
 import com.pscarpellini.frontend.fragments.geral.inputs.inputField
-import com.pscarpellini.frontend.fragments.geral.inputs.inputFileUpload
+import com.pscarpellini.frontend.fragments.geral.inputs.inputImage
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
-import kotlinx.html.*
+import kotlinx.html.FlowContent
+import kotlinx.html.InputType
+import kotlinx.html.div
 
 fun FlowContent.novaPromocao() {
     formulario(id = "form-nova-promocao", classes = "flex flex-col gap-6", autoValidar = true) {
@@ -51,24 +51,9 @@ fun FlowContent.novaPromocao() {
                         hint = "Selecione a data de encerramento",
                         nomeDoCampo = "data_de_encerramento"
                     )
-                    div(classes = "flex flex-col w-full") {
-                        label(classes = "${CoresEnum.LOW_PURE.text} block text-base font-semibold") { +"Imagem de exibição" }
-                        span(classes = CoresEnum.LOW_LIGHT.text) {
-                            +"Tamanho máximo do arquivo é de 500kb. Os tipos suportados são .jpg e .png"
-                        }
 
-                        img(
-                            classes = "self-start mt-4 w-60 ${ArredondamentosEnum.MD}",
-                            src = ""
-                        ) {
-                            attributes["id"] = "imagem-preview"
-                        }
+                    inputImage(nomeDoCampo = "imagem_de_exibicao")
 
-                        inputFileUpload(
-                            classes = "self-start mt-4",
-                            nomeDoCampo = "imagem_de_exibicao"
-                        ) { +"Enviar imagem" }
-                    }
                     card(classes = "col-span-2", showBordas = true) {
                         includeContentGrid(colunas = 2, classes = "w-full") {
                             inputField(
@@ -101,25 +86,9 @@ fun FlowContent.novaPromocao() {
                 hxPath = CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO,
                 hxTarget = "form-nova-promocao",
                 hxEncoding = "multipart/form-data",
+                hxSwap = "none",
                 enabled = false,
             ) { +"Salvar" }
-        }
-    }
-
-    script {
-        unsafe {
-            +"""
-                document.getElementById('imagem_de_exibicao').addEventListener('change', function(event) {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            document.getElementById('imagem-preview').src = e.target.result;
-                        }
-                        reader.readAsDataURL(file);
-                    }
-                });
-            """.trimIndent()
         }
     }
 }

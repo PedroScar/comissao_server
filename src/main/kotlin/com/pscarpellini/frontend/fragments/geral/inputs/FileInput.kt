@@ -1,10 +1,6 @@
 package com.pscarpellini.frontend.fragments.geral.inputs
 
-import com.pscarpellini.frontend.enums.designsystem.ArredondamentosEnum
-import com.pscarpellini.frontend.enums.designsystem.CoresEnum
-import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
-import com.pscarpellini.frontend.fragments.geral.icone.icone
 import kotlinx.html.*
 
 fun FlowContent.inputFileUpload(
@@ -17,10 +13,13 @@ fun FlowContent.inputFileUpload(
     conteudo: FlowContent.() -> Unit,
 ) {
     div(classes = "relative inline-block") {
-        button(classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if(small) "py-1 px-4" else "py-2 px-6"} ${if(interativo) "cursor-pointer" else ""} transition-all duration-300 ${if(!enabled) "text-low-light" else ""} $classes") {
+        button(classes = "${tipo.cssProprio} disabled:pointer-events-none select-none font-semibold ${if (small) "py-1 px-4" else "py-2 px-6"} ${if (interativo) "cursor-pointer" else ""} transition-all duration-300 ${if (!enabled) "text-low-light" else ""} $classes") {
             conteudo()
         }
-        input(type = InputType.file, classes = "absolute inset-0 w-full h-full opacity-0 cursor-pointer") {
+        input(
+            type = InputType.file,
+            classes = "absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        ) {
             id = nomeDoCampo
             name = nomeDoCampo
         }
