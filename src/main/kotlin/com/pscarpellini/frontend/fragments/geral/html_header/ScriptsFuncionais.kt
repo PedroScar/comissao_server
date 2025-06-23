@@ -13,6 +13,8 @@ fun HEAD.includeScriptsFuncionais(
     script(src = "https://unpkg.com/htmx.org") {}
     script(src = "/static/scripts/HTMXConfigs.js") {}
 
+//    AVATAR
+    script(src = "/static/scripts/AvatarScript.js") {}
 //    MENU DROPDOWN
     script(src = "/static/scripts/DropdownScript.js") {}
 //    POPUP

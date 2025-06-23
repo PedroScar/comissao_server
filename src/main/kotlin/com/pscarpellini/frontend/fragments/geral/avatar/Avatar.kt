@@ -3,8 +3,10 @@ package com.pscarpellini.frontend.fragments.geral.avatar
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
 import kotlinx.html.FlowContent
+import kotlinx.html.ImgLoading
 import kotlinx.html.div
 import kotlinx.html.img
+import kotlinx.html.onError
 
 fun FlowContent.avatar(
     nome: String,
@@ -18,16 +20,22 @@ fun FlowContent.avatar(
     ) {
         if (!imagemUrl.isNullOrBlank()) {
             img(
+                loading = ImgLoading.lazy,
                 src = "data:image/png;base64, $imagemUrl",
                 alt = nome.firstOrNull()?.toString()?.uppercase().orEmpty(),
-                classes = "object-cover $tipo text-center items-center"
-            )
+                classes = "object-cover $tipo text-center items-center",
+            ) {
+                onError = "handleImageError(this, '${nome.firstOrNull()?.toString()?.uppercase().orEmpty()}')"
+            }
         } else if(!base64.isNullOrBlank()) {
             img(
+                loading = ImgLoading.lazy,
                 src = "data:image/png;base64, $base64",
                 alt = nome.firstOrNull()?.toString()?.uppercase().orEmpty(),
-                classes = "object-cover $tipo text-center items-center"
-            )
+                classes = "object-cover $tipo text-center items-center",
+            ) {
+                onError = "handleImageError(this, '${nome.firstOrNull()?.toString()?.uppercase().orEmpty()}')"
+            }
         } else +nome.firstOrNull()?.toString()?.uppercase().orEmpty()
     }
 }
