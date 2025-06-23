@@ -6,7 +6,7 @@ import com.pscarpellini.models.vos.VideoVO
 
 interface VideosRepository {
     suspend fun editarVideo(video: VideoVO): DbResponse<VideoVO>
-    suspend fun desabilitarVideo(videoId: Int, clienteId: Int): DbResponse<VideoVO>
+    suspend fun habilitarDesabilitarVideo(habilitar: Boolean, videoId: Int, clienteId: Int): DbResponse<VideoVO>
     suspend fun removerVideo(videoId: Int, clienteId: Int): DbResponse<Unit>
     suspend fun criarVideo(video: VideoVO): DbResponse<VideoVO>
     suspend fun carregarVideo(videoId: Int, clienteId: Int): DbResponse<VideoVO>

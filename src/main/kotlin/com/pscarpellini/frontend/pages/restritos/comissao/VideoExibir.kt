@@ -77,7 +77,17 @@ fun FlowContent.exibirVideo(
                 }
             }
 
-            if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.REMOVER_VIDEO) && !video.habilitado) {
+            if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_VIDEO) && !video.habilitado) {
+                botao(
+                    tipo = TiposBotaoEnum.PRIMARY,
+                    hxPath = CaminhosComissaoEnum.FORMULARIO_HABILITAR_VIDEO,
+                    hxParams = mapOf("id_video" to video.id.toString()),
+                    hxTarget = "visualizacao-video",
+                    enabled = true,
+                ) {
+                    icone(icone = IconesEnum.ADICIONAR)
+                    +"Habilitar video"
+                }
                 botao(
                     tipo = TiposBotaoEnum.WARNING_PRIMARY_ROUNDED,
                     hxPath = CaminhosComissaoEnum.FORMULARIO_REMOVER_VIDEO,

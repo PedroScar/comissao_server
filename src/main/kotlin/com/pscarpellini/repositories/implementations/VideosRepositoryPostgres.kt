@@ -38,7 +38,7 @@ class VideosRepositoryPostgres : VideosRepository {
         }.getOrDefault(DbResponse.Erro(null, message = "Ops... algo de errado aconteceu!"))
     }
 
-    override suspend fun desabilitarVideo(videoId: Int, clienteId: Int): DbResponse<VideoVO> = suspendTransaction {
+    override suspend fun habilitarDesabilitarVideo(habilitar: Boolean, videoId: Int, clienteId: Int): DbResponse<VideoVO> = suspendTransaction {
         val videoDAO = VideoDAO.find {
             (VideosTable.id eq videoId).and(VideosTable.clienteId eq clienteId)
         }.firstOrNull()
@@ -47,7 +47,7 @@ class VideosRepositoryPostgres : VideosRepository {
             if (videoDAO == null) {
                 DbResponse.Erro(message = "Video não encontrado")
             } else {
-                videoDAO.apply { habilitado = false }
+                videoDAO.apply { habilitado = habilitar }
                 DbResponse.Successo(videoDaoToModel(videoDAO))
             }
         }.onFailure {

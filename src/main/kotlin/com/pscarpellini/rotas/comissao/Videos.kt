@@ -319,11 +319,11 @@ suspend fun RoutingContext.handleFormularioNovoVideo(
 
 private fun String.pegarVideoId(): String = this.split('=').last()
 
-suspend fun RoutingContext.handleDesabilitarVideo(videosRepository: VideosRepository) {
+suspend fun RoutingContext.handleHabilitarDesabilitarVideo(videosRepository: VideosRepository, habilitar: Boolean) {
     val sessao = obterSessao()
     val parameters = call.receiveParameters()
     runCatching { parameters["id_video"]?.toInt() ?: -1 }.onSuccess { idVideo ->
-        videosRepository.desabilitarVideo(videoId = idVideo, clienteId = sessao.conta?.cliente?.id ?: -1)
+        videosRepository.habilitarDesabilitarVideo(habilitar = habilitar, videoId = idVideo, clienteId = sessao.conta?.cliente?.id ?: -1)
             .let { resposta ->
                 when (resposta) {
                     is DbResponse.Erro -> call.respondToast(
@@ -336,7 +336,7 @@ suspend fun RoutingContext.handleDesabilitarVideo(videosRepository: VideosReposi
                         includeMenuPrincipal(sessao)
                         includeHeaderLogado(sessao)
                         exibirVideo(sessao, resposta.data!!)
-                        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Vídeo desabilitado com sucesso!")
+                        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Vídeo ${if(habilitar) "habilitado" else "desabilitado"} com sucesso!")
                     }
                 }
             }
