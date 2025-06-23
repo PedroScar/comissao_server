@@ -1,6 +1,7 @@
 package com.pscarpellini.plugins
 
 import com.pscarpellini.exceptions.NaoLogadoException
+import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
 import com.pscarpellini.repositories.interfaces.*
@@ -26,7 +27,7 @@ fun Application.configurePages() {
 
     install(StatusPages) {
         exception<NaoLogadoException> { call, cause ->
-            call.respondText(text = "Você não poderia estar aqui!", status = HttpStatusCode.Forbidden)
+            call.respondRedirect (PaginasAbertasEnum.Login.path)
         }
         exception<Throwable> { call, cause ->
             call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)

@@ -336,7 +336,7 @@ suspend fun RoutingContext.handleDesabilitarVideo(videosRepository: VideosReposi
                         includeMenuPrincipal(sessao)
                         includeHeaderLogado(sessao)
                         exibirVideo(sessao, resposta.data!!)
-                        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video desabilitado com sucesso!")
+                        toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Vídeo desabilitado com sucesso!")
                     }
                 }
             }
@@ -364,7 +364,7 @@ suspend fun RoutingContext.handleRemoverVideo(videosRepository: VideosRepository
                                 includeMenuPrincipal(sessao)
                                 includeHeaderLogado(sessao)
                                 videos()
-                                toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Video desabilitado com sucesso!")
+                                toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Vídeo excluído com sucesso!")
                             }
                         }
                     }

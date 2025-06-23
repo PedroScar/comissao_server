@@ -55,6 +55,7 @@ suspend fun RoutingContext.handlePromocoes() {
 
 suspend fun RoutingContext.handleNovaPromocao() {
     val sessao = obterSessao()
+
     call.respondFragment(HttpStatusCode.OK) {
         sessao.paginaAtual = PaginasComissaoEnum.NOVA_PROMOCAO
         includeMenuPrincipal(sessao)
@@ -229,10 +230,7 @@ suspend fun RoutingContext.handleFormularioCriarPromocao(
                 )
 
                 is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-
-                    println("==================")
-                    println("RESPOSTA DB CRIAR PROMOCAO: SUCESSO")
-                    println("==================")
+                    novaPromocao()
                     toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção cadastrada com sucesso")
                 }
             }
@@ -382,11 +380,14 @@ suspend fun RoutingContext.handleEncerrarPromocao(promocoesRepository: Promocoes
                     )
 
                     is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                        exibirPromocao(sessao, resposta.data)
+                        val promoteste = resposta.data
+                        promoteste?.titulo = "TESTE MANUAL"
+                        exibirPromocao(sessao, promoteste)
+                        toast("Promoção encerrada com sucesso!")
                     }
                 }
             }
-    }
+}
 }
 
 suspend fun RoutingContext.handleSelectPromocoesAtivas(promocoesRepository: PromocoesRepository) {

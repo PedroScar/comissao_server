@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 data class PromocaoVO(
     val id: Int? = null,
     val clientId: Int,
-    val titulo: String,
+    var titulo: String,
     val subtitulo: String,
     val conteudo: String,
     val imagem: String,

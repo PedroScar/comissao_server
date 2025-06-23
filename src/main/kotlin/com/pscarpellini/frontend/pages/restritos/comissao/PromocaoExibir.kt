@@ -64,11 +64,16 @@ fun FlowContent.exibirPromocao(
                 botao(
                     tipo = TiposBotaoEnum.PRIMARY,
                     hxPath = CaminhosComissaoEnum.FORMULARIO_ENCERRAR_PROMOCAO,
+                    hxTarget = "visualizacao-promocao",
                     hxParams = mapOf("id_promocao" to promocao.id.toString()),
                     enabled = true,
                 ) {
-                    if(promocao.status == StatusPromocoesEnum.ATIVA) +"Encerrar promoção"
-                    else +"Cancelar promoção"
+                    when (promocao.status) {
+                        StatusPromocoesEnum.ATIVA -> +"Encerrar promoção"
+                        StatusPromocoesEnum.AGENDADA -> +"Cancelar promoção"
+                        StatusPromocoesEnum.CANCELADA -> +"Excluir promoção"
+                        StatusPromocoesEnum.ENCERRADA -> +"Excluir promoção"
+                    }
                 }
             }
         }

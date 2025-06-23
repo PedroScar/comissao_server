@@ -4,6 +4,7 @@ import com.pscarpellini.acesso.UsuariosLogados
 import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
 import com.pscarpellini.extensions.obterSessao
+import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.pages.abertos.componentes.componentsPage
@@ -40,7 +41,7 @@ fun Route.paginasAbertas(
     get(PaginasAbertasEnum.Login.path) {
         runCatching { obterSessao() }
             .onFailure { call.respondHtml(HttpStatusCode.OK) { loginPage() } }
-            .onSuccess { call.respondRedirect(CaminhosBaseEnum.INICIO.path) }
+            .onSuccess { call.redirecionarFormHTMX(CaminhosBaseEnum.INICIO.path) }
     }
 
     post(PaginasAbertasEnum.Login.path) {
@@ -73,7 +74,7 @@ fun Route.paginasAbertas(
                     }.onFailure {
                         call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "${it.message}")
                     }.onSuccess {
-                        call.respondRedirect(CaminhosBaseEnum.INICIO.path)
+                        call.redirecionarFormHTMX(CaminhosBaseEnum.INICIO.path)
                     }
                 }
             }

@@ -86,7 +86,7 @@ fun FlowContent.novaPromocao() {
                 hxPath = CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO,
                 hxTarget = "form-nova-promocao",
                 hxEncoding = "multipart/form-data",
-                hxSwap = "none",
+                hxSwap = "outerHTML",
                 enabled = false,
             ) { +"Salvar" }
         }

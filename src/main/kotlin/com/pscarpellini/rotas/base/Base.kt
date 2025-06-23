@@ -4,6 +4,7 @@ import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.extensions.fecharSessao
 import com.pscarpellini.extensions.obterSessao
+import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
@@ -28,7 +29,7 @@ suspend fun RoutingContext.handleInicio() {
 
 suspend fun RoutingContext.handleLogout() {
     fecharSessao()
-    call.respondRedirect(PaginasAbertasEnum.Landing.path)
+    call.redirecionarFormHTMX(PaginasAbertasEnum.Landing.path)
 }
 
 suspend fun RoutingContext.handleInterno() {
