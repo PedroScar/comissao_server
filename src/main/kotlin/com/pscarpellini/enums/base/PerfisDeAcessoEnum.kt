@@ -39,6 +39,7 @@ enum class PerfisDeAcessoEnum(
             PapeisDeAcessoEnum.CRIAR_PROMOCAO,
             PapeisDeAcessoEnum.EDITAR_PROMOCAO,
             PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
+            PapeisDeAcessoEnum.REMOVER_PROMOCAO,
 
       //      PapeisDeAcessoEnum.VISUALIZAR_RELATORIOS, //TODO Criar tela de relatórios
 

@@ -25,6 +25,7 @@ fun FlowContent.botao(
     hxReplaceUrl: String = "",
     hxSwap: String = "innerHTML",
     hxEncoding: String = "",
+    disabledElt: Boolean = false,
     isAutovalidateButton: Boolean = true,
     conteudo: FlowContent.() -> Unit
 ) {
@@ -45,6 +46,7 @@ fun FlowContent.botao(
         hxReplaceUrl = hxReplaceUrl,
         hxSwap = hxSwap,
         hxEncoding = hxEncoding,
+        disabledElt = disabledElt,
         isAutovalidateButton = isAutovalidateButton,
         conteudo = conteudo,
     )
@@ -67,6 +69,7 @@ fun FlowContent.botao(
     hxReplaceUrl: String = "",
     hxSwap: String = "innerHTML",
     hxEncoding: String = "",
+    disabledElt: Boolean = false,
     isAutovalidateButton: Boolean = true,
     conteudo: FlowContent.() -> Unit
 ) {
@@ -87,6 +90,7 @@ fun FlowContent.botao(
         hxReplaceUrl = hxReplaceUrl,
         hxSwap = hxSwap,
         hxEncoding = hxEncoding,
+        disabledElt = disabledElt,
         isAutovalidateButton = isAutovalidateButton,
         conteudo = conteudo,
     )

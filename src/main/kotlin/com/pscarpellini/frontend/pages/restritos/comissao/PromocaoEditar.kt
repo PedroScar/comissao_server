@@ -102,6 +102,7 @@ fun FlowContent.editarPromocao(
                 hxPath = CaminhosComissaoEnum.FORMULARIO_EDITAR_PROMOCAO,
                 hxTarget = "form-editar-promocao",
                 hxEncoding = "multipart/form-data",
+                disabledElt = true,
                 enabled = false,
             ) { +"Salvar" }
         }

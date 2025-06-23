@@ -76,6 +76,21 @@ fun FlowContent.exibirPromocao(
                     }
                 }
             }
+            if (
+                sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.REMOVER_PROMOCAO)
+                && (promocao?.status == StatusPromocoesEnum.ENCERRADA || promocao?.status == StatusPromocoesEnum.CANCELADA)
+            ) {
+                botao(
+                    tipo = TiposBotaoEnum.WARNING_PRIMARY_ROUNDED,
+                    hxPath = CaminhosComissaoEnum.FORMULARIO_REMOVER_PROMOCAO,
+                    hxParams = mapOf("id_promocao" to promocao.id.toString()),
+                    hxTarget = "visualizacao-promocao",
+                    enabled = true,
+                ) {
+                    icone(icone = IconesEnum.CLOSE_BRANCO)
+                    +"Remover promoção"
+                }
+            }
         }
     }
 }

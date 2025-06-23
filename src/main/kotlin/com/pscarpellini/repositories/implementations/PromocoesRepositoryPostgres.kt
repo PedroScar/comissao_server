@@ -177,4 +177,21 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
 
         DbResponse.Successo(promocaoDaoToModel(promocaoDAO))
     }
+
+    override suspend fun removerPromocao(promocaoId: Int, clienteId: Int): DbResponse<Unit> = suspendTransaction {
+        val promocaoDAO = PromocaoDAO.find {
+            (PromocoesTable.id eq promocaoId).and(PromocoesTable.clienteId eq clienteId)
+        }.firstOrNull()
+
+        if (promocaoDAO == null) return@suspendTransaction DbResponse.Erro(message = "Promoção não encontrada.")
+
+        runCatching {
+            promocaoDAO.delete()
+        }.onFailure {
+            it.printStackTrace()
+            return@suspendTransaction DbResponse.Erro(message = "Erro ao deletar a promoção.")
+        }
+
+        DbResponse.Successo(Unit)
+    }
 }

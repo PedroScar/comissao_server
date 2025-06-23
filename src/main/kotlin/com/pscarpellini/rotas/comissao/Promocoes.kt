@@ -380,14 +380,36 @@ suspend fun RoutingContext.handleEncerrarPromocao(promocoesRepository: Promocoes
                     )
 
                     is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                        val promoteste = resposta.data
-                        promoteste?.titulo = "TESTE MANUAL"
-                        exibirPromocao(sessao, promoteste)
+                        exibirPromocao(sessao, resposta.data)
                         toast("Promoção encerrada com sucesso!")
                     }
                 }
             }
+    }
 }
+
+suspend fun RoutingContext.handleRemoverPromocao(promocoesRepository: PromocoesRepository) {
+    val sessao = obterSessao()
+    val parameters = call.receiveParameters()
+    runCatching { parameters["id_promocao"]?.toInt() ?: -1 }.onSuccess { idPromocao ->
+        promocoesRepository.removerPromocao(promocaoId = idPromocao, clienteId = sessao.conta?.cliente?.id ?: -1)
+            .let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ops... algo de errado aconteceu!"
+                    )
+
+                    is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
+                        sessao.paginaAtual = PaginasComissaoEnum.VIDEOS
+                        includeMenuPrincipal(sessao)
+                        includeHeaderLogado(sessao)
+                        promocoes()
+                        toast("Promoção excluída com sucesso!")
+                    }
+                }
+            }
+    }
 }
 
 suspend fun RoutingContext.handleSelectPromocoesAtivas(promocoesRepository: PromocoesRepository) {

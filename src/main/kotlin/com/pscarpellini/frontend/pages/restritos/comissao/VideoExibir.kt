@@ -88,6 +88,9 @@ fun FlowContent.exibirVideo(
                     icone(icone = IconesEnum.ADICIONAR)
                     +"Habilitar video"
                 }
+            }
+
+            if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.REMOVER_VIDEO) && !video.habilitado) {
                 botao(
                     tipo = TiposBotaoEnum.WARNING_PRIMARY_ROUNDED,
                     hxPath = CaminhosComissaoEnum.FORMULARIO_REMOVER_VIDEO,

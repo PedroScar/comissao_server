@@ -9,11 +9,12 @@ enum class PapeisDeAcessoEnum(
     VISUALIZAR_PROMOCOES(nome = "Visualizar promoções", slug = "visualizar_promocoes"),
     CRIAR_PROMOCAO(nome = "Nova promoção", slug = "nova_promocao"),
     EDITAR_PROMOCAO(nome = "Editar promoção", slug = "editar_promocao"),
+    REMOVER_PROMOCAO(nome = "Remover promoção", slug = "remover_promocao"),
 
     VISUALIZAR_VIDEOS(nome = "Visualizar videos", slug = "visualizar_videos"),
     CRIAR_VIDEO(nome = "Novo video", slug = "novo_video"),
     EDITAR_VIDEO(nome = "Editar video", slug = "editar_video"),
-    REMOVER_VIDEO(nome = "Editar video", slug = "editar_video"),
+    REMOVER_VIDEO(nome = "Remover video", slug = "remover_video"),
 
     VISUALIZAR_SALDOS(nome = "Visualizar saldos", slug = "visualizar_saldos"),
     EDITAR_SALDOS(nome = "Editar saldos", slug = "editar_saldos"),

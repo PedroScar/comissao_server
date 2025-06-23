@@ -30,6 +30,7 @@ fun Route.paginasRestritas(
     post(CaminhosComissaoEnum.SELECT_PROMOCOES_ATIVAS.path) { handleSelectPromocoesAtivas(promocoesRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO.path) { handleFormularioCriarPromocao(promocoesRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_ENCERRAR_PROMOCAO.path) { handleEncerrarPromocao(promocoesRepository) }
+    post(CaminhosComissaoEnum.FORMULARIO_REMOVER_PROMOCAO.path) { handleRemoverPromocao(promocoesRepository) }
     post(CaminhosComissaoEnum.FORMULARIO_EDITAR_PROMOCAO.path) { handleFormularioEditarPromocao(promocoesRepository) }
 
     post(PaginasComissaoEnum.VIDEOS.caminho.path) { handleVideos() }

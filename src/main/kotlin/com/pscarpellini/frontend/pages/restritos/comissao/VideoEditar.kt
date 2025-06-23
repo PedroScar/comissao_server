@@ -72,6 +72,7 @@ fun FlowContent.editarVideo(
                 hxPath = CaminhosComissaoEnum.FORMULARIO_EDITAR_VIDEO,
                 hxTarget = "form-editar-video",
                 hxEncoding = "multipart/form-data",
+                disabledElt = true,
                 enabled = false,
             ) { +"Salvar" }
         }

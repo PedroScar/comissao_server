@@ -29,7 +29,7 @@ suspend fun RoutingContext.handleInicio() {
 
 suspend fun RoutingContext.handleLogout() {
     fecharSessao()
-    call.redirecionarFormHTMX(PaginasAbertasEnum.Landing.path)
+    call.respondRedirect(PaginasAbertasEnum.Landing.path)
 }
 
 suspend fun RoutingContext.handleInterno() {

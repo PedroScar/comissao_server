@@ -12,6 +12,7 @@ enum class CaminhosComissaoEnum(
     FORMULARIO_CRIAR_PROMOCAO(path = "/forms/promocoes/nova_promocao"),
     FORMULARIO_EDITAR_PROMOCAO(path = "/forms/promocoes/editar_promocao"),
     FORMULARIO_ENCERRAR_PROMOCAO(path = "/forms/promocoes/encerrar_promocao"),
+    FORMULARIO_REMOVER_PROMOCAO(path = "/forms/promocoes/remover_promocao"),
     SELECT_PROMOCOES_ATIVAS(path = "/select/promocoes/ativas"),
 
     VIDEOS(path = "/int/videos"),
