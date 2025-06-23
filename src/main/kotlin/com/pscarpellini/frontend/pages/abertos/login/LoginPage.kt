@@ -75,6 +75,7 @@ fun HTML.loginPage() {
                                 classes = "w-full",
                                 hxPath = PaginasAbertasEnum.Login.path,
                                 hxSwap = "none",
+                                disabledElt = true,
                                 hxMethod = FormMethod.post,
                                 hxIndicator = "loading-login"
                             ) { +"Entrar" }

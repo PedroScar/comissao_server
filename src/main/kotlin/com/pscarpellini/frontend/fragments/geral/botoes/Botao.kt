@@ -110,6 +110,7 @@ fun FlowContent.botao(
     hxSwap: String = "innerHTML",
     hxEncoding: String = "",
     isAutovalidateButton: Boolean = true,
+    disabledElt: Boolean = false,
     conteudo: FlowContent.() -> Unit
 ) {
     button(
@@ -119,6 +120,7 @@ fun FlowContent.botao(
         if (id != null) attributes["id"] = id
         if (isAutovalidateButton) attributes["ktAutovalidateButton"] = ""
         attributes["hx-${hxMethod.name}"] = hxPath
+        if (disabledElt) attributes["hx-disabled-elt"] = "this"
         if (hxTarget.isNotEmpty()) {
             attributes["hx-target"] = "#$hxTarget"
             attributes["hx-swap"] = hxSwap

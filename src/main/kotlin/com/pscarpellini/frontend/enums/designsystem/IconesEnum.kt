@@ -63,4 +63,5 @@ enum class IconesEnum(
     HOME("/static/icons/menu/home.svg", caminhoDoIconePreenchido = "/static/icons/menu/home_preenchido.svg"),
     PRECO("/static/icons/menu/preco.svg", caminhoDoIconePreenchido = "/static/icons/menu/preco_preenchido.svg"),
     USUARIOS("/static/icons/menu/usuarios.svg", caminhoDoIconePreenchido = "/static/icons/menu/usuarios_preenchido.svg"),
+    VIDEOS("/static/icons/menu/videos.svg", caminhoDoIconePreenchido = "/static/icons/menu/videos_preenchido.svg"),
 }

@@ -27,7 +27,7 @@ enum class ItensMenuEnum(
     ),
     VIDEOS(
         nome = "Videos",
-        icone = IconesEnum.CARRINHO,
+        icone = IconesEnum.VIDEOS,
         pagina = CaminhosComissaoEnum.VIDEOS,
         papelDeAcesso = PapeisDeAcessoEnum.VISUALIZAR_VIDEOS
     ),

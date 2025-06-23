@@ -19,7 +19,7 @@ enum class ItensMenuPilulaEnum(
     ),
     CRIAR_NOVO_VIDEO(
         textoCTA = "Criar video",
-        icone = IconesEnum.CARRINHO,
+        icone = IconesEnum.VIDEOS,
         pagina = CaminhosComissaoEnum.CRIAR_VIDEO
     ),
     MODIFICAR_SALDO(
