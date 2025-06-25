@@ -10,6 +10,7 @@ import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
 import com.pscarpellini.frontend.pages.abertos.componentes.componentsPage
 import com.pscarpellini.frontend.pages.abertos.landing.landingPage
 import com.pscarpellini.frontend.pages.abertos.login.loginPage
+import com.pscarpellini.frontend.pages.abertos.politicaprivacidade.politicaPrivacidadePage
 import com.pscarpellini.frontend.pages.abertos.senha.esqueciMinhaSenhaPage
 import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.models.DbResponse
@@ -18,7 +19,6 @@ import com.pscarpellini.repositories.interfaces.ContasRepository
 import io.ktor.http.*
 import io.ktor.server.html.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 
@@ -36,6 +36,10 @@ fun Route.paginasAbertas(
         runCatching { obterSessao() }
             .onSuccess { call.respondHtml(HttpStatusCode.OK) { landingPage(it) } }
             .onFailure { call.respondHtml(HttpStatusCode.OK) { landingPage() } }
+    }
+
+    get(PaginasAbertasEnum.PoliticaPrivacidade.path) {
+        call.respondHtml(HttpStatusCode.OK) { politicaPrivacidadePage() }
     }
 
     get(PaginasAbertasEnum.Login.path) {
@@ -68,7 +72,9 @@ fun Route.paginasAbertas(
                         sessao.conta = resposta.data
                         sessao.papeisDeAcesso = perfilDeAcesso.papeis
 
-                        if (!isUsuarioLogado(sessao)) { UsuariosLogados.lista.add(sessao) }
+                        if (!isUsuarioLogado(sessao)) {
+                            UsuariosLogados.lista.add(sessao)
+                        }
 
                         call.sessions.set(sessao.toCookieVO())
                     }.onFailure {
@@ -94,6 +100,7 @@ enum class PaginasAbertasEnum(
     override val path: String
 ) : IPaginaEnum {
     Landing("/"),
+    PoliticaPrivacidade("/politicaPrivacidadeMobile"),
     Login("/login"),
     EsqueciMinhaSenha("/esqueciMinhaSenha"),
     Components("/components"),
