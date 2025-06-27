@@ -27,10 +27,6 @@ fun FlowContent.saldosDosPromotores() {
                 hxIndicator = "loading_$idDaTabela",
                 icone = IconesEnum.BUSCAR
             )
-//            botao(tipo = TiposBotaoEnum.NEUTRAL) {
-//                icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
-//                +"Filtro"
-//            }
         }
         autoLoaderFragment(
             id = idDaTabela,

@@ -13,7 +13,6 @@ fun RoutingContext.obterSessao(): SessaoUsuarioVO = run {
     UsuariosLogados.lista.find { usuarioLogado ->
         usuarioLogado.conta?.id == sessao.idUsuario &&
                 usuarioLogado.conta?.cliente?.id == sessao.idCliente
-
     } ?: throw NaoLogadoException()
 }
 

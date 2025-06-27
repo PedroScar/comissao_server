@@ -41,7 +41,6 @@ private fun exibirLinhaSaldo(saldo: SaldoVO): List<FlowContent.() -> Unit> {
         {
             div(classes = "flex flex-row w-64 justify-between gap-2 ${CoresEnum.BRAND_LIGHT.bg} ${CoresEnum.LOW_DARK.text} items-center font-semibold ${ArredondamentosEnum.PILL} py-2 px-4") {
                 span(classes = "grow") { +saldo.saldo.formatarValorMonetario() }
-                botao(tipo = TiposBotaoEnum.PRIMARY) { +"Modificar" }
             }
         },
         { +"5" },

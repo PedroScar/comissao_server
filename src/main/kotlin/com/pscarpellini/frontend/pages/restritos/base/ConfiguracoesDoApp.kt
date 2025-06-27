@@ -1,6 +1,8 @@
 package com.pscarpellini.frontend.pages.restritos.base
 
+import com.pscarpellini.enums.base.PapeisDeAcessoEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
+import com.pscarpellini.enums.comissao.StatusPromocoesEnum
 import com.pscarpellini.frontend.fragments.geral.botoes.botao
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.formulario.formulario
@@ -21,29 +23,33 @@ fun FlowContent.configuracoesDoApp(
                 div(classes = "flex flex-col w-full gap-2") {
                     h2(classes = "grow") { +"Dados da empresa" }
                     div(classes = "grid grid-cols-2 gap-6 w-full") {
-                        linhaValor(titulo = "Nome da empresa", valor = sessao.conta?.nome ?: "")
-                        linhaValor(titulo = "Contato para suporte", valor = sessao.conta?.email ?: "")
-                        linhaValor(titulo = "Serviços contratados", valor = sessao.conta?.nome ?: "")
-                        linhaValor(titulo = "CNPJ", valor = sessao.conta?.email ?: "")
+                        linhaValor(titulo = "Nome da empresa", valor = sessao.conta?.cliente?.nome ?: "")
+                        linhaValor(titulo = "Contato para suporte", valor = sessao.conta?.cliente?.email ?: "")
+//                        linhaValor(titulo = "Serviços contratados", valor = sessao.conta?.nome ?: "")
+                        linhaValor(titulo = "CNPJ", valor = sessao.conta?.cliente?.cnpj ?: "")
                     }
                 }
                 div(classes = "flex flex-col w-full gap-2") {
                     h2(classes = "grow") { +"Tema do aplicativo" }
                     div(classes = "grid grid-cols-2 gap-6 w-full") {
-                        linhaValor(titulo = "Logotipo da empresa", valor = sessao.conta?.email ?: "")
-                        linhaValor(titulo = "Contato para suporte", valor = sessao.conta?.email ?: "")
+                        linhaValor(titulo = "Logotipo da empresa", valor = sessao.conta?.cliente?.email ?: "")
+//                        linhaValor(titulo = "Contato para suporte", valor = sessao.cliente?.email ?: "")
                     }
                 }
             }
         }
         div(classes = "self-end flex flex-row gap-2") {
-            botao(
-                hxPath = CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO,
-                hxTarget = "form-configuracoes-app",
-                hxSwap = "outerHTML",
-                hxEncoding = "multipart/form-data",
-                enabled = false,
-            ) { +"Salvar" }
+            if (
+                sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_CONFIGURACOES_DO_APP)
+            ) {
+                botao(
+                    hxPath = CaminhosComissaoEnum.FORMULARIO_CRIAR_PROMOCAO,
+                    hxTarget = "form-configuracoes-app",
+                    hxSwap = "outerHTML",
+                    hxEncoding = "multipart/form-data",
+                    enabled = false,
+                ) { +"Salvar" }
+            }
         }
     }
 }
