@@ -45,7 +45,7 @@ fun Route.fragmentsRestritos(
     }
 
     post(FragmentsRestritosEnum.FRAGMENT_TABELA_SALDOS_DOS_PROMOTORES.path) {
-        handleFragmentTabelaSaldosDosPromotores(saldosRepository)
+        handleFragmentTabelaSaldosDosPromotores(saldosRepository, promocoesRepository)
     }
 
     post(FragmentsRestritosEnum.FRAGMENT_POPUP_MODIFICAR_SALDO.path) {

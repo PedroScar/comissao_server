@@ -4,6 +4,7 @@ import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.PromocaoVO
 
 interface PromocoesRepository {
+    suspend fun carregarTotalTransacoesPorConta(contaIds: List<Int>): DbResponse<List<Triple<Int, Int, Int>>>
     suspend fun editarPromocao(promocao: PromocaoVO): DbResponse<PromocaoVO>
     suspend fun listarPromocoesAtivas(clienteId: Int): DbResponse<List<PromocaoVO>>
     suspend fun carregarPromocoes(termo: String = "", clienteId: Int): DbResponse<List<PromocaoVO>>

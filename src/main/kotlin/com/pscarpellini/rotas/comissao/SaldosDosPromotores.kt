@@ -14,12 +14,16 @@ import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.NovoExtratoVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
+import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.repositories.interfaces.SaldosRepository
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
-suspend fun RoutingContext.handleFragmentTabelaSaldosDosPromotores(saldosRepository: SaldosRepository) {
+suspend fun RoutingContext.handleFragmentTabelaSaldosDosPromotores(
+    saldosRepository: SaldosRepository,
+    promocoesRepository: PromocoesRepository
+) {
     val parameters = call.receiveParameters()
 
     val busca = parameters["busca"] ?: ""
@@ -27,8 +31,26 @@ suspend fun RoutingContext.handleFragmentTabelaSaldosDosPromotores(saldosReposit
     val sessao = obterSessao()
     saldosRepository.carregarSaldoContas(nome = busca, clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
         when (resposta) {
-            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-            is DbResponse.Successo -> { call.respondFragment { includeTabelaDeSaldos(saldos = resposta.data) } }
+            is DbResponse.Erro -> call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                mensagem = resposta.mensagem ?: "Ops... algo aconteceu"
+            )
+
+            is DbResponse.Successo -> {
+                promocoesRepository.carregarTotalTransacoesPorConta(resposta.data!!.map { it.conta.id!! }).let { resposta2Chamada ->
+                    when (resposta2Chamada) {
+                        is DbResponse.Erro -> call.respondToast(
+                            tipo = TiposToastEnum.ERROR,
+                            mensagem = resposta.mensagem ?: "Ops... algo aconteceu"
+                        )
+
+                        is DbResponse.Successo -> {
+                            promocoesRepository.carregarTotalTransacoesPorConta(resposta.data.map { it.conta.id!! })
+                            call.respondFragment { includeTabelaDeSaldos(saldos = resposta.data, listaTransacoes = resposta2Chamada.data) }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -53,15 +75,30 @@ suspend fun RoutingContext.handlePopupModificarSaldoInfosPromotor(contasReposito
     val promotor = parameters["promotor"] ?: ""
 
     val sessao = obterSessao()
-    contasRepository.carregarPromotor(promotorId = promotor.toInt(), clienteId = sessao.conta?.cliente?.id!!).let { resposta ->
-        when (resposta) {
-            is DbResponse.Erro -> call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Credenciais inválidas, tente novamente.")
-            is DbResponse.Successo -> call.respondFragment {
-                linhaValor(id = "popup_valor_cpf", titulo = "CPF", valor = resposta.data?.cpf, hxSwapOob = "outerHTML:#popup_valor_cpf")
-                linhaValor(id = "popup_valor_saldo_atual", titulo = "Saldo atual", valor = resposta.data?.saldo?.formatarValorMonetario() ?: "Sem saldo", hxSwapOob = "outerHTML:#popup_valor_saldo_atual")
+    contasRepository.carregarPromotor(promotorId = promotor.toInt(), clienteId = sessao.conta?.cliente?.id!!)
+        .let { resposta ->
+            when (resposta) {
+                is DbResponse.Erro -> call.respondToast(
+                    tipo = TiposToastEnum.ERROR,
+                    mensagem = "Credenciais inválidas, tente novamente."
+                )
+
+                is DbResponse.Successo -> call.respondFragment {
+                    linhaValor(
+                        id = "popup_valor_cpf",
+                        titulo = "CPF",
+                        valor = resposta.data?.cpf,
+                        hxSwapOob = "outerHTML:#popup_valor_cpf"
+                    )
+                    linhaValor(
+                        id = "popup_valor_saldo_atual",
+                        titulo = "Saldo atual",
+                        valor = resposta.data?.saldo?.formatarValorMonetario() ?: "Sem saldo",
+                        hxSwapOob = "outerHTML:#popup_valor_saldo_atual"
+                    )
+                }
             }
         }
-    }
 }
 
 suspend fun RoutingContext.handleAlterarSaldo(extratosRepository: ExtratosRepository) {
@@ -73,7 +110,10 @@ suspend fun RoutingContext.handleAlterarSaldo(extratosRepository: ExtratosReposi
     val promocao = parameters["promocao"]
     val isCredito = parameters["isCredito"] ?: "false"
 
-    if (contaSaldo.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Você precisa selecionar um promotor")
+    if (contaSaldo.isEmpty()) call.respondToast(
+        tipo = TiposToastEnum.ERROR,
+        mensagem = "Você precisa selecionar um promotor"
+    )
     if (valor.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "O extrato deve ter um valor")
 
     runCatching {
@@ -87,8 +127,18 @@ suspend fun RoutingContext.handleAlterarSaldo(extratosRepository: ExtratosReposi
             )
         )
     }
-        .onSuccess { call.respondFragment(fecharPopupAberto = true) { toast(tipo = TiposToastEnum.SUCCESS, mensagem = if(isCredito.toBoolean()) "Saldo adicionado com sucesso!" else "Saldo removido com sucesso!") } }
+        .onSuccess {
+            call.respondFragment(fecharPopupAberto = true) {
+                toast(
+                    tipo = TiposToastEnum.SUCCESS,
+                    mensagem = if (isCredito.toBoolean()) "Saldo adicionado com sucesso!" else "Saldo removido com sucesso!"
+                )
+            }
+        }
         .onFailure {
-            call.respondToast(tipo = TiposToastEnum.ERROR, if(it.message?.contains("Saldo insuficiente") == true) "Saldo insuficiente para a operação" else "Erro ao adicionar registro de extrato")
+            call.respondToast(
+                tipo = TiposToastEnum.ERROR,
+                if (it.message?.contains("Saldo insuficiente") == true) "Saldo insuficiente para a operação" else "Erro ao adicionar registro de extrato"
+            )
         }
 }
