@@ -36,7 +36,7 @@ data class SessaoUsuarioVO(
     fun toCookieVO(): CookieVO = run {
         CookieVO(
             idUsuario = conta!!.id!!,
-            idCliente = conta!!.cliente!!.id
+            idCliente = conta!!.cliente!!.id!!
         )
     }
 }

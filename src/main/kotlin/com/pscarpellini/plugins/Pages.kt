@@ -19,6 +19,7 @@ fun Application.configurePages() {
 
     val contadoresDashboardViewRepository: ContadoresDashboardViewRepository by inject()
     val contasRepository: ContasRepository by inject()
+    val clienteRepository: ClienteRepository by inject()
     val saldosRepository: SaldosRepository by inject()
     val extratosRepository: ExtratosRepository by inject()
     val promocoesRepository: PromocoesRepository by inject()
@@ -46,7 +47,7 @@ fun Application.configurePages() {
         fragmentsAbertos(emailSender, contasRepository)
 
         paginasAbertas(contasRepository)
-        paginasRestritas(contasRepository, promocoesRepository, extratosRepository, videosRepository)
+        paginasRestritas(contasRepository, clienteRepository, promocoesRepository, extratosRepository, videosRepository)
 
         widgetsInicio(promocoesRepository, extratosRepository, contadoresDashboardViewRepository)
 

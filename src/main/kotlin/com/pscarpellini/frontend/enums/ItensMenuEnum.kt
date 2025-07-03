@@ -52,7 +52,7 @@ enum class ItensMenuEnum(
     CONFIGURACOES_DO_APP(
         nome = "Configurações do app",
         icone = IconesEnum.APP,
-        pagina = CaminhosBaseEnum.CONFIGURACOES_DO_APP,
+        pagina = CaminhosBaseEnum.EXIBIR_CONFIGURACOES_DO_APP,
         papelDeAcesso = PapeisDeAcessoEnum.VISUALIZAR_CONFIGURACOES_DO_APP
     ),
     HISTORICO_DE_TRANSACOES(

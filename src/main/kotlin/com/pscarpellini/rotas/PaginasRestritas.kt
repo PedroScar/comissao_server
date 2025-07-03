@@ -4,6 +4,7 @@ import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.enums.comissao.PaginasComissaoEnum
+import com.pscarpellini.repositories.interfaces.ClienteRepository
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.repositories.interfaces.ExtratosRepository
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
@@ -14,6 +15,7 @@ import io.ktor.server.routing.*
 
 fun Route.paginasRestritas(
     contasRepository: ContasRepository,
+    clienteRepository: ClienteRepository,
     promocoesRepository: PromocoesRepository,
     extratosRepository: ExtratosRepository,
     videosRepository: VideosRepository
@@ -21,7 +23,10 @@ fun Route.paginasRestritas(
     get(PaginasRestritasEnum.INTERNO.caminho.path) { handleInterno() }
     post(PaginasRestritasEnum.INICIO.caminho.path) { handleInicio() }
     get(PaginasRestritasEnum.LOGOUT.caminho.path) { handleLogout() }
-    post(PaginasRestritasEnum.CONFIGURACOES_DO_APP.caminho.path) { handleConfiguracoesDoApp() }
+
+    post(PaginasRestritasEnum.EXIBIR_CONFIGURACOES_DO_APP.caminho.path) { handleConfiguracoesDoApp(clienteRepository) }
+    post(PaginasRestritasEnum.EDITAR_CONFIGURACOES_DO_APP.caminho.path) { handleEditarConfiguracoesDoApp(clienteRepository) }
+    post(CaminhosBaseEnum.FORMULARIO_EDITAR_CONFIGURACOES_APP.path) { handleFormularioEditarConfiguracoesApp(clienteRepository) }
 
     post(PaginasComissaoEnum.PROMOCOES.caminho.path) { handlePromocoes() }
     post(PaginasComissaoEnum.NOVA_PROMOCAO.caminho.path) { handleNovaPromocao() }

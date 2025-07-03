@@ -16,7 +16,7 @@ fun FlowContent.includeMenuPrincipal(
         attributes["id"] = "menu-principal"
         attributes["hx-swap-oob"] = "true"
         includeMenuSeletorServico(servico = sessao.servico, classes = "")
-        includeMenuCliente(sessao.conta?.cliente?.nome ?: "", classes = "mt-4")
+        includeMenuCliente(cliente = sessao.conta?.cliente, classes = "mt-4")
 
         div("flex-grow overflow-y-auto space-y-1 mt-4") {
             sessao.menusDisponiveis.obterListaGeral(sessao.papeisDeAcesso).forEach {

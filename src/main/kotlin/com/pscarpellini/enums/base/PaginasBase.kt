@@ -38,9 +38,15 @@ enum class PaginasRestritasEnum(
         itemMenuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
     ),
 
-    CONFIGURACOES_DO_APP(
+    EXIBIR_CONFIGURACOES_DO_APP(
         titulo = "Configurações do app",
-        caminho = CaminhosBaseEnum.CONFIGURACOES_DO_APP,
+        caminho = CaminhosBaseEnum.EXIBIR_CONFIGURACOES_DO_APP,
+        itemMenuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP
+    ),
+
+    EDITAR_CONFIGURACOES_DO_APP(
+        titulo = "Editar configurações do app",
+        caminho = CaminhosBaseEnum.EDITAR_CONFIGURACOES_DO_APP,
         itemMenuSelecionado = ItensMenuEnum.CONFIGURACOES_DO_APP
     ),
 

@@ -36,6 +36,6 @@ enum class ItensMenuPilulaEnum(
     CONFIGURACOES_DO_APP(
         textoCTA = "Configurar app",
         icone = IconesEnum.APP,
-        pagina = CaminhosBaseEnum.CONFIGURACOES_DO_APP
+        pagina = CaminhosBaseEnum.EXIBIR_CONFIGURACOES_DO_APP
     ),
 }

@@ -4,11 +4,9 @@ import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.extensions.fecharSessao
 import com.pscarpellini.extensions.obterSessao
-import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
-import com.pscarpellini.frontend.pages.restritos.base.configuracoesDoApp
 import com.pscarpellini.frontend.pages.restritos.base.inicio
 import com.pscarpellini.frontend.pages.restritos.base.interno
 import com.pscarpellini.rotas.PaginasAbertasEnum
@@ -37,15 +35,5 @@ suspend fun RoutingContext.handleInterno() {
     call.respondHtml(HttpStatusCode.OK) {
         val caminho = call.parameters["path"] ?: CaminhosBaseEnum.INICIO.path
         interno(sessao = sessao, caminho = caminho)
-    }
-}
-
-suspend fun RoutingContext.handleConfiguracoesDoApp() {
-    val sessao = obterSessao()
-    sessao.paginaAtual = PaginasRestritasEnum.CONFIGURACOES_DO_APP
-    call.respondFragment(HttpStatusCode.OK) {
-        includeMenuPrincipal(sessao)
-        includeHeaderLogado(sessao)
-        configuracoesDoApp(sessao)
     }
 }
