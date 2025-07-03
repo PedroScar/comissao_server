@@ -23,11 +23,11 @@ fun Application.configureDI() {
             single<VideosRepository> { VideosRepositoryPostgres() }
             single<EmailSender> {
                 EmailSender(
-                    host = "smtp.gmail.com",
+                    host = "smtp.zoho.com",
                     port = 587,
-                    username = "E-MAIL",
-                    password = "SENHA",
-                    fromEmail = "E-MAIL",
+                    username = "suporte@lumenapps.com.br",
+                    password = "eNAb9LCF95F2JTUGDUby7xrWEIUWin0q",
+                    fromEmail = "Lumen Apps",
                 )
             }
         })
