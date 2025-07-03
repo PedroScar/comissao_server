@@ -24,7 +24,7 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.INICIO.caminho.path) { handleInicio() }
     get(PaginasRestritasEnum.LOGOUT.caminho.path) { handleLogout() }
 
-    post(PaginasRestritasEnum.EXIBIR_CONFIGURACOES_DO_APP.caminho.path) { handleConfiguracoesDoApp(clienteRepository) }
+    post(PaginasRestritasEnum.EXIBIR_CONFIGURACOES_DO_APP.caminho.path) { handleExibirConfiguracoesDoApp(clienteRepository) }
     post(PaginasRestritasEnum.EDITAR_CONFIGURACOES_DO_APP.caminho.path) { handleEditarConfiguracoesDoApp(clienteRepository) }
     post(CaminhosBaseEnum.FORMULARIO_EDITAR_CONFIGURACOES_APP.path) { handleFormularioEditarConfiguracoesApp(clienteRepository) }
 

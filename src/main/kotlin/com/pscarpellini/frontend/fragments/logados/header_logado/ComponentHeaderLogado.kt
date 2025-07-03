@@ -5,7 +5,9 @@ import com.pscarpellini.enums.base.PaginasRestritasEnum
 import com.pscarpellini.frontend.enums.designsystem.CoresEnum
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.frontend.enums.designsystem.PosicoesDropdownEnum
+import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
+import com.pscarpellini.frontend.fragments.geral.avatar.avatar
 import com.pscarpellini.frontend.fragments.geral.botoes.botaoHX
 import com.pscarpellini.frontend.fragments.geral.card.card
 import com.pscarpellini.frontend.fragments.geral.dropdown.DropdownDivider
@@ -48,7 +50,7 @@ fun FlowContent.includeHeaderLogado(
                 posicao = PosicoesDropdownEnum.DIREITA,
                 botao = {
                     div(classes = "flex flex-row") {
-                        icone(IconesEnum.USUARIO, showBackground = true, corFundo = CoresEnum.HIGH_PURE)
+                        avatar(nome = sessao.conta?.nome ?: "", imagemUrl = sessao.conta?.imagemDePerfil, tipo = TiposAvatarEnum.MEDIUM_CIRCLE)
                     }
                 },
                 opcoes = arrayListOf(

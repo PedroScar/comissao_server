@@ -1,8 +1,9 @@
 package com.pscarpellini.rotas.base
 
 import com.pscarpellini.enums.base.PaginasRestritasEnum
-import com.pscarpellini.enums.comissao.PaginasComissaoEnum
+import com.pscarpellini.extensions.adicionarToastNaResposta
 import com.pscarpellini.extensions.obterSessao
+import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.extensions.respondFragment
 import com.pscarpellini.extensions.respondToast
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
@@ -11,9 +12,9 @@ import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLo
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.base.editarConfiguracoesDoApp
 import com.pscarpellini.frontend.pages.restritos.base.exibirConfiguracoesDoApp
-import com.pscarpellini.frontend.pages.restritos.comissao.videos
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.vos.ClienteVO
+import com.pscarpellini.models.vos.SessaoUsuarioVO
 import com.pscarpellini.repositories.interfaces.ClienteRepository
 import io.ktor.http.*
 import io.ktor.http.content.*
@@ -22,7 +23,18 @@ import io.ktor.server.routing.*
 import io.ktor.utils.io.*
 import java.util.*
 
-suspend fun RoutingContext.handleConfiguracoesDoApp(
+private suspend fun RoutingContext.devolverExibirConfiguracoesDoApp(
+    sessao: SessaoUsuarioVO,
+    cliente: ClienteVO
+) {
+    call.respondFragment(HttpStatusCode.OK) {
+        includeMenuPrincipal(sessao)
+        includeHeaderLogado(sessao)
+        exibirConfiguracoesDoApp(sessao = sessao, cliente = cliente)
+    }
+}
+
+suspend fun RoutingContext.handleExibirConfiguracoesDoApp(
     clienteRepository: ClienteRepository
 ) {
     val sessao = obterSessao()
@@ -42,11 +54,7 @@ suspend fun RoutingContext.handleConfiguracoesDoApp(
                         mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar o cliente selecionado"
                     )
                 } else {
-                    call.respondFragment(HttpStatusCode.OK) {
-                        includeMenuPrincipal(sessao)
-                        includeHeaderLogado(sessao)
-                        exibirConfiguracoesDoApp(sessao = sessao, cliente = resposta.data)
-                    }
+                    devolverExibirConfiguracoesDoApp(sessao = sessao, cliente = resposta.data)
                 }
             }
         }
@@ -170,7 +178,7 @@ suspend fun RoutingContext.handleFormularioEditarConfiguracoesApp(
         when (resposta) {
             is DbResponse.Erro -> {
                 call.respondFragment(HttpStatusCode.OK) {
-                    videos()
+                    exibirConfiguracoesDoApp(sessao, sessao.conta?.cliente!!)
                     toast(tipo = TiposToastEnum.ERROR, mensagem = resposta.mensagem ?: "Ops... algo errado aconteceu!")
                 }
             }
@@ -178,10 +186,7 @@ suspend fun RoutingContext.handleFormularioEditarConfiguracoesApp(
             is DbResponse.Successo -> {
                 sessao.conta?.cliente = resposta.data
                 call.respondFragment(HttpStatusCode.OK) {
-                    sessao.paginaAtual = PaginasComissaoEnum.EXIBIR_VIDEO
-                    includeMenuPrincipal(sessao)
-                    includeHeaderLogado(sessao)
-                    exibirConfiguracoesDoApp(sessao = sessao, cliente = clienteEditado)
+                    exibirConfiguracoesDoApp(sessao, sessao.conta?.cliente!!)
                     toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Configurações do App alteradas com sucesso!")
                 }
             }
