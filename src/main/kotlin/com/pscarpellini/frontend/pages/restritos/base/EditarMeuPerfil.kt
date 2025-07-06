@@ -60,15 +60,15 @@ fun FlowContent.editarMeuPerfil(
                     )
                 }
 
-                div(classes = "flex flex-col gap-4 w-full") {
-                    h2 { +"Senha" }
-                    span (classes = CoresEnum.LOW_LIGHT.text) {
-                        +"Proteja sua conta com uma senha exclusiva. Lembre-se, você pode atualizá-la"
-                        br
-                        +"sempre que necessário."
-                    }
-                    botaoLink(link = "#", tipo = TiposBotaoEnum.NEUTRAL, classes = "self-start") { +"Alterar senha" }
-                }
+//                div(classes = "flex flex-col gap-4 w-full") {
+//                    h2 { +"Senha" }
+//                    span (classes = CoresEnum.LOW_LIGHT.text) {
+//                        +"Proteja sua conta com uma senha exclusiva. Lembre-se, você pode atualizá-la"
+//                        br
+//                        +"sempre que necessário."
+//                    }
+//                    botaoLink(link = "#", tipo = TiposBotaoEnum.NEUTRAL, classes = "self-start") { +"Alterar senha" }
+//                }
             }
         }
         div(classes = "self-end flex flex-row gap-2") {

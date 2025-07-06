@@ -22,12 +22,18 @@ fun Application.configureDI() {
             single<ExtratosRepository> { ExtratosRepositoryPostgres() }
             single<VideosRepository> { VideosRepositoryPostgres() }
             single<EmailSender> {
+                val host = environment.config.property("email.host").getString()
+                val port = environment.config.property("email.port").getString().toInt()
+                val username = environment.config.property("email.username").getString()
+                val password = environment.config.property("email.password").getString()
+                val fromEmail = environment.config.property("email.fromEmail").getString()
+
                 EmailSender(
-                    host = "smtp.zoho.com",
-                    port = 587,
-                    username = "suporte@lumenapps.com.br",
-                    password = "eNAb9LCF95F2JTUGDUby7xrWEIUWin0q",
-                    fromEmail = "Lumen Apps",
+                    host = host,
+                    port = port,
+                    username = username,
+                    password = password,
+                    fromEmail = fromEmail,
                 )
             }
         })

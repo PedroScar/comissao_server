@@ -5,3 +5,9 @@ ktor:
     deployment:
         port: 8080
         maxPartSize: 10M
+email:
+    host: smtp.zoho.com
+    port: 587
+    username: suporte@lumenapps.com.br
+    password: eNAb9LCF95F2JTUGDUby7xrWEIUWin0q
+    fromEmail: suporte@lumenapps.com.br

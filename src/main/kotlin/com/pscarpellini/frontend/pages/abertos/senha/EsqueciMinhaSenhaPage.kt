@@ -57,10 +57,10 @@ fun HTML.esqueciMinhaSenhaPage() {
                             }
 
                             inputField(
-                                label = "E-mail",
+                                label = "Usuário ou e-mail",
                                 inputType = InputType.text,
                                 nomeDoCampo = "email",
-                                hint = "Digite seu e-mail"
+                                hint = "Digite seu nome de usuário ou e-mail"
                             )
 
                             botao(

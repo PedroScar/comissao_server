@@ -35,7 +35,7 @@ fun Route.fragmentsAbertos(
                                 appendHTML().html {
                                     includeHtmlHeader()
                                     body {
-                                        h1 (classes = "px-6 py-4 ${CoresEnum.BRAND_PURE.bg} ${CoresEnum.HIGH_LIGHT.text} ${ArredondamentosEnum.PILL}") { +"Redefinição de senha" }
+                                        h1 (classes = "px-6 py-4 ${CoresEnum.BRAND_PURE.bg} ${CoresEnum.HIGH_LIGHT.text} ${ArredondamentosEnum.PILL}") { +"Redefinição de senha - Lumen Apps" }
                                         p { +"Você esqueceu sua senha e nós redefinimos para você!" }
                                         br {  }
                                         p { +"Para fazer login, digite o seu nome de usuário ou endereço de e-mail cadastrado e a senha:" }
@@ -46,9 +46,8 @@ fun Route.fragmentsAbertos(
                                 }
                             }
                             emailSender.enviarEmail(
-                                destinatario = "otaviolmsantos@gmail.com",
-//                                destinatario = email,
-                                assunto = "Redefinição de senha",
+                                destinatario = email,
+                                assunto = "Redefinição de senha - Lumen Apps",
                                 corpo = htmlContent
                             )
                         }
