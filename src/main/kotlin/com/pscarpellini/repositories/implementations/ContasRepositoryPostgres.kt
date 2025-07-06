@@ -117,17 +117,15 @@ class ContasRepositoryPostgres : ContasRepository {
         DbResponse.Successo(conta)
     }
 
-    override suspend fun validarEmailEsqueciMinhaSenha(email: String): Boolean = suspendTransaction {
-        runCatching {
-            ContaDAO
-                .find { ContasTable.email.lowerCase().eq(email.lowercase()) }
-                .limit(1)
-                .firstOrNull()
-        }.onFailure {
-            println("=============================================================================")
-            println("ERRO AQUI: ${it.message}")
-            println("=============================================================================")
-        }.getOrNull() != null
+    override suspend fun validarEmailEsqueciMinhaSenha(emailOuUsuario: String): Pair<String, Boolean> = suspendTransaction {
+        val cliente = ContaDAO.find {
+            ContasTable.usuario.lowerCase()
+                .eq(emailOuUsuario.lowercase())
+                .or { ContasTable.email.lowerCase()
+                    .eq(emailOuUsuario.lowercase()) }
+        }.limit(1).firstOrNull()
+            ?: throw IllegalArgumentException("Cliente não encontrado")
+        cliente.email to true
     }
 
     override suspend fun definirSenhaProvisoria(email: String, novaSenha: String): Boolean = suspendTransaction {

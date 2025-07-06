@@ -21,15 +21,15 @@ fun Route.fragmentsAbertos(
     post(FragmentsAbertosEnum.FORMULARIO_REDEFINIR_SENHA.path) {
         val parameters = call.receiveParameters()
 
-        val email = (parameters["email"] ?: "").toString()
+        val usuarioOuEmail = (parameters["email"] ?: "").toString()
 
-        if (email.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "O campo email deve estar preenchido")
+        if (usuarioOuEmail.isEmpty()) call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "O campo email deve estar preenchido")
         else {
-            runCatching { contasRepository.validarEmailEsqueciMinhaSenha(email) }
+            runCatching { contasRepository.validarEmailEsqueciMinhaSenha(usuarioOuEmail) }
                 .onSuccess {
-                    if(it) {
+                    if(it.second) {
                         val novaSenhaAleatoria = gerarSenhaBasica()
-                        contasRepository.definirSenhaProvisoria(email = email, novaSenha = novaSenhaAleatoria)
+                        contasRepository.definirSenhaProvisoria(email = it.first, novaSenha = novaSenhaAleatoria)
                         runCatching {
                             val htmlContent = buildString {
                                 appendHTML().html {
@@ -46,7 +46,7 @@ fun Route.fragmentsAbertos(
                                 }
                             }
                             emailSender.enviarEmail(
-                                destinatario = email,
+                                destinatario = it.first,
                                 assunto = "Redefinição de senha - Lumen Apps",
                                 corpo = htmlContent
                             )
