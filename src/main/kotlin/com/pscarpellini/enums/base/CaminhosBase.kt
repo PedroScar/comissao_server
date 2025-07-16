@@ -20,6 +20,8 @@ enum class CaminhosBaseEnum(
     MEU_PERFIL(path = "/int/meu_perfil"),
     EDITAR_MEU_PERFIL(path = "/int/meu_perfil/editar"),
     FORMULARIO_EDITAR_MEU_PERFIL(path = "/forms/meu_perfil/editar"),
+    ALTERAR_SENHA_PERFIL(path = "/int/meu_perfil/alterar_senha"),
+    FORMULARIO_ALTERAR_SENHA_PERFIL(path = "/forms/meu_perfil/alterar_senha"),
 
     LOGOUT(path = "/logout"),
 }

@@ -1,5 +1,6 @@
 package com.pscarpellini.rotas
 
+import com.pscarpellini.emails.base.enviarEmailNovaSenha
 import com.pscarpellini.tools.email.EmailSender
 import com.pscarpellini.extensions.gerarSenhaBasica
 import com.pscarpellini.extensions.respondToast
@@ -14,7 +15,7 @@ import io.ktor.server.routing.*
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
 
-fun Route.fragmentsAbertos(
+fun Route.formRedefinirSenha(
     emailSender: EmailSender,
     contasRepository: ContasRepository,
 ) {
@@ -30,27 +31,7 @@ fun Route.fragmentsAbertos(
                     if(it.second) {
                         val novaSenhaAleatoria = gerarSenhaBasica()
                         contasRepository.definirSenhaProvisoria(email = it.first, novaSenha = novaSenhaAleatoria)
-                        runCatching {
-                            val htmlContent = buildString {
-                                appendHTML().html {
-                                    includeHtmlHeader()
-                                    body {
-                                        h1 (classes = "px-6 py-4 ${CoresEnum.BRAND_PURE.bg} ${CoresEnum.HIGH_LIGHT.text} ${ArredondamentosEnum.PILL}") { +"Redefinição de senha - Lumen Apps" }
-                                        p { +"Você esqueceu sua senha e nós redefinimos para você!" }
-                                        br {  }
-                                        p { +"Para fazer login, digite o seu nome de usuário ou endereço de e-mail cadastrado e a senha:" }
-                                        p(classes = "px-4 py-2 ${CoresEnum.HIGH_LIGHT.bg} ${CoresEnum.BRAND_PURE.text} ${ArredondamentosEnum.PILL}") { +novaSenhaAleatoria }
-                                        br {  }
-                                        p { +"Caso esteja com dificuldades, entre em contato!" }
-                                    }
-                                }
-                            }
-                            emailSender.enviarEmail(
-                                destinatario = it.first,
-                                assunto = "Redefinição de senha - Lumen Apps",
-                                corpo = htmlContent
-                            )
-                        }
+                        enviarEmailNovaSenha(emailSender, destinatario = it.first, novaSenha = novaSenhaAleatoria)
                             .onSuccess { call.respondToast(tipo = TiposToastEnum.SUCCESS, mensagem = "Enviamos um e-mail com uma senha provisória - $novaSenhaAleatoria") }
                             .onFailure { call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Ocorreu um erro ao enviar o e-mail com a nova senha") }
                     } else call.respondToast(tipo = TiposToastEnum.ERROR, mensagem = "Enviamos um e-mail com uma senha provisória para o e-mail digitado 1")

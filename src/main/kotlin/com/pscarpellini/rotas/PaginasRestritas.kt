@@ -11,6 +11,7 @@ import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.repositories.interfaces.VideosRepository
 import com.pscarpellini.rotas.base.*
 import com.pscarpellini.rotas.comissao.*
+import com.pscarpellini.tools.email.EmailSender
 import io.ktor.server.routing.*
 
 fun Route.paginasRestritas(
@@ -18,7 +19,8 @@ fun Route.paginasRestritas(
     clienteRepository: ClienteRepository,
     promocoesRepository: PromocoesRepository,
     extratosRepository: ExtratosRepository,
-    videosRepository: VideosRepository
+    videosRepository: VideosRepository,
+    emailSender: EmailSender
 ) {
     get(PaginasRestritasEnum.INTERNO.caminho.path) { handleInterno() }
     post(PaginasRestritasEnum.INICIO.caminho.path) { handleInicio() }
@@ -58,10 +60,12 @@ fun Route.paginasRestritas(
 
     post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.caminho.path) { handleGerenciamentoDeUsuarios() }
     post(PaginasRestritasEnum.NOVO_USUARIO.caminho.path) { handleNovoUsuario() }
-    post(PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho.path) { handleFormularioNovoUsuario(contasRepository) }
+    post(PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho.path) { handleFormularioNovoUsuario(contasRepository, emailSender) }
 
     post(PaginasRestritasEnum.MEU_PERFIL.caminho.path) { handleMeuPerfil() }
     post(PaginasRestritasEnum.EDITAR_MEU_PERFIL.caminho.path) { handleEditarMeuPerfil() }
     post(CaminhosBaseEnum.FORMULARIO_EDITAR_MEU_PERFIL.path) { handleFormularioEditarMeuPerfil(contasRepository) }
+    post(CaminhosBaseEnum.ALTERAR_SENHA_PERFIL.path) { handleMeuPerfilAlterarSenha() }
+    post(CaminhosBaseEnum.FORMULARIO_ALTERAR_SENHA_PERFIL.path) { handleFormularioMeuPerfilAlterarSenha(contasRepository, emailSender) }
 
 }

@@ -1,7 +1,6 @@
 package com.pscarpellini.plugins
 
 import com.pscarpellini.exceptions.NaoLogadoException
-import com.pscarpellini.extensions.redirecionarFormHTMX
 import com.pscarpellini.frontend.pages.geral.not_found.notFoundPage
 import com.pscarpellini.frontend.style.styledRouting
 import com.pscarpellini.repositories.interfaces.*
@@ -44,10 +43,10 @@ fun Application.configurePages() {
         staticResources("/public", "public")
 
         fragmentsComponentes()
-        fragmentsAbertos(emailSender, contasRepository)
+        formRedefinirSenha(emailSender, contasRepository)
 
         paginasAbertas(contasRepository)
-        paginasRestritas(contasRepository, clienteRepository, promocoesRepository, extratosRepository, videosRepository)
+        paginasRestritas(contasRepository, clienteRepository, promocoesRepository, extratosRepository, videosRepository, emailSender)
 
         widgetsInicio(promocoesRepository, extratosRepository, contadoresDashboardViewRepository)
 
