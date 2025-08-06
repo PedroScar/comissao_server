@@ -9,7 +9,7 @@ enum class PerfisDeAcessoEnum(
     FUNCIONARIO(
         slug = "funcionario",
         nome = "Funcionário",
-        descricao = "Funcionário: gerencia promoções e saldos dos promotores com acesso limitado a relatórios",
+        descricao = "gerencia promoções e saldos dos promotores com acesso limitado a relatórios",
         papeis = arrayListOf(
             PapeisDeAcessoEnum.INICIO,
             PapeisDeAcessoEnum.VISUALIZAR_PROMOCOES,
@@ -24,7 +24,7 @@ enum class PerfisDeAcessoEnum(
     PROMOTOR(
         slug = "promotor",
         nome = "Promotor",
-        descricao = "Promotor: usa o app para visualizar saldo, extrato e promoções disponíveis para clientes",
+        descricao = "usa o app para visualizar saldo, extrato e promoções disponíveis para clientes",
         papeis = arrayListOf(
             PapeisDeAcessoEnum.INICIO,
         )
@@ -32,7 +32,7 @@ enum class PerfisDeAcessoEnum(
     ADMINISTRADOR(
         slug = "administrador",
         nome = "Administrador",
-        descricao = "Administrador: acesso total ao sistema, gerenciamento de promoções, usuários e relatórios",
+        descricao = "acesso total ao sistema, gerenciamento de promoções, usuários e relatórios",
         papeis = arrayListOf(
             PapeisDeAcessoEnum.INICIO,
 
@@ -65,7 +65,7 @@ enum class PerfisDeAcessoEnum(
     PERSONALIZADO(
         slug = "personalizado",
         nome = "Personalizado",
-        descricao = "Personalizado: Personalize as permissões de acesso para o usuário",
+        descricao = "Personalize as permissões de acesso para o usuário",
         papeis = arrayListOf(
             PapeisDeAcessoEnum.INICIO,
         )

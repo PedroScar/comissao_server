@@ -2,7 +2,6 @@ package com.pscarpellini.enums.base
 
 import com.pscarpellini.frontend.enums.designsystem.IconesEnum
 import com.pscarpellini.interfaces.ICaminho
-import com.pscarpellini.interfaces.IPaginaEnum
 import com.pscarpellini.interfaces.ISublinksRestritosEnum
 
 enum class SublinksBaseEnum(
@@ -13,7 +12,7 @@ enum class SublinksBaseEnum(
 ) : ISublinksRestritosEnum {
     NOVO_USUARIO(
         nome = "Novo usuário",
-        caminho = CaminhosBaseEnum.NOVO_USUARIO,
+        caminho = CaminhosBaseEnum.USUARIO_NOVO,
         papelNecessario = PapeisDeAcessoEnum.CRIAR_USUARIO,
         icone = IconesEnum.ADICIONAR
     ),

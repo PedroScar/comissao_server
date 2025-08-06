@@ -14,4 +14,5 @@ data class ContaESaldoVO(
     val usuario: String,
     val status: String,
     val tipoConta: String,
+    val senha: String,
 )

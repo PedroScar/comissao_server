@@ -57,7 +57,6 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
             }.getOrDefault(DbResponse.Erro(null, message = "Ops... algo de errado aconteceu!"))
         }
 
-
     override suspend fun editarPromocao(promocao: PromocaoVO): DbResponse<PromocaoVO> = suspendTransaction {
         val cliente = ClienteDAO.findById(promocao.clientId)
             ?: throw IllegalArgumentException("Cliente com ID ${promocao.clientId} não encontrado")

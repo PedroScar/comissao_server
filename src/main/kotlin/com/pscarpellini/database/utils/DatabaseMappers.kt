@@ -132,7 +132,8 @@ fun contaESaldoToModel(row: ResultRow, alias: Alias<Table>): ContaESaldoVO {
         telefone = row[ContasTable.telefone],
         usuario = row[ContasTable.usuario],
         status = row[ContasTable.status],
-        tipoConta = row[ContasTable.tipoConta]
+        tipoConta = row[ContasTable.tipoConta],
+        senha = row[ContasTable.senha]
     )
 }
 

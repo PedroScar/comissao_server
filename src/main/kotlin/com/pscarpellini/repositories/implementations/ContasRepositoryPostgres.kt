@@ -117,6 +117,36 @@ class ContasRepositoryPostgres : ContasRepository {
         DbResponse.Successo(conta)
     }
 
+    override suspend fun editarUsuario(conta: ContaVO): DbResponse<ContaVO> = suspendTransaction {
+            val cliente = ClienteDAO.findById(conta.cliente?.id!!)
+                ?: throw IllegalArgumentException("Cliente com ID ${conta.cliente?.id} não encontrado")
+
+            val contaExistente = ContaDAO.findById(conta.id ?: -1)
+                ?: return@suspendTransaction DbResponse.Erro(null, "Conta com ID ${conta.id} não encontrado")
+
+            runCatching {
+                contaExistente.apply {
+                    clienteId = cliente
+                    tipoConta = conta.tipoConta
+                    nome = conta.nome
+                    cpf = conta.cpf
+                    endereco = conta.endereco
+                    email = conta.email.lowercase()
+                    telefone = conta.telefone
+                    status = conta.status
+                    usuario = conta.usuario.lowercase()
+                    senha = conta.senha ?: "12345678"
+                    dataCriacao = LocalDateTime.now()
+                }
+                DbResponse.Successo(contaDaoToModel(contaExistente))
+            }.onFailure {
+                println("==================")
+                println("ERRO DB: ${it.message}")
+                println("==================")
+                DbResponse.Erro(null, message = it.message.toString())
+            }.getOrDefault(DbResponse.Erro(null, message = "Ops... algo de errado aconteceu!"))
+        }
+
     override suspend fun validarEmailEsqueciMinhaSenha(emailOuUsuario: String): Pair<String, Boolean> = suspendTransaction {
         val cliente = ContaDAO.find {
             ContasTable.usuario.lowerCase()

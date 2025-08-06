@@ -10,6 +10,7 @@ interface ContasRepository {
     suspend fun carregarPromotor(promotorId: Int, clienteId: Int): DbResponse<ContaESaldoVO>
     suspend fun listarPromotores(clienteId: Int): DbResponse<List<ContaVO>>
     suspend fun criarUsuario(conta: ContaVO): DbResponse<ContaVO>
+    suspend fun editarUsuario(conta: ContaVO): DbResponse<ContaVO>
     suspend fun validarEmailEsqueciMinhaSenha(emailOuUsuario: String): Pair<String, Boolean>
     suspend fun definirSenhaProvisoria(email: String, novaSenha: String): Boolean
     suspend fun definirSenha(usuarioId: Int, novaSenha: String): Boolean

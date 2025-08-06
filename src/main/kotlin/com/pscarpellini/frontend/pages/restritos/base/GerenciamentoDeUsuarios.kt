@@ -34,13 +34,13 @@ fun FlowContent.gerenciamentoDeUsuarios(
                 hxTrigger = "keyup changed",
                 hxTarget = idDaTabela,
                 hxIndicator = "loading_$idDaTabela",
-                icone = IconesEnum.BUSCAR
+                icone = IconesEnum.EDITAR
             )
 //            botao(tipo = TiposBotaoEnum.NEUTRAL) {
 //                icone(IconesEnum.FILTRO, usarPadding = false, size = 1.4f)
 //                +"Filtro"
 //            }
-            botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = CaminhosBaseEnum.NOVO_USUARIO) {
+            botaoHX(tipo = TiposBotaoEnum.SUBTLE, link = CaminhosBaseEnum.USUARIO_NOVO) {
                 icone(IconesEnum.ADICIONAR, usarPadding = false, size = 1.4f)
                 +"Adicionar usuário"
             }

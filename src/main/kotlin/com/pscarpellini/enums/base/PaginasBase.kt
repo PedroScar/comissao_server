@@ -28,13 +28,33 @@ enum class PaginasRestritasEnum(
         titulo = "Novo usuário",
         showBreadcrumbs = true,
         breadcrumbs = arrayListOf(GERENCIAMENTO_DE_USUARIOS),
-        caminho = CaminhosBaseEnum.NOVO_USUARIO,
+        caminho = CaminhosBaseEnum.USUARIO_NOVO,
+        itemMenuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+    ),
+    EXIBIR_USUARIO(
+        titulo = "Exibir usuário",
+        showBreadcrumbs = true,
+        breadcrumbs = arrayListOf(GERENCIAMENTO_DE_USUARIOS),
+        caminho = CaminhosBaseEnum.USUARIO_EXIBIR,
+        itemMenuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+    ),
+    EDITAR_USUARIO(
+        titulo = "Exibir usuário",
+        showBreadcrumbs = true,
+        breadcrumbs = arrayListOf(GERENCIAMENTO_DE_USUARIOS),
+        caminho = CaminhosBaseEnum.USUARIO_EDITAR,
         itemMenuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
     ),
 
     FORMULARIO_NOVO_USUARIO(
         titulo = "Novo usuário",
         caminho = CaminhosBaseEnum.FORMULARIO_NOVO_USUARIO,
+        itemMenuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
+    ),
+
+    FORMULARIO_EDITAR_USUARIO(
+        titulo = "Editar usuário",
+        caminho = CaminhosBaseEnum.FORMULARIO_EDITAR_USUARIO,
         itemMenuSelecionado = ItensMenuEnum.GERENCIAMENTO_DE_USUARIOS
     ),
 

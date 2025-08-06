@@ -31,7 +31,7 @@ enum class ItensMenuPilulaEnum(
     CADASTRAR_NOVO_USUARIO(
         textoCTA = "Cadastrar usuário",
         icone = IconesEnum.USUARIOS,
-        pagina = CaminhosBaseEnum.NOVO_USUARIO
+        pagina = CaminhosBaseEnum.USUARIO_NOVO
     ),
     CONFIGURACOES_DO_APP(
         textoCTA = "Configurar app",

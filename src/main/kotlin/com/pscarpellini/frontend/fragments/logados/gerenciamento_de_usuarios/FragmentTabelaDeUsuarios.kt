@@ -1,7 +1,7 @@
 package com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios
 
+import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PapeisDeAcessoEnum
-import com.pscarpellini.enums.comissao.CaminhosComissaoEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposAvatarEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.fragments.geral.avatar.avatar
@@ -13,7 +13,6 @@ import kotlinx.html.FlowContent
 import kotlinx.html.div
 
 private val HEADERS = arrayListOf("Nome completo", "Nome de usuário", "Último acesso", "Ações")
-
 
 fun FlowContent.includeTabelaDeUsuarios(
     contas: List<ContaVO>?,
@@ -29,8 +28,6 @@ fun FlowContent.includeTabelaDeUsuarios(
     )
 }
 
-
-
 private fun exibirLinhaUsuario(conta: ContaVO, sessao: SessaoUsuarioVO): List<FlowContent.() -> Unit> {
     return listOf(
         {
@@ -43,13 +40,16 @@ private fun exibirLinhaUsuario(conta: ContaVO, sessao: SessaoUsuarioVO): List<Fl
         { +conta.email },
         {
             if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_USUARIO)) {
-                val parametros = mapOf("id_promocao" to "TESTE")
+                val parametros = mapOf(
+                    "conta_id" to conta.id.toString(),
+                    "cliente_id" to conta.cliente?.id.toString()
+                )
                 botao(
                     tipo = TiposBotaoEnum.TRANSPARENT,
                     hxTarget = "conteudo-interno",
-                    hxPath = CaminhosComissaoEnum.EXIBIR_PROMOCAO.path,
+                    hxPath = CaminhosBaseEnum.USUARIO_EXIBIR.path,
                     hxParams = parametros,
-                ) { +"Abrir" }
+                ) { +"Exibir" }
             }
         }
     )

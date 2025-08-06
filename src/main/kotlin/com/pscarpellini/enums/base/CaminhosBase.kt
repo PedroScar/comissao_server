@@ -10,8 +10,11 @@ enum class CaminhosBaseEnum(
     INICIO(path = "/int/inicio"),
 
     GERENCIAMENTO_DE_USUARIOS(path = "/int/usuarios"),
-    NOVO_USUARIO(path = "/int/novo_usuario"),
+    USUARIO_NOVO(path = "/int/usuario_novo"),
+    USUARIO_EXIBIR(path = "/int/usuario_exibir"),
+    USUARIO_EDITAR(path = "/int/usuario_editar"),
     FORMULARIO_NOVO_USUARIO(path = "/forms/novo_usuario"),
+    FORMULARIO_EDITAR_USUARIO(path = "/forms/editar_usuario"),
 
     EXIBIR_CONFIGURACOES_DO_APP(path = "/int/configuracoes"),
     EDITAR_CONFIGURACOES_DO_APP(path = "/int/configuracoes/editar"),

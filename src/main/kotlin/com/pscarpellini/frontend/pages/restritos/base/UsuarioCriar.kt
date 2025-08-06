@@ -16,7 +16,7 @@ import kotlinx.html.FlowContent
 import kotlinx.html.InputType
 import kotlinx.html.div
 
-fun FlowContent.novoUsuario(
+fun FlowContent.usuarioNovo(
     sessao: SessaoUsuarioVO,
 ) {
     includeHeaderLogado(sessao = sessao)
