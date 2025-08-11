@@ -16,6 +16,7 @@ import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.FlowContent
 import kotlinx.html.InputType
 import kotlinx.html.div
+import kotlinx.html.input
 
 fun FlowContent.usuarioExibir(conta: ContaVO, sessao: SessaoUsuarioVO) {
     includeFormExibirUsuario(conta, sessao)
@@ -26,6 +27,7 @@ fun FlowContent.includeFormExibirUsuario(conta: ContaVO, sessao: SessaoUsuarioVO
         includeContentGrid(linhas = 1, colunas = 1) {
             card(classes = "flex flex-col gap-8") {
                 includeContentGrid(linhas = 2, colunas = 3, classes = "w-full") {
+                    input(InputType.hidden, name = "conta_id") { value = conta.id?.toString() ?: "" }
                     inputField(
                         label = "Nome completo",
                         inputType = InputType.text,
@@ -82,12 +84,8 @@ fun FlowContent.includeFormExibirUsuario(conta: ContaVO, sessao: SessaoUsuarioVO
         div(classes = "self-end flex flex-row gap-2") {
             if (sessao.papeisDeAcesso.contains(PapeisDeAcessoEnum.EDITAR_USUARIO)) {
                 val parametros = mapOf(
-                    "nome" to conta.nome,
-                    "usuario" to conta.usuario,
-                    "senha" to conta.senha.toString(),
-                    "email" to conta.email,
-                    "telefone" to conta.telefone,
-                    "tipo" to conta.tipoConta
+                    "cliente_id" to conta.cliente?.id.toString(),
+                    "conta_id" to conta.id.toString()
                 )
                 botao(
                     tipo = TiposBotaoEnum.NEUTRAL,

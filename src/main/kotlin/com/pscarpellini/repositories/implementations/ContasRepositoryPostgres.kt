@@ -139,16 +139,12 @@ class ContasRepositoryPostgres : ContasRepository {
         DbResponse.Successo(conta)
     }
 
-    override suspend fun editarUsuario(conta: ContaVO): DbResponse<ContaVO> = suspendTransaction {
-            val cliente = ClienteDAO.findById(conta.cliente?.id!!)
-                ?: throw IllegalArgumentException("Cliente com ID ${conta.cliente?.id} não encontrado")
-
-            val contaExistente = ContaDAO.findById(conta.id ?: -1)
-                ?: return@suspendTransaction DbResponse.Erro(null, "Conta com ID ${conta.id} não encontrado")
+    override suspend fun editarUsuario(contaId: Int, conta: ContaVO): DbResponse<ContaVO> = suspendTransaction {
+            val contaExistente = ContaDAO.findById(contaId)
+                ?: return@suspendTransaction DbResponse.Erro(null, "Conta com ID $contaId não encontrado")
 
             runCatching {
                 contaExistente.apply {
-                    clienteId = cliente
                     tipoConta = conta.tipoConta
                     nome = conta.nome
                     cpf = conta.cpf
@@ -157,7 +153,7 @@ class ContasRepositoryPostgres : ContasRepository {
                     telefone = conta.telefone
                     status = conta.status
                     usuario = conta.usuario.lowercase()
-                    senha = conta.senha ?: "12345678"
+                    conta.senha?.let { senha = it }
                     dataCriacao = LocalDateTime.now()
                 }
                 DbResponse.Successo(contaDaoToModel(contaExistente))

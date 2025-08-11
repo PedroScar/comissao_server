@@ -219,8 +219,8 @@ suspend fun RoutingContext.handleEditarUsuario(
 
     val parameters = call.receiveParameters()
 
-    val clienteId = (parameters["cliente_id"] ?: "").toString()
-    val contaId = (parameters["conta_id"] ?: "").toString()
+    val clienteId = (parameters["cliente_id"] ?: "")
+    val contaId = (parameters["conta_id"] ?: "")
 
     runCatching {
         if (clienteId.isNotEmpty() && contaId.isNotEmpty()) {
@@ -228,7 +228,7 @@ suspend fun RoutingContext.handleEditarUsuario(
                 when (resposta) {
                     is DbResponse.Erro -> call.respondToast(
                         tipo = TiposToastEnum.ERROR,
-                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção selecionada"
+                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar o usuário selecionado"
                     )
 
                     is DbResponse.Successo -> {
@@ -244,7 +244,7 @@ suspend fun RoutingContext.handleEditarUsuario(
     }.onFailure {
         call.respondToast(
             tipo = TiposToastEnum.ERROR,
-            mensagem = "Ocorreu um erro ao buscar a promoção selecionada"
+            mensagem = "Ocorreu um erro ao buscar o usuário selecionado"
         )
     }
 }
@@ -257,12 +257,13 @@ suspend fun RoutingContext.handleFormularioEditarUsuario(
 
         val parameters = call.receiveParameters()
 
-        val nome = (parameters["nome"] ?: "").toString()
-        val email = (parameters["email"] ?: "").toString()
+        val contaId = (parameters["conta_id"] ?: "").toIntOrNull()
+        val nome = (parameters["nome"] ?: "")
+        val email = (parameters["email"] ?: "")
         val usuario = parameters["usuario"]
-        val password = parameters["password"] ?: gerarSenhaBasica()
-        val telefone = (parameters["telefone"] ?: "").toString()
-        val perfilDeAcesso = (parameters["perfilDeAcesso"] ?: "").toString()
+        val password = parameters["password"]
+        val telefone = (parameters["telefone"] ?: "")
+        val perfilDeAcesso = (parameters["perfilDeAcesso"] ?: "")
 
         if (nome.isEmpty()) call.respondToast(
             tipo = TiposToastEnum.ERROR,
@@ -286,28 +287,29 @@ suspend fun RoutingContext.handleFormularioEditarUsuario(
             email = email,
             telefone = telefone,
             usuario = usuario ?: criarNomeDeUsuario(nome),
-            senha = password,
+            senha = if(password.isNullOrEmpty()) null else password,
             status = "ATIVO",
             tipoConta = perfilDeAcesso,
             imagemDePerfil = ""
         )
 
-        repository.editarUsuario(novaConta).let { resposta ->
+        repository.editarUsuario(contaId ?: -1, novaConta).let { resposta ->
             when (resposta) {
                 is DbResponse.Erro -> call.respondToast(
                     tipo = TiposToastEnum.ERROR,
-                    mensagem = resposta.mensagem ?: "Ocorreu um erro ao editar a promoção"
+                    mensagem = resposta.mensagem ?: "Ocorreu um erro ao editar o usuário"
                 )
 
                 is DbResponse.Successo -> call.respondFragment(HttpStatusCode.OK) {
-                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Promoção editada com sucesso")
+                    usuarioExibir(conta = resposta.data!!, sessao = sessao)
+                    toast(tipo = TiposToastEnum.SUCCESS, mensagem = "Usuário editado com sucesso")
                 }
             }
         }
     }.onFailure {
         call.respondToast(
             tipo = TiposToastEnum.ERROR,
-            mensagem = it.message ?: "Ocorreu um erro ao editar a promoção"
+            mensagem = it.message ?: "Ocorreu um erro ao editar o usuário"
         )
     }
 }

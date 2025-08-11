@@ -16,6 +16,7 @@ import com.pscarpellini.models.vos.ContaVO
 import kotlinx.html.FlowContent
 import kotlinx.html.InputType
 import kotlinx.html.div
+import kotlinx.html.input
 
 fun FlowContent.usuarioEditar(
     conta: ContaVO,
@@ -30,6 +31,7 @@ fun FlowContent.includeFormEditarUsuario(conta: ContaVO, sessao: SessaoUsuarioVO
         includeContentGrid(linhas = 1, colunas = 1) {
             card(classes = "flex flex-col gap-8") {
                 includeContentGrid(linhas = 2, colunas = 3, classes = "w-full") {
+                    input(InputType.hidden, name = "conta_id") { value = conta.id?.toString() ?: "" }
                     inputField(
                         label = "Nome completo",
                         inputType = InputType.text,
@@ -78,7 +80,7 @@ fun FlowContent.includeFormEditarUsuario(conta: ContaVO, sessao: SessaoUsuarioVO
             botao(
                 hxPath = PaginasRestritasEnum.FORMULARIO_EDITAR_USUARIO.caminho,
                 hxTarget = "form-editar-usuario",
-                hxSwap = "outerHTML",
+                disabledElt = true,
                 enabled = true,
             ) { +"Salvar" }
         }
