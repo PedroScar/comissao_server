@@ -18,13 +18,14 @@ import kotlinx.html.InputType
 import kotlinx.html.div
 
 fun FlowContent.usuarioEditar(
-    sessao: SessaoUsuarioVO,
+    conta: ContaVO,
+    sessao: SessaoUsuarioVO
 ) {
     includeHeaderLogado(sessao = sessao)
-    includeFormEditarUsuario(sessao = sessao)
+    includeFormEditarUsuario(conta = conta, sessao = sessao)
 }
 
-fun FlowContent.includeFormEditarUsuario(sessao: SessaoUsuarioVO) {
+fun FlowContent.includeFormEditarUsuario(conta: ContaVO, sessao: SessaoUsuarioVO) {
     formulario(id = "form-editar-usuario", classes = "flex flex-col gap-6", autoValidar = true) {
         includeContentGrid(linhas = 1, colunas = 1) {
             card(classes = "flex flex-col gap-8") {
@@ -35,21 +36,20 @@ fun FlowContent.includeFormEditarUsuario(sessao: SessaoUsuarioVO) {
                         hint = "Digite o nome completo",
                         isObrigatorio = true,
                         nomeDoCampo = "nome",
-                        valueInicial = sessao.conta?.nome
+                        valueInicial = conta.nome
                     )
                     inputField(
                         label = "Nome de usuário",
                         inputType = InputType.text,
                         nomeDoCampo = "usuario",
                         hint = "Digite um nome de usuário",
-                        valueInicial = sessao.conta?.usuario
+                        valueInicial = conta.usuario
                     )
                     inputField(
                         label = "Senha",
                         inputType = InputType.password,
                         nomeDoCampo = "password",
-                        hint = "********",
-                        valueInicial = sessao.conta?.senha ?: ""
+                        hint = "********"
                     )
                     inputField(
                         label = "E-mail",
@@ -58,14 +58,14 @@ fun FlowContent.includeFormEditarUsuario(sessao: SessaoUsuarioVO) {
                         isObrigatorio = true,
                         nomeDoCampo = "email",
                         classes = "lowercase",
-                        valueInicial = sessao.conta?.email
+                        valueInicial = conta.email
                     )
                     inputField(
                         label = "Telefone (opcional)",
                         inputType = InputType.tel,
                         hint = "(00) 00000-0000",
                         nomeDoCampo = "telefone",
-                        valueInicial = sessao.conta?.telefone
+                        valueInicial = conta.telefone
                     )
                     includeSelectDePerfis()
                 }

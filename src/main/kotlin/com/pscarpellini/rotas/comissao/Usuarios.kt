@@ -4,7 +4,6 @@ import com.pscarpellini.emails.base.enviarEmailNovaConta
 import com.pscarpellini.emails.base.enviarEmailSenhaAlterada
 import com.pscarpellini.enums.base.CaminhosBaseEnum
 import com.pscarpellini.enums.base.PaginasRestritasEnum
-import com.pscarpellini.enums.comissao.PaginasComissaoEnum
 import com.pscarpellini.extensions.*
 import com.pscarpellini.frontend.enums.designsystem.TiposBotaoEnum
 import com.pscarpellini.frontend.enums.designsystem.TiposToastEnum
@@ -16,10 +15,7 @@ import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.inc
 import com.pscarpellini.frontend.fragments.logados.header_logado.includeHeaderLogado
 import com.pscarpellini.frontend.fragments.logados.menu_principal.includeMenuPrincipal
 import com.pscarpellini.frontend.pages.restritos.base.*
-import com.pscarpellini.frontend.pages.restritos.comissao.exibirPromocao
 import com.pscarpellini.models.DbResponse
-import com.pscarpellini.models.vos.ClienteVO
-import com.pscarpellini.models.vos.ContaESaldoVO
 import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.repositories.interfaces.ContasRepository
 import com.pscarpellini.tools.email.EmailSender
@@ -185,12 +181,12 @@ suspend fun RoutingContext.handleExibirUsuario(
 
     val parameters = call.receiveParameters()
 
-    val cliente_id = (parameters["cliente_id"] ?: "").toString()
-    val conta_id = (parameters["conta_id"] ?: "").toString()
+    val clienteId = (parameters["cliente_id"] ?: "").toString()
+    val contaId = (parameters["conta_id"] ?: "").toString()
 
     runCatching {
-        if (cliente_id.isNotEmpty() && conta_id.isNotEmpty()) {
-            contasRepository.carregarPromotor(conta_id.toInt(), cliente_id.toInt()).let { resposta ->
+        if (clienteId.isNotEmpty() && contaId.isNotEmpty()) {
+            contasRepository.carregarUsuario(contaId.toInt(), clienteId.toInt()).let { resposta ->
                 when (resposta) {
                     is DbResponse.Erro -> call.respondToast(
                         tipo = TiposToastEnum.ERROR,
@@ -215,35 +211,41 @@ suspend fun RoutingContext.handleExibirUsuario(
     }
 }
 
-suspend fun RoutingContext.handleEditarUsuario() {
+suspend fun RoutingContext.handleEditarUsuario(
+    contasRepository: ContasRepository,
+) {
     val sessao = obterSessao()
     sessao.paginaAtual = PaginasRestritasEnum.EDITAR_USUARIO
 
-
     val parameters = call.receiveParameters()
 
-//    val contaESaldoVO = ContaVO(
-//         id = (parameters["id"] ?: "").toInt(),
-//    var cliente: ClienteVO?,
-//    val nome: String,
-//    val foto: String = "",
-//    val endereco: String,
-//    val cpf: String,
-//    val email: String,
-//    val telefone: String,
-//    val usuario: String,
-//    val senha: String? = null,
-//    val status: String,
-//    val tipoConta: String,
-//    val imagemDePerfil: String?
-//        senha =  (parameters["senha"] ?: "").toString()
-//
-//    )
+    val clienteId = (parameters["cliente_id"] ?: "").toString()
+    val contaId = (parameters["conta_id"] ?: "").toString()
 
-    call.respondFragment(HttpStatusCode.OK) {
-        includeMenuPrincipal(sessao)
-        includeHeaderLogado(sessao)
-        usuarioEditar(sessao)
+    runCatching {
+        if (clienteId.isNotEmpty() && contaId.isNotEmpty()) {
+            contasRepository.carregarUsuario(contaId.toInt(), clienteId.toInt()).let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> call.respondToast(
+                        tipo = TiposToastEnum.ERROR,
+                        mensagem = resposta.mensagem ?: "Ocorreu um erro ao buscar a promoção selecionada"
+                    )
+
+                    is DbResponse.Successo -> {
+                        call.respondFragment(HttpStatusCode.OK) {
+                            includeMenuPrincipal(sessao)
+                            includeHeaderLogado(sessao)
+                            resposta.data?.let { usuarioEditar(it, sessao) }
+                        }
+                    }
+                }
+            }
+        }
+    }.onFailure {
+        call.respondToast(
+            tipo = TiposToastEnum.ERROR,
+            mensagem = "Ocorreu um erro ao buscar a promoção selecionada"
+        )
     }
 }
 

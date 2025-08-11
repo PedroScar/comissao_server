@@ -5,6 +5,7 @@ import com.pscarpellini.database.utils.contaDaoToModel
 import com.pscarpellini.database.daos.ContaDAO
 import com.pscarpellini.database.tables.ContasTable
 import com.pscarpellini.database.tables.SaldosTable
+import com.pscarpellini.database.utils.contaDaoToModel
 import com.pscarpellini.database.utils.contaESaldoToModel
 import com.pscarpellini.enums.base.PerfisDeAcessoEnum
 import com.pscarpellini.models.DbResponse
@@ -87,6 +88,27 @@ class ContasRepositoryPostgres : ContasRepository {
             .map(::contaDaoToModel)
 
         DbResponse.Successo(listaUsuarios)
+    }
+
+    override suspend fun carregarUsuario(usuarioId: Int, clienteId: Int): DbResponse<ContaVO> = suspendTransaction {
+        val cliente = ClienteDAO.findById(clienteId)
+            ?: throw IllegalArgumentException("Cliente com ID $clienteId não encontrado")
+
+        val conta = ContaDAO
+            .find {
+                (ContasTable.clienteId eq cliente.id)
+                    .and(
+                        (ContasTable.id eq usuarioId)
+                    )
+            }
+            .limit(1)
+            .firstOrNull()
+
+        return@suspendTransaction if (conta == null) {
+            DbResponse.Erro(null, "Usuário não encontrado: $usuarioId")
+        } else {
+            DbResponse.Successo(contaDaoToModel(conta))
+        }
     }
 
     override suspend fun criarUsuario(conta: ContaVO): DbResponse<ContaVO> = suspendTransaction {

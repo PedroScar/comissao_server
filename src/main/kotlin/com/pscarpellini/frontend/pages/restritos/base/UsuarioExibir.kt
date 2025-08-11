@@ -11,16 +11,17 @@ import com.pscarpellini.frontend.fragments.geral.inputs.inputField
 import com.pscarpellini.frontend.fragments.logados.content_grid.includeContentGrid
 import com.pscarpellini.frontend.fragments.logados.gerenciamento_de_usuarios.includeCardDePerfis
 import com.pscarpellini.models.vos.ContaESaldoVO
+import com.pscarpellini.models.vos.ContaVO
 import com.pscarpellini.models.vos.SessaoUsuarioVO
 import kotlinx.html.FlowContent
 import kotlinx.html.InputType
 import kotlinx.html.div
 
-fun FlowContent.usuarioExibir(conta: ContaESaldoVO, sessao: SessaoUsuarioVO) {
+fun FlowContent.usuarioExibir(conta: ContaVO, sessao: SessaoUsuarioVO) {
     includeFormExibirUsuario(conta, sessao)
 }
 
-fun FlowContent.includeFormExibirUsuario(conta: ContaESaldoVO, sessao: SessaoUsuarioVO) {
+fun FlowContent.includeFormExibirUsuario(conta: ContaVO, sessao: SessaoUsuarioVO) {
     div(classes = "flex flex-col gap-6") {
         includeContentGrid(linhas = 1, colunas = 1) {
             card(classes = "flex flex-col gap-8") {
@@ -83,7 +84,7 @@ fun FlowContent.includeFormExibirUsuario(conta: ContaESaldoVO, sessao: SessaoUsu
                 val parametros = mapOf(
                     "nome" to conta.nome,
                     "usuario" to conta.usuario,
-                    "senha" to conta.senha,
+                    "senha" to conta.senha.toString(),
                     "email" to conta.email,
                     "telefone" to conta.telefone,
                     "tipo" to conta.tipoConta

@@ -9,6 +9,7 @@ interface ContasRepository {
     suspend fun carregarUsuarios(nome: String = "", clienteId: Int): DbResponse<List<ContaVO>>
     suspend fun carregarPromotor(promotorId: Int, clienteId: Int): DbResponse<ContaESaldoVO>
     suspend fun listarPromotores(clienteId: Int): DbResponse<List<ContaVO>>
+    suspend fun carregarUsuario(promotorId: Int, clienteId: Int): DbResponse<ContaVO>
     suspend fun criarUsuario(conta: ContaVO): DbResponse<ContaVO>
     suspend fun editarUsuario(conta: ContaVO): DbResponse<ContaVO>
     suspend fun validarEmailEsqueciMinhaSenha(emailOuUsuario: String): Pair<String, Boolean>

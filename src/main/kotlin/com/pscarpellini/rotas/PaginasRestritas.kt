@@ -79,7 +79,7 @@ fun Route.paginasRestritas(
     post(PaginasRestritasEnum.GERENCIAMENTO_DE_USUARIOS.caminho.path) { handleGerenciamentoDeUsuarios() }
     post(PaginasRestritasEnum.NOVO_USUARIO.caminho.path) { handleNovoUsuario() }
     post(PaginasRestritasEnum.EXIBIR_USUARIO.caminho.path) { handleExibirUsuario(contasRepository) }
-    post(PaginasRestritasEnum.EDITAR_USUARIO.caminho.path) { handleEditarUsuario() }
+    post(PaginasRestritasEnum.EDITAR_USUARIO.caminho.path) { handleEditarUsuario(contasRepository) }
     post(PaginasRestritasEnum.FORMULARIO_NOVO_USUARIO.caminho.path) {
         handleFormularioNovoUsuario(
             contasRepository,
