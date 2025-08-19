@@ -16,4 +16,5 @@ interface ContasRepository {
     suspend fun definirSenhaProvisoria(email: String, novaSenha: String): Boolean
     suspend fun definirSenha(usuarioId: Int, novaSenha: String): Boolean
     suspend fun atualizarMeuPerfil(usuarioId: Int, telefone: String, imagemDePerfil: String): Boolean
+
 }
