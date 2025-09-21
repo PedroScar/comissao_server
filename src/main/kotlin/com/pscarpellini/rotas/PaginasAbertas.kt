@@ -2,6 +2,7 @@ package com.pscarpellini.rotas
 
 import com.pscarpellini.acesso.UsuariosLogados
 import com.pscarpellini.enums.base.CaminhosBaseEnum
+import com.pscarpellini.enums.base.PerfisDeAcessoEnum
 import com.pscarpellini.enums.base.PerfisDeAcessoEnum.Companion.obterEnumPeloSlug
 import com.pscarpellini.extensions.obterSessao
 import com.pscarpellini.extensions.redirecionarFormHTMX
@@ -69,14 +70,19 @@ fun Route.paginasAbertas(
                         val tipoDeConta = resposta.data?.tipoConta ?: ""
                         val perfilDeAcesso = obterEnumPeloSlug(tipoDeConta)
                         val sessao = SessaoUsuarioVO()
-                        sessao.conta = resposta.data
-                        sessao.papeisDeAcesso = perfilDeAcesso.papeis
 
-                        if (!isUsuarioLogado(sessao)) {
-                            UsuariosLogados.lista.add(sessao)
+                        if(perfilDeAcesso == PerfisDeAcessoEnum.PROMOTOR) {
+                            call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "Você deve realizar o login através do app")
+                        } else {
+                            sessao.conta = resposta.data
+                            sessao.papeisDeAcesso = perfilDeAcesso.papeis
+
+                            if (!isUsuarioLogado(sessao)) {
+                                UsuariosLogados.lista.add(sessao)
+                            }
+
+                            call.sessions.set(sessao.toCookieVO())
                         }
-
-                        call.sessions.set(sessao.toCookieVO())
                     }.onFailure {
                         call.respondToast(tipo = TiposToastEnum.WARNING, mensagem = "${it.message}")
                     }.onSuccess {
