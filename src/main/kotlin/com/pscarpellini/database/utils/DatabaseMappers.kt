@@ -18,7 +18,8 @@ fun clienteDaoToModel(dao: ClienteDAO) = ClienteVO(
     dao.email,
     dao.telefone,
     dao.status,
-    dao.logo
+    dao.logo,
+    dao.isPontos
 )
 
 fun servicoDaoToModel(dao: ServicoDAO) = ServicoVO(

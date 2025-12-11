@@ -1,6 +1,5 @@
 package com.pscarpellini.database.tables
 
-import com.pscarpellini.database.tables.ExtratosTable.nullable
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime

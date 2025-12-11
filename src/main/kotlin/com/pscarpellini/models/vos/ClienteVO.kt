@@ -11,5 +11,6 @@ data class ClienteVO(
     val email: String,
     val telefone: String,
     var status: String,
-    val logo: String?
+    val logo: String?,
+    val isPontos: Boolean = false
 )
