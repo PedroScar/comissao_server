@@ -5,18 +5,18 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_20
-    targetCompatibility = JavaVersion.VERSION_20
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
     compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_20)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
 group = "br.com.lumenapps"
-version = "0.0.1"
+version = "1.0.0"
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
