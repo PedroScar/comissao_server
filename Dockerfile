@@ -31,8 +31,8 @@ RUN gradle dependencies --no-daemon || true
 # Agora copia o restante do código
 COPY --chown=gradle:gradle . .
 
-# Build do fat jar
-RUN gradle buildFatJar --no-daemon
+# Clean cache corrupted e build do fat jar
+RUN gradle clean buildFatJar --no-daemon
 
 
 ############################
