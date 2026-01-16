@@ -50,4 +50,4 @@ EXPOSE 8080
 
 COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
 
-ENTRYPOINT ["java", "-Xmx384m", "-Xms192m", "-XX:+UseG1GC", "-XX:+UseStringDeduplication", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx1536m", "-Xms1024m", "-XX:+UseG1GC", "-XX:+UseStringDeduplication", "-jar", "app.jar"]
