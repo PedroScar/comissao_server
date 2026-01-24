@@ -7,6 +7,7 @@ import com.pscarpellini.database.tables.PromocoesTable
 import com.pscarpellini.database.tables.VendasContaPromocaoTable
 import com.pscarpellini.database.utils.promocaoDaoToModel
 import com.pscarpellini.models.DbResponse
+import com.pscarpellini.models.response.PromocoesPaginacao
 import com.pscarpellini.models.vos.PromocaoVO
 import com.pscarpellini.repositories.interfaces.PromocoesRepository
 import com.pscarpellini.suspendTransaction
@@ -136,6 +137,46 @@ class PromocoesRepositoryPostgres : PromocoesRepository {
                     .map(::promocaoDaoToModel)
             }.onFailure { it.printStackTrace() }.getOrThrow()
             DbResponse.Successo(listaPromocoes)
+        }
+
+    override suspend fun carregarPromocoesPaginacao(clienteId: Int, pagina: Int): DbResponse<PromocoesPaginacao> =
+        suspendTransaction {
+            val itensPorPagina = 7
+            val offset = ((pagina - 1) * itensPorPagina).toLong()
+            val now = LocalDateTime.now()
+
+            val listaPromocoes = runCatching {
+                PromocaoDAO
+                    .find { PromocoesTable.clienteId eq clienteId }
+                    .reversed()
+                    .sortedBy {
+                        when {
+                            // Promoção cancelada (já passou da data de validade e está indisponível)
+                            (it.dataValidade != null) && now.isAfter(it.dataValidade) && now.isBefore(it.dataDisponivel) -> 4
+                            // Promoção encerrada (fora do intervalo ou validade já passou)
+                            (it.dataValidade != null) && now.isAfter(it.dataValidade) -> 3
+                            // Promoção ativa (duração indeterminada ou dentro do intervalo de validade)
+                            it.duracaoIndeterminada && now.isAfter(it.dataDisponivel) && it.dataValidade == null
+                                    || (it.dataValidade != null) && now.isAfter(it.dataDisponivel) && now.isBefore(it.dataValidade) -> 1
+                            // Promoção agendada (não disponível ainda)
+                            now < it.dataDisponivel -> 2
+                            // Promoção encerrada (fora do intervalo ou validade já passou)
+                            else -> 3
+                        }
+                    }
+                    .drop(offset.toInt())
+                    .take(itensPorPagina + 1)
+                    .map(::promocaoDaoToModel)
+            }.onFailure { it.printStackTrace() }.getOrThrow()
+
+            val temNovaPagina = listaPromocoes.size > itensPorPagina
+
+            DbResponse.Successo(
+                PromocoesPaginacao(
+                    lista = listaPromocoes.take(itensPorPagina),
+                    novaPagina = temNovaPagina
+                )
+            )
         }
 
     override suspend fun carregarPromocoesMaisUtilizadas(clienteId: Int): DbResponse<List<PromocaoVO>> =

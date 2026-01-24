@@ -3,6 +3,7 @@ package com.pscarpellini.rotas
 import com.pscarpellini.models.DbResponse
 import com.pscarpellini.models.requests.LoginRequest
 import com.pscarpellini.models.response.ExtratoMobile
+import com.pscarpellini.models.response.PromocoesPaginacao
 import com.pscarpellini.models.response.VideosPaginacao
 import com.pscarpellini.models.tableModels.SaldoDB
 import com.pscarpellini.models.vos.ContaVO
@@ -53,6 +54,23 @@ fun Route.apiMobile(
 
                     is DbResponse.Successo -> {
                         call.respond(HttpStatusCode.OK, resposta.data as List<PromocaoVO>)
+                    }
+                }
+            }
+        }
+
+        get("/promocoesPaginacao") {
+            val clientId = call.request.queryParameters["clienteId"]?.toIntOrNull() ?: 0
+            val pagina = call.request.queryParameters["pagina"]?.toIntOrNull() ?: 0
+
+            promocoesRepository.carregarPromocoesPaginacao(clienteId = clientId, pagina = pagina).let { resposta ->
+                when (resposta) {
+                    is DbResponse.Erro -> {
+                        call.respond(HttpStatusCode.ServiceUnavailable, "${resposta.mensagem}")
+                    }
+
+                    is DbResponse.Successo -> {
+                        call.respond(HttpStatusCode.OK, resposta.data as PromocoesPaginacao)
                     }
                 }
             }
