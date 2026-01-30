@@ -73,6 +73,6 @@ enum class PerfisDeAcessoEnum(
 
     companion object {
         fun obterPerfisDisponiveis() = arrayListOf(FUNCIONARIO, PROMOTOR, ADMINISTRADOR)
-        fun obterEnumPeloSlug(slug: String) = entries.firstOrNull { it.slug == slug } ?: FUNCIONARIO
+        fun obterEnumPeloSlug(slug: String) = entries.firstOrNull { it.slug.equals(slug, ignoreCase = true) } ?: FUNCIONARIO
     }
 }
