@@ -25,13 +25,14 @@ COPY --chown=gradle:gradle gradle gradle
 COPY --chown=gradle:gradle gradlew gradlew
 COPY --chown=gradle:gradle build.gradle.kts settings.gradle.kts ./
 
-# Baixa dependências (cache layer)
-RUN gradle dependencies --no-daemon || true
+# Limpar cache corrupto do Gradle antes de baixar dependências
+RUN rm -rf /home/gradle/.gradle/caches && \
+    gradle dependencies --no-daemon || true
 
 # Agora copia o restante do código
 COPY --chown=gradle:gradle . .
 
-# Clean cache corrupted e build do fat jar
+# Clean cache e build do fat jar
 RUN gradle clean buildFatJar --no-daemon
 
 
