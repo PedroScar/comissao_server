@@ -3,6 +3,7 @@ package com.pscarpellini.plugins
 import com.pscarpellini.tools.email.EmailSender
 import com.pscarpellini.repositories.interfaces.*
 import com.pscarpellini.rotas.apiMobile
+import com.pscarpellini.rotas.endpointsAbertos
 import com.pscarpellini.rotas.endpointsControle
 import com.pscarpellini.rotas.endpointsRestritos
 import io.ktor.server.application.*
@@ -23,5 +24,6 @@ fun Application.configureEndpoints() {
         apiMobile(contasRepository, promocoesRepository, saldosRepository, videosRepository, extratosRepository)
         endpointsRestritos(clientesRepository)
         endpointsControle(emailSender)
+        endpointsAbertos(clientesRepository,contasRepository)
     }
 }

@@ -9,7 +9,6 @@ fun criarNomeDeUsuario(nomeCompleto: String): String {
 
     val primeiroNome = normalizar(nomes.first())
     val segundoNome = normalizar(nomes.getOrNull(1) ?: "")
-    val ultimoNome = normalizar(nomes.last())
 
     return "${primeiroNome.first()}$segundoNome"
 }
