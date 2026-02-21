@@ -13,5 +13,5 @@ object ClientesTable : IntIdTable("clientes") {
     val status = varchar("status", 255)
     val dataCriacao = datetime("data_criacao").clientDefault { LocalDateTime.now() }
     val logo = text("logo").nullable()
-    val isPontos = bool("is_pontos")
+    val isPontos = bool("is_pontos").default(false)
 }
